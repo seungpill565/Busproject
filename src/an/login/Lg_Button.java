@@ -7,6 +7,7 @@ public class Lg_Button extends JButton{
 	public Lg_Button(String str) {
 		
 		super(str);
+		
 	}
 
 }

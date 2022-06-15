@@ -35,6 +35,17 @@ public class Mainframe extends JFrame{
 		add(jp, BorderLayout.SOUTH);
 		
 		/////////////////////////////////////////////////////////
+		//¾×¼Ç
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		////////////////////////////////////////
 		setBounds(100, 100, 600, 500);
 		setResizable(false);  
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
