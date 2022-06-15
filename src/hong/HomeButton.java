@@ -1,4 +1,4 @@
-package hong.selectbus;
+package hong;
 
 import javax.swing.JButton;
 

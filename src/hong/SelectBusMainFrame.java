@@ -1,11 +1,10 @@
-package hong.selectbus;
+package hong;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.JFrame;
-
 
 public class SelectBusMainFrame extends JFrame {
 	
@@ -16,14 +15,10 @@ public class SelectBusMainFrame extends JFrame {
 		
 		setTitle("ø¨Ω¿¡ﬂ");
 		
-		add(centerPanel, "Center");
-		add(backGroundLabel, "East");
-		add(backGroundLabel, "West");
-		add(backGroundLabel, "North");
-		add(backGroundLabel, "South");
+		add(centerPanel);
 		
 		setBounds(300, 100, 600, 700);
-		setBackground(Color.WHITE);
+		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
