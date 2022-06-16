@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import an.OjdbcConnection;
+import an.sign_up.SignupMain_Frame;
 
 public class All_Panel extends JPanel{
 	JPanel idpanel = new IdPanel();
@@ -26,11 +27,12 @@ public class All_Panel extends JPanel{
 	
 	JButton login = new Lg_Button("로그인");
 	JPanel loginPanel = new loginPanel(login);
-
-	JPanel joinPanel = new JoinPanel();
+	
+	JButton join = new Lg_Button("회원가입");
+	JPanel joinPanel = new JoinPanel(join);
 	JPanel findPanel = new findPanel();
 	
-	
+	// 로그인 버튼을 누를시 로그인 성공,실패 여부 확인
 	public All_Panel() {
 		setLayout(new GridLayout(3, 2));
 		login.addActionListener(new ActionListener() {
@@ -40,7 +42,7 @@ public class All_Panel extends JPanel{
 				String id = ptext.getText();
 				String pass = itext.getText();
 				
-				
+			
 			String sql = String.format("SELECT su_password FROM sign_up WHERE user_id = '%s' AND su_password ='%s'",
 					id, pass);	
 			try(Connection conn = OjdbcConnection.getConnection();
@@ -61,6 +63,15 @@ public class All_Panel extends JPanel{
 					System.out.println("SQLException" + ex);
 				}
 				
+			}
+		});
+		
+		join.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new SignupMain_Frame();
+				 
 			}
 		});
 		add(idpanel);add(idPanel2);

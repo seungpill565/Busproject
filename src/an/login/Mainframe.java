@@ -28,25 +28,11 @@ public class Mainframe extends JFrame{
 		jp.setLayout(new FlowLayout());
 		jp.add(allIdLabel);
 		
-		
-		/////////////////////////////////////////////////////////
 		setLayout(new BorderLayout());
 		add(title, BorderLayout.NORTH);
 		add(jp, BorderLayout.SOUTH);
 		
-		/////////////////////////////////////////////////////////
-		//¾×¼Ç
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		////////////////////////////////////////
-		setBounds(100, 100, 600, 500);
+		setBounds(500, 200, 500, 500);
 		setResizable(false);  
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
