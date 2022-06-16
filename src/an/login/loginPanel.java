@@ -9,7 +9,7 @@ public class loginPanel extends JPanel{
 	
 	JButton login = new Lg_Button("·Î±×ÀÎ");
 	
-	public loginPanel() {
+	public loginPanel(JButton login) {
 		new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		add(login);
 	}
