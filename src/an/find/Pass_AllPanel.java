@@ -9,14 +9,14 @@ public class Pass_AllPanel extends JPanel{
 	JTextField nameText = new Find_TextField(10);
 	JTextField idText = new Find_TextField(10);
 	
-	JPanel name = new Pass_NamePanel(nameText);
-	JPanel id = new Pass_IdPanel(idText);	
+	
 	
 	public Pass_AllPanel(JTextField j ,JTextField j2) {
-		nameText = j2;
-		idText = j;
-		
 		setLayout(new FlowLayout());
+		idText = j;
+		nameText = j2;
+		JPanel name = new Pass_NamePanel(nameText);
+		JPanel id = new Pass_IdPanel(idText);	
 		
 		add(name);add(id);
 		

@@ -12,15 +12,15 @@ public class IdFind_ALLPanel extends JPanel{
 	JTextField nameText = new Find_TextField(10);
 	JTextField pnText = new Find_TextField(10);
 	
-	JPanel name = new IdFind_NamePanel(nameText);
-	JPanel pn = new IdFind_PnPanel(pnText);
+	
 	
 	public IdFind_ALLPanel(JTextField j, JTextField j2) {
-		
-		j = nameText;
-		j2= pnText;
-		
 		setLayout(new FlowLayout());
+		nameText = j;
+		pnText = j2;
+		
+		JPanel name = new IdFind_NamePanel(nameText);
+		JPanel pn = new IdFind_PnPanel(pnText);
 		
 		add(name);add(pn);
 		
