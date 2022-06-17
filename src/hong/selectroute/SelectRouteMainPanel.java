@@ -1,4 +1,4 @@
-package hong;
+package hong.selectroute;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -8,17 +8,42 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class MainPanel extends JPanel {
+import hong.selectroute.event.HomeButtonEvent;
+import hong.selectroute.event.MonthComboBoxEvent;
+
+public class SelectRouteMainPanel extends JPanel {
 	
-	GridBagLayout gbl = new GridBagLayout();
-	GridBagConstraints gbc = new GridBagConstraints();
-	HomeButton homeButton = new HomeButton();
-	ArrivalButton arvButton = new ArrivalButton();
-	DestinationButton desButton = new DestinationButton();
+	GridBagLayout gbl = new GridBagLayout(); 
+	GridBagConstraints gbc = new GridBagConstraints(); 
+	HomeButton homeButton = new HomeButton();				// 홈버튼 생성
+	ArrivalButton arvButton = new ArrivalButton();			// 출발버튼 생성
+	DestinationButton desButton = new DestinationButton(); 	// 도착버튼 생성
+	MonthComboBox monBox = new MonthComboBox();				// 달 선택 콤보박스
+	DayComboBox dayBox = new DayComboBox();					// 일 선택 콤보박스
 	
-	public MainPanel() {
+	// 달에 따른 day들을 일 선택 콤보박스에 추가하는 메서드
+	public void addDays(int month) {
+		dayBox.addItems(month);
+	}
+	
+	// 일 선택 콤보박스를 비워주는 메서드
+	public void resetDays() {
+		dayBox.reset();
+	}
+	
+	// 선택한 날짜를 저장해둠
+	public void inputDay(int day) {
+		dayBox.setDay(day);
+	}
+	
+	// 선택한 달을 저장해둠
+	public void inputMonth(int month) {
+		monBox.setMonth(month);
+	}
+	
+	
+	public SelectRouteMainPanel() {
 		// layout을 GridBagLayout으로 설정
-		
 		setLayout(gbl);
 		
 		gbc.fill= GridBagConstraints.BOTH;
@@ -35,6 +60,8 @@ public class MainPanel extends JPanel {
 		gbInsert(new BackGroundLabel(), 6, 1, 1, 1);
 		
 		// 2열 홈버튼
+		HomeButtonEvent hbe = new HomeButtonEvent(this);
+		homeButton.addActionListener(hbe);
 		gbc.weighty = 0.1;
 		gbInsert(homeButton, 1, 1, 5, 1);
 		
@@ -70,8 +97,11 @@ public class MainPanel extends JPanel {
 		BackGroundLabel chulbal = new BackGroundLabel();
 		chulbal.setText("출발 날짜 : ");
 		gbInsert(chulbal, 1, 4, 1, 1);
+		
 		// 월 콤보박스
-		gbInsert(new MonthComboBox(), 2, 4, 1, 1);
+		MonthComboBoxEvent mcbe = new MonthComboBoxEvent(this);
+		monBox.addItemListener(mcbe);
+		gbInsert(monBox, 2, 4, 1, 1);
 		
 		// 몇 월
 		BackGroundLabel wol = new BackGroundLabel();
@@ -79,7 +109,7 @@ public class MainPanel extends JPanel {
 		gbInsert(wol, 3, 4, 1, 1);
 		
 		// 일 콤보박스
-		gbInsert(new DayComboBox(), 4, 4, 1, 1);
+		gbInsert(dayBox, 4, 4, 1, 1);
 		gbc.weightx = 1.0;
 		// 몇 일
 		BackGroundLabel il = new BackGroundLabel();
@@ -127,12 +157,13 @@ public class MainPanel extends JPanel {
 		gbInsert(new BackGroundLabel(), 0, 9, 7, 1);
 	}
 	
-	 public void gbInsert(Component c, int x, int y, int w, int h){
-	        gbc.gridx = x;
-	        gbc.gridy = y;
-	        gbc.gridwidth = w;
-	        gbc.gridheight = h;
-	        gbl.setConstraints(c, gbc);
-	        this.add(c);
-	    }
+	// 컴포넌트, 시작좌표, 너비, 높이를 입력하면 레이아웃에 컴포넌트를 추가하는 메서드
+	public void gbInsert(Component c, int x, int y, int w, int h){
+		gbc.gridx = x;
+		gbc.gridy = y;
+		gbc.gridwidth = w;
+		gbc.gridheight = h;
+		gbl.setConstraints(c, gbc);
+		this.add(c);
+	}
 }

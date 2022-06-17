@@ -1,4 +1,4 @@
-package hong;
+package hong.selectroute;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,8 +10,7 @@ import javax.swing.JFrame;
 
 public class SelectRouteMainFrame extends JFrame {
 	
-	MainPanel mainPanel = new MainPanel();
-	
+	SelectRouteMainPanel mainPanel = new SelectRouteMainPanel();
 	
 	public SelectRouteMainFrame() {
 		

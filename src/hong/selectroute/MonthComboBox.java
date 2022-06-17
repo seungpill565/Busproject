@@ -1,4 +1,4 @@
-package hong;
+package hong.selectroute;
 
 import java.awt.Color;
 
@@ -10,6 +10,8 @@ public class MonthComboBox extends JComboBox<Integer> {
 	final private static int DEC = 12;
 	final private static Color BACK_COLOR = Color.WHITE;
 	
+	private int month;
+	
 	public MonthComboBox() {
 		setBackground(BACK_COLOR);
 		
@@ -17,6 +19,10 @@ public class MonthComboBox extends JComboBox<Integer> {
 		for (int i = JAN; i <= DEC; ++i) {
 			addItem(i);
 		}
-		
 	}
+	
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
 }
