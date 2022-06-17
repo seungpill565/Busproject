@@ -18,10 +18,11 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import an.OjdbcConnection;
-import an.login.Mainframe;
+import an.login.Login_Mainframe;
 
 public class Sign_Panel extends JPanel{
 	JButton button;
+	JButton button2;
 	String id = "", pass = "", passRe = "", name = "", phone = "", check ="";
 	
 	JTextField idtext = new Sign_TextFeild(10);
@@ -41,7 +42,7 @@ public class Sign_Panel extends JPanel{
 	ButtonGroup bg = new ButtonGroup();
 	JPanel radioPanel = new Radio_Panel(client,manager,bg);
 	
-	public Sign_Panel(JButton button) {
+	public Sign_Panel(JButton button,JButton button2) {
 		setLayout(new GridLayout(5, 1));
 		
 		
@@ -98,6 +99,7 @@ public class Sign_Panel extends JPanel{
 			}
 		}
 	});
+		
 		
 	}
 

@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 
 public class Mainpenal extends JPanel{
 
-	JLabel login = new MainLabel("버스 예약 로그인");
+	JLabel login = new Login_MainLabel("버스 예약 로그인");
 	public Mainpenal() {
 		add(login);
 	}

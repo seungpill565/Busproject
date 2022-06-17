@@ -5,11 +5,11 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class loginPanel extends JPanel{
+public class Login_MainPanel extends JPanel{
 	
 	JButton login = new Lg_Button("·Î±×ÀÎ");
 	
-	public loginPanel(JButton login) {
+	public Login_MainPanel(JButton login) {
 		new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		add(login);
 	}

@@ -15,16 +15,15 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class Mainframe extends JFrame{
+public class Login_Mainframe extends JFrame{
 	
 	JPanel title = new Mainpenal();
 	JPanel allIdLabel = new All_Panel();
+	JPanel jp = new JPanel();
 	
-	
-	public Mainframe() {
+	public Login_Mainframe() {
 		setTitle("버스 예약시스템");
 		
-		JPanel jp = new JPanel();
 		jp.setLayout(new FlowLayout());
 		jp.add(allIdLabel);
 		
@@ -32,14 +31,14 @@ public class Mainframe extends JFrame{
 		add(title, BorderLayout.NORTH);
 		add(jp, BorderLayout.SOUTH);
 		
-		setBounds(500, 200, 500, 500);
+		setBounds(500, 200, 800, 500);
 		setResizable(false);  
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
 	
 	public static void main(String[] args) {
-		new Mainframe();
+		new Login_Mainframe();
 	}
 
 }

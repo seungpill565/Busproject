@@ -9,7 +9,7 @@ public class ALL_panel extends JPanel{
 	JButton in = new Sign_Button("회원가입");
 	JButton out = new Sign_Button("나가기");
 	
-	JPanel signPanel = new Sign_Panel(in); 
+	JPanel signPanel = new Sign_Panel(in,out); 
 	//JPanel radioPanel = new Radio_Panel();
 	
 	public class new_panel extends JPanel{
@@ -18,7 +18,9 @@ public class ALL_panel extends JPanel{
 		}
 	}
 	
-	public ALL_panel() {
+	public ALL_panel(JButton out) {
+		
+		this.out= out;
 		setLayout(new FlowLayout());
 		add(signPanel);//add(radioPanel);
 		add(new new_panel());

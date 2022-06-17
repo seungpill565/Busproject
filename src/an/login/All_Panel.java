@@ -1,5 +1,6 @@
 package an.login;
 
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,27 +15,37 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import an.OjdbcConnection;
+import an.find.Find_MainFrame;
 import an.sign_up.SignupMain_Frame;
 
 public class All_Panel extends JPanel{
+	
+	JButton login = new Lg_Button("로그인");
+	JButton join = new Lg_Button("회원가입");
+	JButton up = new Lg_Button("아이디/비밀번호 찾기");
+	
 	JPanel idpanel = new IdPanel();
 	JTextField ptext = new IdPwd_TextFeild(10);
 	JPanel idPanel2 = new IdPanel2(ptext);
 	
-	JPanel pwdPanel = new pwdPanel();
+	JPanel pwdPanel = new PwdPanel();
 	JTextField itext = new IdPwd_TextFeild(10);
-	JPanel pwdPanel2 = new pwdPanel2(itext);
+	JPanel pwdPanel2 = new PwdPanel2(itext);
 	
-	JButton login = new Lg_Button("로그인");
-	JPanel loginPanel = new loginPanel(login);
+
+	JPanel loginPanel = new Login_MainPanel(login);
 	
-	JButton join = new Lg_Button("회원가입");
-	JPanel joinPanel = new JoinPanel(join);
+	
+	JPanel joinPanel = new JoinPanel(up);
 	JPanel findPanel = new findPanel();
+	
+	JPanel buttonPanel = new Login_buttonPanel(login, up, join); 
+	
+	
 	
 	// 로그인 버튼을 누를시 로그인 성공,실패 여부 확인
 	public All_Panel() {
-		setLayout(new GridLayout(3, 2));
+		setLayout(new FlowLayout());
 		login.addActionListener(new ActionListener() {
 			
 			@Override
@@ -60,7 +71,6 @@ public class All_Panel extends JPanel{
 
 				} catch (SQLException ex) {
 					JOptionPane.showMessageDialog(null, "Login Failed", "로그인 실패", 1);
-					System.out.println("SQLException" + ex);
 				}
 				
 			}
@@ -73,10 +83,20 @@ public class All_Panel extends JPanel{
 				new SignupMain_Frame();
 				 
 			}
+		
+		});
+		
+		up.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Find_MainFrame();
+				
+			}
 		});
 		add(idpanel);add(idPanel2);
 		add(pwdPanel);add(pwdPanel2);
-		add(loginPanel);add(joinPanel); 
+		add(buttonPanel); 
 	}
 
 }
