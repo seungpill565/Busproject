@@ -128,6 +128,7 @@ public class Park extends JFrame implements ActionListener { // 회원가입 긁어온�
 		//자기소개
 		JLabel bIntro = new JLabel("자기 소개: ");
 		taIntro = new JTextArea(5, 20); //행 : 열
+		taIntro.setLineWrap(true);
 		JScrollPane pane = new JScrollPane(taIntro);
 		gbAdd(bIntro,0,9,1,1);
 		gbAdd(pane,1,9,3,1);
@@ -164,11 +165,12 @@ public class Park extends JFrame implements ActionListener { // 회원가입 긁어온�
 		new Park();
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent ae) {
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
-
-	}//actionPerformed 
+	//actionPerformed 
 }//end
 	
 

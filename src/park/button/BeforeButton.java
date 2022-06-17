@@ -7,20 +7,21 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-public class HomeButton extends JButton{ // 홈 화면으로 가는 버튼
+public class BeforeButton extends JButton{ // 이전 화면으로 가는 버튼
 
-	public HomeButton() {
-		super("Home");
+	public BeforeButton() {
+	super("Before");
 		
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("home버튼 클릭"); // 테스트용
+				System.out.println("before버튼 클릭"); // 테스트용
 			}
 		});
 		
 		setSize(40, 40);
 		setFont(new Font("궁서체", Font.BOLD,15));
 		setForeground(new Color(0x000000));
-		setBackground(new Color(0xffff00));
+		setBackground(new Color(0xffff00));		
 	}
+	
 }

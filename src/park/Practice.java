@@ -1,37 +1,35 @@
 package park;
 
-import java.awt.FlowLayout;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class Practice {
+import park.scrollpane.PayInfoScrollpane;
 
-    public static void main(String args[]){
+public class Practice extends JFrame{
 
-    	// 플로우레이아웃 연습
-          JFrame f = new JFrame("FlowLayoutTest");
+//    public static void main(String args[]){
+//    	// 플로우레이아웃 연습
+//          JFrame f = new JFrame("FlowLayoutTest");
+//          f.setBounds(100,100,200,500);
+//          //왼쪽 정렬의 FlowLayout생성
+//          f.setLayout(new FlowLayout(FlowLayout.LEFT));
+//
+//          f.add(new JButton("첫번째"));
+//          f.add(new JButton("두번째"));
+//          f.add(new JButton("세번째"));
+//          f.add(new JButton("네번째"));
+//          f.add(new JButton("다섯번째"));
+//          f.setVisible(true);
+//}
 
-          f.setBounds(100,100,200,500);
-
-          //왼쪽 정렬의 FlowLayout생성
-
-          f.setLayout(new FlowLayout(FlowLayout.LEFT));
-
-         
-
-          f.add(new JButton("첫번째"));
-
-          f.add(new JButton("두번째"));
-
-          f.add(new JButton("세번째"));
-
-          f.add(new JButton("네번째"));
-
-          f.add(new JButton("다섯번째"));
-
-          f.setVisible(true);
-
-    }
-
+	public Practice() {
+		
+		add(new PayInfoScrollpane());
+		setBounds(100, 100, 500, 600);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
+	public static void main(String[] args) {
+		new Practice();
+	}
 }
