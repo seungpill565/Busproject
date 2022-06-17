@@ -25,7 +25,7 @@ public class MPcontentsPanel extends JPanel {
 		add(MPreservation);
 		add(MPleave);
 		
-		setBounds(270, 110, 580, 460);
+		setBounds(230, 110, 510, 460);
 		setVisible(true);
 	}
 }

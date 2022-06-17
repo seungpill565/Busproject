@@ -18,13 +18,15 @@ public class MPleavePanel extends JPanel {
 		setLayout(null);
 		
 		//탈퇴하시겠? 라벨 설정
-		MPleaveConfirmLb.setBounds(30, 30, 500, 60);
+		MPleaveConfirmLb.setBounds(30, 30, 400, 60);
 		MPleaveConfirmLb.setOpaque(true);
 		MPleaveConfirmLb.setBackground(Color.pink);
 		
 		//예 버튼 설정
-		MPleaveYesBtn.setBounds(450, 150, 90, 38);
+		MPleaveYesBtn.setBounds(380, 100, 90, 38);
 		MPleaveYesBtn.setBorderPainted(false);
+		
+
 		
 		
 		add(MPleaveConfirmLb);

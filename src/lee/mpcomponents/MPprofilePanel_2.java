@@ -48,13 +48,13 @@ public class MPprofilePanel_2 extends JPanel {
 		
 		//인풋패널 설정
 		MPlabelPanel.setLayout(new GridLayout());
-		MPlabelPanel.setBounds(125, 90, 350, 170);
+		MPlabelPanel.setBounds(85, 90, 350, 170);
 		MPlabelPanel.setBackground(Color.pink);
 		MPlabelPanel.setLayout(gbl);
 		
 		
 		
-		//그백레 설정 + 컴포넌트 넣기
+		//그백레 설정 + 컴포넌트 넣기 
 		gblc.weightx = 1.0;
 		gblc.weighty = 1.0;
 			
@@ -68,11 +68,11 @@ public class MPprofilePanel_2 extends JPanel {
 	
 		
 		//수정완료버튼 설정
-		MPcompleteBtn.setBounds(330, 350, 90, 38);
+		MPcompleteBtn.setBounds(280, 300, 90, 38);
 		MPcompleteBtn.setBorderPainted(false);
 		
 		//뒤로가기 버튼 설정
-		MPbackBtn.setBounds(180, 350, 90, 38 );
+		MPbackBtn.setBounds(150, 300, 90, 38 );
 		MPbackBtn.setBorderPainted(false);
 		
 		
@@ -91,7 +91,7 @@ public class MPprofilePanel_2 extends JPanel {
 		gblc.gridwidth = gridwidth;
 		gblc.gridheight = gridheight;
 		gbl.setConstraints(c,  gblc);
-		gblc.insets = new Insets(10, 10, 10, 10);
+		gblc.insets = new Insets(15, 10, 10, 10);
 		MPlabelPanel.add(c);
 	}
 	

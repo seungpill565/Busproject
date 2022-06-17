@@ -24,11 +24,11 @@ public class MPprofilePanel_1 extends JPanel {
 		MPprofileLb.setOpaque(true);//나중에 삭제 
 		MPprofileLb.setBackground(Color.PINK);
 		MPprofileLb.setFont(new Font("궁서체", Font.PLAIN, 20)); //나중에 통일
-		MPprofileLb.setBounds(30, 30, 520, 360);
+		MPprofileLb.setBounds(65, 30, 390, 350);
 		
 		
 		//수정하기 버튼 설정
-		MPeditBtn.setBounds(480, 415, 90, 38);
+		MPeditBtn.setBounds(400, 400, 90, 38);
 		MPeditBtn.setBorderPainted(false);
 		
 		
