@@ -12,18 +12,17 @@ public class MPcontentsPanel extends JPanel {
 	MPleavePanel MPleave = new MPleavePanel();
 	MPreservationPanel MPreservation = new MPreservationPanel();
 	
+	//카레
+	CardLayout MPcontentsCard = new CardLayout();
 	
 	public MPcontentsPanel() {
 
 		
-		CardLayout MPcontentsCard = new CardLayout();
 		setLayout(MPcontentsCard);	
 		
-		
-		
-		add(MPprofile);
-		add(MPreservation);
-		add(MPleave);
+		add("내정보", MPprofile);
+		add("예매내역", MPreservation);
+		add("계정탈퇴", MPleave);
 		
 		setBounds(230, 110, 510, 460);
 		setVisible(true);

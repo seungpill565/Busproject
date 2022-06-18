@@ -26,7 +26,6 @@ public class MPleavePanel extends JPanel {
 		MPleaveYesBtn.setBounds(380, 100, 90, 38);
 		MPleaveYesBtn.setBorderPainted(false);
 		
-
 		
 		
 		add(MPleaveConfirmLb);
