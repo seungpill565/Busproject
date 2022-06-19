@@ -14,11 +14,13 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 public class Login_Mainframe extends JFrame{
 	
 	JPanel title = new Mainpenal();
 	JPanel allIdLabel = new All_Panel();
+	JPanel image = new Login_ImgPanel();
 	JPanel jp = new JPanel();
 	
 	public Login_Mainframe() {
@@ -30,15 +32,23 @@ public class Login_Mainframe extends JFrame{
 		setLayout(new BorderLayout());
 		add(title, BorderLayout.NORTH);
 		add(jp, BorderLayout.SOUTH);
-		
-		setBounds(500, 200, 800, 500);
+		add(image,BorderLayout.CENTER);
+		setBounds(500, 200, 750, 500);
 		setResizable(false);  
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
 	
 	public static void main(String[] args) {
-		new Login_Mainframe();
-	}
+			  try {
+
+			  JFrame.setDefaultLookAndFeelDecorated(true);
+
+			  }  catch (Exception e) { }
+
+			  new Login_Mainframe();
+
+			}
+	
 
 }

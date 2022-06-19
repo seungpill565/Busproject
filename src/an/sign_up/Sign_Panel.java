@@ -84,8 +84,9 @@ public class Sign_Panel extends JPanel{
 					pstmt.setString(3, pass);
 					pstmt.setString(4, name);
 					pstmt.setString(5, pntext.getText());
-
+	
 					pstmt.executeUpdate();
+					conn.commit();
 					JOptionPane.showMessageDialog(null, "회원 가입 완료!", "회원가입", 1);
 					
 				} catch (SQLException err) {
