@@ -54,7 +54,8 @@ public class All_Panel extends JPanel{
 				String pass = itext.getText();
 				
 			
-			String sql = String.format("SELECT su_password FROM sign_up WHERE user_id = '%s' AND su_password ='%s'",
+			String sql = String.format("SELECT su_password FROM sign_up WHERE user_id = '%s'"
+					+ " AND su_password ='%s'",
 					id, pass);	
 			try(Connection conn = OjdbcConnection.getConnection();
 					PreparedStatement pstmt = conn.prepareStatement(sql);) {
