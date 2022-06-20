@@ -1,6 +1,7 @@
 package lee.mpcomponents;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +28,11 @@ public class MPnavPanel extends JPanel {
 		MPprofileBtn.setBorderPainted(false);
 		MPreservationBtn.setBorderPainted(false);
 		MPleaveBtn.setBorderPainted(false);
+		
+		
+		MPprofileBtn.setFont(new Font("°íµñ", Font.BOLD, 14));
+		MPreservationBtn.setFont(new Font("°íµñ", Font.BOLD, 14));
+		MPleaveBtn.setFont(new Font("°íµñ", Font.BOLD, 14));
 		
 		add(MPprofileBtn);
 		add(MPreservationBtn);

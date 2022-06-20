@@ -8,7 +8,6 @@ public class MPcompleteBtnEvent extends MPmainFrameEvent {
 
 	public MPcompleteBtnEvent(MPmainFrame main) {
 		super(main);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

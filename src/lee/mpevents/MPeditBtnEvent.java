@@ -13,7 +13,6 @@ public class MPeditBtnEvent extends MPmainFrameEvent {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		main.editBtnCtrl();
-		System.out.println(e.getSource());
 	}
 
 }

@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 
 import lee.mpevents.MPBackBtnEvent;
 import lee.mpevents.MPcompleteBtnEvent;
@@ -23,6 +24,8 @@ public class MPmainFrame extends JFrame {
 	MPnavPanel MPnav = new MPnavPanel();
 	MPcontentsPanel MPcontents = new MPcontentsPanel();
 	
+
+	
 	//카테고리명 라벨 텍스트 바꾸는 메서드
 	public void setCategoryLabelText(String title) {
 		MPcategoryLb.setText(title);	
@@ -36,6 +39,7 @@ public class MPmainFrame extends JFrame {
 		if(btn.getText().equals("내 정보 조회/수정")) {
 			setCategoryLabelText("내 정보 조회");
 			MPcontents.MPcontentsCard.show(MPcontents, "내정보");
+			MPcontents.MPprofile.showMPprofile_1();
 		} else if(btn.getText().equals("예매 확인")) {
 			setCategoryLabelText(btn.getText());
 			MPcontents.MPcontentsCard.show(MPcontents, "예매내역");
@@ -50,33 +54,36 @@ public class MPmainFrame extends JFrame {
 	public void editBtnCtrl () {		
 		setCategoryLabelText("내 정보 수정");
 		MPcontents.MPprofile.showMPprofile_2(); 
+		MPcontents.MPprofile.MPprofile_2.setTfEmpty();
 	}
 	
 	//프로필수정하기 화면에서 뒤로가기 버튼 눌렀을 때 (수정값 저장하면 안 됨 ★)
 	public void backBtnCtrl () {
 		setCategoryLabelText("내 정보 조회");
+		MPcontents.MPprofile.MPprofile_2.setTfEmpty();
 		MPcontents.MPprofile.showMPprofile_1();
 	}
+	
 	
 	//프로필수정하기 화면에서 수정 완료 버튼 눌렀을 때 (수정값 저장해야됨 ★)
 	public void completeBtnCtrl() {
 		setCategoryLabelText("내 정보 조회");
-		MPcontents.MPprofile.showMPprofile_1();	
-		//여기에 수정한 정보 저장하는 기능 넣기★ 
+			
+		//여기에 수정한 정보 저장하는 기능 넣기 ★★★★★★★★★★★★★
+
+		MPcontents.MPprofile.MPprofile_2.setTfEmpty();
+		MPcontents.MPprofile.showMPprofile_1();		
+
 	} //내정보 보기 화면에는 항상 최신 값만 뜨도록 해놔야겠네 
 
-	
- 
-	
-	public void reservationCancelBtnCtrl () {
-		 setVisible(false);//나중에 삭제 
-	}
+
 	
 //____________________________________________________________________________________________________________________________________	
 	
 	
 	
 	public MPmainFrame() {
+				
 		
 		setLayout(null);
 
@@ -89,8 +96,8 @@ public class MPmainFrame extends JFrame {
 		
 		MPhomeBtn.setBounds(10, 10, 50, 50);
 		MPhomeBtn.setBorderPainted(false);
-		MPhomeBtn.setBackground(Color.cyan);
-			
+		
+		
 		
 		/*
 		//홈버튼 누르면 홈화면으로 가기 
@@ -121,7 +128,7 @@ public class MPmainFrame extends JFrame {
 		
 		
 		//예약취소버튼 액션
-		MPcontents.MPreservation.MPreservationcancleBtn.addActionListener(new MPreservationCancleBtnEvent(this));
+		MPcontents.MPreservation.MPreservation_2.MPreservationcancleBtn.addActionListener(new MPreservationCancleBtnEvent(this));
 		
 		
 		

@@ -11,7 +11,9 @@ import javax.swing.JPanel;
 
 public class MPprofilePanel_1 extends JPanel {
 
-	JLabel MPprofileLb = new JLabel("내 정보들 좌라락 (디비에서 긁어오기) "); //구구단 HTML로 줄바꿈했던 거 참고
+	String MPprofile = "<html><pre style=\"font-family:고딕;\">아이디    : banana123<br><br>이름       : 바나나<br><br>연락처    : 010-1234-1234</pre><html/>";	
+	
+	JLabel MPprofileLb = new JLabel(MPprofile); //구구단 HTML로 줄바꿈했던 거 참고
 	
 	JButton MPeditBtn = new JButton("수정하기");
 	
@@ -19,15 +21,14 @@ public class MPprofilePanel_1 extends JPanel {
 		
 		setLayout(null);
 		 
-		
-		
+
 		
 		//프로필라벨 설정
 		MPprofileLb.setOpaque(true);//나중에 삭제 
-		MPprofileLb.setBackground(Color.PINK);
-		MPprofileLb.setFont(new Font("궁서체", Font.PLAIN, 20)); //나중에 통일
-		MPprofileLb.setBounds(65, 30, 390, 350);
-		
+		//MPprofileLb.setBackground(Color.PINK);
+		MPprofileLb.setFont(new Font("고딕", Font.BOLD, 18)); 
+		MPprofileLb.setBounds(50, 50, 390, 200);
+		MPprofileLb.setVerticalAlignment(JLabel.TOP);
 		
 		//수정하기 버튼 설정
 		MPeditBtn.setBounds(400, 400, 90, 38);
