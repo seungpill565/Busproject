@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import an.OjdbcConnection;
+import an.admin.Admin_MainFrame;
 import an.find.Find_MainFrame;
 import an.sign_up.Combo;
 import an.sign_up.SignupMain_Frame;
@@ -75,7 +76,7 @@ public class All_Panel extends JPanel{
 						if(check == "손님") {
 							new Info_MainFrame();
 						}else {
-						JOptionPane.showMessageDialog(null, "Login Success", "로그인 성공", 1);
+						new Admin_MainFrame();
 						}
 					
 					} else
