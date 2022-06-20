@@ -1,5 +1,7 @@
 package park;
 
+import park.frame.PayInfo;
+
 public class TestMain { // 모든 프레임 다 돌릴 메인 테스트용
 	
 	public static void main(String[] args) {

@@ -1,8 +1,9 @@
-package park;
+package park.frame;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
+import park.ReservationInfo;
 import park.button.PayButton;
 import park.panel.HomeBeforeBtnPanel;
 import park.panel.SelectSeatNumPanel;
@@ -24,12 +25,12 @@ public class PayInfo extends JFrame{
 	public PayInfo(ReservationInfo user) {
 		super("결제 화면");
 		this.user = user;
-		seatPanel = new SelectSeatNumPanel(user);
+		seatPanel = new SelectSeatNumPanel(user); // 패널 초기화 해주면서 user 정보 계속 유지해야해서 매개변수로 넘겨준다
 		
 		//panel1.setBounds(10, 10, 80, 80); // 판넬(플로우레이아웃) 쓸지 버튼 위치 따로 정해줄지 생각해야됨
 		//scroll.setBounds(10, 100 , 450, 100);
 		
-		add(panel1, "South"); // 홈버튼, 이전버튼 판넬
+		add(panel1); // 홈버튼, 이전버튼 판넬
 		//add(scroll, "Center"); // 좌석정보 출력하는 테이블
 		add(seatPanel);
 		add(payBtn);
@@ -43,7 +44,7 @@ public class PayInfo extends JFrame{
 	
 
 	public static void main(String[] args) {
-		new PayInfo(new ReservationInfo());
+		new PayInfo(user);
 	}
 
 }
