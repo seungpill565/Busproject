@@ -1,5 +1,8 @@
 package park;
 
+import java.util.LinkedHashMap;
+import java.util.Set;
+
 import javax.swing.JFrame;
 
 import park.scrollpane.PayInfoScrollpane;
@@ -30,6 +33,18 @@ public class Practice extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-		new Practice();
+		LinkedHashMap<String,String> map = new LinkedHashMap<>();
+		
+		map.put("21", "성인");
+		map.put("17", "청소년");
+		map.put("18", "청소년");
+		map.put("11", "어린이");
+		map.put("5", "성인");
+		
+		System.out.println(map.size());
+		Set<String> key = map.keySet();
+		for(String keys : key) {
+			System.out.println(keys);
+		}
 	}
 }

@@ -3,6 +3,7 @@ package park.panel;
 import java.awt.FlowLayout;
 import java.awt.LayoutManager;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import park.button.BeforeButton;
@@ -18,5 +19,8 @@ public class HomeBeforeBtnPanel extends JPanel{ // 홈버튼, 이전버튼 일렬로 나타�
 		setLayout(manager);
 		add(homeBtn);
 		add(befBtn);
+			
+	
+		setBounds(10, 10, 500, 60);
 	}
 }

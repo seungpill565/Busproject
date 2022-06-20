@@ -49,3 +49,4 @@
 
 -----------------------------------------------------------------
 자바 관련 참고할 블로그 - https://m.blog.naver.com/javaking75/140189054193
+팝업창 띄우는거 - https://shin-01.tistory.com/entry/JAVA-JOptionPane-%EC%9E%90%EC%A3%BC%EC%93%B0%EB%8A%94-%EB%A9%94%EC%86%8C%EB%93%9C-%EC%82%AC%EC%9A%A9%EB%B2%95
