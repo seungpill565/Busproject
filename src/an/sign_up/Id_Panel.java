@@ -26,6 +26,7 @@ public class Id_Panel extends JPanel{
 public Id_Panel(JTextField idtext) {
 	this.idtext = idtext;
 	setLayout(new FlowLayout(FlowLayout.RIGHT));
+	
 	add(id);add(idtext);
 	
 	

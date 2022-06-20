@@ -107,7 +107,6 @@ public class All_Panel extends JPanel{
 			}
 		});
 		setBackground(new Color(0x77757B));
-		//#77757B
 		add(idpanel);add(idPanel2);
 		add(pwdPanel);add(pwdPanel2);add(combo);
 		add(buttonPanel); 
