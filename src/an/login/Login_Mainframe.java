@@ -26,6 +26,7 @@ public class Login_Mainframe extends JFrame{
 	
 	public Login_Mainframe() {
 		setTitle("버스 예약시스템");
+		setLayout(new BorderLayout(0,0));
 
 		jp.setLayout(new FlowLayout());
 		jp.add(allIdLabel);

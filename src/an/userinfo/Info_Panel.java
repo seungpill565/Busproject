@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Info_Panel extends JPanel{
-	JButton user = new Info_JButton("UserHome");
 	JButton Reservation = new Info_JButton("예약");
 	JButton myinfo 		= new Info_JButton("내정보");
 	JButton logout 		= new Info_JButton("로그 아웃");
@@ -22,6 +21,6 @@ public class Info_Panel extends JPanel{
 		this.myinfo = myinfo;
 		this.logout = logout;
 		setLayout(new GridLayout(1,0));
-		add(user);add(Reservation);add(myinfo);add(logout);
+		add(Reservation);add(myinfo);add(logout);
 	}
 }

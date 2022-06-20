@@ -14,9 +14,11 @@ public class Info_MainFrame extends JFrame{
 	JButton Reservation = new Info_JButton("예약");
 	JButton myinfo 		= new Info_JButton("내정보");
 	JButton logout 		= new Info_JButton("로그 아웃");
+	JPanel card 		= new Info_CardPanel();
 	JPanel panel = new Info_Panel(Reservation,myinfo,logout);
 	public Info_MainFrame() {
 		setTitle("버스예약");
+		add(card,BorderLayout.CENTER);
 		add(panel,BorderLayout.NORTH);
 		/////////////////////////////////////////
 		// 예약 이벤트
@@ -42,8 +44,6 @@ public class Info_MainFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new Login_Mainframe();
-				
 			}
 		});
 		

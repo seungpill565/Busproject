@@ -1,6 +1,7 @@
 package an.sign_up;
 
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -21,7 +22,7 @@ public class ALL_panel extends JPanel{
 	public ALL_panel(JButton out) {
 		
 		this.out= out;
-		setLayout(new FlowLayout());
+		setLayout(new GridLayout(1,0));
 		add(signPanel);//add(radioPanel);
 		add(new new_panel());
 		

@@ -87,7 +87,7 @@ public class PassFind_Frame extends JFrame{
 		});
 		
 		//////////////////////////////////////////////////////////////////////////
-		setBounds(610, 200, 400, 300);
+		setBounds(650, 350, 400, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);  
 		setVisible(true);

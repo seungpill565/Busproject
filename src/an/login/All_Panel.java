@@ -56,7 +56,7 @@ public class All_Panel extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String id = ptext.getText();
+				String id = ptext.getText();// 아이디 -- 이거 끌고 다니면 될거같은데..
 				String pass = itext.getText();
 				String check = combo.getSelectedItem().toString();
 				

@@ -1,5 +1,6 @@
 package an.find;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JLabel;
@@ -11,6 +12,7 @@ public class Pass_Mainpanel extends JPanel{
 	public Pass_Mainpanel() {
 		
 		setLayout(new FlowLayout());
+		setForeground(new Color(0X000000));
 		
 		add(findLabel);
 		

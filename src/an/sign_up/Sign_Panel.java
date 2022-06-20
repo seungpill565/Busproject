@@ -1,5 +1,6 @@
 package an.sign_up;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,6 +36,7 @@ public class Sign_Panel extends JPanel{
 	JPanel pnPanel = new Pn_Panel(pntext);
 	
 	JComboBox<String> combo = new Combo();
+	
 	
 	//JRadioButton client = new RadioButton("손님");
 	//JRadioButton manager = new RadioButton("관리자");
@@ -85,18 +87,15 @@ public class Sign_Panel extends JPanel{
 					pstmt.setString(4, pass);
 					pstmt.setString(5, pntext.getText());
 					pstmt.executeUpdate();
-					
 					JOptionPane.showMessageDialog(null, "회원 가입 완료!", "회원가입", 1);
-					conn.commit();
 					
-				} catch (SQLException err) {
-					if (err.getMessage().contains("PRIMARY")) {
-						//중복된 값 = PRIMARY 라서 거를수있음
+					
+				} catch (SQLException e1) {
+					if (e1.getMessage().contains("PRIMARY")) {
 						JOptionPane.showMessageDialog(null, "아이디 중복!", "아이디 중복 오류", 1);
-					} else {
+					} else
 						JOptionPane.showMessageDialog(null, "정보를 제대로 입력해주세요!", "오류", 1);
-					}
-				} 
+				} // try ,catch
 			}
 		}
 	});

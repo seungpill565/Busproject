@@ -1,5 +1,6 @@
 package an.find;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JLabel;
@@ -10,7 +11,7 @@ public class IdFind_Panel extends JPanel{
 	public IdFind_Panel() {
 		
 		setLayout(new FlowLayout());
-		
+		setForeground(new Color(0X000000));
 		add(findLabel);
 		
 	}
