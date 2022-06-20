@@ -8,7 +8,7 @@ public class HomeButton extends JButton {
 	
 	public HomeButton() {
 		super("Home");
-		setBackground(Color.WHITE);
 		setBorderPainted(false);
+		setBackground(Color.WHITE);
 	}
 }

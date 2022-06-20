@@ -1,6 +1,5 @@
 package hong.selectroute;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,16 +9,24 @@ import javax.swing.JPanel;
 
 import hong.selectroute.event.HomeButtonEvent;
 import hong.selectroute.event.MonthComboBoxEvent;
+import hong.selectroute.event.SelectArriveButtonEvent;
+import hong.selectroute.event.SelectStartingButtonEvent;
+import hong.selectroute.event.ShowArriveTerminalEvent;
+import hong.selectroute.event.ShowStartingTerminalEvent;
 
 public class SelectRouteMainPanel extends JPanel {
 	
 	GridBagLayout gbl = new GridBagLayout(); 
 	GridBagConstraints gbc = new GridBagConstraints(); 
 	HomeButton homeButton = new HomeButton();				// 홈버튼 생성
-	ArrivalButton arvButton = new ArrivalButton();			// 출발버튼 생성
-	DestinationButton desButton = new DestinationButton(); 	// 도착버튼 생성
+	StartingPointButton spButton = new StartingPointButton();			// 출발버튼 생성
+	ArriveButton arvButton = new ArriveButton(); 	// 도착버튼 생성
 	MonthComboBox monBox = new MonthComboBox();				// 달 선택 콤보박스
 	DayComboBox dayBox = new DayComboBox();					// 일 선택 콤보박스
+	SelectTerminalMainFrame stmFrame;
+	SelectStartingButtonEvent ssbe = new SelectStartingButtonEvent(this); // 출발지 선택 버튼 이벤트
+	SelectArriveButtonEvent sabe = new SelectArriveButtonEvent(this); // 도착지 선택 버튼 이벤트
+	
 	
 	// 달에 따른 day들을 일 선택 콤보박스에 추가하는 메서드
 	public void addDays(int month) {
@@ -41,6 +48,31 @@ public class SelectRouteMainPanel extends JPanel {
 		monBox.setMonth(month);
 	}
 	
+	public void departFrom(String starting) {
+		spButton.setStarting(starting);
+	}
+	
+	public void arriveAt(String destination) {
+		arvButton.setDestination(destination);
+	}
+	
+	public void showStartingTerminals() {
+		stmFrame = new SelectTerminalMainFrame();
+		for (JButton btn : stmFrame.getAllBtns()) {
+			btn.addActionListener(ssbe);
+		}
+	}
+	
+	public void showArriveTerminals() {
+		stmFrame = new SelectTerminalMainFrame();
+		for (JButton btn : stmFrame.getAllBtns()) {
+			btn.addActionListener(sabe);
+		}
+	}
+	
+	public void flameClose() {
+		stmFrame.dispose();
+	}
 	
 	public SelectRouteMainPanel() {
 		// layout을 GridBagLayout으로 설정
@@ -71,16 +103,20 @@ public class SelectRouteMainPanel extends JPanel {
 		gbInsert(new BackGroundLabel(), 0, 2, 1, 1);
 		gbInsert(new BackGroundLabel(), 6, 2, 1, 1);
 		
-        // 3열 출발지
+        // 3열 출발지버튼
 		gbc.weightx = 4.0;
-		gbInsert(arvButton, 1, 2, 2, 1);
+		ShowStartingTerminalEvent sste = new ShowStartingTerminalEvent(this);
+		spButton.addActionListener(sste);
+		gbInsert(spButton, 1, 2, 2, 1);
 		
 		gbc.weightx = 1.0;
 		gbInsert(new BackGroundLabel(), 3, 2, 1, 1);
 		
-		// 3열 도착지
+		// 3열 도착지버튼
 		gbc.weightx = 4.0;
-		gbInsert(desButton, 4, 2, 2, 1);
+		ShowArriveTerminalEvent sate = new ShowArriveTerminalEvent(this);
+		arvButton.addActionListener(sate);
+		gbInsert(arvButton, 4, 2, 2, 1);
 		
 		// 4열 시작
 		gbc.weighty = 0.03;
