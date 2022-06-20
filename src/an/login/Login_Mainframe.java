@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -17,7 +19,6 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 public class Login_Mainframe extends JFrame{
-	
 	JPanel title = new Mainpenal();
 	JPanel allIdLabel = new All_Panel();
 	JPanel image = new Login_ImgPanel();
@@ -25,7 +26,7 @@ public class Login_Mainframe extends JFrame{
 	
 	public Login_Mainframe() {
 		setTitle("버스 예약시스템");
-		
+
 		jp.setLayout(new FlowLayout());
 		jp.add(allIdLabel);
 		
@@ -33,7 +34,10 @@ public class Login_Mainframe extends JFrame{
 		add(title, BorderLayout.NORTH);
 		add(jp, BorderLayout.SOUTH);
 		add(image,BorderLayout.CENTER);
-		setBounds(500, 200, 750, 500);
+		
+		
+		
+		setBounds(500, 200, 800, 500);
 		setResizable(false);  
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);

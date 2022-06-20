@@ -48,6 +48,8 @@ public class IdFind_Frame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				String sql = String.format("SELECT user_id from sign_up where su_user_name = '%s' and su_phonenum = '%s'",
 						nameText.getText() ,pnText.getText());
+				System.out.println(nameText.getText());
+				System.out.println(pnText.getText());
 				
 				try(Connection conn = OjdbcConnection.getConnection();
 						PreparedStatement pstmt = conn.prepareStatement(sql);) {

@@ -1,5 +1,6 @@
 package an.login;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JLabel;
@@ -10,6 +11,7 @@ public class PwdPanel extends JPanel{
 	
 	public PwdPanel() {
 		new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		setBackground(new Color(0x77757B));
 		add(pwl);
 	}
 

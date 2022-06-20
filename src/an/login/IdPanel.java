@@ -1,5 +1,6 @@
 package an.login;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
@@ -11,6 +12,7 @@ public class IdPanel extends JPanel{
 	
 	public IdPanel() {
 		new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		setBackground(new Color(0x77757B));
 		add(id);
 		
 	}
