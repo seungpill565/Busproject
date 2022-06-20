@@ -1,26 +1,60 @@
 package lee.mpcomponents;
 
-import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import lee.OjdbcConnection;
+import lee.mpmodel.MPuserinfoModel;
+
 public class MPprofilePanel_1 extends JPanel {
 
-	String MPprofile = "<html><pre style=\"font-family:고딕;\">아이디    : banana123<br><br>이름       : 바나나<br><br>연락처    : 010-1234-1234</pre><html/>";	
+	String user_id = "abc123"; //얘는 홈 프레임에서 받았다고 치고 ★ 
 	
-	JLabel MPprofileLb = new JLabel(MPprofile); //구구단 HTML로 줄바꿈했던 거 참고
+	
+	/*
+	String MPprofile = 
+			"<html><pre style=\"font-family:고딕;\">아이디    : " + user_id 
+			+ "<br><br>이름       : " + user_name + 
+			"<br><br>연락처    : " + phoneNum + 
+			"</pre><html/>";	
+	 */
+		
+	//JLabel MPprofileLb = new JLabel(MPprofile); 
+	
+	String MPprofileLbStr;
+	
+	JLabel MPprofileLb = new JLabel(MPprofileLbStr); 
 	
 	JButton MPeditBtn = new JButton("수정하기");
 	
 	public MPprofilePanel_1() {	 
-		
 		setLayout(null);
-		 
+	
+		try (
+				Connection conn = OjdbcConnection.getConnection();				
+				PreparedStatement pstmt = conn.prepareStatement("SELECT user_name, user_phonenum FROM user_info WHERE user_id = ?;");
+				ResultSet rs = pstmt.executeQuery();
+		){
+			pstmt.setString(1, user_id);
+			
+			MPprofileLbStr = new MPuserinfoModel(rs).toString();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	
+		
 
 		
 		//프로필라벨 설정
