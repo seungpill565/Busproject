@@ -7,14 +7,17 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-public class BeforeButton extends JButton{ // 이전 화면으로 가는 버튼
+import park.ReservationInfo;
 
-	public BeforeButton() {
-	super("Before");
+public class BeforePayButton extends JButton{
+	
+	public BeforePayButton(ReservationInfo user) {
+		super("Before");
 		
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("before버튼 클릭"); // 테스트용
+				
 			}
 		});
 		
@@ -23,5 +26,4 @@ public class BeforeButton extends JButton{ // 이전 화면으로 가는 버튼
 		setForeground(new Color(0x000000));
 		setBackground(new Color(0xffff00));		
 	}
-	
 }

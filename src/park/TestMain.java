@@ -1,6 +1,6 @@
 package park;
 
-import park.frame.PayInfo;
+import park.frame.Pay;
 
 public class TestMain { // 모든 프레임 다 돌릴 메인 테스트용
 	
@@ -13,7 +13,7 @@ public class TestMain { // 모든 프레임 다 돌릴 메인 테스트용
 //		test1.setSeat("21");
 //		test1.setTime("1750");
 		
-		PayInfo payinfo = new PayInfo(test1);
+		Pay payinfo = new Pay(test1);
 		
 		
 	}
