@@ -17,10 +17,12 @@ public class Admin_MainFrame extends JFrame{
 	
 	JPanel main = new Admin_MainPanel(userModify, routemodify, out);
 	JPanel imagepanel = new Admin_MainImagePanel();
+	JPanel titlePanel = new Admin_TitlePanel(); 
 	public Admin_MainFrame() {
 		setTitle("관리자 페이지");
 		
 		add(main,BorderLayout.SOUTH);
+		add(titlePanel,BorderLayout.NORTH);
 		add(imagepanel,BorderLayout.CENTER);
 		//////////////////////////////////////////////////////////////////
 		

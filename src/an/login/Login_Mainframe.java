@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 public class Login_Mainframe extends JFrame{
-	JPanel title = new Mainpenal();
+	JPanel title = new Login_TitlePanal();
 	JPanel allIdLabel = new All_Panel();
 	JPanel image = new Login_ImgPanel();
 	JPanel jp = new JPanel();
