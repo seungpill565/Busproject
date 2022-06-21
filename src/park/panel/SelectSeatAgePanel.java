@@ -13,7 +13,7 @@ public class SelectSeatAgePanel extends JPanel {
 	public SelectSeatAgePanel(ReservationInfo user) {
 		LayoutManager manager = new FlowLayout(FlowLayout.LEFT);
 		
-		for(int i=0;i<user.seatName.size();i++) {// 좌석수만큼 콤보박스를 생성한다
+		for(int i=0;i<user.getSeatName().size();i++) {// 좌석수만큼 콤보박스를 생성한다
 			add(new SelectSeatAgeBox(user,i));
 			
 		}

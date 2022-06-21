@@ -8,7 +8,7 @@ public class TotalCharge extends JLabel{
 	
 	
 	public TotalCharge(ReservationInfo user) {
-		super("결제 금액 : "+user.price);
+		super("결제 금액 : "+user.getPrice());
 	}
 
 }

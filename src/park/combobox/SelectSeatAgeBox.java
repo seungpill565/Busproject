@@ -25,7 +25,7 @@ public class SelectSeatAgeBox extends JComboBox<String>{ // 연령별 좌석개수를 고
 		this.user = user;
 		this.seatCnt = seatCnt;
 		
-		keyArr = new String[user.seatName.size()]; // 좌석수만큼 배열 길이 설정
+		keyArr = new String[user.getSeatName().size()]; // 좌석수만큼 배열 길이 설정
 		selectKey();
 		
 		addItem(keyArr[seatCnt]+"번 좌석"); // i번째 키 값에 해당하는 좌석 번호를 가장 위에 표시
@@ -39,7 +39,7 @@ public class SelectSeatAgeBox extends JComboBox<String>{ // 연령별 좌석개수를 고
 	
 	void selectKey() {
 		int i=0;
-		key = user.seatName.keySet(); // 좌석 키 값들만 순서대로 추출
+		key = user.getSeatName().keySet(); // 좌석 키 값들만 순서대로 추출
 		for(String keys : key) {// 키 값들의 순서가 필요하기 때문에 순서대로 추출하고
 			keyArr[i++] = keys; // 키 값만 넣을 배열에 넣어준다
 		}
@@ -54,8 +54,8 @@ public class SelectSeatAgeBox extends JComboBox<String>{ // 연령별 좌석개수를 고
 					new JOptionPane().showMessageDialog(null, "성인, 청소년, 어린이 중 선택하세요.","오류",JOptionPane.ERROR_MESSAGE); // 성인 어린이 청소년 제외 선택하면 오류창 뜨게
 				}else {
 					discount(age);
-					user.seatName.put(keyArr[seatCnt], discountRate); // 해당 좌석번호 자리에 할인율 넣는다
-					System.out.println(user.seatName.get(keyArr[seatCnt])+" 저장 완료 " ); // 해쉬맵에 저장되는지 확인
+					user.getSeatName().put(keyArr[seatCnt], discountRate); // 해당 좌석번호 자리에 할인율 넣는다
+					System.out.println(user.getSeatName().get(keyArr[seatCnt])+" 저장 완료 " ); // 해쉬맵에 저장되는지 확인
 				}
 			}
 		});
@@ -64,9 +64,13 @@ public class SelectSeatAgeBox extends JComboBox<String>{ // 연령별 좌석개수를 고
 	void discount(String age) {
 		if(age.equals("성인")) {
 			discountRate = 1;
+			user.setAge(age);
 		}else if(age.equals("청소년")) {
 			discountRate = 0.85;
-		}else
+			user.setAge(age);
+		}else if(age.equals("어린이")){
 			discountRate = 0.7;
+			user.setAge(age);
+		}
 	}
 }

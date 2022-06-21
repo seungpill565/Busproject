@@ -33,8 +33,8 @@ public class SelectPayWayBox extends JComboBox{ // 결제 방법 선택할 콤보박스
 				if(way.equals("------")||way.equals("결제 방식")) {// 키 값을 고르거나 ---- 고르면 다시 선택하게
 					new JOptionPane().showMessageDialog(null, "결제 방식울 선택하세요.","오류",JOptionPane.ERROR_MESSAGE); 
 				}else {
-					user.payWay = (String) getSelectedItem().toString();
-					System.out.println(user.payWay);
+					user.setPayWay((String) getSelectedItem().toString()) ;
+					System.out.println(user.getPayWay());
 				}
 			}
 		});
