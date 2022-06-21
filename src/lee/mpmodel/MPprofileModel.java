@@ -3,13 +3,13 @@ package lee.mpmodel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MPuserinfoModel {
+public class MPprofileModel {
 	String user_id;
 	String user_name;
 	String user_phonenum;
 	
 
-	public MPuserinfoModel(ResultSet rs) throws SQLException {
+	public MPprofileModel(ResultSet rs) throws SQLException {
 		user_id = rs.getString("user_id");
 		user_name = rs.getString("user_name");
 		user_phonenum = rs.getString("user_phonenum");
