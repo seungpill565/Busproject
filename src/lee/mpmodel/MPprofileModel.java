@@ -15,7 +15,6 @@ public class MPprofileModel {
 		user_phonenum = rs.getString("user_phonenum");
 	}
 
-	
 	@Override
 	public String toString() {
 		return String.format(

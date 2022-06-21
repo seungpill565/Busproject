@@ -21,8 +21,6 @@ public class MPreservationlistPanel extends JPanel {
 	String reservationdetailStr;
 	
 	
-	JCheckBox MPcheckbox = new JCheckBox();
-	
 	int MPticketNum;
 	
 	
@@ -37,15 +35,9 @@ public class MPreservationlistPanel extends JPanel {
 		MPreservationdetailLb.setBounds(20, 0, 300, 150);
 		MPreservationdetailLb.setFont(new Font("°íµñ", Font.BOLD, 14));
 
-		//«n¹Ú ¼³Á¤
-		MPcheckbox.setBounds(400, 77, 18, 18);
-		//MPcheckbox.setBackground(Color.LIGHT_GRAY);
 
-		
-		
 		add(MPreservationdetailLb);		
-		add(MPcheckbox);
-		
+
 		
 		setLayout(null);
 		setOpaque(true);

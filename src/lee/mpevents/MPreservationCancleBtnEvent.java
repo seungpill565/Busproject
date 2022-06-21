@@ -12,7 +12,7 @@ public class MPreservationCancleBtnEvent extends MPmainFrameEvent {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		main.reservationCancelBtnCtrl();
+		main.reservationcancleBtnCtrl();
 	}
 
 }

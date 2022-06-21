@@ -22,13 +22,68 @@ public class MPreservationlistModel {
 	//최종 요금 구하기 위해서 연령구분, 요금
 	String br_age_group;
 	Integer  rt_charge;
-
+//-------------------------------------
+	Integer bs_id; //좌석 id
+	
+	
+	
 	
 	public Integer getBr_id() {
 		return br_id;
 	}
 	
 
+	
+	public static void delete_bs_id_row(Connection conn, int bs_id) {
+		String sql = "DELETE FROM bus_seat WHERE bs_id = ?";
+		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {	
+			pstmt.setInt(1, bs_id);
+			System.out.println("행 삭제 성공? : " + pstmt.executeUpdate());	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void delete_br_id_row(Connection conn, int br_id) {
+		String sql = "DELETE FROM bus_reservation WHERE br_id = ?";
+		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {
+			pstmt.setInt(1, br_id);
+			System.out.println("행 삭제 성공? : " + pstmt.executeUpdate());	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
+	
+	//Bus_Seat + Bus_Reservation 이너조인 해서 예매번호를 매개변수로 전달하면 bs_id(좌석id)를 리턴하는 메서드
+	public static int get_bs_id(Connection conn, int br_id) {
+		
+		String sql = "SELECT bs_id, br_id FROM bus_seat INNER JOIN bus_Reservation USING(bs_id) WHERE br_id = ?";
+				
+		int bs_id = 0;
+		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {
+			
+			pstmt.setInt(1, br_id);
+			
+			try(ResultSet rs = pstmt.executeQuery();) {
+				while(rs.next() ) {
+					bs_id = rs.getInt("bs_id");
+				}
+			}
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return bs_id;
+	}
+	
+	
+	
+	
+	
 	
 	
 	//특정 예매번호를 입력하면 해당 예매번호의 행을 반환하는 메서드
