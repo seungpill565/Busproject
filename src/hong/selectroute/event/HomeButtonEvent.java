@@ -2,11 +2,11 @@ package hong.selectroute.event;
 
 import java.awt.event.ActionEvent;
 
-import hong.selectroute.SelectRouteMainPanel;
+import hong.selectroute.SelectRouteMainFrame;
 
-public class HomeButtonEvent extends RouteMainPanelAction {
+public class HomeButtonEvent extends RouteMainFrameAction {
 	
-	public HomeButtonEvent(SelectRouteMainPanel main) {
+	public HomeButtonEvent(SelectRouteMainFrame main) {
 		super(main);
 	}
 	

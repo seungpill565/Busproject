@@ -6,16 +6,16 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
-public class HomeButton extends JButton {
+public class NextButton extends JButton {
 	
 	private LineBorder lb = new LineBorder(Color.BLACK);
-	private Dimension dimension = new Dimension(180,70);
+	private Dimension dimension = new Dimension(100,40);
 	
-	public HomeButton() {
-		super("Home");
-		setOpaque(true);
-		setBackground(Color.WHITE);
+	public NextButton() {
+		
+		super("»Æ¿Œ");
 		setBorder(lb);
 		setPreferredSize(dimension);
 	}
+
 }

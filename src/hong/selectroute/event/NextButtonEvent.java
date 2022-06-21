@@ -4,14 +4,17 @@ import java.awt.event.ActionEvent;
 
 import hong.selectroute.SelectRouteMainFrame;
 
-public class ShowArriveTerminalEvent extends RouteMainFrameAction {
+public class NextButtonEvent extends RouteMainFrameAction {
 	
-	public ShowArriveTerminalEvent(SelectRouteMainFrame main) {
+	public NextButtonEvent(SelectRouteMainFrame main) {
 		super(main);
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		main.showArriveTerminals();
+		main.thisFrameClose();
+		main.save();
+		main.showSeatFrame();
 	}
+
 }

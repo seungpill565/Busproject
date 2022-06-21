@@ -2,11 +2,13 @@ package hong.selectroute.event;
 
 import java.awt.event.ItemEvent;
 
-import hong.selectroute.SelectRouteMainPanel;
+import hong.selectroute.SelectRouteMainFrame;
 
-public class DayComboBoxEvent extends RouteMainPanelItem {
+public class DayComboBoxEvent extends RouteMainFrameItem {
 	
-	public DayComboBoxEvent(SelectRouteMainPanel main) {
+	// 날짜를 선택할 수 있는 콤보박스
+	
+	public DayComboBoxEvent(SelectRouteMainFrame main) {
 		super(main);
 	}
 	
@@ -15,8 +17,7 @@ public class DayComboBoxEvent extends RouteMainPanelItem {
 		
 		// 콤보박스가 선택되면 true
 		if(e.getStateChange() == 1) {
-			int day = (int)e.getItem();
-			main.inputDay(day);
+			main.setDay((int)e.getItem());
 		}
 		
 	}

@@ -1,6 +1,7 @@
 package hong.selectroute;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +21,6 @@ public class SelectTerminalMainFrame extends JFrame {
 	ResultSet rs;
 	final private static String SQL = "SELECT rt_depart_from, rt_arrive_at FROM bus_route";
 	ArrayList<TerminalButton> terminalButtons = new ArrayList();
-	//SelectTerminalButtonEvent stbe = new SelectTerminalButtonEvent();
 	
 	public ArrayList<TerminalButton> getAllBtns() {
 		return terminalButtons;
@@ -30,7 +30,8 @@ public class SelectTerminalMainFrame extends JFrame {
 		
 		setTitle("터미널 선택");
 		
-		setLayout(new GridLayout(3, 4, 10, 10));
+		setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+		
 		
 		getTerminals();
 		
@@ -38,7 +39,6 @@ public class SelectTerminalMainFrame extends JFrame {
 			TerminalButton btn = new TerminalButton(terminal);
 			add(btn);
 			terminalButtons.add(btn);
-			//btn.addActionListener(stbe);
 		}
 		
 		setBounds(300, 100, 500, 400);
@@ -67,5 +67,7 @@ public class SelectTerminalMainFrame extends JFrame {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 }

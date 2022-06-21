@@ -4,9 +4,9 @@ import java.awt.event.ActionEvent;
 
 import hong.selectroute.SelectRouteMainFrame;
 
-public class SelectStartingButtonEvent extends RouteMainFrameAction {
+public class SelectArrivalButtonEvent extends RouteMainFrameAction {
 	
-	public SelectStartingButtonEvent(SelectRouteMainFrame main) {
+	public SelectArrivalButtonEvent(SelectRouteMainFrame main) {
 		super(main);
 	}
 	
@@ -15,8 +15,8 @@ public class SelectStartingButtonEvent extends RouteMainFrameAction {
 		main.stmFlameClose();
 		
 		String command = e.getActionCommand();
-		main.departFrom(command);
-		main.setStartingPoint(command);
+		main.arriveAt(command);
+		main.setArrivalPoint(command);
 	}
 
 }

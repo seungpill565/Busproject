@@ -2,12 +2,11 @@ package hong.selectroute.event;
 
 import java.awt.event.ActionEvent;
 
-import hong.selectroute.SelectRouteMainPanel;
-import hong.selectroute.SelectTerminalMainFrame;
+import hong.selectroute.SelectRouteMainFrame;
 
-public class ShowStartingTerminalEvent extends RouteMainPanelAction {
+public class ShowStartingTerminalEvent extends RouteMainFrameAction {
 	
-	public ShowStartingTerminalEvent(SelectRouteMainPanel main) {
+	public ShowStartingTerminalEvent(SelectRouteMainFrame main) {
 		super(main);
 	}
 

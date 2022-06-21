@@ -1,18 +1,20 @@
 package hong.selectroute;
 
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.JComboBox;
 
 public class DayComboBox extends JComboBox<Integer> {
 	
 	final private static int FIRST_DAY = 1; // 모든 달의 첫째날은 1일..
-	private int day;
 	private int lastDay;	// 1일부터 마지막날까지 콤보박스에 추가할 것이므로
+	private Dimension dimension = new Dimension(150,30);
 	
 	public DayComboBox() {
 		setBackground(Color.WHITE);
 		addItem(null);
+		setPreferredSize(dimension);
 	}
 	
 	// 아이템(일)들을 추가하는 메서드 몇 월인지를 매개변수로 입력받는다.
@@ -42,9 +44,5 @@ public class DayComboBox extends JComboBox<Integer> {
 	public void reset() {
 		removeAllItems();
 	}
-	
-	// 며칠인지 알아야 해당 날짜의 노선들을 불러올 수 있다.
-	public void setDay(int day) {
-		this.day = day;
-	}
+
 }
