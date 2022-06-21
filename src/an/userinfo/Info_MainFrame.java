@@ -16,10 +16,11 @@ public class Info_MainFrame extends JFrame{
 	JButton logout 		= new Info_JButton("로그 아웃");
 	JPanel card 		= new Info_CardPanel();
 	JPanel panel = new Info_Panel(Reservation,myinfo,logout);
+	JPanel imagepanel = new Info_ImagePanel();
 	public Info_MainFrame() {
 		setTitle("버스예약");
-		add(card,BorderLayout.CENTER);
-		add(panel,BorderLayout.NORTH);
+		add(imagepanel,BorderLayout.CENTER);
+		add(panel,BorderLayout.SOUTH);
 		/////////////////////////////////////////
 		// 예약 이벤트
 		Reservation.addActionListener(new ActionListener() {
@@ -47,8 +48,7 @@ public class Info_MainFrame extends JFrame{
 			}
 		});
 		
-		
-		setBounds(500, 200, 1000, 800);
+		setBounds(500, 200, 800, 500);
 		setResizable(false);  
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
