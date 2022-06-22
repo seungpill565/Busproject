@@ -26,12 +26,14 @@ public class Pay extends JFrame{
 	
 	public Pay(ReservationInfo user) {
 		super("결제 화면");
+		user.setSeatKeys(); // 해쉬맵에 있는 좌석번호 어레이리스트에 넣기
 		this.user = user;
+		
 		seatPanel = new SelectSeatAgePanel(user); // 패널 초기화 해주면서 user 정보 계속 유지해야해서 매개변수로 넘겨준다
-		
-		//panel1.setBounds(10, 10, 80, 80); // 판넬(플로우레이아웃) 쓸지 버튼 위치 따로 정해줄지 생각해야됨
-		//scroll.setBounds(10, 100 , 450, 100);
-		
+		panel1 = new HomeBeforeBtnPanel(user);
+		payBtn = new PayButton(user);
+		payWayBox = new SelectPayWayBox(user);
+			
 		add(panel1); // 홈버튼, 이전버튼 판넬
 		//add(scroll, "Center"); // 좌석정보 출력하는 테이블
 		add(seatPanel);
@@ -44,8 +46,6 @@ public class Pay extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
-	
-
 	public static void main(String[] args) {
 		new Pay(new ReservationInfo());
 	}
