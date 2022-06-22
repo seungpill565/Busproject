@@ -47,11 +47,9 @@ public class SaveInfo {
 	
 	public void put_bs_id(int bs_id) { 
 		this.bs_id_map.put(bs_id, null);
-		System.out.println(bs_id  + "를 map에 추가했습니다.");
 	}
 	
 	public void remove_bs_id(int bs_id) {
 		this.bs_id_map.remove(bs_id);
-		System.out.println(bs_id + "를 map에서 제거했습니다.");
 	}
 }

@@ -40,10 +40,6 @@ public class SelectBusFrame extends JFrame {
 		setVisible(true);
 	}
 	
-	public static void main(String[] args) {
-		new SelectBusFrame();
-	}
-	
 	// 버스 시간, 버스 id를 불러오는 메서드
 	public void showBusInfo(int routeID, int month, int day) {
 		
@@ -102,10 +98,8 @@ public class SelectBusFrame extends JFrame {
 	// 각 정보를 프레임에 add하는 메서드
 	public void addInfo() {
 		int size = busID.size();
-		System.out.println(busID);
 		
 		for (int i = 0; i < size; ++i) {
-			System.out.println("추가됐음");
 			add(new BusInfoLabel(busID.get(i).toString()));
 			add(new BusInfoLabel(busTime.get(i)));
 			add(new BusInfoLabel(canReserve.get(i) + " / " + MAX_SEAT));

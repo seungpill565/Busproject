@@ -76,7 +76,8 @@ public class SelectRouteMainFrame extends JFrame {
 	public void resetDays() {
 		dayBox.reset();
 	}
-		
+	
+	
 		
 	// 출발지를 선택하면 버튼 이름을 출발지로(ex:동서울) 바꿔준다
 	public void departFrom(String starting) {
