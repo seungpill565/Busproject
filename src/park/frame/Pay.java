@@ -1,14 +1,16 @@
 package park.frame;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
 
 import park.ReservationInfo;
 import park.button.PayButton;
 import park.combobox.SelectPayWayBox;
+import park.label.RouteInfo;
 import park.panel.HomeBeforeBtnPanel;
 import park.panel.SelectSeatAgePanel;
-import park.table.PayInfoTable;
+import park.scrollpane.PayInfoScrollpane;
 
 
 public class Pay extends JFrame{
@@ -22,6 +24,8 @@ public class Pay extends JFrame{
 	static SelectSeatAgePanel seatPanel ; // 좌석별 연령대 고를 콤보박스 들어있는 판넬
 	static PayButton payBtn = new PayButton(user); // 결제하기 버튼
 	static SelectPayWayBox payWayBox = new SelectPayWayBox(user); // 결제 방식 고르는 콤보박스
+	static RouteInfo route = new RouteInfo();
+	static PayInfoScrollpane scroll = new PayInfoScrollpane(); 
 	
 	
 	public Pay(ReservationInfo user) {
@@ -29,17 +33,21 @@ public class Pay extends JFrame{
 		user.setSeatKeys(); // 해쉬맵에 있는 좌석번호 어레이리스트에 넣기
 		this.user = user;
 		
+		// 접속 상태 유지하기위해서 다 매개변수로 받아온 user로 초기화 해줌
 		seatPanel = new SelectSeatAgePanel(user); // 패널 초기화 해주면서 user 정보 계속 유지해야해서 매개변수로 넘겨준다
 		panel1 = new HomeBeforeBtnPanel(user);
 		payBtn = new PayButton(user);
 		payWayBox = new SelectPayWayBox(user);
 			
 		add(panel1); // 홈버튼, 이전버튼 판넬
+		add(route);
+		add(scroll);
 		//add(scroll, "Center"); // 좌석정보 출력하는 테이블
 		add(seatPanel);
 		add(payBtn);
 		add(payWayBox);
 	
+		getContentPane().setBackground(Color.white);
 		setLayout(null);
 		setResizable(false);
 		setBounds(100,100,500,600);

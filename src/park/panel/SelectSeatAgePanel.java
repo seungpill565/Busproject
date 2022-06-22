@@ -15,10 +15,8 @@ public class SelectSeatAgePanel extends JPanel {
 		
 		for(int i=0;i<user.getSeatName().size();i++) {// 좌석수만큼 콤보박스를 생성한다
 			add(new SelectSeatAgeBox(user,i));
-			
 		}
 		setLayout(manager);
-		setBounds(10,200,450,100);
-		
+		setBounds(10,300,450,100);
 	}
 }

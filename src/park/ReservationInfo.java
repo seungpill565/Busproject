@@ -25,10 +25,18 @@ public class ReservationInfo { // 인스턴스 예시 클래스
 	public ReservationInfo() {
 		seatName.put(1, null);
 		seatName.put(2, null);
-//		seatName.put(4, null);
-//		seatName.put(8, null);
-//		seatName.put(11, null);
-//		seatName.put(3, null);
+		seatName.put(4, null);
+		seatName.put(8, null);
+		seatName.put(11, null);
+		seatName.put(3, null);
+		seatName.put(10, null);
+		seatName.put(5, null);
+		seatName.put(6, null);
+		seatName.put(23, null);
+		seatName.put(35, null);
+		seatName.put(74, null);
+		seatName.put(55, null);
+		
 		depart = "동서울";
 		arrive = "부산";
 		price = "20000";
