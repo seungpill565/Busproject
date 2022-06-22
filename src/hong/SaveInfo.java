@@ -1,5 +1,6 @@
 package hong;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SaveInfo {
@@ -7,11 +8,17 @@ public class SaveInfo {
 	private int bi_id;
 	private int rt_id;
 	private HashMap<Integer, Double> bs_id_map = new HashMap<>();
+	private ArrayList<String> seat_name = new ArrayList<>();
 	private String user_id;
 	private String depart_from;
 	private String arrive_at;
 	private String bi_time;
 	private String bi_day;
+	
+	
+	public void set_seat_name(ArrayList<String> seat_name) {
+		this.seat_name = seat_name;
+	}
 	
 	public void set_bi_id(int bi_id) {
 		this.bi_id = bi_id;
@@ -35,6 +42,10 @@ public class SaveInfo {
 	
 	public void set_date(int month, int day) {
 		this.bi_day = String.format("22/%02d/%02d", month, day);
+	}
+	
+	public void set_time(String time) {
+		this.bi_time = time;
 	}
 	
 	public int get_bi_id() {

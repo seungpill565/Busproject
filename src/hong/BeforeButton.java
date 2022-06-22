@@ -14,6 +14,7 @@ public class BeforeButton extends JButton{
 	public BeforeButton() {
 		super("이전으로");
 		setBorder(lb);
+		setBackground(new Color(0xFFE5CC));
 		setPreferredSize(dimension);
 	} 
 }

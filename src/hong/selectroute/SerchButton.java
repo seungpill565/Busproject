@@ -1,5 +1,6 @@
 package hong.selectroute;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
@@ -11,6 +12,7 @@ public class SerchButton extends JButton {
 	
 	public SerchButton() {
 		super("Á¶È¸ÇÏ±â");
+		setBackground(new Color(0xFFE5CC));
 		setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 18));
 		setPreferredSize(dimension);
 	}

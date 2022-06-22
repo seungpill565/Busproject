@@ -14,8 +14,8 @@ public class BackGroundLabel extends JLabel {
 	
 	public BackGroundLabel(String text, int w, int h) {
 		super(text);
-		setOpaque(true);
-		setBackground(BACK_COLOR);
+		//setOpaque(true);
+		//setBackground(BACK_COLOR);
 		setHorizontalAlignment(LEFT);
 		Dimension dimension = new Dimension(w, h);
 		setPreferredSize(dimension);

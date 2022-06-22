@@ -14,6 +14,7 @@ public class NextButton extends JButton {
 	public NextButton() {
 		
 		super("»Æ¿Œ");
+		setBackground(new Color(0xFFE5CC));
 		setBorder(lb);
 		setPreferredSize(dimension);
 	}

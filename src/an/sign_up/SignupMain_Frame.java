@@ -41,7 +41,7 @@ public class SignupMain_Frame extends JFrame {
 		});
 		
 		setBounds(610, 200, 400, 400);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);  
 		setVisible(true);
 	}

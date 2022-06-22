@@ -66,6 +66,7 @@ public class SelectRouteMainFrame extends JFrame {
 	private int day;
 	private int rt_id;
 	private int bi_id;
+	private String bi_time;
 	
 	// 달에 따른 day들을 일 선택 콤보박스에 추가하는 메서드
 	public void addDays(int month) {
@@ -76,8 +77,6 @@ public class SelectRouteMainFrame extends JFrame {
 	public void resetDays() {
 		dayBox.reset();
 	}
-	
-	
 		
 	// 출발지를 선택하면 버튼 이름을 출발지로(ex:동서울) 바꿔준다
 	public void departFrom(String starting) {
@@ -177,6 +176,7 @@ public class SelectRouteMainFrame extends JFrame {
 		saveInfo.set_depart_from(startingPoint);
 		saveInfo.set_arrive_at(arrivalPoint);
 		saveInfo.set_date(month, day);
+		saveInfo.set_time(bi_time);
 	}
 	
 	
@@ -186,6 +186,7 @@ public class SelectRouteMainFrame extends JFrame {
 		
 		this.saveInfo = saveInfo;
 		
+		this.getContentPane().setBackground(new Color(0xFFFFCC));
 		// FlowLayout으로 설정 / gap 10 , 30
 		setLayout(new FlowLayout(FlowLayout.LEFT, 10, 30));
 		
@@ -234,7 +235,7 @@ public class SelectRouteMainFrame extends JFrame {
 		add(beforeButton);
 		
 		setBounds(300, 100, 600, 650);
-		getContentPane().setBackground(Color.WHITE);
+		//getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
@@ -256,13 +257,31 @@ public class SelectRouteMainFrame extends JFrame {
 			pstmt.setString(2, arrivalPoint);
 			ResultSet rs = pstmt.executeQuery();
 			
-			while (rs.next()) {
-				this.rt_id = rs.getInt("rt_id");
+			while(rs.next()) {
+				this.rt_id = rs.getInt("rt_id");			
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+	}
+	
+	// 해당 bi_id 의 출발 시간은??
+	public void getTime() {
+		String sql = "SELECT bi_time FROM bus_info WHERE bi_id=?";
+		try (
+				Connection conn = OjdbcConnection.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+		){	
+			pstmt.setInt(1, bi_id);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				this.bi_time = rs.getString("bi_time");				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

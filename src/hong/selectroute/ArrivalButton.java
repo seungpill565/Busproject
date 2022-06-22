@@ -14,6 +14,7 @@ public class ArrivalButton extends JButton {
 	
 	public ArrivalButton() {
 		super("도착지를 입력해주세요");
+		setBackground(new Color(0xFFE5CC));
 		setFont(new Font("맑은고딕", Font.BOLD, 20));
 		setBorder(lb);
 		setPreferredSize(dimension);

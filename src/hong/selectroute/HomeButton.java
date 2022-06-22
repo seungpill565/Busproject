@@ -14,7 +14,7 @@ public class HomeButton extends JButton {
 	public HomeButton() {
 		super("Home");
 		setOpaque(true);
-		setBackground(Color.WHITE);
+		setBackground(new Color(0xFFE5CC));
 		setBorder(lb);
 		setPreferredSize(dimension);
 	}

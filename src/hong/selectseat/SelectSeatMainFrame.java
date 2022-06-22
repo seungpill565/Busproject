@@ -33,6 +33,10 @@ public class SelectSeatMainFrame extends JFrame {
 	
 	private SeatButtonEvent seatBtnEvent = new SeatButtonEvent(this);
 	
+	public void save_seat_name() {
+		saveInfo.set_seat_name(bs_name_list);
+	}
+	
 	public void selectSeat(int seatNum) {
 		System.out.println(saveInfo.get_user_id());
 		

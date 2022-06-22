@@ -54,7 +54,7 @@ public class Find_MainFrame extends JFrame{
 		add(bt,BorderLayout.CENTER);
 		
 		setBounds(660, 350, 400, 150);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);  
 		setVisible(true);
 	}
