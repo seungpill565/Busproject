@@ -1,13 +1,13 @@
 package lee.mpcomponents;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 
 import lee.OjdbcConnection;
 import lee.mpevents.MPBackBtnEvent;
+import lee.mpevents.MPcheckboxIL;
 import lee.mpevents.MPcompleteBtnEvent;
 import lee.mpevents.MPeditBtnEvent;
 import lee.mpevents.MPnavBtnsEvent;
@@ -24,6 +25,7 @@ import lee.mpmodel.MPreservationlistModel;
 
 public class MPmainFrame extends JFrame {
 
+	String user_id = "abc123";
 	
 	JButton MPhomeBtn = new JButton();
 	JLabel MPcategoryLb = new JLabel("카테고리명");
@@ -64,8 +66,9 @@ public class MPmainFrame extends JFrame {
 		MPcontents.MPprofile.showMPprofile_2(); 
 		MPcontents.MPprofile.MPprofile_2.setTfEmpty();
 	}
+
 	
-	//프로필수정하기 화면에서 뒤로가기 버튼 눌렀을 때 (수정값 저장하면 안 됨 ★)▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+	//프로필수정하기 화면에서 뒤로가기 버튼 눌렀을 때 (수정값 저장하면 안 됨 ★) ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 	public void backBtnCtrl () {
 		setCategoryLabelText("내 정보 조회");
 		MPcontents.MPprofile.MPprofile_2.setTfEmpty();
@@ -73,7 +76,7 @@ public class MPmainFrame extends JFrame {
 	}
 	
 	
-	//프로필수정하기 화면에서 수정 완료 버튼 눌렀을 때 (수정값 저장해야됨 ★)▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+	//프로필수정하기 화면에서 수정 완료 버튼 눌렀을 때 (수정값 저장해야됨 ★) ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 	public void completeBtnCtrl() {
 		setCategoryLabelText("내 정보 조회");
 			
@@ -85,16 +88,16 @@ public class MPmainFrame extends JFrame {
 	} //내정보 보기 화면에는 항상 최신 값만 뜨도록 해놔야겠네 
 
 	
-	
 	public void reservationcancleBtnCtrl() {
 		int checkNum = 0;
+		//System.out.println(MPcontents.MPreservation.MPreservation_2.cbArr.length);
 		for(JCheckBox cb : MPcontents.MPreservation.MPreservation_2.cbArr) {
 			if(cb.isSelected()) {
 				br_id_list.add(Integer.parseInt(cb.getText()));
 				checkNum++;
 			} 
 		}
-		
+		System.out.println(checkNum);
 		//체크된 체크박스가 없을 땐 작은 창이 안 뜨고, 하나라도 있으면 작은 창(정말 취소?) 뜸
 		if(checkNum > 0) {
 			
@@ -107,6 +110,9 @@ public class MPmainFrame extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					
 					try (Connection conn = OjdbcConnection.getConnection();){
+						
+						conn.setAutoCommit(false);
+						
 						int cancleNum = br_id_list.size();
 						
 						for(int i = 0; i < cancleNum; ++i) {
@@ -118,48 +124,51 @@ public class MPmainFrame extends JFrame {
 							//예매번호에 해당하는 행 bus_reservation 테이블에서 지우고 좌석번호에 해당하는 행 bus_seat테이블에서 지우면 됨!
 							MPreservationlistModel.delete_br_id_row(conn, br_id);
 							MPreservationlistModel.delete_bs_id_row(conn, bs_id);
-							
-							//■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-							//아 이제 삭제는 되는데 문제 1: 커밋을 여기서 하게 만들어야 할 듯
-							
-							sf.dispose();//예 누르면 작은 창 닫기
-							
-							//문제 3 : 리스트 패널이 새로고침 되야됨
-							//아 이게 문제네 ....
-							
-							//문제 4 : 어레리 비우는 거 
-							dispose();
-							setVisible(true); // 이런다고 새로고침 안 되네 망할
-							//결국 패널에 데이터 다시 띄우는 수밖에 없는듯 
-							
-							/*
-							new MPreservationPanel_2() 해서 MPreservationPanel에 다시 붙이는 방법이 없나? 
-							add하는 건 가능할 것 같은데 그럼 기존에 있던 MPreservationPanel_2객체를 지우는게 문제네 
-							아 아니다 MPreservationPanel 을 MAin에 다시 붙이면 되겠다! 근데 그 방법도 기존에 있던 패널 없애는게 문제다 
-							*/
-
-							//헐 그리고 사용자가 체크 해놓고 네브 버튼 누를 수도 있짜늠 그러면 체크 버튼 비우게 해놔야됨!
-						
-						
-							//아나 예매내역 없으면 패널1로 변환하는 것도 해야됨ㅠㅠㅠㅠ할거 개많아
 						}
 						
+						conn.commit();//커밋 오라클 가서 안 해도 되고 여기서 바로 됨
+						sf.dispose();//예 누르면 작은 창 닫기
+
 						
+						//MPcontents.MPreservation.MPreservation_2.MPreservation_3.removeAll();
+						
+						
+						
+					
+						 //이렇게 새로고침하면 문제점이 취소버튼을 누를 때마다 새 객체를 생성하게 되고 거기서 checkNum을 정해진 변수로 넘겨받을 수 없다는 것...
+						//_______________________________예매내역 새로고침 부분_________________________________________
+						MPcontents.MPreservation.remove(MPcontents.MPreservation.MPreservation_2);
+						MPreservationPanel_2 newMPreservationPanel_2 = new MPreservationPanel_2();
+						btnAddAction(newMPreservationPanel_2.MPreservationcancleBtn);
+						MPcontents.MPreservation.add(newMPreservationPanel_2);
+						
+						br_id_list = new ArrayList<>(); //체크박스 선택된 예매번호(br_id) 담는 어레리 비워주고 
+						
+						//이 밑에 두 줄은 navPanel 에서 예매확인 눌렀을 때 동작되는 것들(내정보조회/수정이나 계정 탈퇴 버튼 눌렀다가 예매확인 눌러야 reservation_2 패널에 바뀐 예매내역들로 뜨길래)  
+						
+						
+						//예매내역 패널 새로고침
+						dispose();
+						MPmainFrame MPnewmainF = new MPmainFrame();
+						MPnewmainF.setCategoryLabelText("예매확인");
+						MPnewmainF.MPcontents.MPcontentsCard.show(MPnewmainF.MPcontents, "예매내역");
+
+						//■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+						//이제 해결할 건 날짜 오늘 날짜로 조회하는 거		 
 						
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
-			
-					
 				}
 			});
-		}
 		
+		}	
 	}
 	
-	//■■■■■■■■■헐 어레리로 바꿨으니까 어레리 비우는 걸로 바꿔야겠네■■■■■■■■■■■■■■■■■■■■■
-	public void br_idsSbSetVacate() {
-		//br_idsSb.setLength(0); //이렇게 하면 StringBuilder 비워짐
+	
+	
+	public void btnAddAction(JButton btn) {
+		btn.addActionListener(new MPreservationCancleBtnEvent(this));
 	}
 	
 	
@@ -207,7 +216,7 @@ public class MPmainFrame extends JFrame {
 		MPcontents.MPprofile.MPprofile_2.MPcompleteBtn.addActionListener(new MPcompleteBtnEvent(this));
 
 		
-		//예약취소버튼 액션■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ㅍ
+		//예약취소버튼 액션■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 		MPcontents.MPreservation.MPreservation_2.MPreservationcancleBtn.addActionListener(new MPreservationCancleBtnEvent(this));
 		
 		

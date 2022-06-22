@@ -38,7 +38,7 @@ public class MPreservationlistModel {
 		String sql = "DELETE FROM bus_seat WHERE bs_id = ?";
 		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {	
 			pstmt.setInt(1, bs_id);
-			System.out.println("青 昏力 己傍? : " + pstmt.executeUpdate());	
+			System.out.println("bs_id狼 青 昏力 己傍? : " + pstmt.executeUpdate());	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -48,7 +48,7 @@ public class MPreservationlistModel {
 		String sql = "DELETE FROM bus_reservation WHERE br_id = ?";
 		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {
 			pstmt.setInt(1, br_id);
-			System.out.println("青 昏力 己傍? : " + pstmt.executeUpdate());	
+			System.out.println("br_id狼 青 昏力 己傍? : " + pstmt.executeUpdate());	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
