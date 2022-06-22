@@ -2,7 +2,6 @@ package hong.selectroute;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,10 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import hong.OjdbcConnection;
+import an.OjdbcConnection;
 
 public class SelectTerminalMainFrame extends JFrame {
 	

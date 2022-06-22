@@ -11,7 +11,7 @@ public class Login_ImgPanel extends JPanel{
 	
 	public Login_ImgPanel() {
 		JLabel label = new IdPwd_Label("¿ÃπÃ¡ˆ");
-		ImageIcon image = new ImageIcon("C:\\javaAWS\\repository\\project\\MyTeamProject\\src\\an\\Bus.png");
+		ImageIcon image = new ImageIcon("image/Bus.png");
 		label.setText("");
 		label.setIcon(image);
 		

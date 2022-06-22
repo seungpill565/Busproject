@@ -29,8 +29,8 @@ public class SaveInfo {
 		this.arrive_at = arrive_at;
 	}
 	
-	public void set_bi_time(String time) {
-		
+	public void set_user_id(String user_id) {
+		this.user_id = user_id;
 	}
 	
 	public void set_date(int month, int day) {
@@ -39,6 +39,10 @@ public class SaveInfo {
 	
 	public int get_bi_id() {
 		return bi_id;
+	}
+	
+	public String get_user_id() {
+		return user_id;
 	}
 	
 	public void put_bs_id(int bs_id) { 

@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import an.login.Login_Mainframe;
+import hong.SaveInfo;
+import hong.selectroute.SelectRouteMainFrame;
 
 public class Info_MainFrame extends JFrame{
 	JButton Reservation = new Info_JButton("예약");
@@ -19,7 +21,12 @@ public class Info_MainFrame extends JFrame{
 	JPanel imagePanel = new Info_ImagePanel();
 	JPanel titlePanel = new Info_TitlePanel();
 	
-	public Info_MainFrame() {
+	SaveInfo saveInfo;
+	
+	public Info_MainFrame(SaveInfo saveInfo) {
+		
+		this.saveInfo = saveInfo;
+		
 		setTitle("버스예약");
 		
 		add(titlePanel,BorderLayout.NORTH);
@@ -31,7 +38,8 @@ public class Info_MainFrame extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				new SelectRouteMainFrame(saveInfo);
+				dispose();
 			}
 		});
 		
@@ -48,6 +56,7 @@ public class Info_MainFrame extends JFrame{
 		logout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				new Login_Mainframe();
 				dispose();
 			}
 		});
@@ -57,7 +66,5 @@ public class Info_MainFrame extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
-	public static void main(String[] args) {
-		new Info_MainFrame();
-	}
+
 }

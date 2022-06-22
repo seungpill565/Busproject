@@ -10,10 +10,12 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import an.OjdbcConnection;
+import an.login.Login_Mainframe;
+import an.userinfo.Info_MainFrame;
 import hong.BackGroundLabel;
 import hong.BeforeButton;
 import hong.NextButton;
-import hong.OjdbcConnection;
 import hong.SaveInfo;
 import hong.selectroute.event.BeforeButtonEvent;
 import hong.selectroute.event.DayComboBoxEvent;
@@ -30,7 +32,7 @@ import hong.selectseat.SelectSeatMainFrame;
 
 public class SelectRouteMainFrame extends JFrame {
 	
-	SaveInfo saveInfo = new SaveInfo();
+	SaveInfo saveInfo;
 	
 	HomeButton homeButton = new HomeButton();				// 홈 버튼
 	StartingPointButton startingPointButton = new StartingPointButton();	// 출발 버튼
@@ -81,13 +83,26 @@ public class SelectRouteMainFrame extends JFrame {
 		startingPointButton.setTextStpBtn(starting);
 	}
 		
+	// 출발지를 선택하면 출발지를 입력받는다.
+	public void setStartingPoint(String startingPoint) {
+		this.startingPoint = startingPoint;
+	}
+	
 	// 도착지를 선택하면 버튼 이름을 출발지로(ex:부산) 바꿔준다
 	public void arriveAt(String destination) {
 		arrivalButton.setTextArvBtn(destination);
+		
 	}
 		
+	// 도착지를 선택하면 도착지를 입력받는다.
+	public void setArrivalPoint(String arrivalPoint) {
+		this.arrivalPoint = arrivalPoint;
+	}
+	
 	// 출발지 버튼을 누르면 터미널들을 보여주는 메서드. 각각의 터미널 버튼에 액션을 추가해준다.
 	public void showStartingTerminals() {
+		
+		System.out.println(saveInfo.get_user_id());
 		stmFrame = new SelectTerminalMainFrame();
 		for (JButton btn : stmFrame.getAllBtns()) {
 			btn.addActionListener(startingBtnEvent);
@@ -96,21 +111,13 @@ public class SelectRouteMainFrame extends JFrame {
 	
 	// 도착지 버튼을 누르면 터미널들을 보여주는 메서드. 각각의 터미널 버튼에 액션을 추가해준다.
 	public void showArriveTerminals() {
+		//System.out.println(saveInfo.get_user_id());
 		stmFrame = new SelectTerminalMainFrame();
 		for (JButton btn : stmFrame.getAllBtns()) {
 			btn.addActionListener(arrivalBtnEvent);
 		}
 	}
 		
-	// 출발지를 선택하면 출발지를 입력받는다.
-	public void setStartingPoint(String startingPoint) {
-		this.startingPoint = startingPoint;
-	}
-		
-	// 도착지를 선택하면 도착지를 입력받는다.
-	public void setArrivalPoint(String arrivalPoint) {
-		this.arrivalPoint = arrivalPoint;
-	}
 		
 	// 달 입력 받기
 	public void setMonth(int month) {
@@ -154,6 +161,10 @@ public class SelectRouteMainFrame extends JFrame {
 		seatMainFrame = new SelectSeatMainFrame(saveInfo);	
 	}
 	
+	public void before() {
+		new Info_MainFrame(saveInfo);
+	}
+	
 	// 이 프레임 꺼주기
 	public void thisFrameClose() {
 		this.dispose();
@@ -168,9 +179,12 @@ public class SelectRouteMainFrame extends JFrame {
 	}
 	
 	
-	public SelectRouteMainFrame() {
-		
+	// 생성자 SaveInfo saveInfo
+	public SelectRouteMainFrame(SaveInfo saveInfo) {
 		super("버스 예약 시스템");
+		
+		this.saveInfo = saveInfo;
+		
 		// FlowLayout으로 설정 / gap 10 , 30
 		setLayout(new FlowLayout(FlowLayout.LEFT, 10, 30));
 		
@@ -226,7 +240,7 @@ public class SelectRouteMainFrame extends JFrame {
 	
 	
 	public static void main(String[] args) {
-		new SelectRouteMainFrame();
+		new Login_Mainframe();
 	}
 	
 	

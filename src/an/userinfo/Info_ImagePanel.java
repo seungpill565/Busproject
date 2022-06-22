@@ -10,7 +10,7 @@ public class Info_ImagePanel extends JPanel{
 	
 	public Info_ImagePanel() {
 		JLabel label = new IdPwd_Label("¿ÃπÃ¡ˆ");
-		ImageIcon image = new ImageIcon("C:\\javaAWS\\repository\\project\\MyTeamProject\\src\\an\\Bus2.png");
+		ImageIcon image = new ImageIcon("image/Bus2.png");
 		label.setText("");
 		label.setIcon(image);
 		

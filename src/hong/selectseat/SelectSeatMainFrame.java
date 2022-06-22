@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import an.OjdbcConnection;
 import hong.BackGroundLabel;
-import hong.OjdbcConnection;
 import hong.SaveInfo;
 import hong.selectseat.event.SeatButtonEvent;
 
@@ -34,6 +34,8 @@ public class SelectSeatMainFrame extends JFrame {
 	private SeatButtonEvent seatBtnEvent = new SeatButtonEvent(this);
 	
 	public void selectSeat(int seatNum) {
+		System.out.println(saveInfo.get_user_id());
+		
 		if(!seatBtns[seatNum].get_is_selected()) {
 			saveInfo.put_bs_id(seatBtns[seatNum].get_bs_id());			
 		} else {

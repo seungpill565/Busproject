@@ -8,10 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import hong.OjdbcConnection;
+import an.OjdbcConnection;
 
 public class SelectBusFrame extends JFrame {
 	
@@ -103,8 +102,10 @@ public class SelectBusFrame extends JFrame {
 	// 각 정보를 프레임에 add하는 메서드
 	public void addInfo() {
 		int size = busID.size();
+		System.out.println(busID);
 		
 		for (int i = 0; i < size; ++i) {
+			System.out.println("추가됐음");
 			add(new BusInfoLabel(busID.get(i).toString()));
 			add(new BusInfoLabel(busTime.get(i)));
 			add(new BusInfoLabel(canReserve.get(i) + " / " + MAX_SEAT));

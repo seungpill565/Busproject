@@ -2,6 +2,7 @@ package hong.selectroute.event;
 
 import java.awt.event.ActionEvent;
 
+import an.userinfo.Info_MainFrame;
 import hong.selectroute.SelectRouteMainFrame;
 
 public class BeforeButtonEvent extends RouteMainFrameAction {
@@ -13,6 +14,7 @@ public class BeforeButtonEvent extends RouteMainFrameAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		main.thisFrameClose();
+		main.before();
 	}
 
 }

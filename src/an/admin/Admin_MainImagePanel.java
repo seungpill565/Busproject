@@ -10,7 +10,7 @@ public class Admin_MainImagePanel extends JPanel{
 	
 	public Admin_MainImagePanel() {
 		JLabel label = new IdPwd_Label("¿ÃπÃ¡ˆ");
-		ImageIcon image = new ImageIcon("C:\\javaAWS\\repository\\project\\MyTeamProject\\src\\an\\Bus3.png");
+		ImageIcon image = new ImageIcon("image/Bus3.png");
 		label.setText("");
 		label.setIcon(image);
 		
