@@ -27,6 +27,18 @@ public class MPreservationlistModel {
 	
 	
 	
+	public double totalCharge() {
+		if(br_age_group.equals("성인")) {
+			return rt_charge * 1;
+		} else if(br_age_group.equals("청소년")) {
+			return rt_charge * 0.85;
+		} else if(br_age_group.equals("아동")) {
+			return rt_charge * 0.7;
+		}
+		return 0; 
+	}
+	
+	
 	
 	
 	public Integer getBr_id() {
@@ -213,28 +225,11 @@ public class MPreservationlistModel {
 			+ "좌석 : %s<br>"
 			+ "연령구분 : %s<br>"
 			+ "요금 : %d</pre></html>",
-			br_id, bi_day, bi_time, rt_depart_from, rt_arrive_at, bs_name, br_age_group, rt_charge);
+			br_id, bi_day, bi_time, rt_depart_from, rt_arrive_at, bs_name, br_age_group, Math.round(totalCharge()));
 	}
 
 	
-	//나중에 지우기
-	public static void main(String[] args) {
-		
-		/* 테스트 코드 (정상작동함)
-		Connection conn;
-		try {
-			conn = OjdbcConnection.getConnection();
-			//System.out.println(getAll(conn));
-			//System.out.println(getAll(conn).get(1));
-			//System.out.println(get(conn, 10010));
-			//System.out.println(get(conn, "abc123", "22/06/20"));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
-		
-		
-	}
+
 	
 	
 } 

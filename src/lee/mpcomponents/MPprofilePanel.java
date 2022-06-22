@@ -70,11 +70,6 @@ public class MPprofilePanel extends JPanel {
 	}
 	
 
-	
-	
-	
-	
-	
 	public void showMPprofile_2() {
 		MPprofileCard.show(this, "내정보 수정");
 	}
