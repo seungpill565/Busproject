@@ -55,7 +55,7 @@ public class PassFind_Frame extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String sql = String.format("SELECT su_password from sign_up where user_id = '%s' and su_user_name = '%s'",
+				String sql = String.format("SELECT user_password from user_info where user_id = '%s' and user_user_name = '%s'",
 						idText.getText() ,nameText.getText());	
 				
 				

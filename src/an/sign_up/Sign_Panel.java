@@ -65,7 +65,7 @@ public class Sign_Panel extends JPanel{
 			phone = pntext.getText();
 			check = combo.getSelectedItem().toString();
 
-			String sql = "INSERT into sign_up(user_id,su_passenger_manager,su_user_name,su_password,su_phonenum)"
+			String sql = "INSERT into user_info(user_id,user_passenger_manager,user_user_name,user_password,user_phonenum)"
 					+ " values (?,?,?,?,?)"; 
 
 			Pattern passPattern1 = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$"); //8자 영문+특문+숫자

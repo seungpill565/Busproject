@@ -62,8 +62,8 @@ public class All_Panel extends JPanel{
 				String check = combo.getSelectedItem().toString();
 				
 			
-			String sql = String.format("SELECT su_password FROM sign_up WHERE user_id = '%s'"
-					+ " AND su_password ='%s'and su_passenger_manager = '%s'",
+			String sql = String.format("SELECT user_password FROM user_info WHERE user_id = '%s'"
+					+ " AND user_password ='%s'and user_passenger_manager = '%s'",
 					id, pass,check);	
 			try(Connection conn = OjdbcConnection.getConnection();
 					PreparedStatement pstmt = conn.prepareStatement(sql);) {
