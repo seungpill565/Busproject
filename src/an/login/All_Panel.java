@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import an.OjdbcConnection;
@@ -34,7 +35,7 @@ public class All_Panel extends JPanel{
 	JPanel idPanel2 = new IdPanel2(ptext);
 	
 	JPanel pwdPanel = new PwdPanel();
-	JTextField itext = new IdPwd_TextFeild(10);
+	JPasswordField itext = new JPasswordField(10);
 	JPanel pwdPanel2 = new PwdPanel2(itext);
 	
 
