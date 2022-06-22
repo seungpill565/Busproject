@@ -1,10 +1,12 @@
 package hong;
 
+import java.util.HashMap;
+
 public class SaveInfo {
 	
 	private int bi_id;
-	private int bs_id;
 	private int rt_id;
+	private HashMap<Integer, Double> bs_id_map = new HashMap<>();
 	private String user_id;
 	private String depart_from;
 	private String arrive_at;
@@ -31,8 +33,21 @@ public class SaveInfo {
 		
 	}
 	
+	public void set_date(int month, int day) {
+		this.bi_day = String.format("22/%02d/%02d", month, day);
+	}
+	
 	public int get_bi_id() {
 		return bi_id;
 	}
 	
+	public void put_bs_id(int bs_id) { 
+		this.bs_id_map.put(bs_id, null);
+		System.out.println(bs_id  + "를 map에 추가했습니다.");
+	}
+	
+	public void remove_bs_id(int bs_id) {
+		this.bs_id_map.remove(bs_id);
+		System.out.println(bs_id + "를 map에서 제거했습니다.");
+	}
 }

@@ -10,31 +10,52 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import hong.BackGroundLabel;
 import hong.OjdbcConnection;
 import hong.SaveInfo;
-import hong.selectroute.BackGroundLabel;
+import hong.selectseat.event.SeatButtonEvent;
 
 public class SelectSeatMainFrame extends JFrame {
 	
 	final private static int MAX_SEAT = 21;
 	
+	private SaveInfo saveInfo;
+	
 	private int bi_id;
+	private int bs_id;
+	
 	private static SeatButton[] seatBtns = new SeatButton[21];
+	private SeatButton seatBtn;
 	
 	private ArrayList<Integer> bs_id_list = new ArrayList<>();
 	private ArrayList<Integer> bs_is_reserved = new ArrayList<>();
 	private ArrayList<String> bs_name_list = new ArrayList<>();
 	
+	private SeatButtonEvent seatBtnEvent = new SeatButtonEvent(this);
+	
+	public void selectSeat(int seatNum) {
+		if(!seatBtns[seatNum].get_is_selected()) {
+			saveInfo.put_bs_id(seatBtns[seatNum].get_bs_id());			
+		} else {
+			saveInfo.remove_bs_id(seatBtns[seatNum].get_bs_id());
+		}
+		seatBtns[seatNum].selectedCheck();	
+	}
+	
 	public SelectSeatMainFrame(SaveInfo saveInfo) {
 		
 		super("ÁÂ¼® ¼±ÅÃ");
+		this.saveInfo = saveInfo;
 		this.bi_id = saveInfo.get_bi_id();
 		setSeatTable();
 		
 		setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 		
 		for(int i = 0; i < MAX_SEAT; ++i) {
-			seatBtns[i] = new SeatButton();
+			seatBtn = new SeatButton();
+			seatBtns[i] = seatBtn;
+			seatBtns[i].addActionListener(seatBtnEvent);
+			seatBtns[i].setName("" + i);
 			seatBtns[i].set_seat_id(bs_id_list.get(i));
 			seatBtns[i].setSeatName(bs_name_list.get(i));
 			seatBtns[i].set_is_reserved(bs_is_reserved.get(i));

@@ -10,8 +10,12 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import hong.BackGroundLabel;
+import hong.BeforeButton;
+import hong.NextButton;
 import hong.OjdbcConnection;
 import hong.SaveInfo;
+import hong.selectroute.event.BeforeButtonEvent;
 import hong.selectroute.event.DayComboBoxEvent;
 import hong.selectroute.event.HomeButtonEvent;
 import hong.selectroute.event.MonthComboBoxEvent;
@@ -32,7 +36,8 @@ public class SelectRouteMainFrame extends JFrame {
 	StartingPointButton startingPointButton = new StartingPointButton();	// 출발 버튼
 	ArrivalButton arrivalButton = new ArrivalButton(); 	// 도착 버튼
 	SerchButton serchButton = new SerchButton(); // 조회하기 버튼
-	NextButton nextButton = new NextButton();
+	NextButton nextButton = new NextButton();	// 다음 버튼
+	BeforeButton beforeButton = new BeforeButton();
 	
 	MonthComboBox monBox = new MonthComboBox();				// 달 선택 콤보박스
 	DayComboBox dayBox = new DayComboBox();					// 일 선택 콤보박스
@@ -46,18 +51,19 @@ public class SelectRouteMainFrame extends JFrame {
 	DayComboBoxEvent dayBoxEvent = new DayComboBoxEvent(this); // 일 선택 콤보박스 이벤트
 	SerchButtonEvent serchBtnEvent = new SerchButtonEvent(this); // 조회하기 버튼 이벤트
 	SelectBusButtonEvent selectBusBtnEvent = new SelectBusButtonEvent(this); // 버스 선택해서 예약하기 버튼 이벤트
-	NextButtonEvent nextBtnEvent = new NextButtonEvent(this);
+	NextButtonEvent nextBtnEvent = new NextButtonEvent(this);	// 다음 버튼 이벤트
+	BeforeButtonEvent beforeBtnEvent = new BeforeButtonEvent(this);
 	
-	SelectSeatMainFrame seatMainFrame;
-	SelectTerminalMainFrame stmFrame;
-	SelectBusFrame busFrame;
+	SelectSeatMainFrame seatMainFrame; // 좌석선택 프레임
+	SelectTerminalMainFrame stmFrame;	// 터미널 선택 프레임
+	SelectBusFrame busFrame;	// 버스 선택 프레임
 	
 	private String startingPoint;
 	private String arrivalPoint;
 	private int month;
 	private int day;
-	private int routeID;
-	private int busID;
+	private int rt_id;
+	private int bi_id;
 	
 	// 달에 따른 day들을 일 선택 콤보박스에 추가하는 메서드
 	public void addDays(int month) {
@@ -118,14 +124,13 @@ public class SelectRouteMainFrame extends JFrame {
 		
 	// 출발지나 도착지를 선택하면 그 창만 닫아준다.
 	public void stmFlameClose() {
-		
 		stmFrame.dispose();
 	}
 	
 	// 노선, 날짜에 맞는 버스들의 정보를 보여주는 메서드
 	public void showBus() {
 		busFrame = new SelectBusFrame();
-		busFrame.showBusInfo(routeID, month, day);
+		busFrame.showBusInfo(rt_id, month, day);
 		busFrame.getCanReserve();
 		busFrame.addInfo();
 		
@@ -135,27 +140,31 @@ public class SelectRouteMainFrame extends JFrame {
 		}
 	}
 	
-	public void setBusID(int busID) {
-		this.busID = busID;
+	public void setBusID(int bi_id) {
+		this.bi_id = bi_id;
 	}
 	
+	// 버스 선택 프레임 꺼주기
 	public void busFrameClose() {
 		busFrame.dispose();
 	}
 	
+	// 좌석 선택 프레임을 보여줄 메서드
 	public void showSeatFrame() {
-		seatMainFrame = new SelectSeatMainFrame(saveInfo);
+		seatMainFrame = new SelectSeatMainFrame(saveInfo);	
 	}
 	
+	// 이 프레임 꺼주기
 	public void thisFrameClose() {
 		this.dispose();
 	}
 	
 	public void save() {
-		saveInfo.set_bi_id(busID);
-		saveInfo.set_rt_id(routeID); 
+		saveInfo.set_bi_id(bi_id);
+		saveInfo.set_rt_id(rt_id); 
 		saveInfo.set_depart_from(startingPoint);
 		saveInfo.set_arrive_at(arrivalPoint);
+		saveInfo.set_date(month, day);
 	}
 	
 	
@@ -199,8 +208,15 @@ public class SelectRouteMainFrame extends JFrame {
 		
 		
 		add(new BackGroundLabel("", 150, 30));
+		
+		// 다음 프레임으로 넘어가는 버튼
 		nextButton.addActionListener(nextBtnEvent);
 		add(nextButton);
+		
+		add(new BackGroundLabel("", 30, 30));
+		
+		beforeButton.addActionListener(beforeBtnEvent);
+		add(beforeButton);
 		
 		setBounds(300, 100, 600, 650);
 		getContentPane().setBackground(Color.WHITE);
@@ -226,7 +242,7 @@ public class SelectRouteMainFrame extends JFrame {
 			ResultSet rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				this.routeID = rs.getInt("rt_id");
+				this.rt_id = rs.getInt("rt_id");
 			}
 			
 		} catch (SQLException e) {

@@ -48,13 +48,7 @@ public class SelectBusFrame extends JFrame {
 	// 버스 시간, 버스 id를 불러오는 메서드
 	public void showBusInfo(int routeID, int month, int day) {
 		
-		String date;
-		
-		if(month < 10) {
-			date = "22/0" + month + "/" + day;
-		} else {
-			date = "22/" + month + "/" + day;
-		}
+		String date = String.format("22/%02d/%02d" , month, day);
 		
 		String sql = "SELECT bi_id, bi_time FROM bus_info WHERE rt_id=? AND bi_day=?";
 
