@@ -25,11 +25,11 @@ public class MPprofilePanel_2 extends JPanel {
 	
 	JPanel MPlabelPanel = new JPanel();//레이아웃은 그리드백레이아웃으로
 	
-	//그백레
+	//그리드백레이아웃
 	GridBagLayout gbl = new GridBagLayout();
 	GridBagConstraints gblc = new GridBagConstraints();
 
-	JLabel MPviewLb1 = new JLabel("   이름 "); //왜 얘만 튀어나와 있음?▲
+	JLabel MPviewLb1 = new JLabel("   이름 "); //이 라벨 글자만 앞으로 튀어나와 있어서 앞에 공백 넣어줌
 	JLabel MPviewLb2 = new JLabel("핸드폰 번호 ");
 	JLabel MPviewLb3 = new JLabel("새 비밀번호 ");
 	
@@ -127,17 +127,13 @@ public class MPprofilePanel_2 extends JPanel {
 	}
 	
 	
-	
+	//JPasswordField에서 얻어온 char[]배열을 String으로 변환
 	public String MPgetPwd(JPasswordField MPnewpwTf) {
-		StringBuilder pw = new StringBuilder();
-		//tf_pw 필드에서 패스워드를 얻어옴, char[] 배열에 저장
+		StringBuilder pw = new StringBuilder();	
 		char[] secret_pw = MPnewpwTf.getPassword(); 
-		
-		//secret_pw 배열에 저장된 암호의 자릿수 만큼 for문 돌리면서 cha 에 한 글자씩 저장
+
 	    for(char cha : secret_pw){         
-	        Character.toString(cha);       //cha 에 저장된 값 string으로 변환
-	       //pw 에 저장하기, pw 에 값이 비어있으면 저장, 값이 있으면 이어서 저장하는 삼항연산자
-	         //pw += (pw.equals("")) ? ""+cha+"" : ""+cha+"";   
+	        Character.toString(cha); 
 	        pw.append(cha);
 	    }
 		return pw.toString();

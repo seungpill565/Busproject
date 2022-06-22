@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 
@@ -53,7 +54,7 @@ public class MPreservationlistModel {
 			pstmt.setString(1, user_id);
 			System.out.println("user_id의 행 삭제 성공? : " + pstmt.executeUpdate());	
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("");
 		}
 	}
 	
@@ -65,7 +66,7 @@ public class MPreservationlistModel {
 			pstmt.setInt(1, bs_id);
 			System.out.println("bs_id의 행 삭제 성공? : " + pstmt.executeUpdate());	
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("");
 		}
 	}
 	
@@ -75,7 +76,7 @@ public class MPreservationlistModel {
 			pstmt.setInt(1, br_id);
 			System.out.println("br_id의 행 삭제 성공? : " + pstmt.executeUpdate());	
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("");
 		}
 	}
 	
@@ -100,7 +101,7 @@ public class MPreservationlistModel {
 			}
 						
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("");
 		}
 		return bs_id;
 	}
@@ -143,9 +144,13 @@ public class MPreservationlistModel {
 	}
 	
 	
-	//회원아이디와 오늘 날짜를 입력하면 오늘 날짜 이후의 예매 내역에 대한 데이터(행)를 반환하는 메서드
-	public static ArrayList<MPreservationlistModel> get(Connection conn, String user_id, String todaysDate) {
+	//회원아이디를 입력하면 오늘 날짜 이후의 예매 내역에 대한 데이터(행)를 반환하는 메서드
+	public static ArrayList<MPreservationlistModel> get(Connection conn, String user_id) {
 		ArrayList<MPreservationlistModel> list = new ArrayList<>();
+		
+		String[] split = LocalDate.now().toString().split("-");
+		String join = String.join("/", split);
+		String date = join.substring(2);
 		
 		
 		String sql = 
@@ -163,7 +168,7 @@ public class MPreservationlistModel {
 		) {
 			
 			pstmt.setString(1, user_id);
-			pstmt.setString(2, todaysDate);
+			pstmt.setString(2, date);
 			
 			try(ResultSet rs = pstmt.executeQuery();) {
 				while(rs.next() ) {
@@ -172,7 +177,7 @@ public class MPreservationlistModel {
 			}
 					
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("예매내역 없음");
 		}
 		return list;
 	}
@@ -217,7 +222,7 @@ public class MPreservationlistModel {
 	}
 	
 	
-	@Override
+	@Override 
 	public String toString() {	
 		return String.format("<html><pre style=\"font-family:고딕;\">예매번호 : %s<br>"
 			+ "%s  %s<br>"

@@ -1,12 +1,8 @@
 package lee.mpcomponents;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Dimension;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 public class MPreservationPanel extends JPanel {
 	
@@ -20,7 +16,7 @@ public class MPreservationPanel extends JPanel {
 		setLayout(MPreservationCard);
 
 				
-		//add(MPreservation_1);
-		add(MPreservation_2);
+		add(MPreservation_1, "예매내역 없음");
+		add(MPreservation_2, "예매내역 있음");
 	}
 }

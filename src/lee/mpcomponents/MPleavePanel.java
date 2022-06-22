@@ -16,7 +16,7 @@ public class MPleavePanel extends JPanel {
 		
 		setLayout(null);
 		
-		//Å»ÅðÇÏ½Ã°Ú? ¶óº§ ¼³Á¤
+		//Å»ÅðÇÏ½Ã°Ú½À´Ï±î? ¶óº§ ¼³Á¤
 		MPleaveConfirmLb.setBounds(30, 30, 300, 60);
 		MPleaveConfirmLb.setOpaque(true);
 		MPleaveConfirmLb.setFont(new Font("°íµñ", Font.BOLD, 15));

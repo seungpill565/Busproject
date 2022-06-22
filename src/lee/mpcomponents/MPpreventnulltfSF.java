@@ -29,9 +29,7 @@ public class MPpreventnulltfSF extends JFrame implements ActionListener {
 		closeBtn.addActionListener(this);
 		add(closeBtn);	
 		
-		
-		
-		
+
 		
 		setLayout(null);
 		setVisible(true);
@@ -43,7 +41,6 @@ public class MPpreventnulltfSF extends JFrame implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		dispose();
 	}
 

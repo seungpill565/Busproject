@@ -12,7 +12,7 @@ public class MPcontentsPanel extends JPanel {
 	MPleavePanel MPleave = new MPleavePanel();
 	MPreservationPanel MPreservation = new MPreservationPanel();
 	
-	//카레
+	//카드레이아웃
 	CardLayout MPcontentsCard = new CardLayout();
 	
 	public MPcontentsPanel() {

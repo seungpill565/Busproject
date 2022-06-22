@@ -11,5 +11,4 @@ abstract public class MPmainFrameEvent implements ActionListener {
 	public MPmainFrameEvent(MPmainFrame main) {
 		this.main = main;
 	}
-
 }

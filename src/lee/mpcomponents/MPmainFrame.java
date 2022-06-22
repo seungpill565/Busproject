@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -41,7 +42,7 @@ public class MPmainFrame extends JFrame {
 	ArrayList<Integer> br_id_list = new ArrayList<>();
 	
 
-//액션리스너에서 쓰일 메서드들 모음_____________________________________________________________________________________________________________
+//액션리스너에서 쓰일 메서드들 모음##########################################################################################
 	
 	//카테고리명 라벨 텍스트 바꾸는 메서드
 		public void setCategoryLabelText(String title) {
@@ -57,6 +58,18 @@ public class MPmainFrame extends JFrame {
 		} else if(btn.getText().equals("예매 확인")) {
 			setCategoryLabelText(btn.getText());
 			MPcontents.MPcontentsCard.show(MPcontents, "예매내역");
+			
+			//예매내역이 없으면 예매내역 없음 패널이 뜨도록
+			try(Connection conn = OjdbcConnection.getConnection();) {
+				if(MPreservationlistModel.get(conn, user_id).size() > 0) {
+					MPcontents.MPreservation.MPreservationCard.show(MPcontents.MPreservation, "예매내역 있음");
+				}
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			
 		} else if(btn.getText().equals("계정 탈퇴")) {
 			setCategoryLabelText(btn.getText());
 			MPcontents.MPcontentsCard.show(MPcontents, "계정탈퇴");
@@ -82,7 +95,6 @@ public class MPmainFrame extends JFrame {
 	
 	//프로필수정하기 화면에서 수정 완료 버튼 눌렀을 때 (수정값 저장되게) 
 	public void completeBtnCtrl() {
-		
 		if(MPcontents.MPprofile.MPprofile_2.MPnameTf.getText().equals("") 
 			|| MPcontents.MPprofile.MPprofile_2.MPphoneTf.getText().equals("") 
 			|| MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf).equals("")) {
@@ -236,18 +248,15 @@ public class MPmainFrame extends JFrame {
 					e1.printStackTrace();
 				}
 			}
-		});
-		 
-		
-		
-		
-		
-		
+		});	
 	}
 	
 	
 	
-//____________________________________________________________________________________________________________________________________	
+//####################################################################################################################################	
+	
+	
+	
 	
 	
 	
@@ -267,7 +276,7 @@ public class MPmainFrame extends JFrame {
 		MPhomeBtn.setBorderPainted(false);
 		
 
-		/*
+		/* ★★★★★★★★★★★★★★★★★★★이을 때 할 것!★★★★★★★★★★★★★★★★★★★★ㅍㅍ
 		//홈버튼 누르면 홈화면으로 가기 
 		MPhomeBtn.addActionListener(new ActionListener() {		
 			@Override

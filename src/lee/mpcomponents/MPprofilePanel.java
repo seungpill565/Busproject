@@ -53,7 +53,6 @@ public class MPprofilePanel extends JPanel {
 		JLabel MPprofileLb = new JLabel(MPprofileLbStr);
 		//프로필라벨 설정
 		MPprofileLb.setOpaque(true);//나중에 삭제 
-		//MPprofileLb.setBackground(Color.PINK);
 		MPprofileLb.setFont(new Font("고딕", Font.BOLD, 18)); 
 		MPprofileLb.setBounds(50, 50, 390, 200);
 		MPprofileLb.setVerticalAlignment(JLabel.TOP);

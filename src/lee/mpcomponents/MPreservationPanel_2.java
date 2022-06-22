@@ -46,11 +46,6 @@ public class MPreservationPanel_2 extends JPanel {
 		setLayout(MPborderlayout);
 		MPreservation_3.setLayout(MPboxlayout);
 	
-		//오늘 날짜 22/06/22 형식으로 구하기
-		String[] split = LocalDate.now().toString().split("-");
-		String join = String.join("/", split);
-		String date = join.substring(2);
-		
 		//예매 티켓 수에 따라 레저리스트패널 추가
 		ArrayList<MPreservationlistPanel> MPreservationlistArrList = new ArrayList<>();
 		
@@ -58,7 +53,7 @@ public class MPreservationPanel_2 extends JPanel {
 		ArrayList<MPreservationlistModel> sqlResults = null;
 		try (Connection conn = OjdbcConnection.getConnection();){	
 			//이너조인 검색결과를 어레리에 저장            ▲▲▲▲"22/06/20" 이거 임시로 채운거 오늘 날짜 구해서 넣는 걸로 바꾸기▲▲▲▲▲
-			sqlResults = MPreservationlistModel.get(conn, user_id, date);
+			sqlResults = MPreservationlistModel.get(conn, user_id);
 			ticketNum = sqlResults.size();
 		} catch (SQLException e) {
 			e.printStackTrace();
