@@ -28,8 +28,8 @@ public class MPreservationPanel_2 extends JPanel {
 	 
 	String user_id = "abc123";// 일단 임시로(다른 프레임에서 전달받을 거임) 
 	
-	JButton MPreservationcancleBtn = new JButton("예매취소");
 	
+	JButton MPreservationcancleBtn = new JButton("예매취소");	
 	BorderLayout MPborderlayout = new BorderLayout();
 	
 	//티켓 틀이 되는 패널 (안에 라벨, 쳌박 들어감) 

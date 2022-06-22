@@ -33,7 +33,7 @@ public class MPprofilePanel_1 extends JPanel {
 	public MPprofilePanel_1() {	 
 		setLayout(null);
 	
-		
+		/* 이거 MPprofilePanel 로 옮김
 		String sql = "SELECT user_id, user_name, user_phonenum FROM user_info WHERE user_id = ?";
 		String MPprofileLbStr = "";
 		
@@ -65,14 +65,15 @@ public class MPprofilePanel_1 extends JPanel {
 		MPprofileLb.setFont(new Font("고딕", Font.BOLD, 18)); 
 		MPprofileLb.setBounds(50, 50, 390, 200);
 		MPprofileLb.setVerticalAlignment(JLabel.TOP);
+		add(MPprofileLb);
+		*/
 		
 		
 		//수정하기 버튼 설정
 		MPeditBtn.setBounds(400, 400, 90, 38);
 		MPeditBtn.setBorderPainted(false);
+
 		
-		
-		add(MPprofileLb);
 		add(MPeditBtn);		
 	}
 	

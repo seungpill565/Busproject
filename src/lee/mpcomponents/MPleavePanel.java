@@ -12,7 +12,6 @@ public class MPleavePanel extends JPanel {
 	JLabel MPleaveConfirmLb = new JLabel("정말 탈퇴하시겠습니까?");
 	JButton MPleaveYesBtn = new JButton("예");
 	
-	
 	public MPleavePanel() {
 		
 		setLayout(null);
@@ -21,7 +20,6 @@ public class MPleavePanel extends JPanel {
 		MPleaveConfirmLb.setBounds(30, 30, 300, 60);
 		MPleaveConfirmLb.setOpaque(true);
 		MPleaveConfirmLb.setFont(new Font("고딕", Font.BOLD, 15));
-		//MPleaveConfirmLb.setBackground(Color.pink);
 		
 		//예 버튼 설정
 		MPleaveYesBtn.setBounds(380, 100, 90, 38);

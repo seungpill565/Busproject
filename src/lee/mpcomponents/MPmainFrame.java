@@ -6,8 +6,10 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -19,8 +21,10 @@ import lee.mpevents.MPBackBtnEvent;
 import lee.mpevents.MPcheckboxIL;
 import lee.mpevents.MPcompleteBtnEvent;
 import lee.mpevents.MPeditBtnEvent;
+import lee.mpevents.MPleaveYesBtnEvent;
 import lee.mpevents.MPnavBtnsEvent;
 import lee.mpevents.MPreservationCancleBtnEvent;
+import lee.mpmodel.MPprofileModel;
 import lee.mpmodel.MPreservationlistModel;
 
 public class MPmainFrame extends JFrame {
@@ -63,32 +67,66 @@ public class MPmainFrame extends JFrame {
 	//프로필수정하기 버튼 눌렀을 때
 	public void editBtnCtrl () {		
 		setCategoryLabelText("내 정보 수정");
-		MPcontents.MPprofile.showMPprofile_2(); 
-		MPcontents.MPprofile.MPprofile_2.setTfEmpty();
+		dispose();
+		MPmainFrame MPnewmainF = new MPmainFrame();
+		MPnewmainF.MPcontents.MPprofile.showMPprofile_2(); 
+		//MPcontents.MPprofile.MPprofile_2.tfSetDefaultTexts();		
 	}
 
-	
-	//프로필수정하기 화면에서 뒤로가기 버튼 눌렀을 때 (수정값 저장하면 안 됨 ★) ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+	//프로필수정하기 화면에서 뒤로가기 버튼 눌렀을 때 (수정값 저장하면 안 되도록)
 	public void backBtnCtrl () {
 		setCategoryLabelText("내 정보 조회");
-		MPcontents.MPprofile.MPprofile_2.setTfEmpty();
 		MPcontents.MPprofile.showMPprofile_1();
 	}
 	
 	
-	//프로필수정하기 화면에서 수정 완료 버튼 눌렀을 때 (수정값 저장해야됨 ★) ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+	//프로필수정하기 화면에서 수정 완료 버튼 눌렀을 때 (수정값 저장되게) 
 	public void completeBtnCtrl() {
-		setCategoryLabelText("내 정보 조회");
+		
+		if(MPcontents.MPprofile.MPprofile_2.MPnameTf.getText().equals("") 
+			|| MPcontents.MPprofile.MPprofile_2.MPphoneTf.getText().equals("") 
+			|| MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf).equals("")) {
+			new MPpreventnulltfSF();
+			return;
+		}
+		
+		
+		//이제 숫자 아닌거 넣으면 작은 창 뜨도록 해야됨
+		boolean result = Pattern.matches("\\d{11}", MPcontents.MPprofile.MPprofile_2.MPphoneTf.getText());
+		if(!result) {
+			System.out.println("폰번 잘못 입력됨");
+			new MPincorrectphonenumSF();
+			return;
+		}
 			
-		//여기에 수정한 정보 저장하는 기능 넣기 ★★★★★★★★★★★★★▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-
-		MPcontents.MPprofile.MPprofile_2.setTfEmpty();
+	
+		setCategoryLabelText("내 정보 조회");	
+		//수정한 정보 DB에 업데이트
+		try(Connection conn = OjdbcConnection.getConnection()
+		) {
+			MPprofileModel.MPupdateUserName(conn, user_id, MPcontents.MPprofile.MPprofile_2.MPnameTf.getText());
+			MPprofileModel.MPupdateUserPw(conn, user_id, MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf));
+			//핸드폰번호는 01012341234 로 입력받아서 010-1234-1234로 저장	
+			String str = MPcontents.MPprofile.MPprofile_2.MPphoneTf.getText();
+			ArrayList<String> arr = new ArrayList<>();
+			arr.add(str.substring(0, 3));
+			arr.add(str.substring(3, 7));
+			arr.add(str.substring(7, 11));
+			MPprofileModel.MPupdateUserPhoneNum(conn, user_id, String.join("-", arr));
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		dispose();
+		MPmainFrame MPnewmainF = new MPmainFrame();
 		MPcontents.MPprofile.showMPprofile_1();		
-
 	} //내정보 보기 화면에는 항상 최신 값만 뜨도록 해놔야겠네 
 
 	
+	//예매취소 버튼 눌렀을 때
 	public void reservationcancleBtnCtrl() {
+
 		int checkNum = 0;
 		//System.out.println(MPcontents.MPreservation.MPreservation_2.cbArr.length);
 		for(JCheckBox cb : MPcontents.MPreservation.MPreservation_2.cbArr) {
@@ -128,14 +166,7 @@ public class MPmainFrame extends JFrame {
 						
 						conn.commit();//커밋 오라클 가서 안 해도 되고 여기서 바로 됨
 						sf.dispose();//예 누르면 작은 창 닫기
-
-						
-						//MPcontents.MPreservation.MPreservation_2.MPreservation_3.removeAll();
-						
-						
-						
 					
-						 //이렇게 새로고침하면 문제점이 취소버튼을 누를 때마다 새 객체를 생성하게 되고 거기서 checkNum을 정해진 변수로 넘겨받을 수 없다는 것...
 						//_______________________________예매내역 새로고침 부분_________________________________________
 						MPcontents.MPreservation.remove(MPcontents.MPreservation.MPreservation_2);
 						MPreservationPanel_2 newMPreservationPanel_2 = new MPreservationPanel_2();
@@ -144,24 +175,17 @@ public class MPmainFrame extends JFrame {
 						
 						br_id_list = new ArrayList<>(); //체크박스 선택된 예매번호(br_id) 담는 어레리 비워주고 
 						
-						//이 밑에 두 줄은 navPanel 에서 예매확인 눌렀을 때 동작되는 것들(내정보조회/수정이나 계정 탈퇴 버튼 눌렀다가 예매확인 눌러야 reservation_2 패널에 바뀐 예매내역들로 뜨길래)  
-						
-						
 						//예매내역 패널 새로고침
 						dispose();
 						MPmainFrame MPnewmainF = new MPmainFrame();
 						MPnewmainF.setCategoryLabelText("예매확인");
 						MPnewmainF.MPcontents.MPcontentsCard.show(MPnewmainF.MPcontents, "예매내역");
-
-						//■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-						//이제 해결할 건 날짜 오늘 날짜로 조회하는 거		 
 						
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
 				}
 			});
-		
 		}	
 	}
 	
@@ -170,6 +194,57 @@ public class MPmainFrame extends JFrame {
 	public void btnAddAction(JButton btn) {
 		btn.addActionListener(new MPreservationCancleBtnEvent(this));
 	}
+	
+	
+	
+	public void leaveBtnCtrl() {
+		
+		//정말 삭제하시겠습니까? 작은 창 띄우기
+		MPleaveRealSF sf = new MPleaveRealSF();
+		
+		//user_info 테이블에서 user_info에 해당하는 행 DELETE 
+		sf.yesBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try(Connection conn = OjdbcConnection.getConnection();) {
+					conn.setAutoCommit(false);
+					
+					//레저테이블의 user_id 행을  먼저 삭제하고 그 다음에 user_info의 user_id행을 삭제해야됨
+					MPreservationlistModel.delete_user_id_row(conn, user_id);	
+					MPprofileModel.MPdeleteUserInfo(conn, user_id);
+					
+					conn.commit();
+					sf.dispose();
+					
+					//삭제되었습니다 작은 창 띄유기 
+					MPleavecompleteSF sf1 = new MPleavecompleteSF();	
+					sf1.yesBtn.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							sf1.dispose();
+							dispose();
+							
+							
+							
+							// 이을 때 여기에 홈화면으로 가는 기능 추가하기!!!!★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+							
+							
+						}
+					});
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		 
+		
+		
+		
+		
+		
+	}
+	
 	
 	
 //____________________________________________________________________________________________________________________________________	
@@ -216,11 +291,18 @@ public class MPmainFrame extends JFrame {
 		MPcontents.MPprofile.MPprofile_2.MPcompleteBtn.addActionListener(new MPcompleteBtnEvent(this));
 
 		
-		//예약취소버튼 액션■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+		//예약취소버튼 액션 
 		MPcontents.MPreservation.MPreservation_2.MPreservationcancleBtn.addActionListener(new MPreservationCancleBtnEvent(this));
 		
 		
-	
+		//탈퇴하기 예 버튼 액션 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 
+		MPcontents.MPleave.MPleaveYesBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				leaveBtnCtrl();
+			}
+		});
 		
 		
 		

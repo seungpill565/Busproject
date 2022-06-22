@@ -28,8 +28,21 @@ public class MPreservationlistModel {
 	
 	
 	
+	
 	public Integer getBr_id() {
 		return br_id;
+	}
+	
+	
+	
+	public static void delete_user_id_row(Connection conn, String user_id) {
+		String sql = "DELETE FROM bus_reservation WHERE user_id = ?";
+		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {
+			pstmt.setString(1, user_id);
+			System.out.println("user_id의 행 삭제 성공? : " + pstmt.executeUpdate());	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 
