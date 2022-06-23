@@ -20,6 +20,7 @@ public class BackGroundLabel extends JLabel {
 		Dimension dimension = new Dimension(w, h);
 		setPreferredSize(dimension);
 		setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 13));
+		setForeground(Color.WHITE);
 		//setBorder(lb);
 	}
 	

@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import an.OjdbcConnection;
 import an.login.Login_Mainframe;
@@ -62,7 +63,8 @@ public class SelectRouteMainFrame extends JFrame {
 	SelectTerminalMainFrame stmFrame;	// 터미널 선택 프레임
 	SelectBusFrame busFrame;	// 버스 선택 프레임
 	
-	private Image background = new ImageIcon("image/reservation1.jpg").getImage();
+	private JLabel label = new JLabel();
+	private ImageIcon background = new ImageIcon("image/reservation1.jpg");
 	
 	private String startingPoint;
 	private String arrivalPoint;
@@ -191,51 +193,55 @@ public class SelectRouteMainFrame extends JFrame {
 		this.saveInfo = saveInfo;
 		
 		// FlowLayout으로 설정 / gap 10 , 30
-		setLayout(new FlowLayout(FlowLayout.LEFT, 10, 30));
+		//setLayout(new FlowLayout(FlowLayout.LEFT, 10, 30));
+		label.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 30));
+		label.setIcon(background);
+		
+		add(label);
 		
 		// 홈버튼 액션달고 레이아웃에 붙이기
 		homeButton.addActionListener(homeBtnEvent);
-		add(homeButton);
+		//label.add(homeButton);
 		// 나중에 이미지넣을..?
-		add(new BackGroundLabel("", 370, 100));
+		label.add(new BackGroundLabel("", 370, 100));
 		
 		// 출발지 버튼 액션달고 붙이기
 		startingPointButton.addActionListener(showStratingBtnEvent);
-		add(startingPointButton);
-		add(new BackGroundLabel("=>", 60, 200));
+		label.add(startingPointButton);
+		label.add(new BackGroundLabel("", 60, 200));
 		
 		// 도착지 버튼
 		arrivalButton.addActionListener(showArrivalBtnEvent);
-		add(arrivalButton);
+		label.add(arrivalButton);
 		//add(new BackGroundLabel("", 560, 10));
-		add(new BackGroundLabel("출발 날짜 :",80, 30));
+		label.add(new BackGroundLabel("출발 날짜 :",80, 30));
 		
 		// 월 선택 콤보박스
 		monBox.addItemListener(monthBoxEvent);
-		add(monBox);
-		add(new BackGroundLabel("월", 60, 30));
+		label.add(monBox);
+		label.add(new BackGroundLabel("월", 60, 30));
 		
 		// 일 선택 콤보박스
 		dayBox.addItemListener(dayBoxEvent);
-		add(dayBox);
-		add(new BackGroundLabel("일", 30, 30));
+		label.add(dayBox);
+		label.add(new BackGroundLabel("일", 30, 30));
 		//add(new BackGroundLabel("", 560, 10));
 		
 		// 조회하기 버튼
 		serchButton.addActionListener(serchBtnEvent);
-		add(serchButton);
+		label.add(serchButton);
 		
 		
-		add(new BackGroundLabel("", 150, 30));
+		label.add(new BackGroundLabel("", 150, 30));
 		
 		// 다음 프레임으로 넘어가는 버튼
 		nextButton.addActionListener(nextBtnEvent);
-		add(nextButton);
+		label.add(nextButton);
 		
-		add(new BackGroundLabel("", 30, 30));
+		label.add(new BackGroundLabel("", 30, 30));
 		
 		beforeButton.addActionListener(beforeBtnEvent);
-		add(beforeButton);
+		label.add(beforeButton);
 		
 		setBounds(300, 100, 600, 650);
 		//this.getContentPane().setBackground(new Color(0xFFFFCC));
@@ -291,7 +297,4 @@ public class SelectRouteMainFrame extends JFrame {
 		}
 	}
 	
-	public void paint(Graphics g) {
-		g.drawImage(background, 0, 0, null);
-	}
 }

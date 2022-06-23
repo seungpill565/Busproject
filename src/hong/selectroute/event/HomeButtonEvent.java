@@ -13,7 +13,8 @@ public class HomeButtonEvent extends RouteMainFrameAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		System.exit(0);
+		main.thisFrameClose();
+		main.before();
 	}
 
 }
