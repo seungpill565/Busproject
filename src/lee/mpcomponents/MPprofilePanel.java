@@ -10,19 +10,28 @@ import java.sql.SQLException;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import lee.OjdbcConnection;
+import an.OjdbcConnection;
+import hong.SaveInfo;
 import lee.mpmodel.MPprofileModel;
 
 public class MPprofilePanel extends JPanel {
 
-	MPprofilePanel_1 MPprofile_1 = new MPprofilePanel_1();
-	MPprofilePanel_2 MPprofile_2 = new MPprofilePanel_2();
+	SaveInfo saveInfo;
+	MPprofilePanel_1 MPprofile_1;
+	MPprofilePanel_2 MPprofile_2;
 	
 	CardLayout MPprofileCard = new CardLayout();
 	
-	String user_id  = "abc123"; //나중에 수정
 	
-	public MPprofilePanel() {
+	
+	String user_id; //나중에 수정
+	
+	public MPprofilePanel(SaveInfo saveInfo) {
+		this.saveInfo = saveInfo;
+		this.user_id = saveInfo.get_user_id();
+		
+		MPprofile_1 = new MPprofilePanel_1(saveInfo);
+		MPprofile_2 = new MPprofilePanel_2();
 		
 		setLayout(MPprofileCard);
 

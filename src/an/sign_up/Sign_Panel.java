@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import an.OjdbcConnection;
+import lee.mpcomponents.MPincorrectphonenumSF;
 
 
 public class Sign_Panel extends JPanel{
@@ -65,15 +66,20 @@ public class Sign_Panel extends JPanel{
 			phone = pntext.getText();
 			check = combo.getSelectedItem().toString();
 
-			String sql = "INSERT into user_info(user_id,user_passenger_manager,user_user_name,user_password,user_phonenum)"
+			String sql = "INSERT into user_info(user_id,user_passenger_manager,user_name,user_password,user_phonenum)"
 					+ " values (?,?,?,?,?)"; 
 
 			Pattern passPattern1 = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$"); //8자 영문+특문+숫자
 			Matcher passMatcher = passPattern1.matcher(pass);
-
+			
+			
+			boolean result = Pattern.matches("\\d{3}-\\d{4}-\\d{4}", phone);
+			
 			if (!passMatcher.find()) {
 				JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다", "비밀번호 오류", 1);
-			} 
+			} if(!result) {
+				JOptionPane.showMessageDialog(null, "xxx-xxxx-xxxx로 입력해 주세요", "번호 오류", 1);
+			}
 			
 			else {
 				try(Connection conn = OjdbcConnection.getConnection();

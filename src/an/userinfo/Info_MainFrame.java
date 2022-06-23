@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import an.login.Login_Mainframe;
 import hong.SaveInfo;
 import hong.selectroute.SelectRouteMainFrame;
+import lee.mpcomponents.MPmainFrame;
 
 public class Info_MainFrame extends JFrame{
 	JButton Reservation = new Info_JButton("¿¹¾à");
@@ -20,8 +21,9 @@ public class Info_MainFrame extends JFrame{
 	JPanel buttonPanel = new Info_Panel(Reservation,myinfo,logout);
 	JPanel imagePanel = new Info_ImagePanel();
 	JPanel titlePanel = new Info_TitlePanel();
-	
+
 	SaveInfo saveInfo;
+	
 	
 	public Info_MainFrame(SaveInfo saveInfo) {
 		
@@ -49,6 +51,8 @@ public class Info_MainFrame extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {	
+				new MPmainFrame(saveInfo);
+				dispose();
 			}
 		});
 		

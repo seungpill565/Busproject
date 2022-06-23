@@ -2,23 +2,18 @@ package lee.mpcomponents;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import lee.OjdbcConnection;
+import an.OjdbcConnection;
+import hong.SaveInfo;
 import lee.mpevents.MPcheckboxIL;
 import lee.mpmodel.MPreservationlistModel;
 
@@ -26,7 +21,8 @@ import lee.mpmodel.MPreservationlistModel;
 //디비에서 예매내역 데려올 때 오늘 날짜 이후의 예매내역만 가져와야 됨...
 public class MPreservationPanel_2 extends JPanel {
 	 
-	String user_id = "abc123";// 일단 임시로(다른 프레임에서 전달받을 거임) 
+	SaveInfo saveInfo;
+	String user_id;// 일단 임시로(다른 프레임에서 전달받을 거임) 
 	
 	
 	JButton MPreservationcancleBtn = new JButton("예매취소");	
@@ -37,8 +33,10 @@ public class MPreservationPanel_2 extends JPanel {
 	
 	JCheckBox[] cbArr;
 	
-	public MPreservationPanel_2() {  
-	
+	public MPreservationPanel_2(SaveInfo saveInfo) {  
+		this.saveInfo = saveInfo;
+		
+		this.user_id = new SaveInfo().get_user_id();
 		
 		JScrollPane MPscroll = new JScrollPane(MPreservation_3, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		BoxLayout MPboxlayout = new BoxLayout(MPreservation_3, BoxLayout.Y_AXIS);		

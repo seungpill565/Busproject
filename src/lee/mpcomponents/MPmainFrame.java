@@ -1,28 +1,28 @@
 package lee.mpcomponents;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
-import lee.OjdbcConnection;
+import an.OjdbcConnection;
+import an.login.Login_Mainframe;
+import an.userinfo.Info_MainFrame;
+import hong.SaveInfo;
 import lee.mpevents.MPBackBtnEvent;
-import lee.mpevents.MPcheckboxIL;
 import lee.mpevents.MPcompleteBtnEvent;
 import lee.mpevents.MPeditBtnEvent;
-import lee.mpevents.MPleaveYesBtnEvent;
 import lee.mpevents.MPnavBtnsEvent;
 import lee.mpevents.MPreservationCancleBtnEvent;
 import lee.mpmodel.MPprofileModel;
@@ -30,13 +30,14 @@ import lee.mpmodel.MPreservationlistModel;
 
 public class MPmainFrame extends JFrame {
 
-	String user_id = "abc123";
+	String user_id;
+	SaveInfo saveInfo;
 	
 	JButton MPhomeBtn = new JButton();
 	JLabel MPcategoryLb = new JLabel("카테고리명");
 	
 	MPnavPanel MPnav = new MPnavPanel();
-	MPcontentsPanel MPcontents = new MPcontentsPanel();
+	MPcontentsPanel MPcontents;
 	
 	//체크된 체크박스에 담긴 예매번호 담는 어레리 
 	ArrayList<Integer> br_id_list = new ArrayList<>();
@@ -88,13 +89,16 @@ public class MPmainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try (Connection conn = OjdbcConnection.getConnection();){
+					
 					String str = inputpwSF.MPgetPwd(inputpwSF.inputpwPf);
+					
 					if(str.equals(MPprofileModel.MPgetUserPw(conn, user_id))) {
 						inputpwSF.dispose();
 						setCategoryLabelText("내 정보 수정");
 						dispose();
-						MPmainFrame MPnewmainF = new MPmainFrame();
+						MPmainFrame MPnewmainF = new MPmainFrame(saveInfo);
 						MPnewmainF.MPcontents.MPprofile.showMPprofile_2(); 		
+					
 					} else {
 						new MPincorrectpwSF();
 					}
@@ -133,11 +137,22 @@ public class MPmainFrame extends JFrame {
 		}
 			
 		
-		//이름이랑 비밀번호 글자수 제한하는 거 할까... ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-		if((MPcontents.MPprofile.MPprofile_2.MPnameTf.getText().length() > 10)||(MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf).length() > 10)) {		
+		//이름이랑  글자수 제한하는 거 할까... ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+		if(MPcontents.MPprofile.MPprofile_2.MPnameTf.getText().length() > 10) {		
 			new MPnamelengthrestrictSF();
 			return;
 		}
+		
+		
+	//=======================================================================================================================
+
+		Pattern passPattern1 = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$"); //8자 영문+특문+숫자
+		Matcher passMatcher = passPattern1.matcher(MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf));
+		if (!passMatcher.find()) {
+			JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다", "비밀번호 오류", 1);
+			return;
+		}
+		
 		
 
 	
@@ -145,9 +160,13 @@ public class MPmainFrame extends JFrame {
 		//수정한 정보 DB에 업데이트
 		try(Connection conn = OjdbcConnection.getConnection()
 		) {
-			conn.setAutoCommit(false);
+			//conn.setAutoCommit(false);
+			
+			
+			
 			MPprofileModel.MPupdateUserName(conn, user_id, MPcontents.MPprofile.MPprofile_2.MPnameTf.getText());
 			MPprofileModel.MPupdateUserPw(conn, user_id, MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf));
+		
 			//핸드폰번호는 01012341234 로 입력받아서 010-1234-1234로 저장	
 			String str = MPcontents.MPprofile.MPprofile_2.MPphoneTf.getText();
 			ArrayList<String> arr = new ArrayList<>();
@@ -156,13 +175,15 @@ public class MPmainFrame extends JFrame {
 			arr.add(str.substring(7, 11));
 			MPprofileModel.MPupdateUserPhoneNum(conn, user_id, String.join("-", arr));
 			
-			conn.commit();
+			
+			
+			//conn.commit();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		dispose();
-		MPmainFrame MPnewmainF = new MPmainFrame();
+		MPmainFrame MPnewmainF = new MPmainFrame(saveInfo);
 		MPcontents.MPprofile.showMPprofile_1();		
 	} //내정보 보기 화면에는 항상 최신 값만 뜨도록 해놔야겠네 
 
@@ -212,7 +233,7 @@ public class MPmainFrame extends JFrame {
 					
 						//_______________________________예매내역 새로고침 부분_________________________________________
 						MPcontents.MPreservation.remove(MPcontents.MPreservation.MPreservation_2);
-						MPreservationPanel_2 newMPreservationPanel_2 = new MPreservationPanel_2();
+						MPreservationPanel_2 newMPreservationPanel_2 = new MPreservationPanel_2(saveInfo);
 						btnAddAction(newMPreservationPanel_2.MPreservationcancleBtn);
 						MPcontents.MPreservation.add(newMPreservationPanel_2);
 						
@@ -220,7 +241,7 @@ public class MPmainFrame extends JFrame {
 						
 						//예매내역 패널 새로고침
 						dispose();
-						MPmainFrame MPnewmainF = new MPmainFrame();
+						MPmainFrame MPnewmainF = new MPmainFrame(saveInfo);
 						MPnewmainF.setCategoryLabelText("예매확인");
 						MPnewmainF.MPcontents.MPcontentsCard.show(MPnewmainF.MPcontents, "예매내역");
 						
@@ -253,7 +274,9 @@ public class MPmainFrame extends JFrame {
 					conn.setAutoCommit(false);
 					
 					//레저테이블의 user_id 행을  먼저 삭제하고 그 다음에 user_info의 user_id행을 삭제해야됨
-					MPreservationlistModel.delete_user_id_row(conn, user_id);	
+					System.out.println(user_id);
+		//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+					//MPreservationlistModel.delete_user_id_row(conn, user_id);	
 					MPprofileModel.MPdeleteUserInfo(conn, user_id);
 					
 					conn.commit();
@@ -266,13 +289,7 @@ public class MPmainFrame extends JFrame {
 						public void actionPerformed(ActionEvent e) {
 							sf1.dispose();
 							dispose();
-							
-							
-							
-							// 이을 때 여기에 홈화면으로 가는 기능 추가하기!!!!★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-
-							
-							
+							new Login_Mainframe();
 						}
 					});
 				} catch (SQLException e1) {
@@ -291,8 +308,15 @@ public class MPmainFrame extends JFrame {
 	
 	
 	
-	public MPmainFrame() {
-
+	public MPmainFrame(SaveInfo saveInfo) {
+		
+		
+		this.saveInfo = saveInfo;
+		this.user_id = saveInfo.get_user_id();
+		
+		MPcontents = new MPcontentsPanel(saveInfo);
+		
+		
 		
 		setLayout(null);
 
@@ -306,16 +330,16 @@ public class MPmainFrame extends JFrame {
 		MPhomeBtn.setBounds(10, 10, 50, 50);
 		MPhomeBtn.setBorderPainted(false);
 		
-
-		/* ★★★★★★★★★★★★★★★★★★★이을 때 할 것!★★★★★★★★★★★★★★★★★★★★
-		//홈버튼 누르면 홈화면으로 가기 
+		
+		//홈버튼
 		MPhomeBtn.addActionListener(new ActionListener() {		
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//아 이거 main 쓰려면 액션 클래스 따로 파야하나? 
+				dispose();
+				new Info_MainFrame(saveInfo);
 			}
 		});
-		*/
+		
 		
 		
 		//네비게이션 바 버튼 3개 액션
@@ -361,9 +385,4 @@ public class MPmainFrame extends JFrame {
 	}
 	
 
-	
-	//테스트용 메인부. 나중에 삭제
-	public static void main(String[] args) {
-		new MPmainFrame();
-	}
 }

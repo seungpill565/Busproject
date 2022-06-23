@@ -3,14 +3,21 @@ package lee.mpcomponents;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import hong.SaveInfo;
+
 public class MPprofilePanel_1 extends JPanel {
 
-	String user_id = "abc123"; //얘는 홈 프레임에서 받았다고 치고 ★ 
+	SaveInfo saveInfo;
+	
+	String user_id;   
 
 	
 	JButton MPeditBtn = new JButton("수정하기");
 	
-	public MPprofilePanel_1() {	 
+	public MPprofilePanel_1(SaveInfo saveInfo) {	 
+		this.saveInfo = saveInfo;
+		this.user_id = saveInfo.get_user_id();
+		
 		setLayout(null);
 	
 		

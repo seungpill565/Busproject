@@ -6,11 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MPprofileModel {
+	
 	String user_id;
 	String user_name;
 	String user_phonenum;
 //---------------------------
 	String user_password;
+	
 	
 	
 	
@@ -30,7 +32,6 @@ public class MPprofileModel {
 		user_id = rs.getString("user_id");
 		user_name = rs.getString("user_name");
 		user_phonenum = rs.getString("user_phonenum");
-		
 		user_password = rs.getString("user_password");
 	}
 
@@ -40,7 +41,8 @@ public class MPprofileModel {
 		String sql = "DELETE FROM user_info WHERE user_id = ?";
 		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {
 			pstmt.setString(1, user_id);
-			//System.out.println("회원정보 삭제 성공? : " + pstmt.executeUpdate());	
+			System.out.println(user_id);
+			System.out.println("회원정보 삭제 성공? : " + pstmt.executeUpdate());	
 		} catch (SQLException e) {
 			System.out.println("");
 		}
@@ -70,10 +72,10 @@ public class MPprofileModel {
 	public static void MPupdateUserName(Connection conn, String user_id, String newName) {
 		String sql = "UPDATE user_info SET user_name = ? WHERE user_id = ?";
 		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {
-			
+	
 			pstmt.setString(1, newName);
 			pstmt.setString(2, user_id);
-			
+			pstmt.executeUpdate();
 			//System.out.println("이름 수정 성공? : " + pstmt.executeUpdate());	
 		} catch (SQLException e) {
 			System.out.println("");
@@ -87,7 +89,7 @@ public class MPprofileModel {
 			pstmt.setString(1, newPhoneNum);
 			pstmt.setString(2, user_id);
 			
-			//System.out.println("연락처 수정 성공? : " + pstmt.executeUpdate());	
+			pstmt.executeUpdate();	
 		} catch (SQLException e) {
 			System.out.println("");
 		}
@@ -100,7 +102,7 @@ public class MPprofileModel {
 			pstmt.setString(1, newPw);
 			pstmt.setString(2, user_id);
 			
-			//System.out.println("비밀번호 수정 성공? : " + pstmt.executeUpdate());	
+			pstmt.executeUpdate();	
 		} catch (SQLException e) {
 			System.out.println("");
 		}

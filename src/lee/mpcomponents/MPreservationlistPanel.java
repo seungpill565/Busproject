@@ -1,19 +1,9 @@
 package lee.mpcomponents;
 
-import java.awt.Color;
 import java.awt.Font;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import lee.OjdbcConnection;
-import lee.mpmodel.MPreservationlistModel;
 
 public class MPreservationlistPanel extends JPanel {
 	

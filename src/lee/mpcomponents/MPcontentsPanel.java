@@ -5,18 +5,24 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
+import hong.SaveInfo;
+
 public class MPcontentsPanel extends JPanel {
 	
+	SaveInfo saveInfo;
 	
-	MPprofilePanel MPprofile = new MPprofilePanel();
+	MPprofilePanel MPprofile;
 	MPleavePanel MPleave = new MPleavePanel();
-	MPreservationPanel MPreservation = new MPreservationPanel();
+	MPreservationPanel MPreservation;
 	
 	//카드레이아웃
 	CardLayout MPcontentsCard = new CardLayout();
 	
-	public MPcontentsPanel() {
-
+	public MPcontentsPanel(SaveInfo saveInfo) {
+		this.saveInfo = saveInfo;
+	
+		MPprofile = new MPprofilePanel(saveInfo);
+		MPreservation = new MPreservationPanel(saveInfo);
 		
 		setLayout(MPcontentsCard);	
 		

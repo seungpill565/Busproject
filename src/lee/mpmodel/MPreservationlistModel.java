@@ -52,9 +52,9 @@ public class MPreservationlistModel {
 		String sql = "DELETE FROM bus_reservation WHERE user_id = ?";
 		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {
 			pstmt.setString(1, user_id);
-			System.out.println("user_id의 행 삭제 성공? : " + pstmt.executeUpdate());	
+			System.out.println("user_id의 행 삭제 성공? : " + pstmt.executeUpdate());
 		} catch (SQLException e) {
-			System.out.println("");
+			System.out.println("행 삭제 안 됨");
 		}
 	}
 	
@@ -66,7 +66,7 @@ public class MPreservationlistModel {
 			pstmt.setInt(1, bs_id);
 			System.out.println("bs_id의 행 삭제 성공? : " + pstmt.executeUpdate());	
 		} catch (SQLException e) {
-			System.out.println("");
+			System.out.println("삭제 안 됨");
 		}
 	}
 	

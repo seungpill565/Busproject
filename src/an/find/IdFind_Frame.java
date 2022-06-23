@@ -46,7 +46,7 @@ public class IdFind_Frame extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String sql = String.format("SELECT user_id from user_info where user_user_name = '%s' and user_phonenum = '%s'",
+				String sql = String.format("SELECT user_id from user_info where user_name = '%s' and user_phonenum = '%s'",
 						nameText.getText() ,pnText.getText());
 				System.out.println(nameText.getText());
 				System.out.println(pnText.getText());
