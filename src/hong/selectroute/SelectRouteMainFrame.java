@@ -1,12 +1,14 @@
 package hong.selectroute;
 
-import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -59,6 +61,8 @@ public class SelectRouteMainFrame extends JFrame {
 	SelectSeatMainFrame seatMainFrame; // 좌석선택 프레임
 	SelectTerminalMainFrame stmFrame;	// 터미널 선택 프레임
 	SelectBusFrame busFrame;	// 버스 선택 프레임
+	
+	private Image background = new ImageIcon("image/reservation1.jpg").getImage();
 	
 	private String startingPoint;
 	private String arrivalPoint;
@@ -186,7 +190,6 @@ public class SelectRouteMainFrame extends JFrame {
 		
 		this.saveInfo = saveInfo;
 		
-		this.getContentPane().setBackground(new Color(0xFFFFCC));
 		// FlowLayout으로 설정 / gap 10 , 30
 		setLayout(new FlowLayout(FlowLayout.LEFT, 10, 30));
 		
@@ -235,7 +238,10 @@ public class SelectRouteMainFrame extends JFrame {
 		add(beforeButton);
 		
 		setBounds(300, 100, 600, 650);
+		//this.getContentPane().setBackground(new Color(0xFFFFCC));
 		//getContentPane().setBackground(Color.WHITE);
+		setResizable(false);
+		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
@@ -283,5 +289,9 @@ public class SelectRouteMainFrame extends JFrame {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void paint(Graphics g) {
+		g.drawImage(background, 0, 0, null);
 	}
 }

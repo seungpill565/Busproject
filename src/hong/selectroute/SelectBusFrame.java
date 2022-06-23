@@ -37,6 +37,7 @@ public class SelectBusFrame extends JFrame {
 		setBounds(300, 100, 440, 550);
 		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setResizable(false);
 		setVisible(true);
 	}
 	

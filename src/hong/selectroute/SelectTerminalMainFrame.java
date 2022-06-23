@@ -42,6 +42,7 @@ public class SelectTerminalMainFrame extends JFrame {
 		setBounds(300, 100, 500, 400);
 		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setResizable(false);
 		setVisible(true);
 	}
 	

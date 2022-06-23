@@ -83,6 +83,7 @@ public class SelectSeatMainFrame extends JFrame {
 		setBounds(300, 100, 450, 700);
 		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setResizable(false);
 		setVisible(true);
 	}
 	

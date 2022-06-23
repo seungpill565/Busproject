@@ -12,8 +12,9 @@ public class SerchButton extends JButton {
 	
 	public SerchButton() {
 		super("조회하기");
-		setBackground(new Color(0xFFE5CC));
-		setFont(new Font("맑은고딕", Font.BOLD, 18));
+		setOpaque(true);
+		setBackground(Color.WHITE);
+		setFont(new Font("HY헤드라인M", Font.PLAIN, 18));
 		setPreferredSize(dimension);
 	}
 }
