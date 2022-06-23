@@ -11,9 +11,11 @@ public class RouteInfoColumnNamePanel extends JPanel {// 스크롤패인의 맨 윗부분�
 
 	public RouteInfoColumnNamePanel() {
 		LayoutManager manager = new FlowLayout(FlowLayout.LEFT,0,0);
+		
 		setLayout(manager);
 		
-		add(new RouteInfoColumnNameLabel("날짜"));
+		
+		add(new RouteInfoColumnNameLabel("  날짜"));
 		add(new RouteInfoColumnNameLabel("시간"));
 		add(new RouteInfoColumnNameLabel("출발지"));
 		add(new RouteInfoColumnNameLabel("목적지"));

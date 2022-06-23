@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import park.ReservationInfo;
+import park.database.LoadRVID;
 import park.database.SaveDB;
 import park.frame.PayInfo;
 
@@ -35,7 +36,7 @@ public class PayButton extends JButton{
 				if(ok==JOptionPane.OK_OPTION) { // ok를 누르면
 					new SaveDB(user); // 디비에 저장한다
 					new PayInfo(user); // 결제 버튼 누르면 다음 화면으로 넘어가고
-					
+					new LoadRVID(user); // 디비에 저장된 예매번호를 인스턴스에 저장함
 				}
 				else { // ok 이외의 것을 누르면
 					user.setTotalCharge(); // 결제 팝업에서 취소한 것이므로 총요금을 초기화 해준다

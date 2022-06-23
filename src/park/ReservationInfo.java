@@ -9,7 +9,7 @@ public class ReservationInfo { // 인스턴스 예시 클래스
 	static private String userId;
 	static private Integer busId;
 	static private Integer seatId;
-//	static private Integer[] reservationId; // 좌석당 예매번호 1개고 여러좌석일 수 있으므로 배열로 저장
+	static private ArrayList<Integer> reservationId = new ArrayList<>();; // 좌석당 예매번호 1개고 여러좌석일 수 있으므로 배열로 저장
 	static private String depart;
 	static private String arrive;
 	static private String price;
@@ -17,7 +17,7 @@ public class ReservationInfo { // 인스턴스 예시 클래스
 	static private String time;
 	static private LinkedHashMap<Integer, Double> seatName = new LinkedHashMap<>(); // 할인율을 더블로 받는거랑
 	static private LinkedHashMap<Integer, String> ageBySeat = new LinkedHashMap<>(); 
-	static private ArrayList<Integer> seatKeys = new ArrayList<>(); // 좌석번호인데 이것도 여러 좌석일 수 있으므로 배열
+	static private ArrayList<String> seatKeys = new ArrayList<>(); // 좌석번호인데 이것도 여러 좌석일 수 있으므로 배열
 	static private String payWay; // 이건 한번 결제할때 같은 수단으로 하니까 배열 x
 	//static private String[] age; // 좌석 별 연령이므로 이것도 배열
 	static private double totalCharge=0; // 할인율 곱할 때 소수로 곱하기 때문에 double로
@@ -25,17 +25,17 @@ public class ReservationInfo { // 인스턴스 예시 클래스
 	public ReservationInfo() {
 		seatName.put(1, null);
 		seatName.put(2, null);
-		seatName.put(4, null);
-		seatName.put(8, null);
-		seatName.put(11, null);
-		seatName.put(3, null);
-		seatName.put(10, null);
-		seatName.put(5, null);
-		seatName.put(6, null);
-		seatName.put(23, null);
-		seatName.put(35, null);
-		seatName.put(74, null);
-		seatName.put(55, null);
+//		seatName.put(4, null);
+//		seatName.put(8, null);
+//		seatName.put(11, null);
+//		seatName.put(3, null);
+//		seatName.put(10, null);
+//		seatName.put(5, null);
+//		seatName.put(6, null);
+//		seatName.put(23, null);
+//		seatName.put(35, null);
+//		seatName.put(74, null);
+//		seatName.put(55, null);
 		
 		depart = "동서울";
 		arrive = "부산";
@@ -48,19 +48,19 @@ public class ReservationInfo { // 인스턴스 예시 클래스
 		seatId = 1;
 	}
 	
-	public static void setSeatKeys() { // 키 값들 뽑아서 어레이리스트에 저장
-		Set<Integer> keys = seatName.keySet();
-		for(Integer key : keys) {
-			seatKeys.add(key);
-		}
-		for(int i=0;i<seatKeys.size();i++)
-			System.out.println(seatKeys.get(i));
-	}
-	public static ArrayList<Integer> getSeatKeys() {
+//	public static void setSeatKeys() { // 키 값들 뽑아서 어레이리스트에 저장
+//		Set<String> keys = seatName.keySet();
+//		for(String key : keys) {
+//			seatKeys.add(key);
+//		}
+//		for(int i=0;i<seatKeys.size();i++)
+//			System.out.println(seatKeys.get(i));
+//	}
+	public static ArrayList<String> getSeatKeys() {
 		return seatKeys;
 	}
 	public static int getSeatSize() {
-		return seatName.size();
+		return seatKeys.size();
 	}
 	
 	
@@ -86,7 +86,9 @@ public class ReservationInfo { // 인스턴스 예시 클래스
 		totalCharge = 0;
 	}
 	
-	
+	public static void setReservationId(int rvid) {
+		reservationId.add(rvid);
+	}
 
 	public static String getUserId() {
 		return userId;
@@ -178,6 +180,6 @@ public class ReservationInfo { // 인스턴스 예시 클래스
 	
 	
 	private static void main(String[] args) {
-		new ReservationInfo().setSeatKeys();
+		//new ReservationInfo().setSeatKeys();
 	}
 }

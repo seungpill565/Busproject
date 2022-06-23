@@ -6,16 +6,16 @@ import java.awt.Font;
 
 import javax.swing.JLabel;
 
-public class RouteInfoColumnNameLabel extends JLabel{
-	
-	public RouteInfoColumnNameLabel(String title) {
+public class RouteInfoRowsLabel extends JLabel{
+
+	public RouteInfoRowsLabel(String title) {
 		super(title);
-		
-		setFont(new Font("πŸ≈¡√º",Font.BOLD,20));
+		setFont(new Font("πŸ≈¡√º",Font.BOLD,16));
 		setPreferredSize(new Dimension(50,30));
 		setOpaque(true);
-		setForeground(Color.white);
-		setBackground(Color.black);
+//		setForeground(Color.white);
+		setBackground(Color.blue);
 		
 	}
+	
 }
