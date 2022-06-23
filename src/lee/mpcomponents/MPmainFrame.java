@@ -80,11 +80,33 @@ public class MPmainFrame extends JFrame {
 	
 	//프로필수정하기 버튼 눌렀을 때
 	public void editBtnCtrl () {		
-		setCategoryLabelText("내 정보 수정");
-		dispose();
-		MPmainFrame MPnewmainF = new MPmainFrame();
-		MPnewmainF.MPcontents.MPprofile.showMPprofile_2(); 		
-	}
+		
+		MPinputpwSF inputpwSF = new MPinputpwSF();
+		
+		
+		inputpwSF.completeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try (Connection conn = OjdbcConnection.getConnection();){
+					String str = inputpwSF.MPgetPwd(inputpwSF.inputpwPf);
+					if(str.equals(MPprofileModel.MPgetUserPw(conn, user_id))) {
+						inputpwSF.dispose();
+						setCategoryLabelText("내 정보 수정");
+						dispose();
+						MPmainFrame MPnewmainF = new MPmainFrame();
+						MPnewmainF.MPcontents.MPprofile.showMPprofile_2(); 		
+					} else {
+						new MPincorrectpwSF();
+					}
+				
+					
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+			}
 
 	//프로필수정하기 화면에서 뒤로가기 버튼 눌렀을 때 (수정값 저장하면 안 되도록)
 	public void backBtnCtrl () {

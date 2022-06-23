@@ -47,6 +47,24 @@ public class MPprofileModel {
 	}
 	
 	
+	public static String MPgetUserPw(Connection conn, String user_id) {
+		String sql = "SELECT user_password FROM user_info WHERE user_id = ?";
+		String userPw = "";
+		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {
+			
+			pstmt.setString(1, user_id);
+			
+			try(ResultSet rs = pstmt.executeQuery();) {
+				while(rs.next() ) {
+					userPw = rs.getString("user_password");
+				}
+			}	
+		} catch (SQLException e) {
+			System.out.println("");
+		}
+		return userPw;
+	}
+	
 	
 	//이름수정메서드 
 	public static void MPupdateUserName(Connection conn, String user_id, String newName) {
