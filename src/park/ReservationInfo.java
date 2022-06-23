@@ -15,7 +15,7 @@ public class ReservationInfo { // 인스턴스 예시 클래스
 	static private String price;
 	static private String date;
 	static private String time;
-	static private LinkedHashMap<Integer, Double> seatName = new LinkedHashMap<>(); // 할인율을 더블로 받는거랑
+	static private LinkedHashMap<Integer, Double> seatName = new LinkedHashMap<>(); 
 	static private LinkedHashMap<Integer, String> ageBySeat = new LinkedHashMap<>(); 
 	static private ArrayList<String> seatKeys = new ArrayList<>(); // 좌석번호인데 이것도 여러 좌석일 수 있으므로 배열
 	static private String payWay; // 이건 한번 결제할때 같은 수단으로 하니까 배열 x
@@ -56,6 +56,15 @@ public class ReservationInfo { // 인스턴스 예시 클래스
 //		for(int i=0;i<seatKeys.size();i++)
 //			System.out.println(seatKeys.get(i));
 //	}
+	
+	public static void setSeatKeys() { // 이것부터 해결하기 24일
+		Set<String> keys = seatName.keySet();
+		for(String key : keys) {
+			seatKeys.add(key);
+		}
+		for(int i=0;i<seatKeys.size();i++)
+			System.out.println(seatKeys.get(i));
+	}
 	public static ArrayList<String> getSeatKeys() {
 		return seatKeys;
 	}
