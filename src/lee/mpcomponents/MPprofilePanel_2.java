@@ -38,6 +38,8 @@ public class MPprofilePanel_2 extends JPanel {
 	JTextField MPphoneTf = new JTextField(25);
 	JPasswordField MPnewpwTf = new JPasswordField(25);
 	 
+	JLabel MPprofilerestrictLb = new JLabel("<html><pre style=\"font-family:고딕; font-size:13;\">이름, 비밀번호는 10글자까지 입력 가능합니다.<br>핸드폰번호 ex. 01012341234</pre></htnl>"); 
+	
 	
 	public MPprofilePanel_2() {
 		setLayout(null);
@@ -46,7 +48,8 @@ public class MPprofilePanel_2 extends JPanel {
 		MPviewLb2.setFont(new Font("고딕", Font.BOLD, 14));
 		MPviewLb3.setFont(new Font("고딕", Font.BOLD, 14));
 	
-		
+		MPprofilerestrictLb.setBounds(120, 355, 400, 50);
+		add(MPprofilerestrictLb);
 		
 		//새비밀번호 텍스트필드 입력할 때 ●로 표시 
 		MPnewpwTf.setEchoChar('●');
@@ -72,7 +75,6 @@ public class MPprofilePanel_2 extends JPanel {
 		//인풋패널 설정
 		MPlabelPanel.setLayout(new GridLayout());
 		MPlabelPanel.setBounds(85, 90, 350, 170);
-		//MPlabelPanel.setBackground(Color.pink);
 		MPlabelPanel.setLayout(gbl);
 		
 	
@@ -119,13 +121,7 @@ public class MPprofilePanel_2 extends JPanel {
 		MPlabelPanel.add(c);
 	}
 	
-	
-	public void tfSetDefaultTexts() {
-		MPnameTf.setText("기본정보");
-		MPphoneTf.setText("기본정보");
-		MPnewpwTf.setText("기본정보");
-	}
-	
+
 	
 	//JPasswordField에서 얻어온 char[]배열을 String으로 변환
 	public String MPgetPwd(JPasswordField MPnewpwTf) {

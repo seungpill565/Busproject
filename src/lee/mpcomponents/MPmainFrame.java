@@ -42,6 +42,7 @@ public class MPmainFrame extends JFrame {
 	ArrayList<Integer> br_id_list = new ArrayList<>();
 	
 
+	
 //액션리스너에서 쓰일 메서드들 모음##########################################################################################
 	
 	//카테고리명 라벨 텍스트 바꾸는 메서드
@@ -82,8 +83,7 @@ public class MPmainFrame extends JFrame {
 		setCategoryLabelText("내 정보 수정");
 		dispose();
 		MPmainFrame MPnewmainF = new MPmainFrame();
-		MPnewmainF.MPcontents.MPprofile.showMPprofile_2(); 
-		//MPcontents.MPprofile.MPprofile_2.tfSetDefaultTexts();		
+		MPnewmainF.MPcontents.MPprofile.showMPprofile_2(); 		
 	}
 
 	//프로필수정하기 화면에서 뒤로가기 버튼 눌렀을 때 (수정값 저장하면 안 되도록)
@@ -106,16 +106,24 @@ public class MPmainFrame extends JFrame {
 		//이제 숫자 아닌거 넣으면 작은 창 뜨도록 해야됨
 		boolean result = Pattern.matches("\\d{11}", MPcontents.MPprofile.MPprofile_2.MPphoneTf.getText());
 		if(!result) {
-			System.out.println("폰번 잘못 입력됨");
 			new MPincorrectphonenumSF();
 			return;
 		}
 			
+		
+		//이름이랑 비밀번호 글자수 제한하는 거 할까... ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+		if((MPcontents.MPprofile.MPprofile_2.MPnameTf.getText().length() > 10)||(MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf).length() > 10)) {		
+			new MPnamelengthrestrictSF();
+			return;
+		}
+		
+
 	
 		setCategoryLabelText("내 정보 조회");	
 		//수정한 정보 DB에 업데이트
 		try(Connection conn = OjdbcConnection.getConnection()
 		) {
+			conn.setAutoCommit(false);
 			MPprofileModel.MPupdateUserName(conn, user_id, MPcontents.MPprofile.MPprofile_2.MPnameTf.getText());
 			MPprofileModel.MPupdateUserPw(conn, user_id, MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf));
 			//핸드폰번호는 01012341234 로 입력받아서 010-1234-1234로 저장	
@@ -126,6 +134,7 @@ public class MPmainFrame extends JFrame {
 			arr.add(str.substring(7, 11));
 			MPprofileModel.MPupdateUserPhoneNum(conn, user_id, String.join("-", arr));
 			
+			conn.commit();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -276,7 +285,7 @@ public class MPmainFrame extends JFrame {
 		MPhomeBtn.setBorderPainted(false);
 		
 
-		/* ★★★★★★★★★★★★★★★★★★★이을 때 할 것!★★★★★★★★★★★★★★★★★★★★ㅍㅍ
+		/* ★★★★★★★★★★★★★★★★★★★이을 때 할 것!★★★★★★★★★★★★★★★★★★★★
 		//홈버튼 누르면 홈화면으로 가기 
 		MPhomeBtn.addActionListener(new ActionListener() {		
 			@Override
@@ -304,7 +313,7 @@ public class MPmainFrame extends JFrame {
 		MPcontents.MPreservation.MPreservation_2.MPreservationcancleBtn.addActionListener(new MPreservationCancleBtnEvent(this));
 		
 		
-		//탈퇴하기 예 버튼 액션 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 
+		//탈퇴하기 예 버튼 액션  
 		MPcontents.MPleave.MPleaveYesBtn.addActionListener(new ActionListener() {
 			
 			@Override

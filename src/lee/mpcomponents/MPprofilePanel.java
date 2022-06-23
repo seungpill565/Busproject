@@ -62,7 +62,14 @@ public class MPprofilePanel extends JPanel {
 		
 		//MPprofile_2의 tf들에 회원정보가 기본으로 떠 있게_________________________________________________________________________
 		MPprofile_2.MPnameTf.setText(pm.getUser_name());
-		MPprofile_2.MPphoneTf.setText(pm.getUser_phonenum());
+				
+		//핸드폰번호는 010-1234-1234 에서 01012341234로 변환하여 넣기
+		String str = pm.getUser_phonenum();
+		String[] arr = str.split("-");
+		String strr = String.join("", arr);
+		System.out.println(strr);
+		MPprofile_2.MPphoneTf.setText(strr);
+		
 		MPprofile_2.MPnewpwTf.setText(pm.getUser_password());
 		//__________________________________________________________________________________________________________________
 

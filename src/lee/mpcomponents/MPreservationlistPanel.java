@@ -1,5 +1,6 @@
 package lee.mpcomponents;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
