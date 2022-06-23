@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 import park.ReservationInfo;
 import park.button.HomeButton;
+import park.database.LoadRVID;
 import park.label.SucceedPayLabel;
 
 public class PayInfo extends JFrame{
@@ -15,6 +16,7 @@ public class PayInfo extends JFrame{
 	public PayInfo(ReservationInfo user) {
 		super("예매 완료");
 		this.user = user;
+		new LoadRVID(user); // 시퀀스로 저장되는 예매번호들 user에 저장하고 출력
 		homeBtn.setBounds(190, 500, 100, 50);
 		add(payLabel);
 		add(homeBtn);
