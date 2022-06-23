@@ -1,5 +1,6 @@
 package park.combobox;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,7 +23,8 @@ public class SelectPayWayBox extends JComboBox{ // 결제 방법 선택할 콤보박스
 		addItem("페이코");
 		
 		selectPayWay();
-		setBounds(190, 440, 100, 50);
+		setBackground(Color.white);
+		setBounds(190, 440, 100, 30);
 	}
 
 	void selectPayWay() {

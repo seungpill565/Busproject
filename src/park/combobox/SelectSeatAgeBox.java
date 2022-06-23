@@ -1,5 +1,6 @@
 package park.combobox;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -25,11 +26,13 @@ public class SelectSeatAgeBox extends JComboBox<String>{ // 연령별 좌석개수를 고
 		this.seatCnt = seatCnt;
 		//Integer seatKey = user.getSeatKeys().get(seatCnt);
 		
-		addItem(user.getSeatKeys().get(seatCnt)+"번 좌석"); // i번째 키 값에 해당하는 좌석 번호를 가장 위에 표시
+		addItem(String.format("%d번 좌석", user.getSeatKeys().get(seatCnt))); // i번째 키 값에 해당하는 좌석 번호를 가장 위에 표시
 		addItem("------");
 		for(int i=0;i<ageGroup.length;i++) { // 성인 청소년 어린이 추가
 			addItem(ageGroup[i]);
 		}
+		setBackground(Color.white);
+		setSize(10, 10);
 		selectSeat();
 	}
 
@@ -38,7 +41,7 @@ public class SelectSeatAgeBox extends JComboBox<String>{ // 연령별 좌석개수를 고
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				age = (String) getSelectedItem().toString(); // 콤보박스에서 고른 값을 string으로 변환
-				if(age.equals("------")||age.equals(user.getSeatKeys().get(seatCnt)+"번 좌석")) {// 키 값을 고르거나 ---- 고르면 다시 선택하게
+				if(age.equals("------")||age.equals(String.format("%d번 좌석", user.getSeatKeys().get(seatCnt)))) {// 키 값을 고르거나 ---- 고르면 다시 선택하게
 					new JOptionPane().showMessageDialog(null, "성인, 청소년, 아동 중 선택하세요.","오류",JOptionPane.ERROR_MESSAGE); // 성인 어린이 청소년 제외 선택하면 오류창 뜨게
 				}else {
 					discount(age);

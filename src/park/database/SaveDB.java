@@ -1,8 +1,11 @@
-package park;
+package park.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import park.OjdbcConnection;
+import park.ReservationInfo;
 
 public class SaveDB {
 

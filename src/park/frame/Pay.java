@@ -9,6 +9,7 @@ import park.button.PayButton;
 import park.combobox.SelectPayWayBox;
 import park.label.RouteInfo;
 import park.panel.HomeBeforeBtnPanel;
+import park.panel.RouteInfoPanel;
 import park.panel.SelectSeatAgePanel;
 import park.scrollpane.PayInfoScrollpane;
 
@@ -25,7 +26,8 @@ public class Pay extends JFrame{
 	static PayButton payBtn = new PayButton(user); // 결제하기 버튼
 	static SelectPayWayBox payWayBox = new SelectPayWayBox(user); // 결제 방식 고르는 콤보박스
 	static RouteInfo route = new RouteInfo();
-	static PayInfoScrollpane scroll = new PayInfoScrollpane(); 
+	static RouteInfoPanel routePanel = new RouteInfoPanel();
+	//static PayInfoScrollpane scroll = new PayInfoScrollpane(); 
 	
 	
 	public Pay(ReservationInfo user) {
@@ -41,8 +43,9 @@ public class Pay extends JFrame{
 			
 		add(panel1); // 홈버튼, 이전버튼 판넬
 		add(route);
-		add(scroll);
-		//add(scroll, "Center"); // 좌석정보 출력하는 테이블
+		//add(scroll);
+		add(routePanel);
+		
 		add(seatPanel);
 		add(payBtn);
 		add(payWayBox);
