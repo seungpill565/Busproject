@@ -26,6 +26,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.plaf.basic.BasicSliderUI.ScrollListener;
 import javax.swing.table.DefaultTableModel;
 
+import an.admin.Admin_MainFrame;
 import jang.Data.Member_Data;
 import jang.Data.Member_Update_Data;
 
@@ -53,7 +54,7 @@ public class MemberManagementGUI extends JFrame {
 
 	JLabel pName = new JLabel("관리자");
 	JLabel label = new JLabel("회원");
-	JButton backBtn;
+	//JButton backBtn;
 	JButton homeBtn;
 
 	ImageIcon image = new ImageIcon("Image/back2.png");
@@ -68,11 +69,11 @@ public class MemberManagementGUI extends JFrame {
 	JTable table = new JTable(model);
 	JScrollPane scrolledpane = new JScrollPane(table);
 
-	MemberManagementGUI() {
-		ManagementGUI();
+	public MemberManagementGUI() {
+		MemberManagementGUI();
 	}
 
-	public void ManagementGUI() {
+	public void MemberManagementGUI() {
 		setTitle("회원 관리 프로그램");
 		add(panel);
 		panel.setBackground(Color.WHITE);
@@ -87,11 +88,11 @@ public class MemberManagementGUI extends JFrame {
 		scrolledpane.setSize(500, 200);
 		add(scrolledpane);
 
-		backBtn = new JButton(image);
-		backBtn.setRolloverIcon(image2);
-		backBtn.setBorderPainted(false);
-		backBtn.setBounds(30, 30, 48, 50);
-		panel.add(backBtn);
+//		backBtn = new JButton(image);
+//		backBtn.setRolloverIcon(image2);
+//		backBtn.setBorderPainted(false);
+//		backBtn.setBounds(30, 30, 48, 50);
+//		panel.add(backBtn);
 
 		homeBtn = new JButton(home_image);
 		homeBtn.setRolloverIcon(home_image2);
@@ -165,20 +166,20 @@ public class MemberManagementGUI extends JFrame {
 		Member_DB db = new Member_DB();
 
 		// 뒤로가기 버튼
-		backBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new ManagerMainFrame2();
-				setVisible(false);
-			}
-		});
+//		backBtn.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				new ManagerMainFrame2();
+//				setVisible(false);
+//			}
+//		});
 
 		// 홈 버튼
 		homeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new ManagerMainFrame2(); // 나중에 메인으로 바꾸면 됨
-				setVisible(false);
+				new Admin_MainFrame(); // 나중에 메인으로 바꾸면 됨
+				dispose();
 			}
 		});
 

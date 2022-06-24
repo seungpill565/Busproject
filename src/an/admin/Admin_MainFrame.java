@@ -1,8 +1,6 @@
 package an.admin;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,6 +10,8 @@ import an.admin.action.Admin_OutAction;
 import an.admin.action.Admin_RouteAction;
 import an.admin.action.Admin_UserAction;
 import an.login.Login_Mainframe;
+import jang.MemberManagementGUI;
+import jang.RouteManageMentGUI;
 
 public class Admin_MainFrame extends JFrame{
 	JButton userModify = new Admin_Button("회원정보 수정");
@@ -45,10 +45,13 @@ public class Admin_MainFrame extends JFrame{
 	}
 	//회원정보 수정이동 액션
 	public void userModifyAction() {
-		
+		new MemberManagementGUI();
+		dispose();
 	}
 	//노서정보 수정이동 액션
 	public void routeModifyAction() {
+		new RouteManageMentGUI();
+		dispose();
 		
 	}
 	//나가기 액션

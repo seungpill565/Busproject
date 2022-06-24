@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import an.admin.Admin_MainFrame;
 import jang.Data.Route_Read_Data;
 import jang.Route.Route_Delete;
 import jang.Route.Route_Insert;
@@ -35,7 +36,7 @@ public class RouteManageMentGUI extends JFrame {
 
 	JLabel pName = new JLabel("관리자");
 	JLabel label = new JLabel("노선");
-	JButton backBtn;
+//	JButton backBtn;
 	JButton homeBtn;
 
 	ImageIcon image = new ImageIcon("Image/back2.png");
@@ -48,7 +49,7 @@ public class RouteManageMentGUI extends JFrame {
 
 	Route_DB db = new Route_DB();
 
-	RouteManageMentGUI() {
+	public RouteManageMentGUI() {
 		RouteManageMentGUI();
 	}
 
@@ -64,11 +65,11 @@ public class RouteManageMentGUI extends JFrame {
 
 		ta.setEditable(false);
 
-		backBtn = new JButton(image);
-		backBtn.setRolloverIcon(image2);
-		backBtn.setBorderPainted(false);
-		backBtn.setBounds(30, 30, 48, 50);
-		panel.add(backBtn);
+//		backBtn = new JButton(image);
+//		backBtn.setRolloverIcon(image2);
+//		backBtn.setBorderPainted(false);
+//		backBtn.setBounds(30, 30, 48, 50);
+//		panel.add(backBtn);
 
 		homeBtn = new JButton(home_image);
 		homeBtn.setRolloverIcon(home_image2);
@@ -109,20 +110,20 @@ public class RouteManageMentGUI extends JFrame {
 		panel.add(search);
 
 		// 뒤로가기 버튼
-		backBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new ManagerMainFrame2();
-				setVisible(false);
-			}
-		});
+//		backBtn.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				new ManagerMainFrame2();
+//				setVisible(false);
+//			}
+//		});
 
 		// 홈 버튼
 		homeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new ManagerMainFrame2(); // 나중에 메인으로 바꾸면 됨
-				setVisible(false);
+				new Admin_MainFrame(); // 나중에 메인으로 바꾸면 됨
+				dispose();
 			}
 		});
 
