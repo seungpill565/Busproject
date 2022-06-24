@@ -7,6 +7,7 @@ import java.awt.color.ColorSpace;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,8 +18,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.plaf.basic.BasicSliderUI.ScrollListener;
 
 import jang.Data.Member_Data;
 import jang.Data.Member_Update_Data;
@@ -37,7 +40,7 @@ public class MemberManagementGUI extends JFrame {
 	JButton btn2 = new JButton("조회");
 	JButton btn3 = new JButton("수정");
 	JButton btn4 = new JButton("삭제");
-	JButton btn5 = new JButton("종료");
+	JButton btn5 = new JButton("검색");
 
 	JLabel l1 = new JLabel("ID : ");
 	JLabel l2 = new JLabel("이름 : ");
@@ -55,6 +58,11 @@ public class MemberManagementGUI extends JFrame {
 
 	ImageIcon home_image = new ImageIcon("Image/home.png");
 	ImageIcon home_image2 = new ImageIcon("Image/home2.png");
+	
+	final String[] labels = {"아이디", "이름", "비밀전호", "전화번호", "관리자/손님"};
+	JTextField[] fields = new JTextField[6];
+	
+	
 
 	MemberManagementGUI() {
 		ManagementGUI();
@@ -71,6 +79,8 @@ public class MemberManagementGUI extends JFrame {
 		setVisible(true);
 
 		ta.setEditable(false);
+		
+		
 
 		backBtn = new JButton(image);
 		backBtn.setRolloverIcon(image2);
@@ -178,8 +188,8 @@ public class MemberManagementGUI extends JFrame {
 				String user_password = tf3.getText();
 				String user_phonenum = tf4.getText();
 				String user_passenger_manager = tf5.getText();
-		
-				Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$"); 
+
+				Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$");
 				Matcher passMatcher = passPattern.matcher(user_password);
 				Pattern passPattern2 = Pattern.compile("\\d");
 				Matcher passMatcher2 = passPattern2.matcher(user_phonenum);
@@ -239,11 +249,11 @@ public class MemberManagementGUI extends JFrame {
 				String user_password = tf3.getText();
 				String user_phonenum = tf4.getText();
 
-				Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$"); 
+				Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$");
 				Matcher passMatcher = passPattern.matcher(user_password);
-				Pattern passPattern2 = Pattern.compile("\\d"); 
+				Pattern passPattern2 = Pattern.compile("\\d");
 				Matcher passMatcher2 = passPattern2.matcher(user_phonenum);
-				
+
 				if (!passMatcher.find()) {
 					JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다", "비밀번호 오류", 1);
 					return;
@@ -280,11 +290,26 @@ public class MemberManagementGUI extends JFrame {
 			}
 		});
 
-		// 종료 버튼 이벤트
+		// 검색 버튼 이벤트
 		btn5.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				ta.setText("");
+				String user_id = tf1.getText();
+				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
+				arr = db.search(user_id);
+
+				ta.append("\t아이디\t" + "이름\t" + "비밀번호\t" + "전화번호\t\t" + "관리자/손님\n");
+				ta.append("\t"
+						+ "-----------------------------------------------------------------------------------------------------------------------\n");
+
+				// 전체출력
+				for (int i = 0; i < arr.size(); i++) {
+					ta.append("\t" + arr.get(i).getID() + "\t" + arr.get(i).getName() + "\t" + arr.get(i).getPassword()
+							+ "\t" + arr.get(i).getPhonenum() + "\t\t" + arr.get(i).getPassenger() + "\n");
+
+				}
+
 			}
 		});
 	}

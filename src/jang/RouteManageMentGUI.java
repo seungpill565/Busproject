@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import jang.Data.Route_Read_Data;
 import jang.Route.Route_Delete;
@@ -29,7 +30,7 @@ public class RouteManageMentGUI extends JFrame {
 	JButton btn2 = new JButton("조회");
 	JButton btn3 = new JButton("수정");
 	JButton btn4 = new JButton("삭제");
-	JButton btn5 = new JButton("종료");
+	JButton btn5 = new JButton("검색");
 
 	JLabel pName = new JLabel("관리자");
 	JLabel label = new JLabel("노선");
@@ -41,6 +42,10 @@ public class RouteManageMentGUI extends JFrame {
 
 	ImageIcon home_image = new ImageIcon("Image/home.png");
 	ImageIcon home_image2 = new ImageIcon("Image/home2.png");
+
+	JTextField search = new JTextField();
+
+	Route_DB db = new Route_DB();
 
 	RouteManageMentGUI() {
 		RouteManageMentGUI();
@@ -82,15 +87,15 @@ public class RouteManageMentGUI extends JFrame {
 		jsp.setBounds(40, 320, 700, 250);
 		panel.add(jsp);
 
-		btn1.setBounds(250, 270, 70, 30);
+		btn1.setBounds(300, 160, 70, 30);
 		btn1.setBackground(new Color(0XE7E6E6));
-		btn2.setBounds(145, 270, 70, 30);
+		btn2.setBounds(195, 160, 70, 30);
 		btn2.setBackground(new Color(0XE7E6E6));
-		btn3.setBounds(355, 270, 70, 30);
+		btn3.setBounds(405, 160, 70, 30);
 		btn3.setBackground(new Color(0XE7E6E6));
-		btn4.setBounds(460, 270, 70, 30);
+		btn4.setBounds(510, 160, 70, 30);
 		btn4.setBackground(new Color(0XE7E6E6));
-		btn5.setBounds(565, 270, 70, 30);
+		btn5.setBounds(405, 220, 70, 30);
 		btn5.setBackground(new Color(0XE7E6E6));
 
 		panel.add(btn1);
@@ -99,7 +104,8 @@ public class RouteManageMentGUI extends JFrame {
 		panel.add(btn4);
 		panel.add(btn5);
 
-		Route_DB db = new Route_DB();
+		search.setBounds(300, 220, 100, 30);
+		panel.add(search);
 
 		// 뒤로가기 버튼
 		backBtn.addActionListener(new ActionListener() {
@@ -167,6 +173,32 @@ public class RouteManageMentGUI extends JFrame {
 
 			}
 		});
+		
+		// 검색
+		btn5.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ta.setText("");
+				String depart = search.getText();
+				ArrayList<Route_Read_Data> arr = new ArrayList<Route_Read_Data>();
+				arr = db.searchRoute(depart);
+
+				ta.append("\t버스 ID\t" + "출발지\t" + "도착지\t" + "요금\t" + "날짜\t" + "시간\t" + "좌석 이름\t" + "예약\n");
+				ta.append("\t"
+						+ "-----------------------------------------------------------------------------------------------------------------------\n");
+
+				// 전체출력
+				for (int i = 0; i < arr.size(); i++) {
+					ta.append("\t" + arr.get(i).getBI_ID() + "\t" + arr.get(i).getDepart() + "\t"
+							+ arr.get(i).getArrive() + "\t" + arr.get(i).getCharge() + "\t" + arr.get(i).getDay() + "\t"
+							+ arr.get(i).getTime() + "\t" + arr.get(i).getBS_Name() + "\t" + arr.get(i).getReserved()
+							+ "\n");
+				}
+			}
+
+		});
+
 	}
 
 }
