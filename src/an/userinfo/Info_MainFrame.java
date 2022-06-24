@@ -12,6 +12,7 @@ import an.userinfo.action.Info_MyInfoAction;
 import an.userinfo.action.Info_ReservationAction;
 import hong.SaveInfo;
 import hong.selectroute.SelectRouteMainFrame;
+import lee.mpcomponents.MPmainFrame;
 
 public class Info_MainFrame extends JFrame{
 	JButton Reservation = new Info_JButton("예약");
@@ -60,7 +61,7 @@ public class Info_MainFrame extends JFrame{
 	
 	//내정보 이동 이벤트
 	public void myinfoAction() {
-		new Login_Mainframe();
+		new MPmainFrame(saveInfo);
 		dispose();
 	}
 	
