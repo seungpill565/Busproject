@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.color.ColorSpace;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.channels.SelectableChannel;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -21,7 +22,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.plaf.basic.BasicSliderUI.ScrollListener;
+import javax.swing.table.DefaultTableModel;
 
 import jang.Data.Member_Data;
 import jang.Data.Member_Update_Data;
@@ -58,11 +61,12 @@ public class MemberManagementGUI extends JFrame {
 
 	ImageIcon home_image = new ImageIcon("Image/home.png");
 	ImageIcon home_image2 = new ImageIcon("Image/home2.png");
-	
-	final String[] labels = {"아이디", "이름", "비밀전호", "전화번호", "관리자/손님"};
-	JTextField[] fields = new JTextField[6];
-	
-	
+
+	final String[] colNames = { "아이디", "이름", "비밀전호", "전화번호", "관리자/손님" };
+	DefaultTableModel model = new DefaultTableModel(colNames, 0);
+
+	JTable table = new JTable(model);
+	JScrollPane scrolledpane = new JScrollPane(table);
 
 	MemberManagementGUI() {
 		ManagementGUI();
@@ -79,8 +83,9 @@ public class MemberManagementGUI extends JFrame {
 		setVisible(true);
 
 		ta.setEditable(false);
-		
-		
+
+		scrolledpane.setSize(500, 200);
+		add(scrolledpane);
 
 		backBtn = new JButton(image);
 		backBtn.setRolloverIcon(image2);
@@ -304,10 +309,15 @@ public class MemberManagementGUI extends JFrame {
 						+ "-----------------------------------------------------------------------------------------------------------------------\n");
 
 				// 전체출력
-				for (int i = 0; i < arr.size(); i++) {
-					ta.append("\t" + arr.get(i).getID() + "\t" + arr.get(i).getName() + "\t" + arr.get(i).getPassword()
-							+ "\t" + arr.get(i).getPhonenum() + "\t\t" + arr.get(i).getPassenger() + "\n");
-
+				if (arr.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "저장된 아이디가 없습니다", "아이디 오류", 1);
+					return;
+				} else {
+					
+					for (int i = 0; i < arr.size(); i++) {
+						ta.append("\t" + arr.get(i).getID() + "\t" + arr.get(i).getName() + "\t" + arr.get(i).getPassword()
+								+ "\t" + arr.get(i).getPhonenum() + "\t\t" + arr.get(i).getPassenger() + "\n");
+					}
 				}
 
 			}

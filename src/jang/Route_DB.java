@@ -130,11 +130,11 @@ public class Route_DB {
 	}
 	
 	// search
-	public ArrayList<Route_Read_Data> searchRoute(String depart) {
+	public ArrayList<Route_Read_Data> searchRoute(String arrive) {
 		ArrayList<Route_Read_Data> arr = new ArrayList<Route_Read_Data>();
 		String sql = "SELECT bi_id, rt_depart_from, rt_arrive_at, rt_charge, bi_day, bi_time, bs_name, bu_is_reserved "
 				+ "FROM BUS_ROUTE " + "INNER JOIN BUS_INFO USING (rt_id) " + "INNER JOIN BUS_SEAT USING (bi_id) "
-				+ "WHERE rt_depart_from LIKE '%" + depart + "%'";
+				+ "WHERE rt_depart_from LIKE '%" + arrive + "%'";
 		try (
 				Connection conn = OjdbcConnection.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);

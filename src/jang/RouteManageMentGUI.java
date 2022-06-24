@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -142,13 +143,13 @@ public class RouteManageMentGUI extends JFrame {
 				ArrayList<Route_Read_Data> arr = new ArrayList<Route_Read_Data>();
 				arr = db.readData();
 
-				ta.append("\t버스 ID\t" + "출발지\t" + "도착지\t" + "요금\t" + "날짜\t" + "시간\t" + "좌석 이름\t" + "예약\n");
-				ta.append("\t"
-						+ "-----------------------------------------------------------------------------------------------------------------------\n");
+				ta.append("     버스 ID\t" + "출발지\t" + "도착지\t" + "요금\t" + "날짜\t" + "시간\t" + "좌석 이름\t" + "예약\n");
+				ta.append("     "
+						+ "-----------------------------------------------------------------------------------------------------------------------------------------------------\n");
 
 				// 전체출력
 				for (int i = 0; i < arr.size(); i++) {
-					ta.append("\t" + arr.get(i).getBI_ID() + "\t" + arr.get(i).getDepart() + "\t"
+					ta.append("     " + arr.get(i).getBI_ID() + "\t" + arr.get(i).getDepart() + "\t"
 							+ arr.get(i).getArrive() + "\t" + arr.get(i).getCharge() + "\t" + arr.get(i).getDay() + "\t"
 							+ arr.get(i).getTime() + "\t" + arr.get(i).getBS_Name() + "\t" + arr.get(i).getReserved()
 							+ "\n");
@@ -173,27 +174,33 @@ public class RouteManageMentGUI extends JFrame {
 
 			}
 		});
-		
+
 		// 검색
 		btn5.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ta.setText("");
-				String depart = search.getText();
+				String arrive = search.getText();
 				ArrayList<Route_Read_Data> arr = new ArrayList<Route_Read_Data>();
-				arr = db.searchRoute(depart);
+				arr = db.searchRoute(arrive);
 
-				ta.append("\t버스 ID\t" + "출발지\t" + "도착지\t" + "요금\t" + "날짜\t" + "시간\t" + "좌석 이름\t" + "예약\n");
-				ta.append("\t"
-						+ "-----------------------------------------------------------------------------------------------------------------------\n");
+				ta.append("     버스 ID\t" + "출발지\t" + "도착지\t" + "요금\t" + "날짜\t" + "시간\t" + "좌석 이름\t" + "예약\n");
+				ta.append("     "
+						+ "-----------------------------------------------------------------------------------------------------------------------------------------------------\n");
 
-				// 전체출력
-				for (int i = 0; i < arr.size(); i++) {
-					ta.append("\t" + arr.get(i).getBI_ID() + "\t" + arr.get(i).getDepart() + "\t"
-							+ arr.get(i).getArrive() + "\t" + arr.get(i).getCharge() + "\t" + arr.get(i).getDay() + "\t"
-							+ arr.get(i).getTime() + "\t" + arr.get(i).getBS_Name() + "\t" + arr.get(i).getReserved()
-							+ "\n");
+				if (arr.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "저장된 노선이 없습니다", "아이디 오류", 1);
+					return;
+				} else {
+					// 전체출력
+					for (int i = 0; i < arr.size(); i++) {
+						ta.append("     " + arr.get(i).getBI_ID() + "\t" + arr.get(i).getDepart() + "\t"
+								+ arr.get(i).getArrive() + "\t" + arr.get(i).getCharge() + "\t" + arr.get(i).getDay()
+								+ "\t" + arr.get(i).getTime() + "\t" + arr.get(i).getBS_Name() + "\t"
+								+ arr.get(i).getReserved() + "\n");
+					}
+
 				}
 			}
 
