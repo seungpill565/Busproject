@@ -13,11 +13,11 @@ public class ArrivalButton extends JButton {
 	private Dimension dimension = new Dimension(240,200);
 	
 	public ArrivalButton() {
-		super("도착지를 입력해주세요");
+		super("도착지 선택");
 		setOpaque(false);
 		setBackground(Color.WHITE);
 		setForeground(Color.WHITE);
-		setFont(new Font("맑은고딕", Font.BOLD, 20));
+		setFont(new Font("휴먼편지체", Font.BOLD, 30));
 		setBorderPainted(false);
 		//setBorder(lb);
 		setPreferredSize(dimension);

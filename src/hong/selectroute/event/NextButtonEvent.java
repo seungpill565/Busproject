@@ -19,7 +19,7 @@ public class NextButtonEvent extends RouteMainFrameAction {
 			main.showSeatFrame();
 			main.thisFrameClose();			
 		} catch (IndexOutOfBoundsException iobe) {
-			JOptionPane.showMessageDialog(null, "일정을 먼저 선택해주세요!!", "경고 메시지 제목", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "일정을 먼저 선택해주세요!!", "경고!!", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 

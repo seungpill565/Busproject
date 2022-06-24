@@ -16,6 +16,7 @@ public class SerchButtonEvent extends RouteMainFrameAction {
 	public void actionPerformed(ActionEvent e) {
 		main.getRouteID();
 		main.showBus();
+		main.getprice();
 	}
 
 }
