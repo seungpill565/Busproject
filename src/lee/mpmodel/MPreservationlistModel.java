@@ -59,7 +59,7 @@ public class MPreservationlistModel {
 	}
 	
 
-	
+//●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●	
 	public static void delete_bs_id_row(Connection conn, int bs_id) {
 		String sql = "DELETE FROM bus_seat WHERE bs_id = ?";
 		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {	
@@ -69,6 +69,25 @@ public class MPreservationlistModel {
 			System.out.println("삭제 안 됨");
 		}
 	}
+	
+//UPDATE bus_seat SET bs_is_reserved = 0 WHERE bs_id = 23;
+	public static void update_bs_is_reserved(Connection conn, int bs_id) {
+		String sql = "UPDATE bus_seat SET bs_is_reserved = 0 WHERE bs_id = ?";
+		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {	
+			
+			pstmt.setInt(1, bs_id);
+			
+			System.out.println("bs_id에 해당하는 bs_is_reserved 0으로 바꾸기 성공? : " + pstmt.executeUpdate());	
+		
+		} catch (SQLException e) {
+			System.out.println("삭제 안 됨");
+		}
+	}
+//●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●	
+	
+	
+	
+	
 	
 	public static void delete_br_id_row(Connection conn, int br_id) {
 		String sql = "DELETE FROM bus_reservation WHERE br_id = ?";
@@ -161,10 +180,13 @@ public class MPreservationlistModel {
 				+ " INNER JOIN bus_route USING (rt_id)"
 				+ " INNER JOIN bus_seat USING (bs_id)"
 				+ " WHERE user_id = ?"
+				+ " AND bus_seat.bs_is_reserved = 1"   //이부분 추가함!!!!!!
 				+ " AND bus_info.bi_day >= ?";
+		
+		
+		System.out.println("여기까진 넘어옴");
 		try(
-				PreparedStatement pstmt = conn.prepareStatement(sql); 
-						
+				PreparedStatement pstmt = conn.prepareStatement(sql); 		
 		) {
 			
 			pstmt.setString(1, user_id);

@@ -34,9 +34,8 @@ public class MPreservationPanel_2 extends JPanel {
 	JCheckBox[] cbArr;
 	
 	public MPreservationPanel_2(SaveInfo saveInfo) {  
-		this.saveInfo = saveInfo;
-		
-		this.user_id = new SaveInfo().get_user_id();
+		this.saveInfo = saveInfo;		
+		this.user_id = saveInfo.get_user_id();
 		
 		JScrollPane MPscroll = new JScrollPane(MPreservation_3, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		BoxLayout MPboxlayout = new BoxLayout(MPreservation_3, BoxLayout.Y_AXIS);		
@@ -50,7 +49,7 @@ public class MPreservationPanel_2 extends JPanel {
 		int ticketNum = 0;
 		ArrayList<MPreservationlistModel> sqlResults = null;
 		try (Connection conn = OjdbcConnection.getConnection();){	
-			//이너조인 검색결과를 어레리에 저장            ▲▲▲▲"22/06/20" 이거 임시로 채운거 오늘 날짜 구해서 넣는 걸로 바꾸기▲▲▲▲▲
+			//이너조인 검색결과를 어레리에 저장           
 			sqlResults = MPreservationlistModel.get(conn, user_id);
 			ticketNum = sqlResults.size();
 		} catch (SQLException e) {

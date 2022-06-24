@@ -66,7 +66,6 @@ public class MPmainFrame extends JFrame {
 				if(MPreservationlistModel.get(conn, user_id).size() > 0) {
 					MPcontents.MPreservation.MPreservationCard.show(MPcontents.MPreservation, "예매내역 있음");
 				}
-			
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -124,7 +123,9 @@ public class MPmainFrame extends JFrame {
 		if(MPcontents.MPprofile.MPprofile_2.MPnameTf.getText().equals("") 
 			|| MPcontents.MPprofile.MPprofile_2.MPphoneTf.getText().equals("") 
 			|| MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf).equals("")) {
-			new MPpreventnulltfSF();
+			
+			//new MPpreventnulltfSF();
+			JOptionPane.showMessageDialog(null, "빈 칸을 모두 입력해주세요", "입력 오류", 1);			
 			return;
 		}
 		
@@ -132,14 +133,17 @@ public class MPmainFrame extends JFrame {
 		//이제 숫자 아닌거 넣으면 작은 창 뜨도록 해야됨
 		boolean result = Pattern.matches("\\d{11}", MPcontents.MPprofile.MPprofile_2.MPphoneTf.getText());
 		if(!result) {
-			new MPincorrectphonenumSF();
+			//new MPincorrectphonenumSF();
+			//ex. 01012341234
+			JOptionPane.showMessageDialog(null, "잘못된 핸드폰 번호입니다.", "입력 오류", 1);
 			return;
 		}
 			
 		
-		//이름이랑  글자수 제한하는 거 할까... ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+		//이름 글자수 제한 
 		if(MPcontents.MPprofile.MPprofile_2.MPnameTf.getText().length() > 10) {		
-			new MPnamelengthrestrictSF();
+			//new MPnamelengthrestrictSF();
+			JOptionPane.showMessageDialog(null, "이름은 10글자까지 입력 가능합니다.", "입력 오류", 1);
 			return;
 		}
 		
@@ -149,7 +153,7 @@ public class MPmainFrame extends JFrame {
 		Pattern passPattern1 = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$"); //8자 영문+특문+숫자
 		Matcher passMatcher = passPattern1.matcher(MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf));
 		if (!passMatcher.find()) {
-			JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다", "비밀번호 오류", 1);
+			JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다", "입력 오류", 1);
 			return;
 		}
 		
@@ -223,9 +227,22 @@ public class MPmainFrame extends JFrame {
 							int br_id = br_id_list.get(i);
 							int bs_id = MPreservationlistModel.get_bs_id(conn, br_id_list.get(i));
 							
-							//예매번호에 해당하는 행 bus_reservation 테이블에서 지우고 좌석번호에 해당하는 행 bus_seat테이블에서 지우면 됨!
+														
+							//예매번호에 해당하는 행 bus_reservation 테이블에서 지우기 
 							MPreservationlistModel.delete_br_id_row(conn, br_id);
-							MPreservationlistModel.delete_bs_id_row(conn, bs_id);
+							
+							
+//●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
+							////좌석번호에 해당하는 행 bus_seat 테이블에서 지우기
+							//MPreservationlistModel.delete_bs_id_row(conn, bs_id); 이렇게 행 지우면 안 됨
+							
+							//아 행 지우면 안 되고 1에서 0으로 바꿔야 됨!
+							//bus_seat의 행을 지우지 말고 좌석번호에 해당하는 bs_is_reserved 를 0으로 바꿔야할 듯 
+							//쿼리문은 UPDATE bus_seat SET bs_is_reserved = 0 WHERE bs_id = ?;
+							MPreservationlistModel.update_bs_is_reserved(conn, bs_id);
+//●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●							
+							
+
 						}
 						
 						conn.commit();//커밋 오라클 가서 안 해도 되고 여기서 바로 됨
@@ -243,7 +260,14 @@ public class MPmainFrame extends JFrame {
 						dispose();
 						MPmainFrame MPnewmainF = new MPmainFrame(saveInfo);
 						MPnewmainF.setCategoryLabelText("예매확인");
-						MPnewmainF.MPcontents.MPcontentsCard.show(MPnewmainF.MPcontents, "예매내역");
+						
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+						
+						MPnewmainF.MPcontents.MPcontentsCard.show(MPnewmainF.MPcontents, "예매내역");						
+						if(MPreservationlistModel.get(conn, user_id).size() > 0) {
+							MPnewmainF.MPcontents.MPreservation.MPreservationCard.show(MPnewmainF.MPcontents.MPreservation, "예매내역 있음");
+						}
+						
 						
 					} catch (SQLException e1) {
 						e1.printStackTrace();
@@ -274,9 +298,19 @@ public class MPmainFrame extends JFrame {
 					conn.setAutoCommit(false);
 					
 					//레저테이블의 user_id 행을  먼저 삭제하고 그 다음에 user_info의 user_id행을 삭제해야됨
-					System.out.println(user_id);
-		//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-					//MPreservationlistModel.delete_user_id_row(conn, user_id);	
+					//System.out.println(user_id);
+
+
+					
+					
+//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+					if(MPreservationlistModel.get(conn, user_id).size() > 0) {
+						MPreservationlistModel.delete_user_id_row(conn, user_id);	
+					}
+					
+
+					
+					
 					MPprofileModel.MPdeleteUserInfo(conn, user_id);
 					
 					conn.commit();

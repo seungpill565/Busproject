@@ -13,7 +13,7 @@ public class MPpreventnulltfSF extends JFrame implements ActionListener {
 	
 	public MPpreventnulltfSF() {
 			
-		super("잘못된 비밀번호");
+		super("빈 칸 입력");
 		
 		JLabel label = new JLabel("빈 칸을 모두 입력해주세요.");
 		
