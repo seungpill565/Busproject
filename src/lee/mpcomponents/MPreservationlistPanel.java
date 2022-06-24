@@ -11,9 +11,7 @@ public class MPreservationlistPanel extends JPanel {
 	int br_id;//예매번호
 	String reservationdetailStr;
 	
-	
 	int MPticketNum;
-	
 	
 	public MPreservationlistPanel(Integer br_id, String reservationdetailStr) {
 		

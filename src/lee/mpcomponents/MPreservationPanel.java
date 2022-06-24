@@ -12,7 +12,8 @@ public class MPreservationPanel extends JPanel {
 	
 	CardLayout MPreservationCard = new CardLayout();
 
-	MPreservationPanel_1 MPreservation_1 ;	
+
+	MPreservationPanel_1 MPreservation_1 ;			
 	MPreservationPanel_2 MPreservation_2;
 	
 	
@@ -21,7 +22,6 @@ public class MPreservationPanel extends JPanel {
 		this.saveInfo = saveInfo;
 		MPreservation_1 = new MPreservationPanel_1();		
 		MPreservation_2 = new MPreservationPanel_2(saveInfo);
-		
 		setLayout(MPreservationCard);
 
 				
