@@ -32,7 +32,8 @@ public class Pay extends JFrame{
 	
 	public Pay(ReservationInfo user) {
 		super("결제 화면");
-		//user.setSeatKeys(); // 해쉬맵에 있는 좌석번호 어레이리스트에 넣기
+		user.setSeatId(); // 해쉬맵에 있는 좌석이름 어레이리스트에 넣기
+		user.setSeatNames();
 		this.user = user;
 		
 		// 접속 상태 유지하기위해서 다 매개변수로 받아온 user로 초기화 해줌

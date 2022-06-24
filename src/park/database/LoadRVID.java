@@ -17,15 +17,17 @@ public class LoadRVID { // 결제 후 db에 저장되면 예매번호가 생성되고 그걸 다시 u
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 
 			){
-			pstmt.setString(1, user.getUserId());
-			pstmt.setInt(2,  user.getBusId());
-			pstmt.setInt(3, user.getSeatId());
-			
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				user.setReservationId(rs.getInt("br_id"));
+			for(int i=0 ; i<user.getSeatSize();i++) {
+				pstmt.setString(1, user.getUserId());
+				pstmt.setInt(2,  user.getBusId());
+				pstmt.setInt(3, user.getSeatId().get(i));
+
+				ResultSet rs = pstmt.executeQuery();
+				while(rs.next()) {
+					user.setReservationId(rs.getInt("br_id"));
+				}
+				System.out.println("db불러오기 성공");
 			}
-			System.out.println("db불러오기 성공");
 		}catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("DB불러오기 실패");

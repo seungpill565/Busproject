@@ -15,12 +15,12 @@ public class PayInfo extends JFrame{
 	HomeButton homeBtn = new HomeButton(user);
 	SucceedPayLabel payLabel = new SucceedPayLabel(); 
 	RouteInfoColumnNamePanel columnNamePanel = new RouteInfoColumnNamePanel();
-	RouteInfoPanel routePanel = new RouteInfoPanel();
+	RouteInfoPanel routePanel = new RouteInfoPanel(user);
 	
 	public PayInfo(ReservationInfo user) {
 		super("예매 완료");
 		this.user = user;
-		new LoadRVID(user); // 시퀀스로 저장되는 예매번호들 user에 저장하고 출력
+		//new LoadRVID(user); // 시퀀스로 저장되는 예매번호들 user에 저장하고 출력
 		homeBtn.setBounds(190, 500, 100, 50);
 		add(payLabel);
 		add(homeBtn);

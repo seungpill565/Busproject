@@ -13,7 +13,7 @@ public class RouteInfoRowsPanel extends JPanel{ // 행선지 정보 행들 넣는 패널
 			add(new RouteInfoRowsLabel(user.getTime()));
 			add(new RouteInfoRowsLabel(user.getDepart()));
 			add(new RouteInfoRowsLabel(user.getArrive()));
-			add(new RouteInfoRowsLabel(user.getSeatKeys().get(i)));
+			//add(new RouteInfoRowsLabel(user.getSeatKeys().get(i))); // 좌석이름
 		}
 	}
 	

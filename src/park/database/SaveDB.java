@@ -22,13 +22,13 @@ public class SaveDB {
 			for(int i=0;i<user.getSeatSize();i++) {
 				System.out.println("포문 시작");
 				pstmt.setString(1, user.getPayWay()); // 결제방식
-				pstmt.setString(2, user.getAgeBySeat().get(user.getSeatKeys().get(i))); // 해당 좌석에 대한 연령 
+				pstmt.setString(2, user.getAgeBySeat().get(user.getSeatId().get(i))); // 해당 좌석에 대한 연령 
 				pstmt.setString(3, user.getUserId()); // 유저id
 				pstmt.setInt(4, user.getBusId()); // 버스 id
-				pstmt.setInt(5, user.getSeatKeys().get(i)); // 0번째 부터 들어있는 좌석의 번호
+				pstmt.setInt(5, user.getSeatId().get(i)); // 0번째 부터 들어있는 좌석의 번호
 				pstmt.executeUpdate();
 				// -------------------------
-				pstmt2.setInt(1, user.getSeatKeys().get(i));
+				pstmt2.setInt(1, user.getSeatId().get(i));
 				pstmt2.execute();
 			}
 			
