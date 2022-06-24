@@ -1,9 +1,11 @@
-package jang;
+package jang.Data;
 
 public class Seat_Insert_Data {
 	
-	int bifk_id, bs_id;
-	String bs_name, bu_is_reserved;
+	public int bifk_id;
+	public int bs_id;
+	public String bs_name;
+	public String bu_is_reserved;
 	
 	public Seat_Insert_Data() {
 		

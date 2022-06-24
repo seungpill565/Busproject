@@ -1,4 +1,4 @@
-package jang;
+package jang.Data;
 
 public class RouteUpdate_Data {
 

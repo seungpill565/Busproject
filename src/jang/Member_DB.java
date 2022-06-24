@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import jang.Data.Member_Data;
+import jang.Data.Member_Update_Data;
+
 public class Member_DB {
 	
 	
@@ -71,14 +74,14 @@ public class Member_DB {
 	}
 	
 	// Delete
-	public void deleteData(String user_name) {
-		String sql = "DELETE FROM USER_INFO WHERE user_name = ?";
+	public void deleteData(String user_id) {
+		String sql = "DELETE FROM USER_INFO WHERE user_id = ?";
 		try (
 				Connection conn = OjdbcConnection.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 			){
 
-			pstmt.setString(1, user_name);
+			pstmt.setString(1, user_id);
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {

@@ -1,9 +1,11 @@
-package jang;
+package jang.Data;
 
 public class Route_Insert_Data {
 	
-	int rt_id;
-	String rt_depart_from, rt_arrive_at, rt_charge;
+	public int rt_id;
+	public String rt_depart_from;
+	public String rt_arrive_at;
+	public String rt_charge;
 	
 	public Route_Insert_Data() {
 		

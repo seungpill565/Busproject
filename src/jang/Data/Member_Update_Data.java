@@ -1,25 +1,20 @@
-package jang;
+package jang.Data;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-public class Member_Data {
-	String user_id;
-	String user_name;
-	String user_phonenum;
-	String user_password;
-	String user_passenger_manager;
+public class Member_Update_Data {
+	public String user_id;
+	public String user_name;
+	public String user_phonenum;
+	public String user_password;
 	
-	public Member_Data() {
+	public Member_Update_Data() {
 		
 	}
 	
-	public Member_Data(String user_id, String user_name, String user_password, String user_phonenum, String user_passenger_manager) {
+	public Member_Update_Data(String user_id, String user_name, String user_password, String user_phonenum) {
 		this.user_phonenum = user_phonenum;
 		this.user_password = user_password;
 		this.user_name = user_name;
 		this.user_id = user_id;
-		this.user_passenger_manager = user_passenger_manager;
 	}
 	
 	public String getID() {
@@ -53,11 +48,5 @@ public class Member_Data {
 	public void setPassword(String user_password) {
 		this.user_password = user_password;
 	}
-	public String getPassenger() {
-		return user_passenger_manager;
-	}
 	
-	public void setPassenger(String user_passenger_manager) {
-		this.user_passenger_manager = user_passenger_manager;
-	}
 }

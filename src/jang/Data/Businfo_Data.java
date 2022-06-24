@@ -1,11 +1,13 @@
-package jang;
+package jang.Data;
 
 public class Businfo_Data {
-	int bi_id;
-	int rt_id;
-	String bi_day, bi_time;
+	public int bi_id;
+	public int rt_id;
+	public String bi_day;
+	public String bi_time;
 	
 	public Businfo_Data() {
+		
 		
 	}
 	

@@ -1,9 +1,10 @@
-package jang;
+package jang.Data;
 
 public class BI_Insert_Data {
-	int bi_id;
-	int rtfk_id;
-	String bi_day, bi_time;
+	public int bi_id;
+	public int rtfk_id;
+	public String bi_day;
+	public String bi_time;
 	
 	public BI_Insert_Data() {
 		
