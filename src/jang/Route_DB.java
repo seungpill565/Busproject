@@ -15,7 +15,7 @@ import jang.Data.Seat_Insert_Data;
 
 public class Route_DB {
 
-	// Create
+	// Insert Create
 	public void bus_info_insertData(BI_Insert_Data data) {
 		String sql = "INSERT INTO BUS_INFO (bi_id, bi_day, bi_time, rt_id) VALUES(BI_ID_SQ.nextval, ?, ?, ?)";
 		try (
@@ -53,7 +53,7 @@ public class Route_DB {
 		
 		// SEAT Create
 		public void seat_insertData(Seat_Insert_Data data) {
-			String sql = "INSERT INTO BUS_SEAT (bs_id, bs_name, bu_is_reserved, bi_id) VALUES(BS_ID_SQ.nextval, ?, 0, ?)";
+			String sql = "INSERT INTO BUS_SEAT (bs_id, bs_name, bs_is_reserved, bi_id) VALUES(BS_ID_SQ.nextval, ?, 0, ?)";
 			try (
 					Connection conn = OjdbcConnection.getConnection(); 
 					PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -74,7 +74,7 @@ public class Route_DB {
 	// Read
 	public ArrayList<Route_Read_Data> readData() {
 		ArrayList<Route_Read_Data> arr = new ArrayList<Route_Read_Data>();
-		String sql = "SELECT bi_id, rt_depart_from, rt_arrive_at, rt_charge, bi_day, bi_time, bs_name, bu_is_reserved "
+		String sql = "SELECT bi_id, rt_depart_from, rt_arrive_at, rt_charge, bi_day, bi_time, bs_name, bs_is_reserved "
 				+ "FROM BUS_ROUTE " + "INNER JOIN BUS_INFO USING (rt_id) " + "INNER JOIN BUS_SEAT USING (bi_id) ";
 		try (
 				Connection conn = OjdbcConnection.getConnection();
@@ -132,9 +132,9 @@ public class Route_DB {
 	// search
 	public ArrayList<Route_Read_Data> searchRoute(String arrive) {
 		ArrayList<Route_Read_Data> arr = new ArrayList<Route_Read_Data>();
-		String sql = "SELECT bi_id, rt_depart_from, rt_arrive_at, rt_charge, bi_day, bi_time, bs_name, bu_is_reserved "
+		String sql = "SELECT bi_id, rt_depart_from, rt_arrive_at, rt_charge, bi_day, bi_time, bs_name, bs_is_reserved "
 				+ "FROM BUS_ROUTE " + "INNER JOIN BUS_INFO USING (rt_id) " + "INNER JOIN BUS_SEAT USING (bi_id) "
-				+ "WHERE rt_depart_from LIKE '%" + arrive + "%'";
+				+ "WHERE rt_arrive_at LIKE '%" + arrive + "%'";
 		try (
 				Connection conn = OjdbcConnection.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);
