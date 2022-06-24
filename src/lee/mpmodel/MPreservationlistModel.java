@@ -59,7 +59,7 @@ public class MPreservationlistModel {
 	}
 	
 
-//●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●	
+	
 	public static void delete_bs_id_row(Connection conn, int bs_id) {
 		String sql = "DELETE FROM bus_seat WHERE bs_id = ?";
 		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {	
@@ -70,7 +70,9 @@ public class MPreservationlistModel {
 		}
 	}
 	
-//UPDATE bus_seat SET bs_is_reserved = 0 WHERE bs_id = 23;
+
+//●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
+	// bs_id(버스좌석 아이디. 좌석번호 아님!) 에 해당하는 좌석예매여부 (1= 예매됨, 0=예매안됨)를 1에서 0으로 바꾸는 메서드
 	public static void update_bs_is_reserved(Connection conn, int bs_id) {
 		String sql = "UPDATE bus_seat SET bs_is_reserved = 0 WHERE bs_id = ?";
 		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {	

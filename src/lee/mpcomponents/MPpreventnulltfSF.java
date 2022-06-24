@@ -18,7 +18,6 @@ public class MPpreventnulltfSF extends JFrame implements ActionListener {
 		JLabel label = new JLabel("빈 칸을 모두 입력해주세요.");
 		
 			
-		
 		// 라벨 설정
 		label.setBounds(95, 60, 300, 30);
 		add(label);
