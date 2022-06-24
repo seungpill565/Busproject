@@ -14,6 +14,7 @@ import an.OjdbcConnection;
 import hong.BackGroundLabel;
 import hong.NextButton;
 import hong.SaveInfo;
+import hong.selectseat.event.NextButtonEvent;
 import hong.selectseat.event.SeatButtonEvent;
 import park.frame.Pay;
 
@@ -35,6 +36,7 @@ public class SelectSeatMainFrame extends JFrame {
 	
 	private NextButton nextBtn = new NextButton();
 	private SeatButtonEvent seatBtnEvent = new SeatButtonEvent(this);
+	private NextButtonEvent nextBtnEvent = new NextButtonEvent(this);
 	
 //	public void save_seat_name() {
 //		saveInfo.set_seat_name(bs_name_list);
@@ -44,13 +46,18 @@ public class SelectSeatMainFrame extends JFrame {
 		new Pay(saveInfo);
 	}
 	
+	public void thisClose() {
+		dispose();
+	}
+	
 	public void selectSeat(int seatNum) {
 		
 		if(!seatBtns[seatNum].get_is_selected()) {
 			saveInfo.put_bs_id(seatBtns[seatNum].get_bs_id());
 			saveInfo.put_bs_name("" + seatNum, seatBtns[seatNum].get_bs_id()); // 좌석 번호와 좌석이름을 SaveInfo HashMap에..
 		} else {
-			saveInfo.remove_bs_map(seatBtns[seatNum].get_bs_id());
+			saveInfo.removeIdMap(seatBtns[seatNum].get_bs_id());
+			saveInfo.removeNameMap("" + seatNum);
 		}
 		seatBtns[seatNum].selectedCheck();
 	}
@@ -86,6 +93,7 @@ public class SelectSeatMainFrame extends JFrame {
 			}
 		}
 		
+		nextBtn.addActionListener(nextBtnEvent);
 		add(nextBtn);
 		
 		setBounds(300, 100, 450, 700);

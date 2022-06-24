@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import an.OjdbcConnection;
 import hong.SaveInfo;
-import park.OjdbcConnection;
 
 public class LoadRVID { // 결제 후 db에 저장되면 예매번호가 생성되고 그걸 다시 user에 예매번호로 넣어준다
 

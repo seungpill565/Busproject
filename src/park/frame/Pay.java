@@ -26,9 +26,9 @@ public class Pay extends JFrame{
 	static SelectSeatAgePanel seatPanel ; // 좌석별 연령대 고를 콤보박스 들어있는 판넬
 	static PayButton payBtn ; // 결제하기 버튼
 	static SelectPayWayBox payWayBox ; // 결제 방식 고르는 콤보박스
-	static RouteInfoLabel route = new RouteInfoLabel(); // 행선지 정보 
+	static RouteInfoLabel route; // 행선지 정보 
 	static RouteInfoPanel routePanel ; // 행선지 정보 표 형태로 보여줄 패널
-	static PayInfoScrollpane scroll = new PayInfoScrollpane(); 
+	static PayInfoScrollpane scroll;
 	
 	
 	public Pay(SaveInfo user) {
@@ -43,6 +43,8 @@ public class Pay extends JFrame{
 		payBtn = new PayButton(user);
 		payWayBox = new SelectPayWayBox(user);
 		routePanel = new RouteInfoPanel(user); 
+		scroll = new PayInfoScrollpane(); 
+		route = new RouteInfoLabel();
 			
 		scroll.setViewportView(routePanel);
 	

@@ -29,6 +29,10 @@ public class SaveInfo {
 //		this.seat_name = seat_name;
 //	}
 	
+	public void set_price(Integer price) {
+		this.price = price.toString();
+	}
+	
 	public void set_bi_id(int bi_id) {
 		this.busId = bi_id;
 	}
@@ -69,9 +73,25 @@ public class SaveInfo {
 		this.dcBySeat.put(bs_id, null);
 	}
 	
-	public void remove_bs_map(int bs_id) {
+	public void remove_bs_map(ArrayList<Integer> seatId, ArrayList<String> seatName) {
+		int size = seatId.size();
+		System.out.println(seatId.size());
+		System.out.println(dcBySeat.size());
+		for(int i= 0 ; i < size; ++i) {
+			dcBySeat.remove(seatId.get(i));
+			seatNameBySeatId.remove(seatName.get(i));
+			this.seatId.remove(i);
+			this.seatNames.remove(i);
+		}
+	}
+	
+	public void removeIdMap(int bs_id) {
 		this.dcBySeat.remove(bs_id);
-		this.seatNameBySeatId.remove(bs_id);
+		
+	}
+	
+	public void removeNameMap(String bs_name) {
+		this.seatNameBySeatId.remove(bs_name);
 	}
 	
 	public void put_bs_name(String bs_name, int bs_id) {
@@ -224,6 +244,7 @@ public class SaveInfo {
 	public void setTotalCharge(double totalCharge) {
 		this.totalCharge = totalCharge;
 	}
+
 	
 	
 	

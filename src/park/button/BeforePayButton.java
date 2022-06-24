@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import hong.SaveInfo;
+import hong.selectseat.SelectSeatMainFrame;
 
 public class BeforePayButton extends JButton{
 	
@@ -16,8 +17,13 @@ public class BeforePayButton extends JButton{
 		
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("before버튼 클릭"); // 테스트용
-				
+				//System.out.println("before버튼 클릭"); // 테스트용
+				try {
+					user.remove_bs_map(user.getSeatId(), user.getSeatNames());		
+				}catch(IndexOutOfBoundsException a) {
+					user.remove_bs_map(user.getSeatId(), user.getSeatNames());
+				}
+				new SelectSeatMainFrame(user);
 			}
 		});
 		

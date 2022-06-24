@@ -4,15 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import an.OjdbcConnection;
 import hong.SaveInfo;
-import park.OjdbcConnection;
 
 public class SaveDB {
 
 	public SaveDB(SaveInfo user) { // 결제수단 , 연령, 유저아이디, 버스 아이디, 좌석id
-		String sql = "insert into bus_reservation values (br_id_sq.nextval, ?, ?, ?,?,?) "; // 유저 1 버스 1000 좌석 1
+		String sql = "insert into bus_reservation values (br_id_sq.nextval, ?, ?, ?,?,?)"; // 유저 1 버스 1000 좌석 1
 
-		String sql2 = "update bus_seat set bu_is_reserved = '1' where bs_id = ?";
+		String sql2 = "update bus_seat set bs_is_reserved = '1' where bs_id = ?";
 
 		try(Connection conn = OjdbcConnection.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -22,10 +22,15 @@ public class SaveDB {
 			for(int i=0;i<user.getSeatSize();i++) {
 				System.out.println("포문 시작");
 				pstmt.setString(1, user.getPayWay()); // 결제방식
-				pstmt.setString(2, user.getAgeBySeat().get(user.getSeatId().get(i))); // 해당 좌석에 대한 연령 
+				System.out.println(user.getPayWay());
+				pstmt.setString(2, user.getAgeBySeat().get(user.getSeatId().get(i))); // 해당 좌석에 대한 연령
+				System.out.println(user.getAgeBySeat().get(user.getSeatId().get(i)));
 				pstmt.setString(3, user.getUserId()); // 유저id
+				System.out.println(user.getUserId());
 				pstmt.setInt(4, user.getBusId()); // 버스 id
+				System.out.println(user.getBusId());
 				pstmt.setInt(5, user.getSeatId().get(i)); // 0번째 부터 들어있는 좌석의 번호
+				System.out.println(user.getSeatId().get(i));
 				pstmt.executeUpdate();
 				// -------------------------
 				pstmt2.setInt(1, user.getSeatId().get(i));

@@ -71,6 +71,7 @@ public class SelectRouteMainFrame extends JFrame {
 	private int rt_id;
 	private int bi_id;
 	private String bi_time;
+	private Integer price;
 	
 	// 달에 따른 day들을 일 선택 콤보박스에 추가하는 메서드
 	public void addDays(int month) {
@@ -181,6 +182,7 @@ public class SelectRouteMainFrame extends JFrame {
 		saveInfo.set_arrive_at(arrivalPoint);
 		saveInfo.set_date(month, day);
 		saveInfo.set_time(bi_time);
+		saveInfo.set_price(price);
 	}
 	
 	
@@ -288,6 +290,24 @@ public class SelectRouteMainFrame extends JFrame {
 			
 			while(rs.next()) {
 				this.bi_time = rs.getString("bi_time");				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void getprice() {
+		String sql = "SELECT rt_charge FROM bus_route WHERE rt_id=?";
+		try (
+				Connection conn = OjdbcConnection.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+		){	
+			pstmt.setInt(1, rt_id);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				this.price = rs.getInt("rt_charge");				
 			}
 			
 		} catch (SQLException e) {

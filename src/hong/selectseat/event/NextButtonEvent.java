@@ -13,5 +13,6 @@ public class NextButtonEvent extends SeatMainFramAction{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		main.nextFrame();
+		main.thisClose();
 	}
 }
