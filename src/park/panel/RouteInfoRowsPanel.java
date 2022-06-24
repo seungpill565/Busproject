@@ -2,12 +2,12 @@ package park.panel;
 
 import javax.swing.JPanel;
 
-import park.ReservationInfo;
+import hong.SaveInfo;
 import park.label.RouteInfoRowsLabel;
 
 public class RouteInfoRowsPanel extends JPanel{ // 행선지 정보 행들 넣는 패널 
 
-	public RouteInfoRowsPanel(ReservationInfo user) {
+	public RouteInfoRowsPanel(SaveInfo user) {
 		for(int i=0;i<user.getSeatSize();i++) {
 			add(new RouteInfoRowsLabel(user.getDate()));
 			add(new RouteInfoRowsLabel(user.getTime()));

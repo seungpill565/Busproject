@@ -7,11 +7,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import park.ReservationInfo;
+import hong.SaveInfo;
 
 public class BeforePayButton extends JButton{
 	
-	public BeforePayButton(ReservationInfo user) {
+	public BeforePayButton(SaveInfo user) {
 		super("Before");
 		
 		addActionListener(new ActionListener() {

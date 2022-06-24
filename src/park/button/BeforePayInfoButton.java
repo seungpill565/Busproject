@@ -18,7 +18,7 @@ public class BeforePayInfoButton extends JButton{ // 이전 화면으로 가는 버튼
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("before버튼 클릭"); // 테스트용
-				new Pay(user);
+				//new Pay(user);
 			}
 		});
 		

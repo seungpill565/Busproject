@@ -20,14 +20,14 @@ public class Pay extends JFrame{
 	static SaveInfo user;
 //	static String[][] rowData ; // 예매 정보들
 //	static String[] columnNames = {"날짜", "출발지", "도착지", "시간", "좌석번호"};
-	static HomeBeforeBtnPanel panel1 = new HomeBeforeBtnPanel(user); // 홈버튼, 이전버튼이 들어가는 판넬 (플로우레이아웃)
+	static HomeBeforeBtnPanel panel1 ; // 홈버튼, 이전버튼이 들어가는 판넬 (플로우레이아웃)
 	//static PayInfoTable table = new PayInfoTable(user);	// 좌석정보 테이블
 	//static JScrollPane scroll = new JScrollPane(table); // 좌석정보 테이블 담는 스크롤
 	static SelectSeatAgePanel seatPanel ; // 좌석별 연령대 고를 콤보박스 들어있는 판넬
-	static PayButton payBtn = new PayButton(user); // 결제하기 버튼
-	static SelectPayWayBox payWayBox = new SelectPayWayBox(user); // 결제 방식 고르는 콤보박스
+	static PayButton payBtn ; // 결제하기 버튼
+	static SelectPayWayBox payWayBox ; // 결제 방식 고르는 콤보박스
 	static RouteInfoLabel route = new RouteInfoLabel(); // 행선지 정보 
-	static RouteInfoPanel routePanel = new RouteInfoPanel(user); // 행선지 정보 표 형태로 보여줄 패널
+	static RouteInfoPanel routePanel ; // 행선지 정보 표 형태로 보여줄 패널
 	static PayInfoScrollpane scroll = new PayInfoScrollpane(); 
 	
 	
@@ -61,8 +61,8 @@ public class Pay extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
-	public static void main(String[] args) {
-		new Pay(new ReservationInfo());
-	}
+//	public static void main(String[] args) {
+//		new Pay(new ReservationInfo());
+//	}
 
 }

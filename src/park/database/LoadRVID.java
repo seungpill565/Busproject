@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import hong.SaveInfo;
 import park.OjdbcConnection;
-import park.ReservationInfo;
 
 public class LoadRVID { // 결제 후 db에 저장되면 예매번호가 생성되고 그걸 다시 user에 예매번호로 넣어준다
 
-	public LoadRVID(ReservationInfo user) {
+	public LoadRVID(SaveInfo user) {
 		String sql = "select br_id from bus_reservation where user_id = ? and bi_id = ? and bs_id = ?";
 		
 		try(Connection conn = OjdbcConnection.getConnection();

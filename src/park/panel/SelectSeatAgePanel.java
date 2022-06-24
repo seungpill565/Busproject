@@ -6,12 +6,12 @@ import java.awt.LayoutManager;
 
 import javax.swing.JPanel;
 
-import park.ReservationInfo;
+import hong.SaveInfo;
 import park.combobox.SelectSeatAgeBox;
 
 public class SelectSeatAgePanel extends JPanel {
 
-	public SelectSeatAgePanel(ReservationInfo user) {
+	public SelectSeatAgePanel(SaveInfo user) {
 		LayoutManager manager = new FlowLayout(FlowLayout.CENTER,5,3);
 		
 		for(int i=0;i<user.getSeatSize();i++) {// 좌석수만큼 콤보박스를 생성한다

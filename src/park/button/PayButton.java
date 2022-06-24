@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import park.ReservationInfo;
+import hong.SaveInfo;
 import park.database.LoadRVID;
 import park.database.SaveDB;
 import park.frame.PayInfo;
@@ -22,7 +22,7 @@ public class PayButton extends JButton{
 		cardLayoutManager = cl;
 	}
 	
-	public PayButton(ReservationInfo user) {
+	public PayButton(SaveInfo user) {
 		super("결제 하기");
 		setBackground(Color.cyan);
 		setBounds(190, 500, 100, 50);

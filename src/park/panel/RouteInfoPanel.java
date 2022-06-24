@@ -6,12 +6,12 @@ import java.awt.LayoutManager;
 
 import javax.swing.JPanel;
 
-import park.ReservationInfo;
+import hong.SaveInfo;
 
 public class RouteInfoPanel extends JPanel{
 	RouteInfoColumnNamePanel panel = new RouteInfoColumnNamePanel();
 	RouteInfoRowsPanel rowsPanel ;
-	public RouteInfoPanel(ReservationInfo user) {
+	public RouteInfoPanel(SaveInfo user) {
 		LayoutManager manager = new BorderLayout();
 		setLayout(manager);
 		//panel.setLocation(10, 200);

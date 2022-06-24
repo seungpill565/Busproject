@@ -7,11 +7,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import park.ReservationInfo;
+import hong.SaveInfo;
 
 public class HomeButton extends JButton{ // 홈 화면으로 가는 버튼
 
-	public HomeButton(ReservationInfo user) {
+	public HomeButton(SaveInfo user) {
 		super("Home");
 		
 		addActionListener(new ActionListener() {

@@ -7,12 +7,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-import park.ReservationInfo;
+import hong.SaveInfo;
 
 public class SelectPayWayBox extends JComboBox{ // 결제 방법 선택할 콤보박스
 	
-	ReservationInfo user;
-	public SelectPayWayBox(ReservationInfo user) {
+	SaveInfo user;
+	public SelectPayWayBox(SaveInfo user) {
 		
 		this.user = user;
 		

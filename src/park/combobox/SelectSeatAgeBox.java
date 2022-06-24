@@ -3,18 +3,16 @@ package park.combobox;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.Set;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
+import hong.SaveInfo;
 import park.ReservationInfo;
 
 public class SelectSeatAgeBox extends JComboBox<String>{ // 연령별 좌석개수를 고를 콤보박스
 	
-	ReservationInfo user;
+	SaveInfo user;
 	String[] ageGroup = {"성인", "청소년", "아동"};
 	String age;
 	int seatCnt;
@@ -22,7 +20,7 @@ public class SelectSeatAgeBox extends JComboBox<String>{ // 연령별 좌석개수를 고
 	String seatName;
 	//Integer seatKey = user.getSeatKeys().get(seatCnt); // 체크박스 나오는 순서에 해당하는 자석번호
 	
-	public SelectSeatAgeBox(ReservationInfo user, int seatCnt) { // 예매정보에 연령 좌석 추가해야해서 클래스 그대로 이끌어오고 어떤 좌석에 대한 콤보박스인지 확인해야해서 배열 인덱스로 쓸 seatnum 데려온다
+	public SelectSeatAgeBox(SaveInfo user, int seatCnt) { // 예매정보에 연령 좌석 추가해야해서 클래스 그대로 이끌어오고 어떤 좌석에 대한 콤보박스인지 확인해야해서 배열 인덱스로 쓸 seatnum 데려온다
 		this.user = user;
 		this.seatCnt = seatCnt;
 		seatName = user.getSeatNames().get(seatCnt);
