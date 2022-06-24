@@ -3,6 +3,7 @@ package jang;
 import java.awt.Color;
 
 import java.awt.Font;
+import java.awt.ScrollPane;
 import java.awt.color.ColorSpace;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -63,14 +64,32 @@ public class MemberManagementGUI extends JFrame {
 	ImageIcon home_image = new ImageIcon("Image/home.png");
 	ImageIcon home_image2 = new ImageIcon("Image/home2.png");
 
-	final String[] colNames = { "아이디", "이름", "비밀전호", "전화번호", "관리자/손님" };
-	DefaultTableModel model = new DefaultTableModel(colNames, 0);
-
-	JTable table = new JTable(model);
-	JScrollPane scrolledpane = new JScrollPane(table);
 
 	public MemberManagementGUI() {
 		MemberManagementGUI();
+	}
+	Member_DB db = new Member_DB();
+	
+	public void allView() {
+		ArrayList<Member_Data> arr = db.readData();
+		String[] colNames = { "아이디", "이름", "비밀번호", "전화번호", "관리자/손님" };
+		String[][] rowData = new String[arr.size()][colNames.length];
+		
+		for (int row = 0; row < rowData.length; ++row) {
+			rowData[row][0] = arr.get(row).getID();
+			rowData[row][1] = arr.get(row).getName();
+			rowData[row][2] = arr.get(row).getPassword();
+			rowData[row][3] = arr.get(row).getPhonenum();
+			rowData[row][4] = arr.get(row).getPassenger();
+		}
+		
+		DefaultTableModel model = new DefaultTableModel(rowData, colNames);
+		JTable table = new JTable(model);
+		JScrollPane scrolledpane = new JScrollPane();
+		scrolledpane.setViewportView(table);
+		
+		scrolledpane.setBounds(40, 300, 700, 250);
+		add(scrolledpane);
 	}
 
 	public void MemberManagementGUI() {
@@ -79,14 +98,12 @@ public class MemberManagementGUI extends JFrame {
 		panel.setBackground(Color.WHITE);
 		panel.setLayout(null);
 		setResizable(false);
-		setBounds(10, 20, 800, 650);
+		setBounds(500, 200, 800, 650);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 
 		ta.setEditable(false);
 
-		scrolledpane.setSize(500, 200);
-		add(scrolledpane);
 
 //		backBtn = new JButton(image);
 //		backBtn.setRolloverIcon(image2);
@@ -144,7 +161,7 @@ public class MemberManagementGUI extends JFrame {
 		// 입력한 글이 보이는 창
 		JScrollPane jsp = new JScrollPane(ta); // 창 스크롤
 		jsp.setBounds(40, 300, 700, 250);
-		panel.add(jsp);
+//		panel.add(jsp);
 
 		btn1.setBounds(250, 240, 70, 30);
 		btn1.setBackground(new Color(0XE7E6E6));
@@ -162,8 +179,6 @@ public class MemberManagementGUI extends JFrame {
 		panel.add(btn3);
 		panel.add(btn4);
 		panel.add(btn5);
-
-		Member_DB db = new Member_DB();
 
 		// 뒤로가기 버튼
 //		backBtn.addActionListener(new ActionListener() {
@@ -197,16 +212,14 @@ public class MemberManagementGUI extends JFrame {
 
 				Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$");
 				Matcher passMatcher = passPattern.matcher(user_password);
-				Pattern passPattern2 = Pattern.compile("\\d");
+				Pattern passPattern2 = Pattern.compile("\\d{3}-\\d{4}-\\d{4}");
 				Matcher passMatcher2 = passPattern2.matcher(user_phonenum);
+				
 				if (!passMatcher.find()) {
 					JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다", "비밀번호 오류", 1);
 					return;
 				} else if (!passMatcher2.find()) {
-					JOptionPane.showMessageDialog(null, "전화번호는 숫자로만 구성되어야 합니다", "전화번호 오류", 1);
-					return;
-				} else if (user_id.equals(user_id)) {
-					JOptionPane.showMessageDialog(null, "아이디가 존재합니다", "아이디 중복", 1);
+					JOptionPane.showMessageDialog(null, "다시 입력해주세요\nex) xxx-xxxx-xxxx", "전화번호 오류", 1);
 					return;
 				} else {
 					db.insertData(
@@ -226,20 +239,21 @@ public class MemberManagementGUI extends JFrame {
 		btn2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ta.setText("");
-				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
-				arr = db.readData();
+//				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
+//				arr = db.readData();
+				allView();
 
-				ta.append("\t아이디\t" + "이름\t" + "비밀번호\t" + "전화번호\t\t" + "관리자/손님\n");
-				ta.append("\t"
-						+ "-----------------------------------------------------------------------------------------------------------------------\n");
-
-				// 전체출력
-				for (int i = 0; i < arr.size(); i++) {
-					ta.append("\t" + arr.get(i).getID() + "\t" + arr.get(i).getName() + "\t" + arr.get(i).getPassword()
-							+ "\t" + arr.get(i).getPhonenum() + "\t\t" + arr.get(i).getPassenger() + "\n");
-
-				}
+				
+//				ta.append("\t아이디\t" + "이름\t" + "비밀번호\t" + "전화번호\t\t" + "관리자/손님\n");
+//				ta.append("\t"
+//						+ "-----------------------------------------------------------------------------------------------------------------------\n");
+//
+//				// 전체출력
+//				for (int i = 0; i < arr.size(); i++) {
+//					ta.append("\t" + arr.get(i).getID() + "\t" + arr.get(i).getName() + "\t" + arr.get(i).getPassword()
+//							+ "\t" + arr.get(i).getPhonenum() + "\t\t" + arr.get(i).getPassenger() + "\n");
+//
+//				}
 
 			}
 		});
