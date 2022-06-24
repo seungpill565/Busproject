@@ -1,18 +1,19 @@
 package park.scrollpane;
 
+import java.awt.Color;
+
 import javax.swing.JScrollPane;
 
-import park.table.PayInfoTable;
+import park.panel.RouteInfoColumnNamePanel;
 
-public class PayInfoScrollpane extends JScrollPane{ // 이게 있어야되는지 판단해봐야됨
+public class PayInfoScrollpane extends JScrollPane{ 
 
-//	public PayInfoScrollpane(String[][] rowData, String[] columnNames) {
-//		piTable(rowData, columnNames);	
-//	}
+	public PayInfoScrollpane() {
+		super(new RouteInfoColumnNamePanel());
+		getViewport().setBackground(Color.white); // 스크롤패인 배경색 변경
+	    setVerticalScrollBarPolicy(0);
 
-	
-//	private static PayInfoTable piTable(String[][] rowData, String[] columnNames) {
-//
-//		return new PayInfoTable(rowData, columnNames);
-//	}
+
+		setBounds(10,100,465,200);
+	}
 }

@@ -1,5 +1,6 @@
 package park.panel;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.LayoutManager;
 
@@ -24,7 +25,7 @@ public class HomeBeforeBtnPanel extends JPanel{ // 홈버튼, 이전버튼 일렬로 나타�
 		add(homeBtn);
 		add(befBtn);
 			
-	
-		setBounds(10, 10, 500, 60);
+		setBackground(Color.white);
+		setBounds(10, 10, 500, 40);
 	}
 }
