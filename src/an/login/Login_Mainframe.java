@@ -21,9 +21,11 @@ import javax.swing.JTextField;
 import an.OjdbcConnection;
 import an.admin.Admin_MainFrame;
 import an.find.Find_MainFrame;
+import an.login.action.Allpanel_loginAction;
 import an.sign_up.SignupMain_Frame;
 import an.userinfo.Info_MainFrame;
 import hong.SaveInfo;
+import hong.selectseat.event.SeatButtonEvent;
 
 public class Login_Mainframe extends JFrame{
 	
@@ -40,15 +42,12 @@ public class Login_Mainframe extends JFrame{
 	JPanel idpanel = new IdPanel();
 	JTextField ptext = new IdPwd_TextFeild(10);
 	JPanel idPanel2 = new IdPanel2(ptext);
-	
+
 	JPanel pwdPanel = new PwdPanel();
 	JPasswordField itext = new JPasswordField(10);
 	JPanel pwdPanel2 = new PwdPanel2(itext);
 	
-
 	JPanel loginPanel = new Login_MainPanel(login);
-	
-	
 	JPanel joinPanel = new JoinPanel(up);
 	JPanel findPanel = new findPanel();
 	
@@ -58,6 +57,7 @@ public class Login_Mainframe extends JFrame{
 	
 	String id;
 	
+	/////////////////////////////////////////////////////////////////
 	public Login_Mainframe() {
 
 		setTitle("버스 예약시스템");
@@ -72,44 +72,8 @@ public class Login_Mainframe extends JFrame{
 		add(image,BorderLayout.CENTER);
 		
 		///////////////////////////////////////////////////////////////
-		login.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				id = ptext.getText();// 아이디 -- 이거 끌고 다니면 될거같은데..
-				String pass = itext.getText();
-				String check = combo.getSelectedItem().toString();
-				
-			
-			String sql = String.format("SELECT user_password FROM user_info WHERE user_id = '%s'"
-					+ " AND user_password ='%s'and user_passenger_manager = '%s'",
-					id, pass,check);	
-			try(Connection conn = OjdbcConnection.getConnection();
-					PreparedStatement pstmt = conn.prepareStatement(sql);) {
-					
-					ResultSet rset = pstmt.executeQuery();
-
-					rset.next();
-					
-					if (pass.equals(rset.getString(1))) {
-						if(check == "손님") {
-							all_id(id);
-							dispose();
-							new Info_MainFrame(saveInfo);
-						}else {
-						new Admin_MainFrame();
-						dispose();
-						}
-					
-					} else
-						JOptionPane.showMessageDialog(null, "Login Failed", "로그인 실패", 1);
-
-				} catch (SQLException ex) {
-					JOptionPane.showMessageDialog(null, "Login Failed", "로그인 실패", 1);
-				}
-				
-			}
-		});
+		Allpanel_loginAction loginevent = new Allpanel_loginAction(this);
+		login.addActionListener(loginevent);
 		
 		join.addActionListener(new ActionListener() {
 			
@@ -157,6 +121,41 @@ public class Login_Mainframe extends JFrame{
 	 public void all_id(String id) {
 			saveInfo.set_user_id(id);
 		}
+	 
+	 public void loginac() {
+		 
+		 	id = ptext.getText();
+			String pass = itext.getText();
+			String check = combo.getSelectedItem().toString();
+			
+		
+		String sql = String.format("SELECT user_password FROM user_info WHERE user_id = '%s'"
+				+ " AND user_password ='%s'and user_passenger_manager = '%s'",
+				id, pass,check);	
+		try(Connection conn = OjdbcConnection.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);) {
+				
+				ResultSet rset = pstmt.executeQuery();
+
+				rset.next();
+				
+				if (pass.equals(rset.getString(1))) {
+					if(check == "손님") {
+						all_id(id);
+						dispose();
+						new Info_MainFrame(saveInfo);
+					}else {
+					new Admin_MainFrame();
+					dispose();
+					}
+				
+				} else
+					JOptionPane.showMessageDialog(null, "Login Failed", "로그인 실패", 1);
+
+			} catch (SQLException ex) {
+				JOptionPane.showMessageDialog(null, "Login Failed", "로그인 실패", 1);
+			} 
+	 }
 	
 	public static void main(String[] args) {
 			  

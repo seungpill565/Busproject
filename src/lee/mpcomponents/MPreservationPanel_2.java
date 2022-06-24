@@ -36,7 +36,7 @@ public class MPreservationPanel_2 extends JPanel {
 	public MPreservationPanel_2(SaveInfo saveInfo) {  
 		this.saveInfo = saveInfo;
 		
-		this.user_id = new SaveInfo().get_user_id();
+		this.user_id = saveInfo.get_user_id();
 		
 		JScrollPane MPscroll = new JScrollPane(MPreservation_3, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		BoxLayout MPboxlayout = new BoxLayout(MPreservation_3, BoxLayout.Y_AXIS);		
