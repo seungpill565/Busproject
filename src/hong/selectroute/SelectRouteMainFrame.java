@@ -1,8 +1,6 @@
 package hong.selectroute;
 
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

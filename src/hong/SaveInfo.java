@@ -1,6 +1,5 @@
 package hong;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SaveInfo {
@@ -8,7 +7,7 @@ public class SaveInfo {
 	private int bi_id;
 	private int rt_id;
 	private HashMap<Integer, Double> bs_id_map = new HashMap<>();
-	private ArrayList<String> seat_name = new ArrayList<>();
+	private HashMap<Integer, String> bs_name_map = new HashMap<>();
 	private String user_id;
 	private String depart_from;
 	private String arrive_at;
@@ -16,9 +15,9 @@ public class SaveInfo {
 	private String bi_day;
 	
 	
-	public void set_seat_name(ArrayList<String> seat_name) {
-		this.seat_name = seat_name;
-	}
+//	public void set_seat_name(ArrayList<String> seat_name) {
+//		this.seat_name = seat_name;
+//	}
 	
 	public void set_bi_id(int bi_id) {
 		this.bi_id = bi_id;
@@ -60,7 +59,13 @@ public class SaveInfo {
 		this.bs_id_map.put(bs_id, null);
 	}
 	
-	public void remove_bs_id(int bs_id) {
+	public void remove_bs_map(int bs_id) {
 		this.bs_id_map.remove(bs_id);
+		this.bs_name_map.remove(bs_id);
 	}
+	
+	public void put_bs_name(int bs_id, String bs_name) {
+		this.bs_name_map.put(bs_id, bs_name);
+	}
+	
 }

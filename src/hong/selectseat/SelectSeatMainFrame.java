@@ -33,19 +33,19 @@ public class SelectSeatMainFrame extends JFrame {
 	
 	private SeatButtonEvent seatBtnEvent = new SeatButtonEvent(this);
 	
-	public void save_seat_name() {
-		saveInfo.set_seat_name(bs_name_list);
-	}
+//	public void save_seat_name() {
+//		saveInfo.set_seat_name(bs_name_list);
+//	}
 	
 	public void selectSeat(int seatNum) {
-		System.out.println(saveInfo.get_user_id());
 		
 		if(!seatBtns[seatNum].get_is_selected()) {
-			saveInfo.put_bs_id(seatBtns[seatNum].get_bs_id());			
+			saveInfo.put_bs_id(seatBtns[seatNum].get_bs_id());
+			saveInfo.put_bs_name(seatBtns[seatNum].get_bs_id(), "" + seatNum); // 좌석 번호와 좌석이름을 SaveInfo HashMap에..
 		} else {
-			saveInfo.remove_bs_id(seatBtns[seatNum].get_bs_id());
+			saveInfo.remove_bs_map(seatBtns[seatNum].get_bs_id());
 		}
-		seatBtns[seatNum].selectedCheck();	
+		seatBtns[seatNum].selectedCheck();
 	}
 	
 	public SelectSeatMainFrame(SaveInfo saveInfo) {
