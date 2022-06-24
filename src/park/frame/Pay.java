@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import javax.swing.JFrame;
 
+import hong.SaveInfo;
 import park.ReservationInfo;
 import park.button.PayButton;
 import park.combobox.SelectPayWayBox;
@@ -16,7 +17,7 @@ import park.scrollpane.PayInfoScrollpane;
 
 public class Pay extends JFrame{
 	// 레이아웃 널로 만들고 위에서부터 flow, table, label, combobox, button 
-	static ReservationInfo user;
+	static SaveInfo user;
 //	static String[][] rowData ; // 예매 정보들
 //	static String[] columnNames = {"날짜", "출발지", "도착지", "시간", "좌석번호"};
 	static HomeBeforeBtnPanel panel1 = new HomeBeforeBtnPanel(user); // 홈버튼, 이전버튼이 들어가는 판넬 (플로우레이아웃)
@@ -30,7 +31,7 @@ public class Pay extends JFrame{
 	static PayInfoScrollpane scroll = new PayInfoScrollpane(); 
 	
 	
-	public Pay(ReservationInfo user) {
+	public Pay(SaveInfo user) {
 		super("결제 화면");
 		user.setSeatId(); // 해쉬맵에 있는 좌석이름 어레이리스트에 넣기
 		user.setSeatNames();

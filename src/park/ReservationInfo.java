@@ -9,9 +9,9 @@ public class ReservationInfo { // 인스턴스 예시 클래스
 
 	static private String userId;
 	static private Integer busId;
-	static private ArrayList<Integer> reservationId = new ArrayList<>();; // 좌석당 예매번호 1개고 여러좌석일 수 있으므로 배열로 저장
+	static private ArrayList<Integer> reservationId = new ArrayList<>(); // 좌석당 예매번호 1개고 여러좌석일 수 있으므로 배열로 저장
 	static private String depart;
-	static private String arrive;
+	static String arrive;
 	static private String price;
 	static private String date;
 	static private String time;
