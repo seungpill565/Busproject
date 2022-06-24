@@ -8,6 +8,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import an.find.action.Find_IdAction;
+import an.find.action.Find_OutAction;
+import an.find.action.Find_PassAction;
+
 public class Find_MainFrame extends JFrame{
 	JButton id = new Find_Button("아이디 찾기");
 	JButton pass = new Find_Button("비밀번호 찾기"); 
@@ -20,33 +24,13 @@ public class Find_MainFrame extends JFrame{
 		JPanel main  = new Find_Panel();
 		JPanel bt = new Find_ButtonPanel(id,pass,out);
 		/////////////////////////////////////////////////////////////
-		id.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new IdFind_Frame();
-				
-			}
-		});
-		out.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			 dispose();
-				
-			}
-		});
+		Find_OutAction outevent = new Find_OutAction(this);
+		Find_IdAction idevent = new Find_IdAction(this);
+		Find_PassAction passevent = new Find_PassAction(this);
 		
-		
-		pass.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			new PassFind_Frame();
-				
-			}
-		});
+		id.addActionListener(idevent);
+		out.addActionListener(outevent);
+		pass.addActionListener(passevent);
 		
 		
 		///////////////////////////////////////////////////////
@@ -58,9 +42,22 @@ public class Find_MainFrame extends JFrame{
 		setResizable(false);  
 		setVisible(true);
 	}
+	//아이디 찾기 이동 이벤트
+	public void Find_id() {		
+		new IdFind_Frame();
+		dispose();
+		
+	}
+	//나가기  이벤트
+	public void Find_out() {
+		 dispose();
+		
+	}
 	
-	public static void main(String[] args) {
-		new Find_MainFrame();
+	//비밀번호 찾기 이동 이벤트
+	public void Find_pass() {
+		new PassFind_Frame();
+		 dispose();
 	}
 
 }

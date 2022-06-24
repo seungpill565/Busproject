@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import an.OjdbcConnection;
+import an.sign_up.action.Sign_ButtonAction;
 import lee.mpcomponents.MPincorrectphonenumSF;
 
 
@@ -56,57 +57,58 @@ public class Sign_Panel extends JPanel{
 		add(pnPanel);
 		add(combo);
 		
-		button.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			id = idtext.getText();
-			pass = new String(passtext.getText());
-			name = nametext.getText();
-			phone = pntext.getText();
-			check = combo.getSelectedItem().toString();
+		Sign_ButtonAction btevent = new Sign_ButtonAction(this);
+		
+		button.addActionListener(btevent);
+		
+		
+	}
+	
+	//회원가입 이벤트
+	public void signupAction() {
+		id = idtext.getText();
+		pass = new String(passtext.getText());
+		name = nametext.getText();
+		phone = pntext.getText();
+		check = combo.getSelectedItem().toString();
 
-			String sql = "INSERT into user_info(user_id,user_passenger_manager,user_name,user_password,user_phonenum)"
-					+ " values (?,?,?,?,?)"; 
+		String sql = "INSERT into user_info(user_id,user_passenger_manager,user_name,user_password,user_phonenum)"
+				+ " values (?,?,?,?,?)"; 
 
-			Pattern passPattern1 = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$"); //8자 영문+특문+숫자
-			Matcher passMatcher = passPattern1.matcher(pass);
-			
-			
-			boolean result = Pattern.matches("\\d{3}-\\d{4}-\\d{4}", phone);
-			
-			if (!passMatcher.find()) {
-				JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다", "비밀번호 오류", 1);
-			} if(!result) {
-				JOptionPane.showMessageDialog(null, "xxx-xxxx-xxxx로 입력해 주세요", "번호 오류", 1);
-			}
-			
-			else {
-				try(Connection conn = OjdbcConnection.getConnection();
-					PreparedStatement pstmt = conn.prepareStatement(sql);
-						
-						) {
-					
-					pstmt.setString(1, id);
-					pstmt.setString(2, check);
-					pstmt.setString(3, name);
-					pstmt.setString(4, pass);
-					pstmt.setString(5, pntext.getText());
-					pstmt.executeUpdate();
-					JOptionPane.showMessageDialog(null, "회원 가입 완료!", "회원가입", 1);
-					
-					
-				} catch (SQLException e1) {
-					if (e1.getMessage().contains("PRIMARY")) {
-						JOptionPane.showMessageDialog(null, "아이디 중복!", "아이디 중복 오류", 1);
-					} else
-						JOptionPane.showMessageDialog(null, "정보를 제대로 입력해주세요!", "오류", 1);
-				} // try ,catch
-			}
+		Pattern passPattern1 = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$"); //8자 영문+특문+숫자
+		Matcher passMatcher = passPattern1.matcher(pass);
+		
+		
+		boolean result = Pattern.matches("\\d{3}-\\d{4}-\\d{4}", phone);
+		
+		if (!passMatcher.find()) {
+			JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다", "비밀번호 오류", 1);
+		} if(!result) {
+			JOptionPane.showMessageDialog(null, "xxx-xxxx-xxxx로 입력해 주세요", "번호 오류", 1);
 		}
-	});
 		
-		
+		else {
+			try(Connection conn = OjdbcConnection.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+					
+					) {
+				
+				pstmt.setString(1, id);
+				pstmt.setString(2, check);
+				pstmt.setString(3, name);
+				pstmt.setString(4, pass);
+				pstmt.setString(5, pntext.getText());
+				pstmt.executeUpdate();
+				JOptionPane.showMessageDialog(null, "회원 가입 완료!", "회원가입", 1);
+				
+				
+			} catch (SQLException e1) {
+				if (e1.getMessage().contains("PRIMARY")) {
+					JOptionPane.showMessageDialog(null, "아이디 중복!", "아이디 중복 오류", 1);
+				} else
+					JOptionPane.showMessageDialog(null, "정보를 제대로 입력해주세요!", "오류", 1);
+			} 
+		}
 	}
 
 }

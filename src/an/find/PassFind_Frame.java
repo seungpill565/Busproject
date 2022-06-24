@@ -15,6 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import an.OjdbcConnection;
+import an.find.action.Pass_FindAction;
+import an.find.action.Pass_IdAction;
+import an.find.action.Pass_OutAction;
 import an.sign_up.Password_Panel;
 
 public class PassFind_Frame extends JFrame{
@@ -39,52 +42,14 @@ public class PassFind_Frame extends JFrame{
 		add(all,BorderLayout.CENTER);
 		add(buttonPanel,BorderLayout.SOUTH);
 		//////////////////////////////////////////////////////////////////////////
-		button2.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new IdFind_Frame();
-				
-			}
-		});
+		Pass_IdAction idevent = new Pass_IdAction(this);
+		Pass_FindAction findevent = new Pass_FindAction(this);
+		Pass_OutAction outevent = new Pass_OutAction(this);
 		
-	
-		
-		button.addActionListener(new ActionListener() {
+		button2.addActionListener(idevent); 
+		button.addActionListener(findevent);
+		out.addActionListener(outevent); 
 			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String sql = String.format("SELECT user_password from user_info where user_id = '%s' and user_name = '%s'",
-						idText.getText() ,nameText.getText());	
-				
-				
-				try(Connection conn = OjdbcConnection.getConnection();
-						PreparedStatement pstmt = conn.prepareStatement(sql);) {
-						
-						ResultSet rset = pstmt.executeQuery();
-						
-						rset.next();
-						String pass =rset.getString(1);
-						
-						JOptionPane.showMessageDialog(null, "비밀번호 :   "+pass, "비밀번호 찾기", 1);
-						
-				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null, "올바른 정보를 입력하세요", "정보 없음", 1);
-				}
-				
-				
-			}
-		});
-		
-		out.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				
-			}
-		});
 		
 		//////////////////////////////////////////////////////////////////////////
 		setBounds(650, 350, 400, 300);
@@ -93,8 +58,36 @@ public class PassFind_Frame extends JFrame{
 		setVisible(true);
 	}
 	
-	public static void main(String[] args) {
-		new PassFind_Frame();
+	//찾기이벤트
+	public void findAction() {
+		String sql = String.format("SELECT user_password from user_info where user_id = '%s' and user_name = '%s'",
+				idText.getText() ,nameText.getText());	
+		
+		
+		try(Connection conn = OjdbcConnection.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);) {
+				
+				ResultSet rset = pstmt.executeQuery();
+				
+				rset.next();
+				String pass =rset.getString(1);
+				
+				JOptionPane.showMessageDialog(null, "비밀번호 :   "+pass, "비밀번호 찾기", 1);
+				
+		} catch (SQLException e1) {
+			JOptionPane.showMessageDialog(null, "올바른 정보를 입력하세요", "정보 없음", 1);
+		}
+		
 	}
-
+	//나가기 메소드
+	
+	public void outAction() {
+		dispose();
+	}
+	
+	//나가기 메소드
+	public void idAction() {
+		dispose();
+		new IdFind_Frame();
+	}
 }

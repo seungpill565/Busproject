@@ -8,6 +8,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import an.admin.action.Admin_OutAction;
+import an.admin.action.Admin_RouteAction;
+import an.admin.action.Admin_UserAction;
 import an.login.Login_Mainframe;
 
 public class Admin_MainFrame extends JFrame{
@@ -26,46 +29,32 @@ public class Admin_MainFrame extends JFrame{
 		add(imagepanel,BorderLayout.CENTER);
 		//////////////////////////////////////////////////////////////////
 		
-		//회원정보 수정이동 액션
-		userModify.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		Admin_RouteAction rtevent = new Admin_RouteAction(this);
+		Admin_UserAction userevent = new Admin_UserAction(this);
+		Admin_OutAction outevent = new Admin_OutAction(this);
 		
-		//노서정보 수정이동 액션
-		routemodify.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		//나가기 액션
-		out.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new Login_Mainframe();
-				
-			}
-		});
+		userModify.addActionListener(userevent);
+		routemodify.addActionListener(rtevent);
+		out.addActionListener(outevent);
+
 		///////////////////////////////////////////////////////////////////
 		setBounds(500, 200, 800, 500);
 		setResizable(false);  
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
-	
-	public static void main(String[] args) {
-		new Admin_MainFrame();
+	//회원정보 수정이동 액션
+	public void userModifyAction() {
 		
 	}
-
+	//노서정보 수정이동 액션
+	public void routeModifyAction() {
+		
+	}
+	//나가기 액션
+	public void outAction() {
+	dispose();
+	new Login_Mainframe();
+		
+	}
 }

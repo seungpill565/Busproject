@@ -22,10 +22,11 @@ import an.OjdbcConnection;
 import an.admin.Admin_MainFrame;
 import an.find.Find_MainFrame;
 import an.login.action.Allpanel_loginAction;
+import an.login.action.Join_Action;
+import an.login.action.Up_action;
 import an.sign_up.SignupMain_Frame;
 import an.userinfo.Info_MainFrame;
 import hong.SaveInfo;
-import hong.selectseat.event.SeatButtonEvent;
 
 public class Login_Mainframe extends JFrame{
 	
@@ -49,7 +50,7 @@ public class Login_Mainframe extends JFrame{
 	
 	JPanel loginPanel = new Login_MainPanel(login);
 	JPanel joinPanel = new JoinPanel(up);
-	JPanel findPanel = new findPanel();
+	JPanel findPanel = new FindPanel();
 	
 	JPanel buttonPanel = new Login_buttonPanel(login, up, join); 
 	
@@ -72,36 +73,20 @@ public class Login_Mainframe extends JFrame{
 		add(image,BorderLayout.CENTER);
 		
 		///////////////////////////////////////////////////////////////
+		
+		//로그인후 관리자,회원 이동 이벤트
 		Allpanel_loginAction loginevent = new Allpanel_loginAction(this);
+		//회원가입 이동 이벤트
+		Join_Action joinevent = new Join_Action(this);
+		//아이디 비밀번호 찾기 이동 이벤트
+		Up_action upevent = new Up_action(this);
+		
 		login.addActionListener(loginevent);
-		
-		join.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new SignupMain_Frame();
-				 
-			}
-		
-		});
-		
-		up.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new Find_MainFrame();
-				
-			}
-		});
-		
-		
-		
+		join.addActionListener(joinevent);
+		up.addActionListener(upevent);
 		
 		
 		///////////////////////////////////////////////////////////////
-		
-		
-		
 		setBounds(500, 200, 800, 500);
 		setResizable(false);  
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,11 +102,13 @@ public class Login_Mainframe extends JFrame{
 				add(buttonPanel); 
 		}
 	 }
-	 
+	 // 아이디 넘기는 메서드
 	 public void all_id(String id) {
 			saveInfo.set_user_id(id);
 		}
 	 
+	 
+	 //로그인 체크 메서드
 	 public void loginac() {
 		 
 		 	id = ptext.getText();
@@ -155,6 +142,15 @@ public class Login_Mainframe extends JFrame{
 			} catch (SQLException ex) {
 				JOptionPane.showMessageDialog(null, "Login Failed", "로그인 실패", 1);
 			} 
+	 }
+	 
+	 // 회원가입으로 이동 메서드
+	 public void join() {
+		 new SignupMain_Frame();
+	 }
+	 //비밀번호/아이디 찾기 이동 메서드
+	 public void  up() {
+		 new Find_MainFrame();
 	 }
 	
 	public static void main(String[] args) {

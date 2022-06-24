@@ -1,17 +1,17 @@
 package an.userinfo;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import an.login.Login_Mainframe;
+import an.userinfo.action.Info_LogoutAction;
+import an.userinfo.action.Info_MyInfoAction;
+import an.userinfo.action.Info_ReservationAction;
 import hong.SaveInfo;
 import hong.selectroute.SelectRouteMainFrame;
-import lee.mpcomponents.MPmainFrame;
 
 public class Info_MainFrame extends JFrame{
 	JButton Reservation = new Info_JButton("예약");
@@ -35,40 +35,39 @@ public class Info_MainFrame extends JFrame{
 		add(imagePanel,BorderLayout.CENTER);
 		add(buttonPanel,BorderLayout.SOUTH);
 		/////////////////////////////////////////
-		// 예약 이벤트
-		Reservation.addActionListener(new ActionListener() {
+		
+		Info_ReservationAction rvevent = new Info_ReservationAction(this);
+		Info_MyInfoAction myevent = new Info_MyInfoAction(this);
+		Info_LogoutAction logevent = new Info_LogoutAction(this);
+		
+		Reservation.addActionListener(rvevent);
+		myinfo.addActionListener(myevent);
+		logout.addActionListener(logevent);
 			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new SelectRouteMainFrame(saveInfo);
-				dispose();
-			}
-		});
 		
-		
-		//내정보 이벤트
-		myinfo.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {	
-				new MPmainFrame(saveInfo);
-				dispose();
-			}
-		});
-		
-		//로그아웃 이벤트
-		logout.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new Login_Mainframe();
-				dispose();
-			}
-		});
-		
+		/////////////////////////////////////////
 		setBounds(500, 200, 800, 500);
 		setResizable(false);  
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+	}
+	
+	//예약 이동 이벤트
+	public void ReservationAction() {
+		new SelectRouteMainFrame(saveInfo);
+		dispose();
+	}
+	
+	//내정보 이동 이벤트
+	public void myinfoAction() {
+		new Login_Mainframe();
+		dispose();
+	}
+	
+	//로그아웃 이동 이벤트
+	public void logoutAction() {
+		new Login_Mainframe();
+		dispose();
 	}
 
 }

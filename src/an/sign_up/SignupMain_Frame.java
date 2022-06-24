@@ -47,9 +47,4 @@ public class SignupMain_Frame extends JFrame {
 	}
 	
 	
-			
-	public static void main(String[] args) {
-		new SignupMain_Frame();
-	}
-
 }
