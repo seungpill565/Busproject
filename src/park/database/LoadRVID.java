@@ -32,5 +32,7 @@ public class LoadRVID { // 결제 후 db에 저장되면 예매번호가 생성되고 그걸 다시 u
 			e.printStackTrace();
 			System.out.println("DB불러오기 실패");
 		}
+		for(int i=0;i<user.getReservationId().size();i++)
+			System.out.println(user.getReservationId().get(i));
 	}
 }

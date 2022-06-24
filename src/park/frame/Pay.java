@@ -41,8 +41,9 @@ public class Pay extends JFrame{
 		panel1 = new HomeBeforeBtnPanel(user);
 		payBtn = new PayButton(user);
 		payWayBox = new SelectPayWayBox(user);
+		routePanel = new RouteInfoPanel(user); 
 			
-		//scroll.setViewportView(route);
+		scroll.setViewportView(routePanel);
 	
 		add(panel1); // 홈버튼, 이전버튼 판넬
 		add(route); // 행선지 정보

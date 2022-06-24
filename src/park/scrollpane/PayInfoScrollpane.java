@@ -11,6 +11,9 @@ public class PayInfoScrollpane extends JScrollPane{
 	public PayInfoScrollpane() {
 		super(new RouteInfoColumnNamePanel());
 		getViewport().setBackground(Color.white); // 스크롤패인 배경색 변경
+	    setVerticalScrollBarPolicy(0);
+
+
 		setBounds(10,100,465,200);
 	}
 }

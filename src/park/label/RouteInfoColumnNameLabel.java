@@ -12,7 +12,7 @@ public class RouteInfoColumnNameLabel extends JLabel{
 		super(title);
 		
 		setFont(new Font("πŸ≈¡√º",Font.BOLD,20));
-		setPreferredSize(new Dimension(50,30));
+		setPreferredSize(new Dimension(92,30));
 		setOpaque(true);
 		setForeground(Color.white);
 		setBackground(Color.black);

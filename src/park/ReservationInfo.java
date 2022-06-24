@@ -9,15 +9,12 @@ public class ReservationInfo { // 인스턴스 예시 클래스
 
 	static private String userId;
 	static private Integer busId;
-	
 	static private ArrayList<Integer> reservationId = new ArrayList<>();; // 좌석당 예매번호 1개고 여러좌석일 수 있으므로 배열로 저장
 	static private String depart;
 	static private String arrive;
 	static private String price;
 	static private String date;
 	static private String time;
-//	static private HashMap<Integer, Double> dcBySeat = new HashMap<>(); // 좌석별 할인률 여기 키값이 좌석 id //팀장님 넘겨주시는거
-//	static private HashMap<Integer, String> ageBySeat = new HashMap<>(); // 좌석별 연령
 	static private HashMap<Integer, Double> dcBySeat = new HashMap<>(); // 좌석별 할인률 여기 키값이 좌석 id //팀장님 넘겨주시는거
 	static private HashMap<Integer, String> ageBySeat = new HashMap<>(); // 좌석별 연령
 	static private HashMap<String, Integer> seatNameBySeatId = new HashMap<>();// 좌석이름에 해당하는 좌석 id
@@ -32,6 +29,14 @@ public class ReservationInfo { // 인스턴스 예시 클래스
 		dcBySeat.put(2, null);
 		seatNameBySeatId.put("a-21",1);
 		seatNameBySeatId.put("a-04",2 );
+		dcBySeat.put(3, null);
+		dcBySeat.put(4, null);
+		seatNameBySeatId.put("a-01",3);
+		seatNameBySeatId.put("a-02",4 );
+		dcBySeat.put(5, null);
+		dcBySeat.put(6, null);
+		seatNameBySeatId.put("a-03",5);
+		seatNameBySeatId.put("a-05",6 );
 
 		depart = "동서울";
 		arrive = "부산";
@@ -44,25 +49,15 @@ public class ReservationInfo { // 인스턴스 예시 클래스
 		
 	}
 	
-//	public static void setSeatNamesBySeatId() { // 좌석 id들 뽑아서 그걸 키 값으로 하고 좌석이름을 리스트에서 불러와서 밸류로 넣는다
-//		Set<Integer> keys = dcBySeat.keySet();
-//		int i=0;
-//		for(Integer key : keys) {
-//			seatNameBySeatId.put(key, seatNames.get(i++));
-//		}
-//		for(int j=0;j<seatNameBySeatId.size();j++)
-//			System.out.println(seatNameBySeatId.get(j));
-//	}
-	
 	
 	public static void setSeatNames() { 		// 
 		Set<String> keys = seatNameBySeatId.keySet();
 		for(String key : keys) {
 			seatNames.add(key);
 		}
-			for(int i=0;i<seatNames.size();i++)
-				System.out.println(i+"번째 좌석ID "+seatNames.get(i)+"저장");
-		
+		for(int i=0;i<seatNames.size();i++)
+			System.out.println(i+"번째 좌석ID "+seatNames.get(i)+"저장");
+
 	}
 	public static HashMap<String, Integer> getSeatNameBySeatId() {
 		return seatNameBySeatId;
@@ -99,7 +94,9 @@ public class ReservationInfo { // 인스턴스 예시 클래스
 		return dcBySeat;
 	}
 	
-	
+	public static ArrayList<Integer> getReservationId() {
+		return reservationId;
+	}
 	
 	//---------------------------------------------
 	public static double getTotalCharge() { // price * dcBySeat.get(key) + price * dcBySeat.get(key)
@@ -193,8 +190,6 @@ public class ReservationInfo { // 인스턴스 예시 클래스
 	public static void setPayWay(String payWay) {
 		ReservationInfo.payWay = payWay;
 	}
-
-
 
 	public static void setTotalCharge(double totalCharge) {
 		ReservationInfo.totalCharge = totalCharge;
