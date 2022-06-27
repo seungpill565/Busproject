@@ -88,7 +88,7 @@ public class MemberManagementGUI extends JFrame {
 		model.fireTableDataChanged();
 		JScrollPane scrolledpane = new JScrollPane();
 		scrolledpane.setViewportView(table);
-		table.setEnabled(false);
+//		table.setEnabled(false);
 
 		scrolledpane.setBounds(40, 300, 700, 250);
 		getContentPane().add(scrolledpane);
@@ -210,7 +210,8 @@ public class MemberManagementGUI extends JFrame {
 				String user_password = tf3.getText();
 				String user_phonenum = tf4.getText();
 				String user_passenger_manager = tf5.getText();
-				ArrayList<Member_Data> arr = db.readData();
+				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
+				arr = db.search(user_id);
 
 				Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$");
 				Matcher passMatcher = passPattern.matcher(user_password);
@@ -218,7 +219,11 @@ public class MemberManagementGUI extends JFrame {
 				Matcher passMatcher2 = passPattern2.matcher(user_phonenum);
 				Member_Data data = new Member_Data(user_id, user_name, user_password, user_phonenum,
 						user_passenger_manager);
-				if (!passMatcher.find()) {
+				if(!arr.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "아이디가 중복됩니다", "아이디 중복", 1);
+					return;
+				}
+				else if (!passMatcher.find()) {
 					JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다", "비밀번호 오류", 1);
 					return;
 				} else if (!passMatcher2.find()) {
@@ -288,7 +293,9 @@ public class MemberManagementGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				String user_id = tf1.getText();
-				if (!user_id.equals(user_id)) {
+				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
+				arr = db.search(user_id);
+				if (arr.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "아이디가 존재하지 않습니다", "아이디 오류", 1);
 					return;
 				} else {
@@ -311,10 +318,19 @@ public class MemberManagementGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String user_id = tf1.getText();
-
-
-					searchView(user_id);
+				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
+				arr = db.search(user_id);
 				
+				// 전체 출력
+				if (arr.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "아이디가 존재하지 않습니다", "아이디 오류", 1);
+					return;
+				} else {
+					db.search(user_id);
+					searchView(user_id);
+
+				}
+
 				tf1.setText("");
 				tf2.setText("");
 				tf3.setText("");
