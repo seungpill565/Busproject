@@ -35,8 +35,8 @@ public class MPprofilePanel_2 extends JPanel {
 	JTextField MPnameTf = new JTextField(25);
 	JTextField MPphoneTf = new JTextField(25);
 	JPasswordField MPnewpwTf = new JPasswordField(25);
-	 
-	JLabel MPprofilerestrictLb = new JLabel("<html><pre style=\"font-family:고딕; font-size:13;\">이름, 비밀번호는 10글자까지 입력 가능합니다.<br>핸드폰번호 ex. 01012341234</pre></htnl>"); 
+	
+	JLabel MPprofilerestrictLb = new JLabel("<html><pre style=\"font-family:고딕; font-size:13;\">이름은 10글자까지 입력 가능합니다.<br>핸드폰번호 ex. 01012341234<br>비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다.</pre></htnl>"); 
 	
 	
 	public MPprofilePanel_2() {
@@ -46,14 +46,14 @@ public class MPprofilePanel_2 extends JPanel {
 		MPviewLb2.setFont(new Font("고딕", Font.BOLD, 14));
 		MPviewLb3.setFont(new Font("고딕", Font.BOLD, 14));
 	
-		MPprofilerestrictLb.setBounds(120, 355, 400, 50);
+		MPprofilerestrictLb.setBounds(80, 350, 400, 65);
 		add(MPprofilerestrictLb);
 		
 		//새비밀번호 텍스트필드 입력할 때 ●로 표시 
 		MPnewpwTf.setEchoChar('●');
 	
-		//비밀번호텍필에 입력한 비번(새로 바꿀거) String으로 가져오기
-		MPgetPwd(MPnewpwTf);		
+		//비밀번호텍필에 입력한 비번(새로 바꿀거) String으로 가져오기 메서드 사용 예시
+		//MPgetPwd(MPnewpwTf);		
 	
 		
 		MPphoneTf.addKeyListener(new KeyAdapter() {
