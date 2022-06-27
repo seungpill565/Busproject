@@ -8,21 +8,22 @@ import javax.swing.JPanel;
 
 import hong.SaveInfo;
 
-public class RouteInfoPanel extends JPanel{
-	RouteInfoColumnNamePanel panel = new RouteInfoColumnNamePanel();
-	RouteInfoRowsPanel rowsPanel ;
-	public RouteInfoPanel(SaveInfo user) {
+public class RvInfoPanel extends JPanel {
+	
+	RvInfoColumnNamePanel panel = new RvInfoColumnNamePanel();
+	RvInfoRowsPanel rowsPanel;
+	
+	public RvInfoPanel(SaveInfo user) {
 		LayoutManager manager = new BorderLayout();
 		setLayout(manager);
-		//panel.setLocation(10, 200);
-		rowsPanel = new RouteInfoRowsPanel(user);
+		rowsPanel = new RvInfoRowsPanel(user);
 		add(panel,"North");
 		add(rowsPanel,"Center");
 		
-		
 		setBackground(Color.white);
 		//setLayout(null);
-		setBounds(10,100,465,250);
+		setBounds(10,100,465,200);
+		
 	}
 
 }

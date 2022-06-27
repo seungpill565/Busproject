@@ -42,7 +42,9 @@ public class SelectSeatAgeBox extends JComboBox<String>{ // 연령별 좌석개수를 고
 			public void actionPerformed(ActionEvent e) {
 				age = (String) getSelectedItem().toString(); // 콤보박스에서 고른 값을 string으로 변환
 				if(age.equals("------")||age.equals(String.format("%d번 좌석", (Integer.parseInt(user.getSeatNames().get(seatCnt))) + 1))) {// 키 값을 고르거나 ---- 고르면 다시 선택하게
+					user.setTotalChargeCheck(false);
 					new JOptionPane().showMessageDialog(null, "성인, 청소년, 아동 중 선택하세요.","오류",JOptionPane.ERROR_MESSAGE); // 성인 어린이 청소년 제외 선택하면 오류창 뜨게
+	
 				}else {
 					discount(age);
 					user.getdcBySeat().put(user.getSeatNameBySeatId().get(seatName), discountRate);  // 해당 좌석번호 자리에 할인율 넣는다
@@ -57,12 +59,15 @@ public class SelectSeatAgeBox extends JComboBox<String>{ // 연령별 좌석개수를 고
 		if(age.equals("성인")) {
 			discountRate = 1;
 			user.setAgeBySeat(user.getSeatNameBySeatId().get(seatName), age);
+			user.setTotalChargeCheck(true);
 		}else if(age.equals("청소년")) {
 			discountRate = 0.85;
 			user.setAgeBySeat(user.getSeatNameBySeatId().get(seatName), age);
+			user.setTotalChargeCheck(true);
 		}else if(age.equals("아동")){
 			discountRate = 0.7;
 			user.setAgeBySeat(user.getSeatNameBySeatId().get(seatName), age);
+			user.setTotalChargeCheck(true);
 		}
 	}
 }

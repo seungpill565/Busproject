@@ -23,12 +23,19 @@ public class SaveInfo {
 	private ArrayList<String> seatNames = new ArrayList<>(); // 좌석이름 리스트 // 팀장님 넘겨주시는거
 	private String payWay; // 이건 한번 결제할때 같은 수단으로 하니까 배열 x
 	private double totalCharge=0; // 할인율 곱할 때 소수로 곱하기 때문에 double로
+	private boolean totalChargeCheck = true;
 	
 	
 //	public void set_seat_name(ArrayList<String> seat_name) {
 //		this.seat_name = seat_name;
 //	}
 	
+	public void setTotalChargeCheck(boolean totalChargeCheck) {
+		this.totalChargeCheck = totalChargeCheck;
+	}
+	public boolean isTotalChargeCheck() {
+		return totalChargeCheck;
+	}
 	public void set_price(Integer price) {
 		this.price = price.toString();
 	}
@@ -161,8 +168,13 @@ public class SaveInfo {
 	public void setTotalCharge() {
 		totalCharge = 0;
 	}
+	public void setTotalCharge2() {
+		totalCharge = 1;
+	}
 	
-	
+	public double getTotalCharge2() {
+		return totalCharge;
+	}
 	
 	
 	public void setReservationId(int rvid) {

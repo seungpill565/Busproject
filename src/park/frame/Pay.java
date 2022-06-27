@@ -3,11 +3,19 @@ package park.frame;
 import java.awt.Color;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 
+import an.userinfo.Info_MainFrame;
 import hong.SaveInfo;
-import park.ReservationInfo;
+import hong.selectseat.SelectSeatMainFrame;
 import park.button.PayButton;
 import park.combobox.SelectPayWayBox;
+import park.database.LoadRVID;
+import park.database.SaveDB;
+import park.event.BeforeButtonEvent;
+import park.event.HomeButtonEvent;
+import park.event.PayButtonEvent;
 import park.label.RouteInfoLabel;
 import park.panel.HomeBeforeBtnPanel;
 import park.panel.RouteInfoPanel;
@@ -29,6 +37,7 @@ public class Pay extends JFrame{
 	static RouteInfoLabel route; // 행선지 정보 
 	static RouteInfoPanel routePanel ; // 행선지 정보 표 형태로 보여줄 패널
 	static PayInfoScrollpane scroll;
+	//static JScrollPane scroll2;
 	
 	
 	public Pay(SaveInfo user) {
@@ -43,10 +52,15 @@ public class Pay extends JFrame{
 		payBtn = new PayButton(user);
 		payWayBox = new SelectPayWayBox(user);
 		routePanel = new RouteInfoPanel(user); 
-		scroll = new PayInfoScrollpane(); 
+		scroll = new PayInfoScrollpane();
+		//scroll2 = new JScrollPane(routePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		route = new RouteInfoLabel();
-			
+
 		scroll.setViewportView(routePanel);
+		
+		panel1.getHomeBtn().addActionListener(new HomeButtonEvent(this));
+		panel1.getBefBtn().addActionListener(new BeforeButtonEvent(this));
+		payBtn.addActionListener(new PayButtonEvent(this));
 	
 		add(panel1); // 홈버튼, 이전버튼 판넬
 		add(route); // 행선지 정보
@@ -63,8 +77,66 @@ public class Pay extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
-//	public static void main(String[] args) {
-//		new Pay(new ReservationInfo());
-//	}
+	
+	public void homeButtonEvent() {
+		String str = "메인 화면으로 돌아가시겠습니까?";
+		int ok =JOptionPane.showConfirmDialog(null, str, "메인 화면", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+		if(ok==JOptionPane.OK_OPTION) { // ok를 누르면
+			try {
+				user.remove_bs_map(user.getSeatId(), user.getSeatNames());
+			}catch(IndexOutOfBoundsException e1){
+				user.remove_bs_map(user.getSeatId(), user.getSeatNames());
+			}
+			user.setTotalCharge();
+			dispose();
+			new Info_MainFrame(user);
+		}
+	}
+	
+	public void beforeButtonEvent() {
+		try {
+			user.remove_bs_map(user.getSeatId(), user.getSeatNames());		
+		}catch(IndexOutOfBoundsException a) {
+			user.remove_bs_map(user.getSeatId(), user.getSeatNames());
+		}
+		user.setTotalCharge();
+		dispose();
+		new SelectSeatMainFrame(user);
+		
+	}
+	
+	public void payButtonEvent() {
+
+		try {
+			if((!user.getPayWay().equals(null))&&user.isTotalChargeCheck()) {
+				String str =String.format("결제 금액 : %d\n결제 수단 : %s\n결제 하시겠습니까?", (int)(user.getTotalCharge()), user.getPayWay());
+				int ok =JOptionPane.showConfirmDialog(null, str, "결제 확인", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				if(ok==JOptionPane.OK_OPTION) { // ok를 누르면
+					new SaveDB(user); // 디비에 저장한다
+					new LoadRVID(user); // 디비에 저장된 예매번호를 인스턴스에 저장함
+					dispose();
+					new PayInfo(user); // 결제 버튼 누르면 다음 화면으로 넘어가고
+					System.out.println("db저장 성공");
+				}
+				else { // ok 이외의 것을 누르면
+					user.setTotalCharge(); // 결제 팝업에서 취소한 것이므로 총요금을 초기화 해준다
+
+				}
+			}else {
+				String str ="올바르지 않은 연령 및 결제 방식입니다.";
+				JOptionPane.showMessageDialog(null, str, "오류 메시지", JOptionPane.PLAIN_MESSAGE);
+			}
+		}catch(NullPointerException e1){
+			String str ="올바르지 않은 연령 선택 또는 결제 방식입니다.";
+			JOptionPane.showMessageDialog(null, str, "오류 메시지", JOptionPane.PLAIN_MESSAGE);
+		}
+
+
+	}
+	
+	
+	public static void main(String[] args) {
+		new Pay(new SaveInfo());
+	}
 
 }
