@@ -49,7 +49,7 @@ public class Route_Update extends JFrame {
 		panel.setLayout(null);
 		setResizable(false);
 		setBounds(10, 20, 370, 300);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
 
 		pName.setBounds(100, 30, 200, 50);

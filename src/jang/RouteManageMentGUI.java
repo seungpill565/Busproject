@@ -122,7 +122,7 @@ public class RouteManageMentGUI extends JFrame {
 		homeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Admin_MainFrame(); // 나중에 메인으로 바꾸면 됨
+//				new Admin_MainFrame(); // 나중에 메인으로 바꾸면 됨
 				dispose();
 			}
 		});
@@ -144,7 +144,7 @@ public class RouteManageMentGUI extends JFrame {
 				ArrayList<Route_Read_Data> arr = new ArrayList<Route_Read_Data>();
 				arr = db.readData();
 
-				ta.append("     버스 ID\t" + "출발지\t" + "도착지\t" + "요금\t" + "날짜\t" + "시간\t" + "좌석 이름\t" + "예약\n");
+				ta.append("     버스 ID\t" + "출발지\t" + "도착지\t" + "요금\t" + "날짜\t" + "시간\t" + "좌석 번호\t" + "예약\n");
 				ta.append("     "
 						+ "-----------------------------------------------------------------------------------------------------------------------------------------------------\n");
 
@@ -186,7 +186,7 @@ public class RouteManageMentGUI extends JFrame {
 				ArrayList<Route_Read_Data> arr = new ArrayList<Route_Read_Data>();
 				arr = db.searchRoute(arrive);
 
-				ta.append("     버스 ID\t" + "출발지\t" + "도착지\t" + "요금\t" + "날짜\t" + "시간\t" + "좌석 이름\t" + "예약\n");
+				ta.append("     버스 ID\t" + "출발지\t" + "도착지\t" + "요금\t" + "날짜\t" + "시간\t" + "좌석 번호\t" + "예약\n");
 				ta.append("     "
 						+ "-----------------------------------------------------------------------------------------------------------------------------------------------------\n");
 

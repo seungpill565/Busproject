@@ -14,6 +14,7 @@ public class BI_Insert_Data {
 		this.rtfk_id = rtfk_id;
 		this.bi_day = bi_day;
 		this.bi_time = bi_time;
+		this.bi_id =  bi_id;
 	}
 	
 	public int getBI_ID() {

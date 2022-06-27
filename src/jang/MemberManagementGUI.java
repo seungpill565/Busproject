@@ -1,15 +1,10 @@
 package jang;
 
 import java.awt.Color;
-
 import java.awt.Font;
-import java.awt.ScrollPane;
-import java.awt.color.ColorSpace;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.nio.channels.SelectableChannel;
 import java.util.ArrayList;
-import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,10 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.plaf.basic.BasicSliderUI.ScrollListener;
 import javax.swing.table.DefaultTableModel;
 
 import an.admin.Admin_MainFrame;
@@ -95,8 +87,8 @@ public class MemberManagementGUI extends JFrame {
 	}
 
 	public void searchView(String user_id) {
-		ArrayList<Member_Data> arr = db.readData();
-		arr = db.search(user_id);
+		ArrayList<Member_Data> arr = db.search(user_id);
+		
 		String[] colNames = { "아이디", "이름", "비밀번호", "전화번호", "관리자/손님" };
 		String[][] rowData = new String[arr.size()][colNames.length];
 
@@ -110,10 +102,11 @@ public class MemberManagementGUI extends JFrame {
 
 		DefaultTableModel model = new DefaultTableModel(rowData, colNames);
 		JTable table = new JTable(model);
+		model.fireTableDataChanged();
 		JScrollPane scrolledpane = new JScrollPane();
 		scrolledpane.setViewportView(table);
 
-		table.setBounds(40, 300, 700, 250);
+		scrolledpane.setBounds(40, 300, 700, 250);
 		getContentPane().add(scrolledpane);
 	}
 
@@ -326,16 +319,11 @@ public class MemberManagementGUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "아이디가 존재하지 않습니다", "아이디 오류", 1);
 					return;
 				} else {
-					db.search(user_id);
 					searchView(user_id);
 
 				}
 
 				tf1.setText("");
-				tf2.setText("");
-				tf3.setText("");
-				tf4.setText("");
-				tf5.setText("");
 
 			}
 		});

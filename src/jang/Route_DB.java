@@ -14,18 +14,19 @@ import jang.Data.Route_Read_Data;
 import jang.Data.Seat_Insert_Data;
 
 public class Route_DB {
+	
 
 	// Insert Create
-	public void bus_info_insertData(BI_Insert_Data data) {
+	public void bus_info_insertData(String bi_day, String bi_time, int rtfk_id) {
 		String sql = "INSERT INTO BUS_INFO (bi_id, bi_day, bi_time, rt_id) VALUES(BI_ID_SQ.nextval, ?, ?, ?)";
 		try (
 				Connection conn = OjdbcConnection.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 			) {
 
-			pstmt.setString(1, data.bi_day);
-			pstmt.setString(2, data.bi_time);
-			pstmt.setInt(3, data.rtfk_id);
+			pstmt.setString(1, bi_day);
+			pstmt.setString(2, bi_time);
+			pstmt.setInt(3, rtfk_id);
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -35,7 +36,7 @@ public class Route_DB {
 	
 	// ROUTE Create
 		public void route_insertData(Route_Insert_Data data) {
-			String sql = "INSERT INTO BUS_ROUTE (rt_id, rt_depart_from, rt_arrive_at, rt_charge) VALUES(br_id_sq.nextval, ?, ?, ?)";
+			String sql = "INSERT INTO BUS_ROUTE (rt_id, rt_depart_from, rt_arrive_at, rt_charge) VALUES(rt_id_sq.nextval, ?, ?, ?)";
 			try (
 					Connection conn = OjdbcConnection.getConnection(); 
 					PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -51,8 +52,30 @@ public class Route_DB {
 			}
 		}
 		
+		public int get_currsq() {
+			  String sql = "SELECT * FROM user_sequences WHERE sequence_name ='BI_ID_SQ'";
+			  int i = 0;
+		      
+		      try (
+		         Connection conn = OjdbcConnection.getConnection();
+		         PreparedStatement pstmt = conn.prepareStatement(sql);   
+		      ){
+		         
+		         ResultSet rs = pstmt.executeQuery();
+		               
+		         while(rs.next()) {
+		          i = rs.getInt("last_number");
+		         }
+		         
+		      } catch (SQLException e) {
+		         e.printStackTrace();
+		      }
+		    System.out.println(i);
+			return i;
+		}
+		
 		// SEAT Create
-		public void seat_insertData(Seat_Insert_Data data) {
+		public void seat_insertData(int bi_id) {
 			String sql = "INSERT INTO BUS_SEAT (bs_id, bs_name, bs_is_reserved, bi_id) VALUES(BS_ID_SQ.nextval, ?, 0, ?)";
 			try (
 					Connection conn = OjdbcConnection.getConnection(); 
@@ -61,8 +84,8 @@ public class Route_DB {
 
 				
 				for (int i = 1; i < 22; ++i) {
-					pstmt.setString(1, data.bs_name + i);
-					pstmt.setInt(2, data.bifk_id);
+					pstmt.setString(1, "" + i);
+					pstmt.setInt(2, bi_id);
 					pstmt.executeUpdate();
 				}
 
@@ -70,12 +93,12 @@ public class Route_DB {
 				e.printStackTrace();
 			}
 		}
-
+		
 	// Read
 	public ArrayList<Route_Read_Data> readData() {
 		ArrayList<Route_Read_Data> arr = new ArrayList<Route_Read_Data>();
 		String sql = "SELECT bi_id, rt_depart_from, rt_arrive_at, rt_charge, bi_day, bi_time, bs_name, bs_is_reserved "
-				+ "FROM BUS_ROUTE " + "INNER JOIN BUS_INFO USING (rt_id) " + "INNER JOIN BUS_SEAT USING (bi_id) ";
+				+ "FROM BUS_ROUTE " + "INNER JOIN BUS_INFO USING (rt_id) " + "INNER JOIN BUS_SEAT USING (bi_id) ORDER BY bi_id";
 		try (
 				Connection conn = OjdbcConnection.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);

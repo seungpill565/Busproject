@@ -34,7 +34,7 @@ public class Route_Insert extends JFrame {
 
 	JLabel bus = new JLabel("버스 정보");
 	JLabel route = new JLabel("노선 정보");
-	JLabel seat = new JLabel("좌석 정보");
+//	JLabel seat = new JLabel("좌석 정보");
 
 	JTextField tf1 = new JTextField();
 	JTextField tf2 = new JTextField();
@@ -51,7 +51,7 @@ public class Route_Insert extends JFrame {
 	JLabel l4 = new JLabel("출발 : ");
 	JLabel l5 = new JLabel("도착 : ");
 	JLabel l6 = new JLabel("요금 : ");
-	JLabel l7 = new JLabel("좌석 이름 : ");
+	JLabel l7 = new JLabel("좌석 번호 : ");
 	JLabel l8 = new JLabel("버스 ID : ");
 
 	JLabel pName = new JLabel("노선 추가");
@@ -69,7 +69,7 @@ public class Route_Insert extends JFrame {
 		panel.setLayout(null);
 		setResizable(false);
 		setBounds(10, 20, 600, 450);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
 
 		pName.setBounds(200, 30, 200, 50);
@@ -80,14 +80,14 @@ public class Route_Insert extends JFrame {
 		btn1.setBackground(new Color(0XE7E6E6));
 		btn2.setBounds(480, 220, 70, 30);
 		btn2.setBackground(new Color(0XE7E6E6));
-		btn3.setBounds(480, 300, 70, 30);
-		btn3.setBackground(new Color(0XE7E6E6));
+//		btn3.setBounds(480, 300, 70, 30);
+//		btn3.setBackground(new Color(0XE7E6E6));
 		btn4.setBounds(250, 360, 70, 30);
 		btn4.setBackground(new Color(0XE7E6E6));
 
 		panel.add(btn1);
 		panel.add(btn2);
-		panel.add(btn3);
+//		panel.add(btn3);
 		panel.add(btn4);
 
 		route.setBounds(20, 100, 80, 30);
@@ -96,9 +96,9 @@ public class Route_Insert extends JFrame {
 		bus.setBounds(20, 181, 80, 30);
 		bus.setFont(new Font("휴먼매직체", Font.BOLD, 20));
 		panel.add(bus);
-		seat.setBounds(20, 260, 80, 30);
-		seat.setFont(new Font("휴먼매직체", Font.BOLD, 20));
-		panel.add(seat);
+//		seat.setBounds(20, 260, 80, 30);
+//		seat.setFont(new Font("휴먼매직체", Font.BOLD, 20));
+//		panel.add(seat);
 
 		// 입력 공간 라벨
 		tf1.setBounds(70, 220, 80, 25);
@@ -119,12 +119,12 @@ public class Route_Insert extends JFrame {
 		tf6.setBounds(350, 140, 80, 25);
 		tf6.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
 		panel.add(tf6); // 요금
-		tf7.setBounds(90, 300, 80, 25);
-		tf7.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
-		panel.add(tf7); // 좌석 이름
-		tf8.setBounds(240, 300, 80, 25);
-		tf8.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
-		panel.add(tf8); // 버스 ID
+//		tf7.setBounds(90, 300, 80, 25);
+//		tf7.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
+//		panel.add(tf7); // 좌석 이름
+//		tf8.setBounds(240, 300, 80, 25);
+//		tf8.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
+//		panel.add(tf8); // 버스 ID
 
 		// 입력 공간 라벨 이름
 		l1.setBounds(20, 220, 80, 30);
@@ -145,12 +145,12 @@ public class Route_Insert extends JFrame {
 		l6.setBounds(300, 140, 80, 30);
 		l6.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
 		panel.add(l6); // 요금
-		l7.setBounds(20, 300, 80, 30);
-		l7.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
-		panel.add(l7); // 좌석 이름
-		l8.setBounds(180, 300, 80, 30);
-		l8.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
-		panel.add(l8); // 버스 ID
+//		l7.setBounds(20, 300, 80, 30);
+//		l7.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
+//		panel.add(l7); // 좌석 이름
+//		l8.setBounds(180, 300, 80, 30);
+//		l8.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
+//		panel.add(l8); // 버스 ID
 
 		// 노선 추가
 		btn1.addActionListener(new ActionListener() {
@@ -178,6 +178,7 @@ public class Route_Insert extends JFrame {
 				String bi_time = tf2.getText();
 				int rtfk_id = Integer.parseInt(tf3.getText());
 
+
 				Pattern passPattern = Pattern.compile("\\d{2}/\\d{2}/\\d{2}");
 				Matcher passMatcher = passPattern.matcher(bi_day);
 				Pattern passPattern2 = Pattern.compile("\\d{2}:\\d{2}");
@@ -190,30 +191,34 @@ public class Route_Insert extends JFrame {
 					JOptionPane.showMessageDialog(null, "다시 입력하세요\nex) 15:00", "시간 오류", 1);
 					return;
 				} else {
-					db.bus_info_insertData(new BI_Insert_Data(bi_day, bi_time, rtfk_id));
+					db.bus_info_insertData(bi_day, bi_time, rtfk_id);
+					int i = db.get_currsq();
+					db.seat_insertData(i);
+
 					JOptionPane.showMessageDialog(null, "입력되었습니다!");
 				}
 
 				tf1.setText("");
 				tf2.setText("");
 				tf3.setText("");
-			}
-		});
-
-		// 좌석 추가
-		btn3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				String bs_name = tf7.getText();
-				int bifk_id = Integer.parseInt(tf8.getText());
-
-				db.seat_insertData(new Seat_Insert_Data(bs_name, bifk_id));
-
-				tf7.setText("");
 				tf8.setText("");
 			}
 		});
+
+//		// 좌석 추가
+//		btn3.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//
+//				String bs_name = tf7.getText();
+//				int bifk_id = Integer.parseInt(tf8.getText());
+//
+//				db.seat_insertData(new Seat_Insert_Data(bs_name, bifk_id));
+//
+//				tf7.setText("");
+//				tf8.setText("");
+//			}
+//		});
 
 		btn4.addActionListener(new ActionListener() {
 			@Override

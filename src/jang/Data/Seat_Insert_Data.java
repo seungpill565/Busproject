@@ -11,7 +11,7 @@ public class Seat_Insert_Data {
 		
 	}
 	
-	public Seat_Insert_Data (String bs_name, int bifk_id) {
+	public Seat_Insert_Data (String bs_name) {
 		this.bifk_id = bifk_id;
 		this.bs_name = bs_name;
 	}
