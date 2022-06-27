@@ -29,12 +29,12 @@ public class SignupMain_Frame extends JFrame {
 			
 		add(signupPanel, BorderLayout.NORTH);
 		add(allPanel, BorderLayout.CENTER);
-		add(pass_explan, BorderLayout.SOUTH);
+		//add(pass_explan, BorderLayout.SOUTH);
 		
 		
 		
 		
-		setBounds(610, 200, 500, 400);
+		setBounds(610, 200, 390, 600);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);  
 		setVisible(true);

@@ -14,7 +14,7 @@ public class Name_panel extends JPanel{
 public Name_panel(JTextField nametex) {
 	
 	this.nametext = nametex;
-	setLayout(new FlowLayout(FlowLayout.RIGHT));
+	setLayout(new FlowLayout(FlowLayout.LEFT));
 	add(name);add(nametext);
 	
 }
