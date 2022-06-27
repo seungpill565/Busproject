@@ -205,7 +205,7 @@ public class Sign_Panel extends JPanel{
 				pstmt.setString(2, check);
 				pstmt.setString(3, name);
 				pstmt.setString(4, pass);
-				pstmt.setString(5, pntext.getText());
+				pstmt.setString(5, phone);
 				pstmt.executeUpdate();
 				JOptionPane.showMessageDialog(null, "회원 가입 완료!", "회원가입", 1);
 				
