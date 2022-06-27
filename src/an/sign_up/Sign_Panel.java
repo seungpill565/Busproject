@@ -120,13 +120,19 @@ public class Sign_Panel extends JPanel{
 		id = idtext.getText();
 		
 		
-		String sql2 = String.format("SELECT user_id from user_info where user_id = '%s'",id);
+		String sql1 = String.format("SELECT user_id from user_info where user_id = '%s'",id);
+		
+		boolean result = Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", id);
+		
+		
 		
 		try(Connection conn = OjdbcConnection.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql2);
+			PreparedStatement pstmt = conn.prepareStatement(sql1);
 		) {
 			ResultSet rset = pstmt.executeQuery();
-			
+			if(!result) {
+				JOptionPane.showMessageDialog(null, "아이디는 영문숫자로이루어진 5~12글자로 생성 해주세요", "번호 오류", 1);
+			}else {
 			
 				if(!rset.next()) {
 					JOptionPane.showMessageDialog(null, "사용가능한 아이디 입니다.", "아이디 중복 체크", 1);
@@ -134,7 +140,7 @@ public class Sign_Panel extends JPanel{
 				else {
 					JOptionPane.showMessageDialog(null, "중복된 아이디 입니다.", "중복 체크", 1);
 				}
-			
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
