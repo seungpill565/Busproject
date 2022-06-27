@@ -54,7 +54,7 @@ public class MemberManagementGUI extends JFrame {
 
 	JLabel pName = new JLabel("관리자");
 	JLabel label = new JLabel("회원");
-	//JButton backBtn;
+	// JButton backBtn;
 	JButton homeBtn;
 
 	ImageIcon image = new ImageIcon("Image/back2.png");
@@ -63,19 +63,18 @@ public class MemberManagementGUI extends JFrame {
 	ImageIcon home_image = new ImageIcon("Image/home.png");
 	ImageIcon home_image2 = new ImageIcon("Image/home2.png");
 
-
 	public MemberManagementGUI() {
 		MemberManagementGUI();
 	}
-	
+
 	Member_DB db = new Member_DB();
-	
+
 	public void allView() {
 		ArrayList<Member_Data> arr = db.readData();
-		
+
 		String[] colNames = { "아이디", "이름", "비밀번호", "전화번호", "관리자/손님" };
 		String[][] rowData = new String[arr.size()][colNames.length];
-		
+
 		for (int row = 0; row < rowData.length; ++row) {
 			rowData[row][0] = arr.get(row).getID();
 			rowData[row][1] = arr.get(row).getName();
@@ -83,23 +82,24 @@ public class MemberManagementGUI extends JFrame {
 			rowData[row][3] = arr.get(row).getPhonenum();
 			rowData[row][4] = arr.get(row).getPassenger();
 		}
-		
+
 		DefaultTableModel model = new DefaultTableModel(rowData, colNames);
 		JTable table = new JTable(model);
+		model.fireTableDataChanged();
 		JScrollPane scrolledpane = new JScrollPane();
 		scrolledpane.setViewportView(table);
-		
+		table.setEnabled(false);
+
 		scrolledpane.setBounds(40, 300, 700, 250);
 		getContentPane().add(scrolledpane);
-		table.updateUI();
 	}
-	
+
 	public void searchView(String user_id) {
 		ArrayList<Member_Data> arr = db.readData();
 		arr = db.search(user_id);
 		String[] colNames = { "아이디", "이름", "비밀번호", "전화번호", "관리자/손님" };
 		String[][] rowData = new String[arr.size()][colNames.length];
-		
+
 		for (int row = 0; row < rowData.length; ++row) {
 			rowData[row][0] = arr.get(row).getID();
 			rowData[row][1] = arr.get(row).getName();
@@ -107,12 +107,12 @@ public class MemberManagementGUI extends JFrame {
 			rowData[row][3] = arr.get(row).getPhonenum();
 			rowData[row][4] = arr.get(row).getPassenger();
 		}
-		
+
 		DefaultTableModel model = new DefaultTableModel(rowData, colNames);
 		JTable table = new JTable(model);
 		JScrollPane scrolledpane = new JScrollPane();
 		scrolledpane.setViewportView(table);
-		
+
 		table.setBounds(40, 300, 700, 250);
 		getContentPane().add(scrolledpane);
 	}
@@ -210,12 +210,14 @@ public class MemberManagementGUI extends JFrame {
 				String user_password = tf3.getText();
 				String user_phonenum = tf4.getText();
 				String user_passenger_manager = tf5.getText();
+				ArrayList<Member_Data> arr = db.readData();
 
 				Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$");
 				Matcher passMatcher = passPattern.matcher(user_password);
 				Pattern passPattern2 = Pattern.compile("\\d{3}-\\d{4}-\\d{4}");
 				Matcher passMatcher2 = passPattern2.matcher(user_phonenum);
-				
+				Member_Data data = new Member_Data(user_id, user_name, user_password, user_phonenum,
+						user_passenger_manager);
 				if (!passMatcher.find()) {
 					JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다", "비밀번호 오류", 1);
 					return;
@@ -228,7 +230,13 @@ public class MemberManagementGUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "입력되었습니다!");
 					allView();
 				}
+				tf1.setText("");
+				tf2.setText("");
+				tf3.setText("");
+				tf4.setText("");
+				tf5.setText("");
 			}
+
 		});
 
 		// 출력 버튼 이벤트
@@ -265,6 +273,11 @@ public class MemberManagementGUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "수정되었습니다!", "알림", 1);
 					allView();
 				}
+				tf1.setText("");
+				tf2.setText("");
+				tf3.setText("");
+				tf4.setText("");
+				tf5.setText("");
 
 			}
 		});
@@ -275,10 +288,21 @@ public class MemberManagementGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				String user_id = tf1.getText();
-				db.deleteData(user_id);
-				JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", 1);
+				if (!user_id.equals(user_id)) {
+					JOptionPane.showMessageDialog(null, "아이디가 존재하지 않습니다", "아이디 오류", 1);
+					return;
+				} else {
+					db.deleteData(user_id);
+					JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", 1);
+					allView();
 
-				allView();
+				}
+
+				tf1.setText("");
+				tf2.setText("");
+				tf3.setText("");
+				tf4.setText("");
+				tf5.setText("");
 			}
 		});
 
@@ -287,16 +311,15 @@ public class MemberManagementGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String user_id = tf1.getText();
-				
-				ArrayList<Member_Data> arr = db.readData();
-				arr = db.search(user_id);
 
-				if (arr.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "저장된 아이디가 없습니다", "아이디 오류", 1);
-						return;
-				} else {
+
 					searchView(user_id);
-				}
+				
+				tf1.setText("");
+				tf2.setText("");
+				tf3.setText("");
+				tf4.setText("");
+				tf5.setText("");
 
 			}
 		});
