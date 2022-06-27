@@ -345,6 +345,7 @@ public class MPmainFrame extends JFrame {
 		
 		
 		this.saveInfo = saveInfo;
+		System.out.println(saveInfo.get_user_id());
 		this.user_id = saveInfo.get_user_id();
 		
 		MPcontents = new MPcontentsPanel(saveInfo);

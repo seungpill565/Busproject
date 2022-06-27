@@ -4,16 +4,16 @@ import java.awt.event.ActionEvent;
 
 import hong.selectseat.SelectSeatMainFrame;
 
-public class NextButtonEvent extends SeatMainFramAction{
+public class BeforeButtonEvent extends SeatMainFramAction{
 	
-	public NextButtonEvent(SelectSeatMainFrame main) {
+	
+	public BeforeButtonEvent(SelectSeatMainFrame main) {
 		super(main);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		main.putSeat();
-		main.nextFrame();
+		main.beforeFrame();
 		main.thisClose();
 	}
 }

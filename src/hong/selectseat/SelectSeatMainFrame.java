@@ -12,8 +12,11 @@ import javax.swing.JFrame;
 
 import an.OjdbcConnection;
 import hong.BackGroundLabel;
+import hong.BeforeButton;
 import hong.NextButton;
 import hong.SaveInfo;
+import hong.selectroute.SelectRouteMainFrame;
+import hong.selectseat.event.BeforeButtonEvent;
 import hong.selectseat.event.NextButtonEvent;
 import hong.selectseat.event.SeatButtonEvent;
 import park.frame.Pay;
@@ -35,8 +38,10 @@ public class SelectSeatMainFrame extends JFrame {
 	private ArrayList<String> bs_name_list = new ArrayList<>();
 	
 	private NextButton nextBtn = new NextButton();
+	private BeforeButton beforeBtn = new BeforeButton();
 	private SeatButtonEvent seatBtnEvent = new SeatButtonEvent(this);
 	private NextButtonEvent nextBtnEvent = new NextButtonEvent(this);
+	private BeforeButtonEvent beforeBtnEvent = new BeforeButtonEvent(this);
 	
 //	public void save_seat_name() {
 //		saveInfo.set_seat_name(bs_name_list);
@@ -50,16 +55,30 @@ public class SelectSeatMainFrame extends JFrame {
 		dispose();
 	}
 	
+	public void beforeFrame() {
+		new SelectRouteMainFrame(saveInfo);
+	}
+	
 	public void selectSeat(int seatNum) {
 		
-		if(!seatBtns[seatNum].get_is_selected()) {
-			saveInfo.put_bs_id(seatBtns[seatNum].get_bs_id());
-			saveInfo.put_bs_name("" + seatNum, seatBtns[seatNum].get_bs_id()); // 좌석 번호와 좌석이름을 SaveInfo HashMap에..
-		} else {
-			saveInfo.removeIdMap(seatBtns[seatNum].get_bs_id());
-			saveInfo.removeNameMap("" + seatNum);
-		}
+//		if(!seatBtns[seatNum].get_is_selected()) {
+//			saveInfo.put_bs_id(seatBtns[seatNum].get_bs_id());
+//			saveInfo.put_bs_name("" + seatNum, seatBtns[seatNum].get_bs_id()); // 좌석 번호와 좌석이름을 SaveInfo HashMap에..
+//		} else {
+//			
+//			saveInfo.removeIdMap(seatBtns[seatNum].get_bs_id());
+//			saveInfo.removeNameMap("" + seatNum);
+//		}
 		seatBtns[seatNum].selectedCheck();
+	}
+	
+	public void putSeat() {
+		for(int i = 0; i < MAX_SEAT; ++i) {
+			if(seatBtns[i].get_is_selected()) {
+				saveInfo.put_bs_id(seatBtns[i].get_bs_id());
+				saveInfo.put_bs_name("" + i, seatBtns[i].get_bs_id());
+			}
+		}
 	}
 	
 	public SelectSeatMainFrame(SaveInfo saveInfo) {
@@ -96,6 +115,9 @@ public class SelectSeatMainFrame extends JFrame {
 		nextBtn.addActionListener(nextBtnEvent);
 		add(nextBtn);
 		
+		beforeBtn.addActionListener(beforeBtnEvent);
+		add(beforeBtn);
+		
 		setBounds(300, 100, 450, 700);
 		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -123,4 +145,6 @@ public class SelectSeatMainFrame extends JFrame {
 			e.printStackTrace();
 		}
 	}
+
+
 }

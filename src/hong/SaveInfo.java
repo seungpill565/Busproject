@@ -74,7 +74,7 @@ public class SaveInfo {
 	}
 	
 	public void remove_bs_map(ArrayList<Integer> seatId, ArrayList<String> seatName) {
-		int size = seatId.size();
+		int size = dcBySeat.size();
 		System.out.println(seatId.size());
 		System.out.println(dcBySeat.size());
 		for(int i= 0 ; i < size; ++i) {
@@ -97,6 +97,7 @@ public class SaveInfo {
 	public void put_bs_name(String bs_name, int bs_id) {
 		this.seatNameBySeatId.put(bs_name, bs_id);
 	}
+	
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	

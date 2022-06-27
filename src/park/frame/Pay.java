@@ -30,6 +30,10 @@ public class Pay extends JFrame{
 	static RouteInfoPanel routePanel ; // 행선지 정보 표 형태로 보여줄 패널
 	static PayInfoScrollpane scroll;
 	
+	public void thisClose() {
+		dispose();
+	}
+	
 	
 	public Pay(SaveInfo user) {
 		super("결제 화면");
@@ -45,7 +49,7 @@ public class Pay extends JFrame{
 		routePanel = new RouteInfoPanel(user); 
 		scroll = new PayInfoScrollpane(); 
 		route = new RouteInfoLabel();
-			
+		
 		scroll.setViewportView(routePanel);
 	
 		add(panel1); // 홈버튼, 이전버튼 판넬
@@ -55,7 +59,8 @@ public class Pay extends JFrame{
 		add(seatPanel); // 좌석별 연령 고르는 콤보박스
 		add(payWayBox); // 결제 수단 고를 콤보 박스
 		add(payBtn); // 결제하기 버튼
-	
+		
+		
 		getContentPane().setBackground(Color.white);
 		setLayout(null);
 		setResizable(false);
