@@ -35,7 +35,7 @@ public class Route_DB {
 	
 	// ROUTE Create
 		public void route_insertData(Route_Insert_Data data) {
-			String sql = "INSERT INTO BUS_ROUTE (rt_id, rt_depart_from, rt_arrive_at, rt_charge) VALUES(br_id_sq.nextval, ?, ?, ?)";
+			String sql = "INSERT INTO BUS_ROUTE (rt_id, rt_depart_from, rt_arrive_at, rt_charge) VALUES(rt_id_sq.nextval, ?, ?, ?)";
 			try (
 					Connection conn = OjdbcConnection.getConnection(); 
 					PreparedStatement pstmt = conn.prepareStatement(sql);

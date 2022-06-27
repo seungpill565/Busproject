@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +18,7 @@ import javax.swing.JTextField;
 
 import an.OjdbcConnection;
 import an.sign_up.action.Sign_ButtonAction;
+import an.sign_up.action.Sign_IdButtonAction;
 import lee.mpcomponents.MPincorrectphonenumSF;
 
 
@@ -58,8 +60,10 @@ public class Sign_Panel extends JPanel{
 		add(combo);
 		
 		Sign_ButtonAction btevent = new Sign_ButtonAction(this);
+		Sign_IdButtonAction idevent = new Sign_IdButtonAction(this);
 		
 		button.addActionListener(btevent);
+		button2.addActionListener(idevent);
 		
 		
 	}
@@ -110,5 +114,31 @@ public class Sign_Panel extends JPanel{
 			} 
 		}
 	}
-
+	
+	//아이디 중복 체크
+	public void checkid() {
+		id = idtext.getText();
+		
+		
+		String sql2 = String.format("SELECT user_id from user_info where user_id = '%s'",id);
+		
+		try(Connection conn = OjdbcConnection.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql2);
+		) {
+			ResultSet rset = pstmt.executeQuery();
+			
+			
+				if(!rset.next()) {
+					JOptionPane.showMessageDialog(null, "사용가능한 아이디 입니다.", "아이디 중복 체크", 1);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "중복된 아이디 입니다.", "중복 체크", 1);
+				}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
 }

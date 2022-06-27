@@ -12,7 +12,7 @@ import park.panel.RouteInfoPanel;
 public class PayInfo extends JFrame{
 	
 	SaveInfo user;
-	HomeButton homeBtn = new HomeButton(user);
+	HomeButton homeBtn;
 	SucceedPayLabel payLabel = new SucceedPayLabel(); 
 	RouteInfoColumnNamePanel columnNamePanel = new RouteInfoColumnNamePanel();
 	RouteInfoPanel routePanel ;
@@ -20,6 +20,7 @@ public class PayInfo extends JFrame{
 	public PayInfo(SaveInfo user) {
 		super("예매 완료");
 		this.user = user;
+		homeBtn = new HomeButton(user);
 		//new LoadRVID(user); // 시퀀스로 저장되는 예매번호들 user에 저장하고 출력
 		routePanel = new RouteInfoPanel(user);
 		homeBtn.setBounds(190, 500, 100, 50);

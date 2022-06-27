@@ -148,6 +148,8 @@ public class Login_Mainframe extends JFrame{
 	 public void join() {
 		 new SignupMain_Frame();
 	 }
+	 
+	 
 	 //비밀번호/아이디 찾기 이동 메서드
 	 public void  up() {
 		 new Find_MainFrame();
