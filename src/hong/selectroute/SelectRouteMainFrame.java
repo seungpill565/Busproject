@@ -123,7 +123,6 @@ public class SelectRouteMainFrame extends JFrame {
 		}
 	}
 		
-		
 	// 달 입력 받기
 	public void setMonth(int month) {
 		this.month = month;
@@ -254,9 +253,8 @@ public class SelectRouteMainFrame extends JFrame {
 	
 	
 	public static void main(String[] args) {
-		new Login_Mainframe();
+		new SelectRouteMainFrame(new SaveInfo());
 	}
-	
 	
 	// 출발지 도착지에 따른 노선ID를...
 	public void getRouteID() {
@@ -314,5 +312,4 @@ public class SelectRouteMainFrame extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	
 }

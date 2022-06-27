@@ -1,6 +1,7 @@
 package hong.selectroute;
 
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Font;
 
@@ -14,5 +15,4 @@ public class TerminalButton extends JButton {
 		setFont(new Font("±¼¸²Ã¼", Font.BOLD, 16));
 		setPreferredSize(new Dimension(108, 70));
 	}
-	
 }

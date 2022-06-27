@@ -21,13 +21,13 @@ import park.frame.Pay;
 public class SelectSeatMainFrame extends JFrame {
 	
 	final private static int MAX_SEAT = 21;
+	private static SeatButton[] seatBtns = new SeatButton[MAX_SEAT];
 	
 	private SaveInfo saveInfo;
 	
 	private int bi_id;
 	private int bs_id;
 	
-	private static SeatButton[] seatBtns = new SeatButton[21];
 	private SeatButton seatBtn;
 	
 	private ArrayList<Integer> bs_id_list = new ArrayList<>();
