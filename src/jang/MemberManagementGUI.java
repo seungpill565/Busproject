@@ -39,7 +39,6 @@ public class MemberManagementGUI extends JFrame {
 	JTextField tf3 = new JTextField();
 	JTextField tf4 = new JTextField();
 	JTextField tf5 = new JTextField();
-	JTextArea ta = new JTextArea();
 
 	JButton btn1 = new JButton("추가");
 	JButton btn2 = new JButton("조회");
@@ -68,10 +67,12 @@ public class MemberManagementGUI extends JFrame {
 	public MemberManagementGUI() {
 		MemberManagementGUI();
 	}
+	
 	Member_DB db = new Member_DB();
 	
 	public void allView() {
 		ArrayList<Member_Data> arr = db.readData();
+		
 		String[] colNames = { "아이디", "이름", "비밀번호", "전화번호", "관리자/손님" };
 		String[][] rowData = new String[arr.size()][colNames.length];
 		
@@ -89,7 +90,31 @@ public class MemberManagementGUI extends JFrame {
 		scrolledpane.setViewportView(table);
 		
 		scrolledpane.setBounds(40, 300, 700, 250);
-		add(scrolledpane);
+		getContentPane().add(scrolledpane);
+		table.updateUI();
+	}
+	
+	public void searchView(String user_id) {
+		ArrayList<Member_Data> arr = db.readData();
+		arr = db.search(user_id);
+		String[] colNames = { "아이디", "이름", "비밀번호", "전화번호", "관리자/손님" };
+		String[][] rowData = new String[arr.size()][colNames.length];
+		
+		for (int row = 0; row < rowData.length; ++row) {
+			rowData[row][0] = arr.get(row).getID();
+			rowData[row][1] = arr.get(row).getName();
+			rowData[row][2] = arr.get(row).getPassword();
+			rowData[row][3] = arr.get(row).getPhonenum();
+			rowData[row][4] = arr.get(row).getPassenger();
+		}
+		
+		DefaultTableModel model = new DefaultTableModel(rowData, colNames);
+		JTable table = new JTable(model);
+		JScrollPane scrolledpane = new JScrollPane();
+		scrolledpane.setViewportView(table);
+		
+		table.setBounds(40, 300, 700, 250);
+		getContentPane().add(scrolledpane);
 	}
 
 	public void MemberManagementGUI() {
@@ -101,15 +126,6 @@ public class MemberManagementGUI extends JFrame {
 		setBounds(500, 200, 800, 650);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
-
-		ta.setEditable(false);
-
-
-//		backBtn = new JButton(image);
-//		backBtn.setRolloverIcon(image2);
-//		backBtn.setBorderPainted(false);
-//		backBtn.setBounds(30, 30, 48, 50);
-//		panel.add(backBtn);
 
 		homeBtn = new JButton(home_image);
 		homeBtn.setRolloverIcon(home_image2);
@@ -158,11 +174,6 @@ public class MemberManagementGUI extends JFrame {
 		l5.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
 		panel.add(l5); // 관리자유무
 
-		// 입력한 글이 보이는 창
-		JScrollPane jsp = new JScrollPane(ta); // 창 스크롤
-		jsp.setBounds(40, 300, 700, 250);
-//		panel.add(jsp);
-
 		btn1.setBounds(250, 240, 70, 30);
 		btn1.setBackground(new Color(0XE7E6E6));
 		btn2.setBounds(145, 240, 70, 30);
@@ -180,15 +191,6 @@ public class MemberManagementGUI extends JFrame {
 		panel.add(btn4);
 		panel.add(btn5);
 
-		// 뒤로가기 버튼
-//		backBtn.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				new ManagerMainFrame2();
-//				setVisible(false);
-//			}
-//		});
-
 		// 홈 버튼
 		homeBtn.addActionListener(new ActionListener() {
 			@Override
@@ -202,7 +204,6 @@ public class MemberManagementGUI extends JFrame {
 		btn1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ta.setText("");
 
 				String user_id = tf1.getText();
 				String user_name = tf2.getText();
@@ -219,19 +220,14 @@ public class MemberManagementGUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다", "비밀번호 오류", 1);
 					return;
 				} else if (!passMatcher2.find()) {
-					JOptionPane.showMessageDialog(null, "다시 입력해주세요\nex) xxx-xxxx-xxxx", "전화번호 오류", 1);
+					JOptionPane.showMessageDialog(null, "전화번호를 다시 입력해주세요\nex) xxx-xxxx-xxxx", "전화번호 오류", 1);
 					return;
 				} else {
 					db.insertData(
 							new Member_Data(user_id, user_name, user_password, user_phonenum, user_passenger_manager));
 					JOptionPane.showMessageDialog(null, "입력되었습니다!");
+					allView();
 				}
-
-				tf1.setText("");
-				tf2.setText("");
-				tf3.setText("");
-				tf4.setText("");
-				tf5.setText("");
 			}
 		});
 
@@ -239,22 +235,7 @@ public class MemberManagementGUI extends JFrame {
 		btn2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
-//				arr = db.readData();
 				allView();
-
-				
-//				ta.append("\t아이디\t" + "이름\t" + "비밀번호\t" + "전화번호\t\t" + "관리자/손님\n");
-//				ta.append("\t"
-//						+ "-----------------------------------------------------------------------------------------------------------------------\n");
-//
-//				// 전체출력
-//				for (int i = 0; i < arr.size(); i++) {
-//					ta.append("\t" + arr.get(i).getID() + "\t" + arr.get(i).getName() + "\t" + arr.get(i).getPassword()
-//							+ "\t" + arr.get(i).getPhonenum() + "\t\t" + arr.get(i).getPassenger() + "\n");
-//
-//				}
-
 			}
 		});
 
@@ -262,7 +243,6 @@ public class MemberManagementGUI extends JFrame {
 		btn3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ta.setText("");
 
 				String user_id = tf1.getText();
 				String user_name = tf2.getText();
@@ -283,12 +263,9 @@ public class MemberManagementGUI extends JFrame {
 				} else {
 					db.updateData(new Member_Update_Data(user_id, user_name, user_password, user_phonenum));
 					JOptionPane.showMessageDialog(null, "수정되었습니다!", "알림", 1);
+					allView();
 				}
 
-				tf1.setText("");
-				tf2.setText("");
-				tf3.setText("");
-				tf4.setText("");
 			}
 		});
 
@@ -296,17 +273,12 @@ public class MemberManagementGUI extends JFrame {
 		btn4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ta.setText("");
 
 				String user_id = tf1.getText();
 				db.deleteData(user_id);
 				JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", 1);
 
-				tf1.setText("");
-				tf2.setText("");
-				tf3.setText("");
-				tf4.setText("");
-				tf5.setText("");
+				allView();
 			}
 		});
 
@@ -314,25 +286,16 @@ public class MemberManagementGUI extends JFrame {
 		btn5.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ta.setText("");
 				String user_id = tf1.getText();
-				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
+				
+				ArrayList<Member_Data> arr = db.readData();
 				arr = db.search(user_id);
 
-				ta.append("\t아이디\t" + "이름\t" + "비밀번호\t" + "전화번호\t\t" + "관리자/손님\n");
-				ta.append("\t"
-						+ "-----------------------------------------------------------------------------------------------------------------------\n");
-
-				// 전체출력
 				if (arr.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "저장된 아이디가 없습니다", "아이디 오류", 1);
-					return;
+						JOptionPane.showMessageDialog(null, "저장된 아이디가 없습니다", "아이디 오류", 1);
+						return;
 				} else {
-					
-					for (int i = 0; i < arr.size(); i++) {
-						ta.append("\t" + arr.get(i).getID() + "\t" + arr.get(i).getName() + "\t" + arr.get(i).getPassword()
-								+ "\t" + arr.get(i).getPhonenum() + "\t\t" + arr.get(i).getPassenger() + "\n");
-					}
+					searchView(user_id);
 				}
 
 			}
