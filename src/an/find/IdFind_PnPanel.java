@@ -13,7 +13,7 @@ public class IdFind_PnPanel extends JPanel{
 	public IdFind_PnPanel(JTextField j) {
 		pnText = j;
 		
-		setLayout(new FlowLayout());
+		setLayout(new FlowLayout(FlowLayout.LEADING));
 		
 		add(pnLabel); add(pnText);
 	}

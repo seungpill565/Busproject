@@ -2,8 +2,9 @@ package an.sign_up;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,11 +17,18 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import an.OjdbcConnection;
 import an.sign_up.action.Sign_ButtonAction;
+import an.sign_up.action.Sign_ComboAction;
 import an.sign_up.action.Sign_IdButtonAction;
+import an.sign_up.action.Sign_KeyIdAction;
+import an.sign_up.action.Sign_KeyNameAction;
+import an.sign_up.action.Sign_KeyPassAction;
+import an.sign_up.action.Sign_KeyPassCkAction;
+import an.sign_up.action.Sign_KeyPnAction;
 import an.sign_up.action.Sign_PassButtonAction;
 
 
@@ -29,33 +37,40 @@ public class Sign_Panel extends JPanel{
 	JButton button2;
 	JButton button3;
 	String id = "", pass = "", passRe = "", name = "", phone = "", check ="" ,passck ="";
-	
+	//아이디
 	JTextField idtext = new Sign_TextFeild(12);
 	JButton checkid = new Action_button("아이디 중복확인");
 	JPanel idPanel = new Id_Panel(idtext,checkid);
+	JLabel idcheckLabel = new ErrorLabel("아이디는 영어 또는 숫자 최소 5자에서 최대 11자 입니다.");
 	
-	JLabel idcheckLabel = new ErrorLabel("아이디는 영어+숫자 최소 5자에서 최대 11자로 구성");
-	
-	JTextField passtext= new Sign_TextFeild(12);
+	//비밀번호
+	JPasswordField passtext= new JPasswordField(12);
 	JButton checkpass = new Action_button("비밀번호 확인");
 	JPanel passPanel = new Password_Panel(passtext,checkpass);
 	JLabel passLabel = new ErrorLabel("비밀번호는 영문+특수문자+숫자 최소 8자에서 최대20자로 구성");
 	
-	JTextField passCktext= new Sign_TextFeild(12);
+	//비밀번호 확인
+	JPasswordField passCktext= new JPasswordField(12);
 	JPanel passCkPanel = new Pass_CheckPanel(passCktext);
 	JLabel passcheckLabel = new ErrorLabel("비밀번호와 동일하게 입력해주세요");
 	
-	
+	//이름
 	JTextField nametext = new Sign_TextFeild(12);
 	JPanel namePanel = new Name_panel(nametext);
+	JLabel nameLabel = new ErrorLabel("이름을 입력해주세요");
+	final String REGEX = "[0-9]+";
 	
+	//전화번호
 	JTextField pntext = new Sign_TextFeild(3);
 	JTextField pntext2 = new Sign_TextFeild(3);
 	JTextField pntext3 = new Sign_TextFeild(3);
 	JPanel pnPanel = new Pn_Panel(pntext,pntext2,pntext3);
+	JLabel pnLabel = new ErrorLabel("전화번호의 형식은 xxx-xxx-xxxx입니다.");
 	
+	//손님/관리자
 	JComboBox<String> combo = new Combo();
 	JPanel comboPanel = new Combo_Panel(combo);
+	public JLabel comboLabel = new ErrorLabel("손님을 선택하셨습니다.");
 	
 	
 	//JRadioButton client = new RadioButton("손님");
@@ -64,12 +79,13 @@ public class Sign_Panel extends JPanel{
 	//JPanel radioPanel = new Radio_Panel(client,manager,bg);
 	
 	public Sign_Panel(JButton button) {
-		setLayout(new GridLayout(9, 0,0,0));
+		setLayout(new GridLayout(12, 0));
 		
 		
 		this.button = button ;
 		//this.button2= button2;
 		//this.button3 = button3;
+		comboLabel.setForeground(Color.blue);
 		
 		add(idPanel);
 		add(idcheckLabel);
@@ -78,8 +94,11 @@ public class Sign_Panel extends JPanel{
 		add(passCkPanel);
 		add(passcheckLabel);
 		add(namePanel);
+		add(nameLabel);
 		add(pnPanel);
+		add(pnLabel);
 		add(comboPanel);
+		add(comboLabel);
 		
 		
 		//////////////////////////////////////////////////////////////
@@ -91,72 +110,22 @@ public class Sign_Panel extends JPanel{
 		button.addActionListener(btevent);
 		//button3.addActionListener(passevent);
 		
+		//키 액션(라벨)
+		Sign_KeyIdAction idkeyevent = new Sign_KeyIdAction(this);
+		Sign_KeyPassAction passkeyevent = new Sign_KeyPassAction(this);
+		Sign_KeyPassCkAction passckkeyevent = new Sign_KeyPassCkAction(this);
+		Sign_KeyNameAction namekeyevent = new Sign_KeyNameAction(this);
+		Sign_KeyPnAction pnkeyevent = new Sign_KeyPnAction(this);
+		Sign_ComboAction comboevent = new Sign_ComboAction(this);
 		
-		///////////////////////////////////////////////////////////
-		
-		//아이디 경고 라벨
-		idtext.addKeyListener(new KeyAdapter() {
-			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				id = idtext.getText();
-				if (id.length() < 5) {
-					idcheckLabel.setForeground(Color.red);
-					idcheckLabel.setText("아이디는 5글자 이상이여야 합니다");
-				} else if (Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", id)) {
-					idcheckLabel.setForeground(Color.BLUE);
-					idcheckLabel.setText("사용가능한 아이디입니다. 아이디 중복을 눌러주세요");
-				}else if(id.length()>=12) {
-					idcheckLabel.setForeground(Color.red);
-					idcheckLabel.setText("아이디는 11글자 이하이여야 합니다");
-				}else {
-					idcheckLabel.setForeground(Color.red);
-					idcheckLabel.setText("옳바른 아이디를 입력하세요");
-				}
-			}
-		});
-		
-		//비밀번호 경고 라벨
-		passtext.addKeyListener(new KeyAdapter() {
-			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				pass = new String(passtext.getText());
-				if (pass.length() <= 8) {
-					passLabel.setForeground(Color.red);
-					passLabel.setText("8자이상으로 입력하세요");
-				}
-				else if(Pattern.matches("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$",pass)) {
-					 passLabel.setForeground(Color.BLUE);
-					 passLabel.setText("사용가능한 비밀번호 입니다. 비밀번호 확인을 눌러주세요");
-				}
-				else if(pass.length() >=21){
-					passLabel.setForeground(Color.red);
-					passLabel.setText("비밀번호는 20자 이하여야 됩니다.");
-				}else {
-					passLabel.setForeground(Color.red);
-					passLabel.setText("비밀번호는 영문+특수문자+숫자 최소 8자에서 최대20자로 구성");
-				}
-			}
-		});
-		
-		//중복비밀번호 확인
-		passCktext.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				pass = new String(passtext.getText());
-				passck =new String(passCktext.getText());
-				if (!passck.equals(pass)) {
-					passcheckLabel.setForeground(Color.red);
-					passcheckLabel.setText("비밀번호가 일치 하지 않습니다.");
-				} else if(passck.equals(pass)) {
-					passcheckLabel.setForeground(Color.BLUE);
-					passcheckLabel.setText("비밀번호가 일치 합니다.");
-				}else {
-					passcheckLabel.setText("비밀번호 입력하세요");
-				}
-			}	
-		});
+		idtext.addKeyListener(idkeyevent);
+		passtext.addKeyListener(passkeyevent);
+		passCktext.addKeyListener(passckkeyevent);
+		nametext.addKeyListener(namekeyevent);
+		pntext3.addKeyListener(pnkeyevent);
+		combo.addActionListener(comboevent);
+					
+				
 	}
 	//////////////////////////////////////////////////메서드///////////////////////////////////////////////
 	
@@ -180,6 +149,8 @@ public class Sign_Panel extends JPanel{
 		boolean idchek = Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", id);
 		
 		boolean phcheck = Pattern.matches("\\d{3}-\\d{4}-\\d{4}", phone);
+		
+		boolean namecheck = Pattern.matches(REGEX, name);
 		if(!passck.equals(pass)) {
 			JOptionPane.showMessageDialog(null, "비밀번호와 비밀번호 확인이 다릅니다.", "비밀번호 오류", 1);	
 			return;
@@ -191,7 +162,10 @@ public class Sign_Panel extends JPanel{
 			JOptionPane.showMessageDialog(null, "xxx-xxxx-xxxx로 입력해 주세요", "번호 오류", 1);
 			return;
 		}if(!idchek) {
-			JOptionPane.showMessageDialog(null, "아이디는 영문숫자로이루어진 5~12글자로 생성 해주세요", "아이디 오류", 1);
+			JOptionPane.showMessageDialog(null, "아이디는 영문또는숫자로이루어진 5~12글자로 생성 해주세요", "아이디 오류", 1);
+			return;
+		}if(namecheck) {
+			JOptionPane.showMessageDialog(null, "이름에는 숫자를 입력하실수 없습니다.", "이름 오류", 1);
 			return;
 		}
 		
@@ -208,6 +182,7 @@ public class Sign_Panel extends JPanel{
 				pstmt.setString(5, phone);
 				pstmt.executeUpdate();
 				JOptionPane.showMessageDialog(null, "회원 가입 완료!", "회원가입", 1);
+				
 				
 				
 			} catch (SQLException e1) {
@@ -273,6 +248,110 @@ public class Sign_Panel extends JPanel{
 			catch (SQLException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	
+	//아이디 경고 메세지 메서드
+	
+	public void iderror() {
+		id = idtext.getText();
+		if (id.length() < 5) {
+			idcheckLabel.setForeground(Color.red);
+			idcheckLabel.setText("아이디는 5글자 이상이여야 합니다");
+		} else if (Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", id)) {
+			idcheckLabel.setForeground(Color.BLUE);
+			idcheckLabel.setText("사용가능한 아이디입니다. 아이디 중복을 눌러주세요");
+		}else if(id.length()>=12) {
+			idcheckLabel.setForeground(Color.red);
+			idcheckLabel.setText("아이디는 11글자 이하이여야 합니다");
+		}else {
+			idcheckLabel.setForeground(Color.red);
+			idcheckLabel.setText("옳바른 아이디를 입력하세요");
+		}
+	}
+	
+	//비밀번호 경고 메세지 메서드
+	public void passerror() {
+		pass = new String(passtext.getText());
+		if (pass.length() <= 8) {
+			passLabel.setForeground(Color.red);
+			passLabel.setText("8자이상으로 입력하세요");
+		}
+		else if(Pattern.matches("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$",pass)) {
+			 passLabel.setForeground(Color.BLUE);
+			 passLabel.setText("사용가능한 비밀번호 입니다. 비밀번호 확인을 눌러주세요");
+		}
+		else if(pass.length() >=21){
+			passLabel.setForeground(Color.red);
+			passLabel.setText("비밀번호는 20자 이하여야 됩니다.");
+		}else {
+			passLabel.setForeground(Color.red);
+			passLabel.setText("비밀번호는 영문+특수문자+숫자 최소 8자에서 최대20자로 구성");
+		}
+		
+	}
+	
+	//비밀번호 확인 메서드
+	public void passckerror() {
+		pass = new String(passtext.getText());
+		passck =new String(passCktext.getText());
+		if (!passck.equals(pass)) {
+			passcheckLabel.setForeground(Color.red);
+			passcheckLabel.setText("비밀번호가 일치 하지 않습니다.");
+		} else if(passck.equals(pass)) {
+			passcheckLabel.setForeground(Color.BLUE);
+			passcheckLabel.setText("비밀번호가 일치 합니다.");
+		}else {
+			passcheckLabel.setText("비밀번호 입력하세요");
+		}
+		
+	}
+	
+	//전화번호 경고 메세지 메서드
+	
+	public void pnerror() {
+		
+		
+		String pnnum = (pntext.getText()+"-"+pntext2.getText() +"-"+pntext3.getText());
+		
+			
+		if(!Pattern.matches("\\d{3}-\\d{4}-\\d{4}", pnnum)) {
+			pnLabel.setForeground(Color.red);
+			pnLabel.setText("전화번호의 형식은 xxx-xxx-xxxx입니다.");
+			}else {
+				pnLabel.setForeground(Color.BLUE);
+			 	pnLabel.setText("올바른 형식의 비밀번호 입니다.");
+			}
+	}
+	
+	//이름 경고 메세지 메서드
+	public void nameerror() {
+		name = nametext.getText();
+		
+		if(name =="") {
+			nameLabel.setText("이름을 입력하세요.");
+			nameLabel.setForeground(Color.BLUE);
+		}	
+		else if(Pattern.matches(REGEX,name)) {
+			nameLabel.setText("이름에는 숫자를 입력하실수 없습니다.");
+			nameLabel.setForeground(Color.RED);
+			}
+		else {
+			nameLabel.setText("이름을 입력하셨습니다.");
+			nameLabel.setForeground(Color.blue);
+		}
+		
+	}
+	
+	//손님/관리자 선택
+	public void checkerror() {
+		String check = combo.getSelectedItem().toString();
+		if(check =="손님") {
+			comboLabel.setText("손님을 선택하셨습니다.");
+		}else {
+			comboLabel.setText("관리자를 선택하셨습니다.");
+			
 		}
 	}
 }
