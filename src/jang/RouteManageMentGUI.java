@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -46,7 +48,7 @@ public class RouteManageMentGUI extends JFrame {
 	JTextField tf2 = new JTextField();
 	JTextField tf3 = new JTextField();
 	JTextField tf4 = new JTextField();
-	JTextField search = new JTextField("도착지를 입력");
+	JTextField search = new JTextField("도착지 입력");
 	JTextField delete = new JTextField();
 	JTextField tf5 = new JTextField();
 
@@ -310,7 +312,26 @@ public class RouteManageMentGUI extends JFrame {
 				String bi_day = tf3.getText();
 				String bi_time = tf4.getText();
 
-				db.updateData(bi_id, rt_id, bi_day, bi_time);
+				Pattern passPattern = Pattern.compile("\\d{2}/\\d{2}/\\d{2}");
+				Matcher passMatcher = passPattern.matcher(bi_day);
+				Pattern passPattern2 = Pattern.compile("\\d{2}:\\d{2}");
+				Matcher passMatcher2 = passPattern2.matcher(bi_time);
+				
+				if (bi_day.equals("") || bi_time.equals("")) {
+					JOptionPane.showMessageDialog(null, "정보를 모두 입력해주세요", "알림", 1);
+					return;
+				} 
+				else if (!passMatcher.find()) {
+					JOptionPane.showMessageDialog(null, "날짜를 다시 입력하세요\nex) xx/xx/xx", "날짜 오류", 1);
+					return;
+				} else if (!passMatcher2.find()) {
+					JOptionPane.showMessageDialog(null, "시간을 다시 입력하세요\nex) 24:00", "시간 오류", 1);
+					return;
+				} else {
+					db.updateData(bi_id, rt_id, bi_day, bi_time);
+
+					JOptionPane.showMessageDialog(null, "추가되었습니다!");
+				}
 
 				tf1.setText("");
 				tf2.setText("");
@@ -328,8 +349,11 @@ public class RouteManageMentGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int bi_id = Integer.parseInt(tf1.getText());
 
-				db.deleteData(bi_id);
-				JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", 1);
+				int delete = JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제 확인", JOptionPane.YES_NO_OPTION);
+				if(delete == JOptionPane.YES_OPTION) {
+					db.deleteData(bi_id);					
+				} 
+//				JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", 1);
 				allView();
 			}
 		});

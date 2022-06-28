@@ -250,14 +250,11 @@ public class Route_Insert extends JFrame {
 				Pattern passPattern2 = Pattern.compile("\\d{2}:\\d{2}");
 				Matcher passMatcher2 = passPattern2.matcher(bi_time);
 
-				ArrayList<Route_Read_Data> arr = db.readData();
-				
-				
 				if (!passMatcher.find()) {
-					JOptionPane.showMessageDialog(null, "다시 입력하세요\nex) xx/xx/xx", "날짜 오류", 1);
+					JOptionPane.showMessageDialog(null, "날짜를 다시 입력하세요\nex) xx/xx/xx", "날짜 오류", 1);
 					return;
 				} else if (!passMatcher2.find()) {
-					JOptionPane.showMessageDialog(null, "다시 입력하세요\nex) 24:00", "시간 오류", 1);
+					JOptionPane.showMessageDialog(null, "시간을 다시 입력하세요\nex) 24:00", "시간 오류", 1);
 					return;
 				} else {
 					db.bus_info_insertData(bi_day, bi_time, rtfk_id);

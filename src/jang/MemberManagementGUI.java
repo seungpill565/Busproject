@@ -61,7 +61,7 @@ public class MemberManagementGUI extends JFrame {
 	ImageIcon image2 = new ImageIcon("Image/back3.png");
 
 	ImageIcon home_image = new ImageIcon("Image/home.png");
-	ImageIcon home_image2 = new ImageIcon("Image/home2.png");	
+	ImageIcon home_image2 = new ImageIcon("Image/home2.png");
 
 	public MemberManagementGUI() {
 		MemberManagementGUI();
@@ -398,12 +398,16 @@ public class MemberManagementGUI extends JFrame {
 				String user_id = tf1.getText();
 				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
 				arr = db.search(user_id);
+				int delete = JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제 확인", JOptionPane.YES_NO_OPTION);
 				if (arr.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "아이디가 존재하지 않습니다", "아이디 오류", 1);
 					return;
 				} else {
-					db.deleteData(user_id);
-					JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", 1);
+					if (delete == JOptionPane.YES_OPTION) {
+						db.deleteData(user_id);
+
+					}
+//					JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", 1);
 					allView();
 
 				}
