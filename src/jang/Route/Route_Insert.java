@@ -244,27 +244,13 @@ public class Route_Insert extends JFrame {
 				String bi_day = tf1.getText();
 				String bi_time = tf2.getText();
 				int rtfk_id = Integer.parseInt(tf3.getText());
-				
 
 				Pattern passPattern = Pattern.compile("\\d{2}/\\d{2}/\\d{2}");
 				Matcher passMatcher = passPattern.matcher(bi_day);
 				Pattern passPattern2 = Pattern.compile("\\d{2}:\\d{2}");
 				Matcher passMatcher2 = passPattern2.matcher(bi_time);
 
-//				String rt_id = Integer.toString(rtfk_id);
-//				ArrayList<Integer> rt_id_list = new ArrayList<>();
-//				rt_id_list.add(rtfk_id);
-				
-//				Route_Read_Data data = new Route_Read_Data();
-//				String rt_id = Integer.toString(data.getRT_ID());
-//				tf3.getText().length() == 0
-				
-				
-				if (bi_day.equals("") || bi_time.equals("") || tf3.getText().length() == 0 ) {
-					JOptionPane.showMessageDialog(null, "정보를 모두 입력해주세요", "알림", 1);
-					return;
-				}
-				else if (!passMatcher.find()) {
+				if (!passMatcher.find()) {
 					JOptionPane.showMessageDialog(null, "날짜를 다시 입력하세요\nex) xx/xx/xx", "날짜 오류", 1);
 					return;
 				} else if (!passMatcher2.find()) {

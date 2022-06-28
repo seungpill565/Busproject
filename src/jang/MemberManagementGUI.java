@@ -368,7 +368,8 @@ public class MemberManagementGUI extends JFrame {
 				arr = db.search(user_id);
 
 				int update = JOptionPane.showConfirmDialog(null, "수정하시겠습니까?", "수정 확인", JOptionPane.YES_NO_OPTION);
-				if (user_id.equals("") || user_name.equals("") || user_password.equals("") || user_phonenum.equals("")) {
+				if (user_id.equals("") || user_name.equals("") || user_password.equals("")
+						|| user_phonenum.equals("")) {
 					JOptionPane.showMessageDialog(null, "정보를 모두 입력해주세요", "알림", 1);
 					return;
 				} else if (!passMatcher3.find()) {
@@ -381,10 +382,10 @@ public class MemberManagementGUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "전화번호는 숫자로만 구성되어야 합니다", "전화번호 오류", 1);
 					return;
 				} else {
-					if(update == JOptionPane.YES_OPTION) {
+					if (update == JOptionPane.YES_OPTION) {
 						db.updateData(new Member_Update_Data(user_id, user_name, user_password, user_phonenum));
 						JOptionPane.showMessageDialog(null, "수정되었습니다!", "알림", 1);
-						
+
 					}
 					allView();
 				}
