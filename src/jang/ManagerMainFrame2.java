@@ -74,11 +74,12 @@ public class ManagerMainFrame2 extends JFrame{
 			}
 		});
 		
+		
 		member.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new MemberManagementGUI();
-				setVisible(false);
+				dispose();
 			}
 		});
 		

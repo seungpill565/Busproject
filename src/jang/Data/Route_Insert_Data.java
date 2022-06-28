@@ -11,7 +11,8 @@ public class Route_Insert_Data {
 		
 	}
 	
-	public Route_Insert_Data (String rt_depart_from, String rt_arrive_at, String rt_charge) {
+	public Route_Insert_Data (int rt_id, String rt_depart_from, String rt_arrive_at, String rt_charge) {
+		this.rt_id = rt_id;
 		this.rt_depart_from = rt_depart_from;
 		this.rt_arrive_at = rt_arrive_at;
 		this.rt_charge = rt_charge;
