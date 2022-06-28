@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import an.OjdbcConnection;
 import an.login.Login_Mainframe;
@@ -123,7 +124,6 @@ public class SelectRouteMainFrame extends JFrame {
 		}
 	}
 		
-		
 	// 달 입력 받기
 	public void setMonth(int month) {
 		this.month = month;
@@ -173,6 +173,11 @@ public class SelectRouteMainFrame extends JFrame {
 	// 이 프레임 꺼주기
 	public void thisFrameClose() {
 		this.dispose();
+	}
+	
+	public void aaa() {
+		String str = String.format("%d월 %d일 %s에 출발하는 버스를 선택하셨습니다", month, day, bi_time);
+		JOptionPane.showMessageDialog(null, str, "버스 확인", JOptionPane.PLAIN_MESSAGE);
 	}
 	
 	public void save() {
@@ -254,9 +259,8 @@ public class SelectRouteMainFrame extends JFrame {
 	
 	
 	public static void main(String[] args) {
-		new Login_Mainframe();
+		new SelectRouteMainFrame(new SaveInfo());
 	}
-	
 	
 	// 출발지 도착지에 따른 노선ID를...
 	public void getRouteID() {
@@ -314,5 +318,4 @@ public class SelectRouteMainFrame extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	
 }

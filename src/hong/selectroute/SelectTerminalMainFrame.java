@@ -24,6 +24,10 @@ public class SelectTerminalMainFrame extends JFrame {
 		return terminalButtons;
 	}
 	
+	public static void main(String[] args) {
+		new SelectTerminalMainFrame();
+	}
+	
 	public SelectTerminalMainFrame() {
 		
 		setTitle("터미널 선택");
@@ -46,9 +50,6 @@ public class SelectTerminalMainFrame extends JFrame {
 		setVisible(true);
 	}
 	
-	public static void main(String[] args) {
-		new SelectTerminalMainFrame();
-	}
 	
 	private void getTerminals() {
 		try (
@@ -66,7 +67,6 @@ public class SelectTerminalMainFrame extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	
 	
 	
 }
