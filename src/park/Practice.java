@@ -1,28 +1,47 @@
 package park;
 
-import java.util.LinkedHashMap;
-import java.util.Set;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.LayoutManager;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import park.scrollpane.PayInfoScrollpane;
 
 public class Practice extends JFrame{
 
-//    public static void main(String args[]){
-//    	// 플로우레이아웃 연습
-//          JFrame f = new JFrame("FlowLayoutTest");
-//          f.setBounds(100,100,200,500);
-//          //왼쪽 정렬의 FlowLayout생성
-//          f.setLayout(new FlowLayout(FlowLayout.LEFT));
-//
-//          f.add(new JButton("첫번째"));
-//          f.add(new JButton("두번째"));
-//          f.add(new JButton("세번째"));
-//          f.add(new JButton("네번째"));
-//          f.add(new JButton("다섯번째"));
-//          f.setVisible(true);
-//}
+    public static void main(String args[]){
+    	// 플로우레이아웃 연습
+          JFrame f = new JFrame("FlowLayoutTest");
+          JPanel p = new JPanel();
+          f.setBounds(100,100,400,500);
+          //왼쪽 정렬의 FlowLayout생성
+          Dimension size = new Dimension();
+          size.setSize(400, 500);
+          
+          JScrollPane scroll = new JScrollPane();
+          f.setLayout(new BorderLayout());
+          f.add(scroll,"Center");
+          LayoutManager manager = new FlowLayout(FlowLayout.LEFT);
+          p.setPreferredSize(size);
+          p.setLayout(manager);
+          p.add(new JButton("첫번째"));
+          p.add(new JButton("두번째"));
+          p.add(new JButton("세번째"));
+          p.add(new JButton("네번째"));
+          p.add(new JButton("다섯번째"));
+          p.add(new JButton("다섯번째"));
+          p.add(new JButton("다섯번째"));
+          p.add(new JButton("다섯번째"));
+          p.add(new JButton("다섯번째"));
+          
+          scroll.setViewportView(p);          
+          f.setVisible(true);
+}
 
 	public Practice() {
 		
@@ -32,19 +51,5 @@ public class Practice extends JFrame{
 		setVisible(true);
 	}
 	
-	public static void main(String[] args) {
-		LinkedHashMap<String,String> map = new LinkedHashMap<>();
-		
-		map.put("21", "성인");
-		map.put("17", "청소년");
-		map.put("18", "청소년");
-		map.put("11", "어린이");
-		map.put("5", "성인");
-		
-		System.out.println(map.size());
-		Set<String> key = map.keySet();
-		for(String keys : key) {
-			System.out.println(keys);
-		}
-	}
+	
 }

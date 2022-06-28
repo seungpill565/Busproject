@@ -2,27 +2,33 @@ package park.frame;
 
 import javax.swing.JFrame;
 
+import an.userinfo.Info_MainFrame;
 import hong.SaveInfo;
-import park.ReservationInfo;
 import park.button.HomeButton;
+import park.event.PayInfoButtonEvent;
 import park.label.SucceedPayLabel;
-import park.panel.RouteInfoColumnNamePanel;
-import park.panel.RouteInfoPanel;
+import park.panel.RvInfoColumnNamePanel;
+import park.panel.RvInfoPanel;
 
 public class PayInfo extends JFrame{
 	
 	SaveInfo user;
+
 	HomeButton homeBtn;
+
 	SucceedPayLabel payLabel = new SucceedPayLabel(); 
-	RouteInfoColumnNamePanel columnNamePanel = new RouteInfoColumnNamePanel();
-	RouteInfoPanel routePanel ;
+	RvInfoColumnNamePanel columnNamePanel = new RvInfoColumnNamePanel();
+	RvInfoPanel routePanel ;
 	
 	public PayInfo(SaveInfo user) {
 		super("예매 완료");
 		this.user = user;
 		homeBtn = new HomeButton(user);
-		//new LoadRVID(user); // 시퀀스로 저장되는 예매번호들 user에 저장하고 출력
-		routePanel = new RouteInfoPanel(user);
+
+		homeBtn.addActionListener(new PayInfoButtonEvent(this));
+		routePanel = new RvInfoPanel(user);
+
+
 		homeBtn.setBounds(190, 500, 100, 50);
 		add(payLabel);
 		add(homeBtn);
@@ -34,6 +40,12 @@ public class PayInfo extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		
+	}
+	public void homeButtonEvent() {
+		user.remove_bs_map(user.getSeatId(), user.getSeatNames());		
+		user.setTotalCharge();
+		dispose();
+		new Info_MainFrame(user);
 	}
 	
 }
