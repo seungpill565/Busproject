@@ -115,7 +115,6 @@ public class Pay extends JFrame{
 				}
 				else { // ok 이외의 것을 누르면
 					user.setTotalCharge(); // 결제 팝업에서 취소한 것이므로 총요금을 초기화 해준다
-
 				}
 			}else {
 				String str ="올바르지 않은 연령 및 결제 방식입니다.";
@@ -125,8 +124,6 @@ public class Pay extends JFrame{
 			String str ="올바르지 않은 연령 선택 또는 결제 방식입니다.";
 			JOptionPane.showMessageDialog(null, str, "오류 메시지", JOptionPane.PLAIN_MESSAGE);
 		}
-
-
 	}
 	
 	
