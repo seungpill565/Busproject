@@ -1,5 +1,6 @@
 package lee.mpcomponents;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,10 +16,11 @@ public class MPinputpwSF extends JFrame {
 	public MPinputpwSF() {
 		super("비밀번호 입력");
 		
-		JLabel label = new JLabel("비밀번호를 입력하세요.");
+		JLabel label = new JLabel("비밀번호를 입력해주세요.");
 
 		// 라벨 설정
-		label.setBounds(110, 40, 300, 30);
+		label.setBounds(90, 40, 300, 30);
+		label.setFont(new Font("고딕", Font.BOLD, 13));
 		add(label);
 		
 		//입력 버튼 설정

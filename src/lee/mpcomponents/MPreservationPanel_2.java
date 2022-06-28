@@ -22,7 +22,7 @@ import lee.mpmodel.MPreservationlistModel;
 public class MPreservationPanel_2 extends JPanel {
 	 
 	SaveInfo saveInfo;
-	String user_id;// 일단 임시로(다른 프레임에서 전달받을 거임) 
+	String user_id; 
 	
 	
 	JButton MPreservationcancleBtn = new JButton("예매취소");	

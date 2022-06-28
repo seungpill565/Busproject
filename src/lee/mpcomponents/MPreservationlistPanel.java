@@ -11,8 +11,6 @@ public class MPreservationlistPanel extends JPanel {
 	int br_id;//예매번호
 	String reservationdetailStr;
 	
-	int MPticketNum;
-	
 	public MPreservationlistPanel(Integer br_id, String reservationdetailStr) {
 		
 		this.br_id = br_id;//예매번호 받는거 성공!
@@ -20,17 +18,15 @@ public class MPreservationlistPanel extends JPanel {
 		
 		
 		JLabel MPreservationdetailLb = new JLabel(reservationdetailStr);
+		
 		//예매정보 뜨는 라벨 설정
 		MPreservationdetailLb.setBounds(20, 0, 300, 150);
 		MPreservationdetailLb.setFont(new Font("고딕", Font.BOLD, 14));
-
-
 		add(MPreservationdetailLb);		
 
 		
 		setLayout(null);
-		setOpaque(true);
-		//setBackground(Color.LIGHT_GRAY);  
+		setOpaque(true);  
 		setSize(470, 180);
 	}
 }

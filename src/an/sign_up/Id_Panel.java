@@ -21,13 +21,13 @@ public class Id_Panel extends JPanel{
 	
 	JLabel id = new Sign_Label("아이디 :");
 	JTextField idtext ;
-	JButton button =new  Sign_Button("중복확인");
+	JButton check = new Action_button("아이디 중복확인");
 	
-public Id_Panel(JTextField idtext) {
+public Id_Panel(JTextField idtext,JButton check) {
 	this.idtext = idtext;
-	setLayout(new FlowLayout(FlowLayout.RIGHT));
+	setLayout(new FlowLayout(FlowLayout.LEFT));
 	
-	add(id);add(idtext);
+	add(id);add(idtext);add(check);
 	
 	
 	

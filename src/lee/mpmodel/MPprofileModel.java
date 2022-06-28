@@ -36,6 +36,7 @@ public class MPprofileModel {
 	}
 
 	
+ 
 	
 	public static void MPdeleteUserInfo(Connection conn, String user_id) {
 		String sql = "DELETE FROM user_info WHERE user_id = ?";
@@ -47,6 +48,7 @@ public class MPprofileModel {
 			System.out.println("");
 		}
 	}
+	
 	
 	
 	public static String MPgetUserPw(Connection conn, String user_id) {

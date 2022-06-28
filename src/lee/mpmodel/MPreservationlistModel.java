@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 
@@ -104,6 +105,36 @@ public class MPreservationlistModel {
 	
 	
 	
+	//user_info 입력하면 bs_id들 구해서 ArrayList에 담아주는 메서드 
+	public static ArrayList<Integer> get_bs_id(Connection conn, String user_id) {
+		ArrayList<Integer> bs_id_list = new ArrayList<>();
+		String sql = "SELECT user_id, br_id, bs_id"
+				+ " FROM user_info"
+				+ " INNER JOIN bus_reservation USING(user_id)"
+				+ " INNER JOIN bus_seat USING (bs_id)"
+				+ " WHERE user_id = ?";
+		
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {
+			
+			pstmt.setString(1, user_id);
+			
+			try(ResultSet rs = pstmt.executeQuery();) {
+				while(rs.next() ) {
+					bs_id_list.add(rs.getInt("bs_id"));
+				}
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("");
+		}
+		return bs_id_list;
+	}
+	
+	
+	
+	
+	
 	
 	//Bus_Seat + Bus_Reservation 이너조인 해서 예매번호를 매개변수로 전달하면 bs_id(좌석id)를 리턴하는 메서드
 	public static int get_bs_id(Connection conn, int br_id) {
@@ -172,7 +203,7 @@ public class MPreservationlistModel {
 		String[] split = LocalDate.now().toString().split("-");
 		String join = String.join("/", split);
 		String date = join.substring(2);
-		
+		String time = LocalTime.now().toString().substring(0, 5);
 		
 		String sql = 
 				"SELECT br_id, bi_day, bi_time, rt_depart_from, rt_arrive_at, bs_name, br_age_group, rt_charge"
@@ -183,16 +214,19 @@ public class MPreservationlistModel {
 				+ " INNER JOIN bus_seat USING (bs_id)"
 				+ " WHERE user_id = ?"
 				+ " AND bus_seat.bs_is_reserved = 1"   //이부분 추가함!!!!!!
-				+ " AND bus_info.bi_day >= ?";
+				+ " AND bus_info.bi_day >= ?"
+				+ " AND bus_info.bi_time >= ?";
+			
 		
-		
-		System.out.println("여기까진 넘어옴");
+		//System.out.println("여기까진 넘어옴");
+		//System.out.println("유저아이디 : " + user_id);
 		try(
 				PreparedStatement pstmt = conn.prepareStatement(sql); 		
 		) {
 			
 			pstmt.setString(1, user_id);
 			pstmt.setString(2, date);
+			pstmt.setString(3, time);
 			
 			try(ResultSet rs = pstmt.executeQuery();) {
 				while(rs.next() ) {

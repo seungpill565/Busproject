@@ -11,18 +11,16 @@ import javax.swing.JPanel;
 public class Find_ButtonPanel extends JPanel{
 	JButton id = new Find_Button("아이디 찾기");
 	JButton pass = new Find_Button("비밀번호 찾기"); 
-	JButton out = new Find_Button("나가기");
 	
-	public Find_ButtonPanel(JButton i, JButton p,JButton o) {
+	
+	public Find_ButtonPanel(JButton i, JButton p) {
 		
 		this.id= i;
 		this.pass = p;
-		this.out = o;
 		
 		setLayout(new FlowLayout());
 		add(id);
 		add(pass);
-		add(out);
 		
 		
 	}

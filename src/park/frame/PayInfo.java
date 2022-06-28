@@ -13,7 +13,9 @@ import park.panel.RvInfoPanel;
 public class PayInfo extends JFrame{
 	
 	SaveInfo user;
-	HomeButton homeBtn ;
+
+	HomeButton homeBtn;
+
 	SucceedPayLabel payLabel = new SucceedPayLabel(); 
 	RvInfoColumnNamePanel columnNamePanel = new RvInfoColumnNamePanel();
 	RvInfoPanel routePanel ;
@@ -22,8 +24,11 @@ public class PayInfo extends JFrame{
 		super("예매 완료");
 		this.user = user;
 		homeBtn = new HomeButton(user);
+
 		homeBtn.addActionListener(new PayInfoButtonEvent(this));
 		routePanel = new RvInfoPanel(user);
+
+
 		homeBtn.setBounds(190, 500, 100, 50);
 		add(payLabel);
 		add(homeBtn);

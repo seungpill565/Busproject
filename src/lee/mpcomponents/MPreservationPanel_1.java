@@ -18,7 +18,6 @@ public class MPreservationPanel_1 extends JPanel {
 		
 		MPnoreservationLb.setBounds(30, 30, 300, 30);
 		MPnoreservationLb.setFont(new Font("°íµñ", Font.BOLD, 15));
-		
 		add(MPnoreservationLb);
 	}
 	

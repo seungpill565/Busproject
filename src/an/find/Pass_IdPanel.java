@@ -14,7 +14,7 @@ public class Pass_IdPanel extends JPanel{
 		 
 		 idText = j;
 		 
-		setLayout(new FlowLayout());
+		setLayout(new FlowLayout(FlowLayout.LEADING));
 		
 		add(idLabel); add(idText);
 	}
