@@ -10,7 +10,6 @@ import hong.SaveInfo;
 import park.label.RouteInfoRowsLabel;
 
 public class ScrollPanePanel extends JPanel {
-	RouteInfoRowsPanel rowsPanel ;
 	public ScrollPanePanel(SaveInfo user) {
 		LayoutManager manager = new FlowLayout(FlowLayout.LEFT);
 		setLayout(manager);

@@ -36,13 +36,8 @@ public class PayInfo extends JFrame{
 		setVisible(true);
 		
 	}
-	
 	public void homeButtonEvent() {
-		try {
-			user.remove_bs_map(user.getSeatId(), user.getSeatNames());		
-		}catch(IndexOutOfBoundsException a) {
-			user.remove_bs_map(user.getSeatId(), user.getSeatNames());
-		}
+		user.remove_bs_map(user.getSeatId(), user.getSeatNames());		
 		user.setTotalCharge();
 		dispose();
 		new Info_MainFrame(user);
