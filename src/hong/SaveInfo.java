@@ -84,7 +84,7 @@ public class SaveInfo {
 		int size = seatId.size();
 		System.out.println(seatId.size());
 		System.out.println(dcBySeat.size());
-		for(int i= 0 ; i < size; ++i) {
+		for(int i= size-1; i >= 0; --i) {
 			dcBySeat.remove(seatId.get(i));
 			seatNameBySeatId.remove(seatName.get(i));
 			this.seatId.remove(i);

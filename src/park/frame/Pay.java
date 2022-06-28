@@ -36,8 +36,8 @@ public class Pay extends JFrame{
 	static SelectPayWayBox payWayBox ; // 결제 방식 고르는 콤보박스
 	static RouteInfoLabel route; // 행선지 정보 
 	static RouteInfoPanel routePanel ; // 행선지 정보 표 형태로 보여줄 패널
-	static PayInfoScrollpane scroll;
-	//static JScrollPane scroll2;
+	//static PayInfoScrollpane scroll;
+	static JScrollPane scroll2;
 	
 	
 	public Pay(SaveInfo user) {
@@ -52,11 +52,11 @@ public class Pay extends JFrame{
 		payBtn = new PayButton(user);
 		payWayBox = new SelectPayWayBox(user);
 		routePanel = new RouteInfoPanel(user); 
-		scroll = new PayInfoScrollpane();
-		//scroll2 = new JScrollPane(routePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		//scroll = new PayInfoScrollpane();
+		scroll2 = new JScrollPane(routePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		route = new RouteInfoLabel();
 
-		scroll.setViewportView(routePanel);
+		//scroll.setViewportView(routePanel);
 		
 		panel1.getHomeBtn().addActionListener(new HomeButtonEvent(this));
 		panel1.getBefBtn().addActionListener(new BeforeButtonEvent(this));
@@ -64,8 +64,9 @@ public class Pay extends JFrame{
 	
 		add(panel1); // 홈버튼, 이전버튼 판넬
 		add(route); // 행선지 정보
-		add(scroll);
-		//add(routePanel); // 행선지 정보 표 표시할 판넬
+		//add(scroll);
+		//add(scroll2);
+		add(routePanel); // 행선지 정보 표 표시할 판넬
 		add(seatPanel); // 좌석별 연령 고르는 콤보박스
 		add(payWayBox); // 결제 수단 고를 콤보 박스
 		add(payBtn); // 결제하기 버튼
@@ -82,11 +83,7 @@ public class Pay extends JFrame{
 		String str = "메인 화면으로 돌아가시겠습니까?";
 		int ok =JOptionPane.showConfirmDialog(null, str, "메인 화면", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 		if(ok==JOptionPane.OK_OPTION) { // ok를 누르면
-			try {
-				user.remove_bs_map(user.getSeatId(), user.getSeatNames());
-			}catch(IndexOutOfBoundsException e1){
-				user.remove_bs_map(user.getSeatId(), user.getSeatNames());
-			}
+			user.remove_bs_map(user.getSeatId(), user.getSeatNames());
 			user.setTotalCharge();
 			dispose();
 			new Info_MainFrame(user);
@@ -94,11 +91,7 @@ public class Pay extends JFrame{
 	}
 	
 	public void beforeButtonEvent() {
-		try {
-			user.remove_bs_map(user.getSeatId(), user.getSeatNames());		
-		}catch(IndexOutOfBoundsException a) {
-			user.remove_bs_map(user.getSeatId(), user.getSeatNames());
-		}
+		user.remove_bs_map(user.getSeatId(), user.getSeatNames());
 		user.setTotalCharge();
 		dispose();
 		new SelectSeatMainFrame(user);

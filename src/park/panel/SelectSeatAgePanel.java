@@ -19,6 +19,6 @@ public class SelectSeatAgePanel extends JPanel {
 		}
 		setLayout(manager);
 		setBackground(Color.white);
-		setBounds(10,350,450,50);
+		setBounds(10,350,450,70);
 	}
 }
