@@ -9,27 +9,24 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import an.find.action.Find_IdAction;
-import an.find.action.Find_OutAction;
 import an.find.action.Find_PassAction;
 
 public class Find_MainFrame extends JFrame{
 	JButton id = new Find_Button("아이디 찾기");
 	JButton pass = new Find_Button("비밀번호 찾기"); 
-	JButton out = new Find_Button("나가기");
 	
 	
 	public Find_MainFrame() {
 		
 		
 		JPanel main  = new Find_Panel();
-		JPanel bt = new Find_ButtonPanel(id,pass,out);
+		JPanel bt = new Find_ButtonPanel(id,pass);
+		
 		/////////////////////////////////////////////////////////////
-		Find_OutAction outevent = new Find_OutAction(this);
 		Find_IdAction idevent = new Find_IdAction(this);
 		Find_PassAction passevent = new Find_PassAction(this);
 		
 		id.addActionListener(idevent);
-		out.addActionListener(outevent);
 		pass.addActionListener(passevent);
 		
 		
@@ -46,11 +43,6 @@ public class Find_MainFrame extends JFrame{
 	public void Find_id() {		
 		new IdFind_Frame();
 		dispose();
-		
-	}
-	//나가기  이벤트
-	public void Find_out() {
-		 dispose();
 		
 	}
 	

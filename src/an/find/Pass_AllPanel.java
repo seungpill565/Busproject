@@ -14,20 +14,21 @@ import javax.swing.JTextField;
 public class Pass_AllPanel extends JPanel{
 	JTextField nameText = new Find_TextField(10);
 	JTextField idText = new Find_TextField(10);
+	final String REGEX = "[0-9]+";
 	
-	//JLabel nameLabel = new Find_ErrorLabel("이름을 입력해 주세요."); 
+	JLabel nameLabel = new Find_ErrorLabel("이름을 입력해 주세요."); 
 	JLabel idLabel = new Find_ErrorLabel("아이디는 영어 또는 숫자 최소 5자에서 최대 11자 입니다.");
 	
 	
 	
 	public Pass_AllPanel(JTextField j ,JTextField j2) {
-		setLayout(new GridLayout(3,1));
+		setLayout(new GridLayout(4,1));
 		idText = j;
 		nameText = j2;
 		JPanel name = new Pass_NamePanel(nameText);
 		JPanel id = new Pass_IdPanel(idText);	
 		
-		add(name);add(id);add(idLabel);
+		add(name);add(nameLabel);add(id);add(idLabel);
 		
 		
 		
@@ -53,8 +54,28 @@ public class Pass_AllPanel extends JPanel{
 			}
 		});
 		
-		
-		
+		nameText.addKeyListener(new KeyAdapter() {
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String name = nameText.getText();
+				
+				if(name =="") {
+					nameLabel.setText("이름을 입력하세요.");
+					nameLabel.setForeground(Color.BLUE);
+				}	
+				else if(Pattern.matches(REGEX,name)) {
+					nameLabel.setText("이름에는 숫자를 입력하실수 없습니다.");
+					nameLabel.setForeground(Color.RED);
+					}
+				else {
+					nameLabel.setText("이름을 입력하셨습니다.");
+					nameLabel.setForeground(Color.blue);
+				}
+				
+			}
+			
+		});	
 	}
 
 }

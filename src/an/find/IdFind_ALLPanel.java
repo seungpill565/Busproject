@@ -15,12 +15,13 @@ import javax.swing.JTextField;
 public class IdFind_ALLPanel extends JPanel{
 	JTextField nameText = new Find_TextField(10);
 	JTextField pnText = new Find_TextField(10);
-	//JLabel nameLabel = new Find_ErrorLabel("이름을 입력해 주세요."); 
+	JLabel nameLabel = new Find_ErrorLabel("이름을 입력해 주세요.");
+	final String REGEX = "[0-9]+";
 	JLabel pnLabel = new Find_ErrorLabel("전화번호의 형식은 xxx-xxx-xxxx입니다.");
 	
 	
 	public IdFind_ALLPanel(JTextField j, JTextField j2) {
-		setLayout(new GridLayout(3,1));
+		setLayout(new GridLayout(4,1));
 		nameText = j;
 		pnText = j2;
 		
@@ -28,7 +29,7 @@ public class IdFind_ALLPanel extends JPanel{
 		JPanel pn = new IdFind_PnPanel(pnText);
 		
 		
-		add(name);add(pn);add(pnLabel);
+		add(name);add(nameLabel);add(pn);add(pnLabel);
 		
 		
 		//전화 번호 경고 이벤트
@@ -48,6 +49,29 @@ public class IdFind_ALLPanel extends JPanel{
 					 pnLabel.setText("올바른 형식의 비밀번호 입니다.");
 				 }
 			}
+		});	
+		//이름 경고 이벤트
+		nameText.addKeyListener(new KeyAdapter() {
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String name = nameText.getText();
+				
+				if(name =="") {
+					nameLabel.setText("이름을 입력하세요.");
+					nameLabel.setForeground(Color.BLUE);
+				}	
+				else if(Pattern.matches(REGEX,name)) {
+					nameLabel.setText("이름에는 숫자를 입력하실수 없습니다.");
+					nameLabel.setForeground(Color.RED);
+					}
+				else {
+					nameLabel.setText("이름을 입력하셨습니다.");
+					nameLabel.setForeground(Color.blue);
+				}
+				
+			}
+			
 		});	
 	}
 
