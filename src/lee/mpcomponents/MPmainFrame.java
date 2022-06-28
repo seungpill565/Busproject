@@ -119,11 +119,11 @@ public class MPmainFrame extends JFrame {
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-			}
+			}	
 		});
 		
-	}
-
+	}				
+				
 	//프로필수정하기 화면에서 뒤로가기 버튼 눌렀을 때 (수정값 저장하면 안 되도록)
 	public void backBtnCtrl () {
 		setCategoryLabelText("내 정보 조회");

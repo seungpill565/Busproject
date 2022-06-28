@@ -39,9 +39,9 @@ public class MPprofilePanel_2 extends JPanel {
 	JLabel MPviewLb4 = new JLabel("비밀번호 확인 ");
 	
 	JTextField MPnameTf = new JTextField(25);
-	JTextField MPphoneTf_1 = new JTextField(6);
-	JTextField MPphoneTf_2 = new JTextField(6);
-	JTextField MPphoneTf_3 = new JTextField(6);
+	JTextField MPphoneTf_1 = new JTextField(4);
+	JTextField MPphoneTf_2 = new JTextField(4);
+	JTextField MPphoneTf_3 = new JTextField(4);
 	JPasswordField MPnewpwTf = new JPasswordField(25);
 	JPasswordField MPchknewpwTf = new JPasswordField(25);
 	
@@ -72,9 +72,10 @@ public class MPprofilePanel_2 extends JPanel {
 		//그리드백레이아웃 적용하는 부분_______________________________________________________________
 		//인풋패널 설정
 		MPlabelPanel.setLayout(new GridLayout());
-		MPlabelPanel.setBounds(60, 5, 380, 300);
+		MPlabelPanel.setBounds(10, 5, 480, 300);
 		MPlabelPanel.setLayout(gbl);
-		
+//		MPlabelPanel.setOpaque(true);
+//		MPlabelPanel.setBackground(Color.BLUE);
 	
 		//그리드백레이아웃 설정 + 컴포넌트 넣기__________ 
 		gblc.weightx = 1.0; //가로, 세로 패딩? 정하기
