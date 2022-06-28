@@ -13,10 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
-import an.admin.Admin_MainFrame;
+import jang.Data.Member_Data;
 import jang.Data.Route_Read_Data;
 import jang.Route.Route_Delete;
 import jang.Route.Route_Insert;
@@ -34,8 +36,8 @@ public class RouteManageMentGUI extends JFrame {
 	JButton btn4 = new JButton("삭제");
 	JButton btn5 = new JButton("검색");
 
-	JLabel pName = new JLabel("관리자");
-	JLabel label = new JLabel("노선");
+	JLabel pName = new JLabel("관리자 - 노선");
+//	JLabel label = new JLabel("노선");
 //	JButton backBtn;
 	JButton homeBtn;
 
@@ -48,6 +50,60 @@ public class RouteManageMentGUI extends JFrame {
 	JTextField search = new JTextField();
 
 	Route_DB db = new Route_DB();
+	
+	public void allView() {
+		ArrayList<Route_Read_Data> arr = db.readData();
+
+		String[] colNames = { "노선 ID", "출발지", "도착지", "요금", "날짜", "좌석번호", "예약여부" };
+		String[][] rowData = new String[arr.size()][colNames.length];
+
+		for (int row = 0; row < rowData.length; ++row) {
+			rowData[row][0] = Integer.toString(arr.get(row).getBI_ID());
+			rowData[row][1] = arr.get(row).getDepart();
+			rowData[row][2] = arr.get(row).getArrive();
+			rowData[row][3] = arr.get(row).getCharge();
+			rowData[row][4] = arr.get(row).getDay();
+			rowData[row][5] = arr.get(row).getTime();
+			rowData[row][6] = arr.get(row).getBS_Name();
+		}
+
+		DefaultTableModel model = new DefaultTableModel(rowData, colNames);
+		JTable table = new JTable(model);
+		model.fireTableDataChanged();
+		JScrollPane scrolledpane = new JScrollPane();
+		scrolledpane.setViewportView(table);
+//		table.setEnabled(false);
+
+		scrolledpane.setBounds(40, 300, 700, 250);
+		getContentPane().add(scrolledpane);
+	}
+	
+	public void searchView(String arrive) {
+		ArrayList<Route_Read_Data> arr = db.searchRoute(arrive);
+
+		String[] colNames = { "노선 ID", "출발지", "도착지", "요금", "날짜", "좌석번호", "예약여부" };
+		String[][] rowData = new String[arr.size()][colNames.length];
+
+		for (int row = 0; row < rowData.length; ++row) {
+			rowData[row][0] = Integer.toString(arr.get(row).getBI_ID());
+			rowData[row][1] = Integer.toString(arr.get(row).get)
+			rowData[row][2] = arr.get(row).getDepart();
+			rowData[row][3] = arr.get(row).getArrive();
+			rowData[row][4] = arr.get(row).getCharge();
+			rowData[row][5] = arr.get(row).getDay();
+			rowData[row][6] = arr.get(row).getTime();
+		}
+
+		DefaultTableModel model = new DefaultTableModel(rowData, colNames);
+		JTable table = new JTable(model);
+		model.fireTableDataChanged();
+		JScrollPane scrolledpane = new JScrollPane();
+		scrolledpane.setViewportView(table);
+//		table.setEnabled(false);
+
+		scrolledpane.setBounds(40, 300, 700, 250);
+		getContentPane().add(scrolledpane);
+	}
 
 	public RouteManageMentGUI() {
 		RouteManageMentGUI();
@@ -77,17 +133,17 @@ public class RouteManageMentGUI extends JFrame {
 		homeBtn.setBounds(700, 30, 50, 50);
 		panel.add(homeBtn);
 
-		pName.setBounds(330, 30, 200, 50);
+		pName.setBounds(230, 30, 300, 50);
 		pName.setFont(new Font("휴먼매직체", Font.BOLD, 40));
 		panel.add(pName);
-		label.setBounds(40, 120, 50, 30);
-		label.setFont(new Font("휴먼매직체", Font.PLAIN, 30));
-		panel.add(label);
+//		label.setBounds(40, 120, 50, 30);
+//		label.setFont(new Font("휴먼매직체", Font.PLAIN, 30));
+//		panel.add(label);
 
 		// 입력한 글이 보이는 창
-		JScrollPane jsp = new JScrollPane(ta); // 창 스크롤
-		jsp.setBounds(40, 320, 700, 250);
-		panel.add(jsp);
+//		JScrollPane jsp = new JScrollPane(ta); // 창 스크롤
+//		jsp.setBounds(40, 320, 700, 250);
+//		panel.add(jsp);
 
 		btn1.setBounds(300, 160, 70, 30);
 		btn1.setBackground(new Color(0XE7E6E6));
@@ -108,7 +164,8 @@ public class RouteManageMentGUI extends JFrame {
 
 		search.setBounds(300, 220, 100, 30);
 		panel.add(search);
-
+		
+		
 		// 뒤로가기 버튼
 //		backBtn.addActionListener(new ActionListener() {
 //			@Override
@@ -123,6 +180,7 @@ public class RouteManageMentGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 //				new Admin_MainFrame(); // 나중에 메인으로 바꾸면 됨
+				new ManagerMainFrame2();
 				dispose();
 			}
 		});
@@ -140,21 +198,7 @@ public class RouteManageMentGUI extends JFrame {
 		btn2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ta.setText("");
-				ArrayList<Route_Read_Data> arr = new ArrayList<Route_Read_Data>();
-				arr = db.readData();
-
-				ta.append("     버스 ID\t" + "출발지\t" + "도착지\t" + "요금\t" + "날짜\t" + "시간\t" + "좌석 번호\t" + "예약\n");
-				ta.append("     "
-						+ "-----------------------------------------------------------------------------------------------------------------------------------------------------\n");
-
-				// 전체출력
-				for (int i = 0; i < arr.size(); i++) {
-					ta.append("     " + arr.get(i).getBI_ID() + "\t" + arr.get(i).getDepart() + "\t"
-							+ arr.get(i).getArrive() + "\t" + arr.get(i).getCharge() + "\t" + arr.get(i).getDay() + "\t"
-							+ arr.get(i).getTime() + "\t" + arr.get(i).getBS_Name() + "\t" + arr.get(i).getReserved()
-							+ "\n");
-				}
+				allView();
 			}
 		});
 
@@ -185,24 +229,17 @@ public class RouteManageMentGUI extends JFrame {
 				String arrive = search.getText();
 				ArrayList<Route_Read_Data> arr = new ArrayList<Route_Read_Data>();
 				arr = db.searchRoute(arrive);
-
-				ta.append("     버스 ID\t" + "출발지\t" + "도착지\t" + "요금\t" + "날짜\t" + "시간\t" + "좌석 번호\t" + "예약\n");
-				ta.append("     "
-						+ "-----------------------------------------------------------------------------------------------------------------------------------------------------\n");
-
+				
+				// 전체 출력
 				if (arr.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "저장된 노선이 없습니다", "아이디 오류", 1);
+					JOptionPane.showMessageDialog(null, "저장된 노선이 없습니다", "오류", 1);
 					return;
 				} else {
-					// 전체출력
-					for (int i = 0; i < arr.size(); i++) {
-						ta.append("     " + arr.get(i).getBI_ID() + "\t" + arr.get(i).getDepart() + "\t"
-								+ arr.get(i).getArrive() + "\t" + arr.get(i).getCharge() + "\t" + arr.get(i).getDay()
-								+ "\t" + arr.get(i).getTime() + "\t" + arr.get(i).getBS_Name() + "\t"
-								+ arr.get(i).getReserved() + "\n");
-					}
+					searchView(arrive);
 
 				}
+
+				search.setText("");
 			}
 
 		});

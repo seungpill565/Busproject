@@ -71,7 +71,7 @@ public class Route_DB {
 		         e.printStackTrace();
 		      }
 		    System.out.println(i);
-			return i;
+			return i-1;
 		}
 		
 		// SEAT Create
@@ -97,7 +97,7 @@ public class Route_DB {
 	// Read
 	public ArrayList<Route_Read_Data> readData() {
 		ArrayList<Route_Read_Data> arr = new ArrayList<Route_Read_Data>();
-		String sql = "SELECT bi_id, rt_depart_from, rt_arrive_at, rt_charge, bi_day, bi_time, bs_name, bs_is_reserved "
+		String sql = "SELECT bi_id, rt_id, rt_depart_from, rt_arrive_at, rt_charge, bi_day, bi_time, bs_name "
 				+ "FROM BUS_ROUTE " + "INNER JOIN BUS_INFO USING (rt_id) " + "INNER JOIN BUS_SEAT USING (bi_id) ORDER BY bi_id";
 		try (
 				Connection conn = OjdbcConnection.getConnection();
@@ -107,7 +107,7 @@ public class Route_DB {
 
 			while (rs.next()) {
 				arr.add(new Route_Read_Data(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
-						rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8)));
+						rs.getString(5), rs.getString(6), rs.getString(7)));
 			}
 
 		} catch (SQLException e) {
@@ -166,7 +166,7 @@ public class Route_DB {
 
 			while (rs.next()) {
 				arr.add(new Route_Read_Data(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
-						rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8)));
+						rs.getString(5), rs.getString(6), rs.getString(7)));
 			}
 
 		} catch (SQLException e) {

@@ -14,7 +14,7 @@ public class Route_Read_Data {
 	}
 	
 	public Route_Read_Data(int bi_id, String rt_depart_from, String rt_arrive_at, String rt_charge, 
-						String bi_day, String bi_time, String bs_name, String bu_is_reserved) {
+						String bi_day, String bi_time, String bs_name) {
 		this.bi_id = bi_id;
 		this.rt_depart_from = rt_depart_from;
 		this.rt_depart_from = rt_depart_from;

@@ -205,21 +205,6 @@ public class Route_Insert extends JFrame {
 			}
 		});
 
-//		// ÁÂ¼® Ãß°¡
-//		btn3.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//
-//				String bs_name = tf7.getText();
-//				int bifk_id = Integer.parseInt(tf8.getText());
-//
-//				db.seat_insertData(new Seat_Insert_Data(bs_name, bifk_id));
-//
-//				tf7.setText("");
-//				tf8.setText("");
-//			}
-//		});
-
 		btn4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

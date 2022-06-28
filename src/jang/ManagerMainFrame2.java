@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 public class ManagerMainFrame2 extends JFrame{
 	
-	
+	MemberManagementGUI mmgui;
 	
 	JPanel panel = new JPanel();
 	JButton logo = new JButton();
