@@ -14,8 +14,8 @@ public class RvInfoColumnNamePanel extends JPanel{
 		setLayout(manager);
 		
 		add(new RvInfoColumnNameLabel("예매번호"));
-		add(new RvInfoColumnNameLabel("  날짜"));
-		add(new RvInfoColumnNameLabel("시간"));
+		add(new RvInfoColumnNameLabel(" 날짜"));
+		add(new RvInfoColumnNameLabel(" 시간"));
 		add(new RvInfoColumnNameLabel("출발지"));
 		add(new RvInfoColumnNameLabel("목적지"));
 		add(new RvInfoColumnNameLabel("좌석번호"));

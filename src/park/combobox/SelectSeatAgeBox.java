@@ -16,6 +16,7 @@ public class SelectSeatAgeBox extends JComboBox<String>{ // 연령별 좌석개수를 고
 	String[] ageGroup = {"성인", "청소년", "아동"};
 	String age;
 	int seatCnt;
+	int seatID;
 	double discountRate=0;
 	String seatName;
 	//Integer seatKey = user.getSeatKeys().get(seatCnt); // 체크박스 나오는 순서에 해당하는 자석번호
@@ -27,6 +28,7 @@ public class SelectSeatAgeBox extends JComboBox<String>{ // 연령별 좌석개수를 고
 		
 		addItem(String.format("%d번 좌석", (Integer.parseInt(user.getSeatNames().get(seatCnt))) + 1)); // i번째 키 값에 해당하는 좌석 번호를 가장 위에 표시
 		addItem("------");
+		this.seatID = user.getSeatNameBySeatId().get(seatName);
 		for(int i=0;i<ageGroup.length;i++) { // 성인 청소년 어린이 추가
 			addItem(ageGroup[i]);
 		}
@@ -43,11 +45,12 @@ public class SelectSeatAgeBox extends JComboBox<String>{ // 연령별 좌석개수를 고
 				age = (String) getSelectedItem().toString(); // 콤보박스에서 고른 값을 string으로 변환
 				if(age.equals("------")||age.equals(String.format("%d번 좌석", (Integer.parseInt(user.getSeatNames().get(seatCnt))) + 1))) {// 키 값을 고르거나 ---- 고르면 다시 선택하게
 					user.setTotalChargeCheck(false);
+					user.getDcBySeat().remove(seatID);
 					new JOptionPane().showMessageDialog(null, "성인, 청소년, 아동 중 선택하세요.","오류",JOptionPane.ERROR_MESSAGE); // 성인 어린이 청소년 제외 선택하면 오류창 뜨게
 	
 				}else {
 					discount(age);
-					user.getdcBySeat().put(user.getSeatNameBySeatId().get(seatName), discountRate);  // 해당 좌석번호 자리에 할인율 넣는다
+					user.getdcBySeat().put(seatID, discountRate);  // 해당 좌석번호 자리에 할인율 넣는다
 					System.out.println(user.getdcBySeat().get(user.getSeatNameBySeatId().get(seatName))+" 저장 완료 " ); // 해쉬맵에 저장되는지 확인
 
 				}

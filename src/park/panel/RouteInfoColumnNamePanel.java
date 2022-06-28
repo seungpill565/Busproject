@@ -15,8 +15,8 @@ public class RouteInfoColumnNamePanel extends JPanel {// 스크롤패인의 맨 윗부분�
 		setLayout(manager);
 		
 		//add(new RouteInfoColumnNameLabel("예매번호"));
-		add(new RouteInfoColumnNameLabel("  날짜"));
-		add(new RouteInfoColumnNameLabel("시간"));
+		add(new RouteInfoColumnNameLabel(" 날짜"));
+		add(new RouteInfoColumnNameLabel(" 시간"));
 		add(new RouteInfoColumnNameLabel("출발지"));
 		add(new RouteInfoColumnNameLabel("목적지"));
 		add(new RouteInfoColumnNameLabel("좌석번호"));

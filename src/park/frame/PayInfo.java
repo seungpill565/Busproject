@@ -29,7 +29,7 @@ public class PayInfo extends JFrame{
 		routePanel = new RvInfoPanel(user);
 
 
-		homeBtn.setBounds(190, 500, 100, 50);
+		homeBtn.setBounds(190, 480, 100, 50);
 		add(payLabel);
 		add(homeBtn);
 		add(routePanel);
