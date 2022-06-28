@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -75,6 +76,7 @@ public class Route_Delete extends JFrame {
 				int bi_id = Integer.parseInt(tf1.getText());
 				
 				db.deleteData(bi_id);
+				JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", 1);
 				
 				tf1.setText("");
 			}

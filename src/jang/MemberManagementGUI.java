@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,7 +28,7 @@ import jang.Data.Member_Data;
 import jang.Data.Member_Update_Data;
 
 public class MemberManagementGUI extends JFrame {
-	
+
 	JScrollPane scrolledpane;
 	JPanel panel = new JPanel();
 	JTextField tf1 = new JTextField();
@@ -36,8 +38,10 @@ public class MemberManagementGUI extends JFrame {
 	JTextField tf5 = new JTextField();
 	JTextField tf6 = new JTextField();
 
+	ArrayList<JTextField> tfList = new ArrayList<>();
+
 	JButton btn1 = new JButton("추가");
-	JButton btn2 = new JButton("조회");
+	JButton btn2 = new JButton("전체 조회");
 	JButton btn3 = new JButton("수정");
 	JButton btn4 = new JButton("삭제");
 	JButton btn5 = new JButton("검색");
@@ -61,17 +65,35 @@ public class MemberManagementGUI extends JFrame {
 
 	public MemberManagementGUI() {
 		MemberManagementGUI();
+
+		tfList.add(tf1);
+		tfList.add(tf2);
+		tfList.add(tf3);
+		tfList.add(tf4);
+		tfList.add(tf5);
+		tfList.add(tf6);
+
+		for (int i = 0; i < tfList.size(); ++i) {
+			JTextField tf = tfList.get(i);
+			tf.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					tf.setText("");
+				}
+			});
+		}
+
 	}
 
 	Member_DB db = new Member_DB();
 
 	public void allView() {
 		try {
-			remove(scrolledpane);			
-		} catch(NullPointerException e) {
-			
+			remove(scrolledpane);
+		} catch (NullPointerException e) {
+
 		}
-		
+
 		ArrayList<Member_Data> arr = db.readData();
 
 		String[] colNames = { "아이디", "이름", "비밀번호", "전화번호", "관리자/손님" };
@@ -95,44 +117,42 @@ public class MemberManagementGUI extends JFrame {
 		ListSelectionModel selectionModel = table.getSelectionModel();
 		selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);
-		
-		selectionModel.addListSelectionListener(new ListSelectionListener() {
-	         @Override
-	         public void valueChanged(ListSelectionEvent e) {
-	            
-	            if (!e.getValueIsAdjusting()) {
-	               System.out.println("select row : " + table.getSelectedRow());
-	               int row = table.getSelectedRow();      
-	               tf1.setText(rowData[row][0]);
-	               tf2.setText(rowData[row][1]);
-	               tf3.setText(rowData[row][2]);
-	               tf4.setText(rowData[row][3]);
-	               tf5.setText(rowData[row][4]);
-	            } 
-	            
-	         }
-	      });
 
-		
+		selectionModel.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+
+				if (!e.getValueIsAdjusting()) {
+					System.out.println("select row : " + table.getSelectedRow());
+					int row = table.getSelectedRow();
+					tf1.setText(rowData[row][0]);
+					tf2.setText(rowData[row][1]);
+					tf3.setText(rowData[row][2]);
+					tf4.setText(rowData[row][3]);
+					tf5.setText(rowData[row][4]);
+				}
+
+			}
+		});
+
 		model.fireTableDataChanged();
 		scrolledpane = new JScrollPane();
 		scrolledpane.setViewportView(table);
 //		table.setEnabled(false);
 
-		scrolledpane.setBounds(40, 150, 700, 330);
+		scrolledpane.setBounds(40, 200, 700, 330);
 		getContentPane().add(scrolledpane);
 	}
 
 	public void searchView(String user_id) {
 		try {
-			remove(scrolledpane);			
-		} catch(NullPointerException e) {
-			
+			remove(scrolledpane);
+		} catch (NullPointerException e) {
+
 		}
-		
-		
+
 		ArrayList<Member_Data> arr = db.search(user_id);
-		
+
 		String[] colNames = { "아이디", "이름", "비밀번호", "전화번호", "관리자/손님" };
 		String[][] rowData = new String[arr.size()][colNames.length];
 
@@ -151,28 +171,28 @@ public class MemberManagementGUI extends JFrame {
 			}
 		};
 		JTable table = new JTable(model);
-		
+
 		ListSelectionModel selectionModel = table.getSelectionModel();
 		selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);
-		
+
 		selectionModel.addListSelectionListener(new ListSelectionListener() {
-	         @Override
-	         public void valueChanged(ListSelectionEvent e) {
-	            
-	            if (!e.getValueIsAdjusting()) {
-	               System.out.println("select row : " + table.getSelectedRow());
-	               int row = table.getSelectedRow();      
-	               tf1.setText(rowData[row][0]);
-	               tf2.setText(rowData[row][1]);
-	               tf3.setText(rowData[row][2]);
-	               tf4.setText(rowData[row][3]);
-	               tf5.setText(rowData[row][4]);
-	            } 
-	            
-	         }
-	      });
-		
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+
+				if (!e.getValueIsAdjusting()) {
+					System.out.println("select row : " + table.getSelectedRow());
+					int row = table.getSelectedRow();
+					tf1.setText(rowData[row][0]);
+					tf2.setText(rowData[row][1]);
+					tf3.setText(rowData[row][2]);
+					tf4.setText(rowData[row][3]);
+					tf5.setText(rowData[row][4]);
+				}
+
+			}
+		});
+
 		model.fireTableDataChanged();
 		scrolledpane = new JScrollPane();
 		scrolledpane.setViewportView(table);
@@ -202,49 +222,46 @@ public class MemberManagementGUI extends JFrame {
 		panel.add(pName);
 
 		// 입력 공간
-		tf1.setBounds(70, 500, 80, 25);
+		tf1.setBounds(70, 150, 80, 25);
 		tf1.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
 		panel.add(tf1); // 아이디 입력 공간
-		tf6.setBounds(70, 550, 80, 25);
+		tf6.setBounds(40, 550, 100, 25);
 		tf6.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
-//		tf6.setText("아이디 입력");
+		tf6.setText("아이디 입력");
 		panel.add(tf6); // 아이디 입력 공간 (검색)
-		tf2.setBounds(195, 500, 60, 25);
+		tf2.setBounds(195, 150, 60, 25);
 		tf2.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
 		panel.add(tf2); // 이름 입력 공간
-		tf3.setBounds(325, 500, 100, 25);
+		tf3.setBounds(325, 150, 80, 25);
 		tf3.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
 		panel.add(tf3); // 비번
-		tf4.setBounds(495, 500, 100, 25);
+		tf4.setBounds(475, 150, 120, 25);
 		tf4.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
 		panel.add(tf4); // 전번
-		tf5.setBounds(685, 500, 60, 25);
+		tf5.setBounds(685, 150, 60, 25);
 		tf5.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
 		panel.add(tf5); // 관리자유무
 
 		// 입력 공간 라벨 이름
-		l1.setBounds(40, 500, 80, 30);
+		l1.setBounds(40, 150, 80, 30);
 		l1.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
 		panel.add(l1); // 아이디 라벨
-		l6.setBounds(40, 550, 60, 30);
-		l6.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
-		panel.add(l6); // 아이디 라벨
-		l2.setBounds(155, 500, 80, 30);
+		l2.setBounds(155, 150, 80, 30);
 		l2.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
 		panel.add(l2); // 이름 라벵
-		l3.setBounds(260, 500, 80, 30);
+		l3.setBounds(260, 150, 80, 30);
 		l3.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
 		panel.add(l3); // 비번
-		l4.setBounds(430, 500, 80, 30);
+		l4.setBounds(410, 150, 80, 30);
 		l4.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
 		panel.add(l4); // 전번
-		l5.setBounds(600, 500, 90, 30);
+		l5.setBounds(600, 150, 90, 30);
 		l5.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
 		panel.add(l5); // 관리자유무
 
-		btn1.setBounds(130, 100, 70, 30);
+		btn1.setBounds(160, 100, 70, 30);
 		btn1.setBackground(new Color(0XE7E6E6));
-		btn2.setBounds(40, 100, 70, 30);
+		btn2.setBounds(40, 100, 100, 30);
 		btn2.setBackground(new Color(0XE7E6E6));
 		btn3.setBounds(355, 550, 70, 30);
 		btn3.setBackground(new Color(0XE7E6E6));
@@ -258,7 +275,7 @@ public class MemberManagementGUI extends JFrame {
 		panel.add(btn3);
 		panel.add(btn4);
 		panel.add(btn5);
-		
+
 		// 홈 버튼
 		homeBtn.addActionListener(new ActionListener() {
 			@Override
@@ -284,7 +301,7 @@ public class MemberManagementGUI extends JFrame {
 
 				Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$");
 				Matcher passMatcher = passPattern.matcher(user_password);
-				Pattern passPattern2 = Pattern.compile("\\d{11}");
+				Pattern passPattern2 = Pattern.compile("\\d{3}-\\d{4}-\\d{4}");
 				Matcher passMatcher2 = passPattern2.matcher(user_phonenum);
 				Member_Data data = new Member_Data(user_id, user_name, user_password, user_phonenum,
 						user_passenger_manager);
@@ -295,13 +312,13 @@ public class MemberManagementGUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다", "비밀번호 오류", 1);
 					return;
 				} else if (!passMatcher2.find()) {
-					JOptionPane.showMessageDialog(null, "숫자만 입력해주세요", "전화번호 오류", 1);
+					JOptionPane.showMessageDialog(null, "전화번호를 다시 입력하세요\nex) xxx-xxxx-xxxx", "전화번호 오류", 1);
 					return;
 				} else {
 					db.insertData(
 							new Member_Data(user_id, user_name, user_password, user_phonenum, user_passenger_manager));
 					JOptionPane.showMessageDialog(null, "입력되었습니다!");
-					
+
 				}
 				tf1.setText("");
 				tf2.setText("");
@@ -389,7 +406,7 @@ public class MemberManagementGUI extends JFrame {
 				String user_id = tf6.getText();
 				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
 				arr = db.search(user_id);
-				
+
 				// 전체 출력
 				if (arr.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "아이디가 존재하지 않습니다", "아이디 오류", 1);

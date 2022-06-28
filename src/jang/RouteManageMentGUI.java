@@ -16,6 +16,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import jang.Data.Member_Data;
@@ -26,6 +29,7 @@ import jang.Route.Route_Update;
 
 public class RouteManageMentGUI extends JFrame {
 
+	JScrollPane scrolledpane;
 	JPanel panel = new JPanel();
 
 	JTextArea ta = new JTextArea();
@@ -52,25 +56,57 @@ public class RouteManageMentGUI extends JFrame {
 	Route_DB db = new Route_DB();
 	
 	public void allView() {
+		try {
+			remove(scrolledpane);			
+		} catch(NullPointerException e) {
+			
+		}
+		
 		ArrayList<Route_Read_Data> arr = db.readData();
 
-		String[] colNames = { "노선 ID", "출발지", "도착지", "요금", "날짜", "좌석번호", "예약여부" };
+		String[] colNames = { "버스 ID", "노선 ID", "출발지", "도착지", "요금", "날짜", "시간" };
 		String[][] rowData = new String[arr.size()][colNames.length];
 
 		for (int row = 0; row < rowData.length; ++row) {
 			rowData[row][0] = Integer.toString(arr.get(row).getBI_ID());
-			rowData[row][1] = arr.get(row).getDepart();
-			rowData[row][2] = arr.get(row).getArrive();
-			rowData[row][3] = arr.get(row).getCharge();
-			rowData[row][4] = arr.get(row).getDay();
-			rowData[row][5] = arr.get(row).getTime();
-			rowData[row][6] = arr.get(row).getBS_Name();
+			rowData[row][1] = Integer.toString(arr.get(row).getRT_ID());
+			rowData[row][2] = arr.get(row).getDepart();
+			rowData[row][3] = arr.get(row).getArrive();
+			rowData[row][4] = arr.get(row).getCharge();
+			rowData[row][5] = arr.get(row).getDay();
+			rowData[row][6] = arr.get(row).getTime();
 		}
 
-		DefaultTableModel model = new DefaultTableModel(rowData, colNames);
+		DefaultTableModel model = new DefaultTableModel(rowData, colNames) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		JTable table = new JTable(model);
+		ListSelectionModel selectionModel = table.getSelectionModel();
+		selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.getTableHeader().setReorderingAllowed(false);
+		
+		selectionModel.addListSelectionListener(new ListSelectionListener() {
+	         @Override
+	         public void valueChanged(ListSelectionEvent e) {
+	            
+	            if (!e.getValueIsAdjusting()) {
+	               System.out.println("select row : " + table.getSelectedRow());
+	               int row = table.getSelectedRow();      
+//	               tf1.setText(rowData[row][0]);
+//	               tf2.setText(rowData[row][1]);
+//	               tf3.setText(rowData[row][2]);
+//	               tf4.setText(rowData[row][3]);
+//	               tf5.setText(rowData[row][4]);
+	            } 
+	            
+	         }
+	      });
+
 		model.fireTableDataChanged();
-		JScrollPane scrolledpane = new JScrollPane();
+		scrolledpane = new JScrollPane();
 		scrolledpane.setViewportView(table);
 //		table.setEnabled(false);
 
@@ -79,14 +115,20 @@ public class RouteManageMentGUI extends JFrame {
 	}
 	
 	public void searchView(String arrive) {
+		try {
+			remove(scrolledpane);			
+		} catch(NullPointerException e) {
+			
+		}
+		
 		ArrayList<Route_Read_Data> arr = db.searchRoute(arrive);
 
-		String[] colNames = { "노선 ID", "출발지", "도착지", "요금", "날짜", "좌석번호", "예약여부" };
+		String[] colNames = { "버스 ID", "노선 ID", "출발지", "도착지", "요금", "날짜", "시간" };
 		String[][] rowData = new String[arr.size()][colNames.length];
 
 		for (int row = 0; row < rowData.length; ++row) {
 			rowData[row][0] = Integer.toString(arr.get(row).getBI_ID());
-			rowData[row][1] = Integer.toString(arr.get(row).get)
+			rowData[row][1] = Integer.toString(arr.get(row).getRT_ID());
 			rowData[row][2] = arr.get(row).getDepart();
 			rowData[row][3] = arr.get(row).getArrive();
 			rowData[row][4] = arr.get(row).getCharge();
@@ -94,10 +136,36 @@ public class RouteManageMentGUI extends JFrame {
 			rowData[row][6] = arr.get(row).getTime();
 		}
 
-		DefaultTableModel model = new DefaultTableModel(rowData, colNames);
+		DefaultTableModel model = new DefaultTableModel(rowData, colNames) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		JTable table = new JTable(model);
+		ListSelectionModel selectionModel = table.getSelectionModel();
+		selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.getTableHeader().setReorderingAllowed(false);
+		
+		selectionModel.addListSelectionListener(new ListSelectionListener() {
+	         @Override
+	         public void valueChanged(ListSelectionEvent e) {
+	            
+	            if (!e.getValueIsAdjusting()) {
+	               System.out.println("select row : " + table.getSelectedRow());
+	               int row = table.getSelectedRow();      
+//	               tf1.setText(rowData[row][0]);
+//	               tf2.setText(rowData[row][1]);
+//	               tf3.setText(rowData[row][2]);
+//	               tf4.setText(rowData[row][3]);
+//	               tf5.setText(rowData[row][4]);
+	            } 
+	            
+	         }
+	      });
+
 		model.fireTableDataChanged();
-		JScrollPane scrolledpane = new JScrollPane();
+		scrolledpane = new JScrollPane();
 		scrolledpane.setViewportView(table);
 //		table.setEnabled(false);
 
