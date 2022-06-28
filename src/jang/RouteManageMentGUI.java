@@ -317,6 +317,7 @@ public class RouteManageMentGUI extends JFrame {
 				Pattern passPattern2 = Pattern.compile("\\d{2}:\\d{2}");
 				Matcher passMatcher2 = passPattern2.matcher(bi_time);
 				
+				int update = JOptionPane.showConfirmDialog(null, "수정하시겠습니까?", "수정 확인", JOptionPane.YES_NO_OPTION);
 				if (bi_day.equals("") || bi_time.equals("")) {
 					JOptionPane.showMessageDialog(null, "정보를 모두 입력해주세요", "알림", 1);
 					return;
@@ -328,9 +329,12 @@ public class RouteManageMentGUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "시간을 다시 입력하세요\nex) 24:00", "시간 오류", 1);
 					return;
 				} else {
-					db.updateData(bi_id, rt_id, bi_day, bi_time);
+					if (update == JOptionPane.YES_OPTION) {
+						db.updateData(bi_id, rt_id, bi_day, bi_time);
+						JOptionPane.showMessageDialog(null, "수정되었습니다!");
+						
+					}
 
-					JOptionPane.showMessageDialog(null, "추가되었습니다!");
 				}
 
 				tf1.setText("");
@@ -352,8 +356,8 @@ public class RouteManageMentGUI extends JFrame {
 				int delete = JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제 확인", JOptionPane.YES_NO_OPTION);
 				if(delete == JOptionPane.YES_OPTION) {
 					db.deleteData(bi_id);					
+					JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", 1);
 				} 
-//				JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", 1);
 				allView();
 			}
 		});
