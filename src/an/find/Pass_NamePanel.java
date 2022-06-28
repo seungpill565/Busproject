@@ -7,13 +7,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class Pass_NamePanel extends JPanel{
-	JLabel nameLabel = new Find_Label("   이름 : ");
+	JLabel nameLabel = new Find_Label("이름   : ");
 	JTextField nameText = new Find_TextField(10);
 	
 	 public Pass_NamePanel(JTextField j) {
 		 
 		 nameText = j;
-		setLayout(new FlowLayout());
+		setLayout(new FlowLayout(FlowLayout.LEADING));
 		
 		add(nameLabel); add(nameText);
 	}

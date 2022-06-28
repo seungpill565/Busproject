@@ -18,10 +18,10 @@ import an.sign_up.ALL_panel.new_panel;
 public class SignupMain_Frame extends JFrame {
 
 		String choice = null;
-		JButton out = new Sign_Button("³ª°¡±â");
+
 		
 		JPanel signupPanel = new Main_penel();
-		JPanel allPanel = new ALL_panel(out);
+		JPanel allPanel = new ALL_panel();
 		JPanel pass_explan = new Pass_Explanation();
 		
 	public SignupMain_Frame() {
@@ -29,22 +29,15 @@ public class SignupMain_Frame extends JFrame {
 			
 		add(signupPanel, BorderLayout.NORTH);
 		add(allPanel, BorderLayout.CENTER);
-		add(pass_explan, BorderLayout.SOUTH);
+		//add(pass_explan, BorderLayout.SOUTH);
 		
-		out.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				
-			}
-		});
 		
-		setBounds(610, 200, 400, 400);
+		
+		
+		setBounds(610, 200, 390, 600);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);  
 		setVisible(true);
 	}
-	
 	
 }
