@@ -112,7 +112,7 @@ public class Login_Mainframe extends JFrame{
 	 public void loginac() {
 		 
 		 	id = ptext.getText();
-			String pass = itext.getText();
+			String pass = new String(itext.getPassword());
 			String check = combo.getSelectedItem().toString();
 			
 		

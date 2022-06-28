@@ -101,7 +101,7 @@ public class Sign_Panel extends JPanel{
 		add(comboLabel);
 		
 		
-		//////////////////////////////////////////////////////////////
+		/////////////////////////////액션/////////////////////////////////
 		Sign_ButtonAction btevent = new Sign_ButtonAction(this);
 		Sign_IdButtonAction idevent = new Sign_IdButtonAction(this);
 		Sign_PassButtonAction passevent = new Sign_PassButtonAction(this);
@@ -132,8 +132,8 @@ public class Sign_Panel extends JPanel{
 	//회원가입 메서드
 	public void signupAction() {
 		id = idtext.getText();
-		pass = new String(passtext.getText());
-		passck = new String(passCktext.getText());
+		pass = new String(passtext.getPassword());
+		passck = new String(passCktext.getPassword());
 		name = nametext.getText();
 		phone = (pntext.getText()+"-"+pntext2.getText() +"-"+pntext3.getText());
 		check = combo.getSelectedItem().toString();
@@ -224,7 +224,7 @@ public class Sign_Panel extends JPanel{
 	
 	//비밀번호 체크 메서드
 	public void checkpass() {
-		pass = passtext.getText();
+		pass = new String(passtext.getPassword());
 		String sql1 = String.format("SELECT user_password from user_info where user_password = '%s'",pass);
 		
 		Pattern passPattern1 = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$"); //8자 영문+특문+숫자
@@ -294,8 +294,8 @@ public class Sign_Panel extends JPanel{
 	
 	//비밀번호 확인 메서드
 	public void passckerror() {
-		pass = new String(passtext.getText());
-		passck =new String(passCktext.getText());
+		pass = new String(passtext.getPassword());
+		passck =new String(passCktext.getPassword());
 		if (!passck.equals(pass)) {
 			passcheckLabel.setForeground(Color.red);
 			passcheckLabel.setText("비밀번호가 일치 하지 않습니다.");
