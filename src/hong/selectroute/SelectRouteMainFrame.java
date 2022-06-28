@@ -161,6 +161,25 @@ public class SelectRouteMainFrame extends JFrame {
 		busFrame.dispose();
 	}
 	
+	public boolean checkDate() {
+		if(month == 0 || day == 0) {
+			JOptionPane.showMessageDialog(null, "출발 날짜를 설정해주세요!!", "날짜 확인", JOptionPane.PLAIN_MESSAGE);
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public boolean checkRoute() {
+		if(startingPoint == null || arrivalPoint == null) {
+			JOptionPane.showMessageDialog(null, "출발지와 도착지를 설정해주세요!!", "여행지 확인", JOptionPane.PLAIN_MESSAGE);
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	
 	// 좌석 선택 프레임을 보여줄 메서드
 	public void showSeatFrame() {
 		seatMainFrame = new SelectSeatMainFrame(saveInfo);	

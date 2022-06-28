@@ -43,7 +43,7 @@ public class SelectTerminalMainFrame extends JFrame {
 			terminalButtons.add(btn);
 		}
 		
-		setBounds(300, 100, 500, 400);
+		setBounds(300, 100, 500, 600);
 		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);

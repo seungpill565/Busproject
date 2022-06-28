@@ -112,8 +112,14 @@ public class SelectSeatMainFrame extends JFrame {
 			}
 		}
 		
+		nextBtn.setBackground(Color.WHITE);
+		nextBtn.setForeground(Color.BLACK);
+		
 		nextBtn.addActionListener(nextBtnEvent);
 		add(nextBtn);
+		
+		beforeBtn.setBackground(Color.WHITE);
+		beforeBtn.setForeground(Color.BLACK);
 		
 		beforeBtn.addActionListener(beforeBtnEvent);
 		add(beforeBtn);

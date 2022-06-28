@@ -14,9 +14,11 @@ public class SerchButtonEvent extends RouteMainFrameAction {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		main.getRouteID();
-		main.showBus();
-		main.getprice();
+		if(main.checkRoute() && main.checkDate()) {
+			main.getRouteID();
+			main.showBus();
+			main.getprice();			
+		}
 	}
 
 }
