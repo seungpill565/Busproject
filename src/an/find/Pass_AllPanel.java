@@ -62,7 +62,7 @@ public class Pass_AllPanel extends JPanel{
 				
 				if(name =="") {
 					nameLabel.setText("이름을 입력하세요.");
-					nameLabel.setForeground(Color.BLUE);
+					nameLabel.setForeground(Color.red);
 				}	
 				else if(Pattern.matches(REGEX,name)) {
 					nameLabel.setText("이름에는 숫자를 입력하실수 없습니다.");
