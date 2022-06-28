@@ -134,7 +134,9 @@ public class MPmainFrame extends JFrame {
 	//프로필수정하기 화면에서 수정 완료 버튼 눌렀을 때 (수정값 저장되게) 
 	public void completeBtnCtrl() {
 		if(MPcontents.MPprofile.MPprofile_2.MPnameTf.getText().equals("") 
-			|| MPcontents.MPprofile.MPprofile_2.MPphoneTf.getText().equals("") 
+			|| MPcontents.MPprofile.MPprofile_2.MPphoneTf_1.getText().equals("")
+			|| MPcontents.MPprofile.MPprofile_2.MPphoneTf_2.getText().equals("")
+			|| MPcontents.MPprofile.MPprofile_2.MPphoneTf_3.getText().equals("")
 			|| MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf).equals("")) {
 			
 			//new MPpreventnulltfSF();
@@ -142,17 +144,7 @@ public class MPmainFrame extends JFrame {
 			return;
 		}
 		
-		
-		//이제 숫자 아닌거 넣으면 작은 창 뜨도록 해야됨
-		boolean result = Pattern.matches("\\d{11}", MPcontents.MPprofile.MPprofile_2.MPphoneTf.getText());
-		if(!result) {
-			//new MPincorrectphonenumSF();
-			//ex. 01012341234
-			JOptionPane.showMessageDialog(null, "잘못된 핸드폰 번호입니다.", "입력 오류", 1);
-			return;
-		}
 			
-		
 		//이름 글자수 제한 
 		if(MPcontents.MPprofile.MPprofile_2.MPnameTf.getText().length() > 10) {		
 			//new MPnamelengthrestrictSF();
@@ -168,6 +160,15 @@ public class MPmainFrame extends JFrame {
 			return;
 		}
 		
+		
+		if(!MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPchknewpwTf).equals(MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf))) {
+			JOptionPane.showMessageDialog(null, "<html>비밀번호가 일치하지 않습니다.</html>", "입력 오류", 1);
+			return;
+		}
+		
+		
+		
+		
 		setCategoryLabelText("내 정보 조회");	
 
 		//수정한 정보 DB에 업데이트
@@ -180,7 +181,7 @@ public class MPmainFrame extends JFrame {
 			MPprofileModel.MPupdateUserPw(conn, user_id, MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf));
 		
 			//핸드폰번호는 01012341234 로 입력받아서 010-1234-1234로 저장	
-			String str = MPcontents.MPprofile.MPprofile_2.MPphoneTf.getText();
+			String str = MPcontents.MPprofile.MPprofile_2.MPgetPhoneNum();
 			ArrayList<String> arr = new ArrayList<>();
 			arr.add(str.substring(0, 3));
 			arr.add(str.substring(3, 7));
@@ -273,48 +274,62 @@ public class MPmainFrame extends JFrame {
 	//계정 탈퇴 '예' 버튼
 	public void leaveBtnCtrl() {
 		
-		//정말 탈퇴 하시겠습니까? 작은 창 띄우기
-		MPleaveRealSF sf = new MPleaveRealSF();
 		
-		//●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●	
-		//정말 탈퇴? '예' 누르면 bus_seat에서 좌석 1>0으로 바꾸고, bus_reservation에서 예매기록 삭제한 후에 user_id삭제  
-		sf.yesBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try(Connection conn = OjdbcConnection.getConnection();) {
-					conn.setAutoCommit(false);
-					
-					//user_id에 해당하는 bs_id들을 1에서 0으로 바꾸기
-					ArrayList<Integer> bs_id_list = MPreservationlistModel.get_bs_id(conn, user_id);
-					for(int bs_id : bs_id_list) {
-						MPreservationlistModel.update_bs_is_reserved(conn, bs_id);
-					}
-					//user_id가 예매한 예매내역 지우기
-					MPreservationlistModel.delete_user_id_row(conn, user_id);
-					//user_info테이블에서 user_id에 해당하는 행 지우기
-					MPprofileModel.MPdeleteUserInfo(conn, user_id);
-					//●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●					
-					conn.commit();
-					sf.dispose();
-					
-					//삭제되었습니다 작은 창 띄유기 
-					MPleavecompleteSF sf1 = new MPleavecompleteSF();	
-					sf1.yesBtn.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							sf1.dispose();
-							dispose();
-							new Login_Mainframe();
+		String confirmPw = MPcontents.MPleave.MPgetPwd(MPcontents.MPleave.MPleavePf);
+		String userPw = "";
+		try {
+			Connection conn = OjdbcConnection.getConnection();
+			userPw = MPprofileModel.MPgetUserPw(conn, user_id);
+		} catch (SQLException e2) {
+		}
+		
+		//비밀번호 일치하면 정말 탈퇴 하시겠습니까? 작은 창 띄우기
+		if(confirmPw.equals(userPw)) {
+			
+			//정말 탈퇴 하시겠습니까? 작은 창 
+			MPleaveRealSF sf = new MPleaveRealSF();
+			//정말 탈퇴?창 '예' 누르면 bus_seat에서 좌석 1>0으로 바꾸고, bus_reservation에서 예매기록 삭제한 후에 user_id삭제  
+			sf.yesBtn.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try(Connection conn = OjdbcConnection.getConnection();) {
+						conn.setAutoCommit(false);
+						
+						//user_id에 해당하는 bs_id들을 1에서 0으로 바꾸기
+						ArrayList<Integer> bs_id_list = MPreservationlistModel.get_bs_id(conn, user_id);
+						for(int bs_id : bs_id_list) {
+							MPreservationlistModel.update_bs_is_reserved(conn, bs_id);
 						}
-					});
-				} catch (SQLException e1) {
-					e1.printStackTrace();
+						//user_id가 예매한 예매내역 지우기
+						MPreservationlistModel.delete_user_id_row(conn, user_id);
+						//user_info테이블에서 user_id에 해당하는 행 지우기
+						MPprofileModel.MPdeleteUserInfo(conn, user_id);
+							
+						conn.commit();
+						sf.dispose();
+						
+						//삭제되었습니다 작은 창 띄유기 
+						MPleavecompleteSF sf1 = new MPleavecompleteSF();	
+						sf1.yesBtn.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								sf1.dispose();
+								dispose();
+								new Login_Mainframe();
+							}
+						});
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
 				}
-			}
-		});	
+			});	
+
+		} else {
+			JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다 .", "입력 오류", 1);
+		}	
 	}
 
-	
+
 	
 //####################################################################################################################################	
 //####################################################################################################################################
