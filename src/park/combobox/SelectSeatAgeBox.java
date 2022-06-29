@@ -26,7 +26,10 @@ public class SelectSeatAgeBox extends JComboBox<String>{ // 연령별 좌석개수를 고
 		this.seatCnt = seatCnt;
 		seatName = user.getSeatNames().get(seatCnt);
 		
-		addItem(String.format("%d번 좌석", (Integer.parseInt(user.getSeatNames().get(seatCnt))) + 1)); // i번째 키 값에 해당하는 좌석 번호를 가장 위에 표시
+		if(((Integer.parseInt(user.getSeatNames().get(seatCnt))) + 1)<10) {
+			addItem(String.format("0%d번 좌석", (Integer.parseInt(user.getSeatNames().get(seatCnt))) + 1)); // i번째 키 값에 해당하는 좌석 번호를 가장 위에 표시
+		}else
+			addItem(String.format("%d번 좌석", (Integer.parseInt(user.getSeatNames().get(seatCnt))) + 1)); // i번째 키 값에 해당하는 좌석 번호를 가장 위에 표시
 		addItem("------");
 		this.seatID = user.getSeatNameBySeatId().get(seatName);
 		for(int i=0;i<ageGroup.length;i++) { // 성인 청소년 어린이 추가
