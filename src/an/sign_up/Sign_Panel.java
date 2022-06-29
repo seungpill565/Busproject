@@ -47,7 +47,7 @@ public class Sign_Panel extends JPanel{
 	JPasswordField passtext= new JPasswordField(12);
 	JButton checkpass = new Action_button("비밀번호 확인");
 	JPanel passPanel = new Password_Panel(passtext,checkpass);
-	JLabel passLabel = new ErrorLabel("비밀번호는 영문+특수문자+숫자 최소 8자에서 최대20자로 구성");
+	JLabel passLabel = new ErrorLabel("비밀번호는 영문+숫자+특수문자 최소 8자에서 최대20자로 구성");
 	
 	//비밀번호 확인
 	JPasswordField passCktext= new JPasswordField(12);
@@ -122,6 +122,8 @@ public class Sign_Panel extends JPanel{
 		passtext.addKeyListener(passkeyevent);
 		passCktext.addKeyListener(passckkeyevent);
 		nametext.addKeyListener(namekeyevent);
+		pntext.addKeyListener(pnkeyevent);
+		pntext2.addKeyListener(pnkeyevent);
 		pntext3.addKeyListener(pnkeyevent);
 		combo.addActionListener(comboevent);
 					
@@ -156,7 +158,7 @@ public class Sign_Panel extends JPanel{
 			return;
 		}	
 		if (!passMatcher.find()) {
-			JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 최소 8자에서 최대20자로 구성되어야 합니다", "비밀번호 오류", 1);
+			JOptionPane.showMessageDialog(null, "비밀번호는 영문+숫자+특수문자 최소 8자에서 최대20자로 구성되어야 합니다", "비밀번호 오류", 1);
 			return;
 		} if(!phcheck) {
 			JOptionPane.showMessageDialog(null, "xxx-xxxx-xxxx로 입력해 주세요", "번호 오류", 1);
@@ -232,7 +234,7 @@ public class Sign_Panel extends JPanel{
 		Matcher passMatcher = passPattern1.matcher(pass);
 		
 		if(!passMatcher.find()) {
-			JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 최소 8자에서 최대20자로 구성되어야 합니다", "비밀번호 오류", 1);
+			JOptionPane.showMessageDialog(null, "비밀번호는 영문+숫자+특수문자  최소 8자에서 최대20자로 구성되어야 합니다", "비밀번호 오류", 1);
 		}else {
 			try(
 				Connection conn = OjdbcConnection.getConnection();
@@ -287,7 +289,7 @@ public class Sign_Panel extends JPanel{
 			passLabel.setText("비밀번호는 20자 이하여야 됩니다.");
 		}else {
 			passLabel.setForeground(Color.red);
-			passLabel.setText("비밀번호는 영문+특수문자+숫자 최소 8자에서 최대20자로 구성");
+			passLabel.setText("비밀번호는 영문+숫자+특수문자 최소 8자에서 최대20자로 구성");
 		}
 		
 	}
