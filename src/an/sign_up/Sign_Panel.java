@@ -260,7 +260,7 @@ public class Sign_Panel extends JPanel{
 			idcheckLabel.setForeground(Color.red);
 			idcheckLabel.setText("아이디는 5글자 이상이여야 합니다");
 		} else if (Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", id)) {
-			idcheckLabel.setForeground(Color.BLUE);
+			idcheckLabel.setForeground(Color.BLACK);
 			idcheckLabel.setText("사용가능한 아이디입니다. 아이디 중복을 눌러주세요");
 		}else if(id.length()>=12) {
 			idcheckLabel.setForeground(Color.red);
@@ -273,13 +273,13 @@ public class Sign_Panel extends JPanel{
 	
 	//비밀번호 경고 메세지 메서드
 	public void passerror() {
-		pass = new String(passtext.getText());
+		pass = new String(passtext.getPassword());
 		if (pass.length() <= 8) {
 			passLabel.setForeground(Color.red);
 			passLabel.setText("8자이상으로 입력하세요");
 		}
 		else if(Pattern.matches("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$",pass)) {
-			 passLabel.setForeground(Color.BLUE);
+			 passLabel.setForeground(Color.BLACK);
 			 passLabel.setText("사용가능한 비밀번호 입니다. 비밀번호 확인을 눌러주세요");
 		}
 		else if(pass.length() >=21){
@@ -300,7 +300,7 @@ public class Sign_Panel extends JPanel{
 			passcheckLabel.setForeground(Color.red);
 			passcheckLabel.setText("비밀번호가 일치 하지 않습니다.");
 		} else if(passck.equals(pass)) {
-			passcheckLabel.setForeground(Color.BLUE);
+			passcheckLabel.setForeground(Color.BLACK);
 			passcheckLabel.setText("비밀번호가 일치 합니다.");
 		}else {
 			passcheckLabel.setText("비밀번호 입력하세요");
@@ -320,7 +320,7 @@ public class Sign_Panel extends JPanel{
 			pnLabel.setForeground(Color.red);
 			pnLabel.setText("전화번호의 형식은 xxx-xxx-xxxx입니다.");
 			}else {
-				pnLabel.setForeground(Color.BLUE);
+				pnLabel.setForeground(Color.BLACK);
 			 	pnLabel.setText("올바른 형식의 비밀번호 입니다.");
 			}
 	}
@@ -331,7 +331,7 @@ public class Sign_Panel extends JPanel{
 		
 		if(name =="") {
 			nameLabel.setText("이름을 입력하세요.");
-			nameLabel.setForeground(Color.BLUE);
+			nameLabel.setForeground(Color.RED);
 		}	
 		else if(Pattern.matches(REGEX,name)) {
 			nameLabel.setText("이름에는 숫자를 입력하실수 없습니다.");
@@ -339,7 +339,7 @@ public class Sign_Panel extends JPanel{
 			}
 		else {
 			nameLabel.setText("이름을 입력하셨습니다.");
-			nameLabel.setForeground(Color.blue);
+			nameLabel.setForeground(Color.BLACK);
 		}
 		
 	}

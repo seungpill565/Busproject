@@ -16,7 +16,7 @@ public class ALL_panel extends JPanel{
 	//JButton out = new Sign_Button("³ª°¡±â");
 	
 	JPanel signPanel = new Sign_Panel(in); 
-	JPanel imagePanel = new ImagePanel();
+	//JPanel imagePanel = new ImagePanel();
 	JLabel allLabel = new JLabel();
 	//JPanel radioPanel = new Radio_Panel();
 	
@@ -33,7 +33,7 @@ public class ALL_panel extends JPanel{
 		allLabel.setLayout(new BorderLayout());
 		
 		allLabel.add(signPanel,BorderLayout.NORTH);
-		allLabel.add(imagePanel,BorderLayout.SOUTH);
+		//allLabel.add(imagePanel,BorderLayout.SOUTH);
 		allLabel.add(new new_panel(),BorderLayout.CENTER);
 		add(allLabel);
 		
