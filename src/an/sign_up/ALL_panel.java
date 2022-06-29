@@ -5,12 +5,14 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class ALL_panel extends JPanel{
-	JButton in = new Sign_Button("회원가입");
+	JButton in = new Sign_Button("");
+	ImageIcon signimage = new ImageIcon("image/signadd.png");
 	//JButton check = new Sign_Button("아이디 중복확인");
 	//JButton checkpass = new Sign_Button("비밀번호 확인");
 	//JButton out = new Sign_Button("나가기");
@@ -24,6 +26,7 @@ public class ALL_panel extends JPanel{
 		public new_panel() {
 			setLayout(new FlowLayout());	
 			setBackground(new Color(0X4D7F86));
+			in.setIcon(signimage);
 			
 			add(in);
 		}
