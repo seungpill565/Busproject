@@ -107,7 +107,7 @@ public class Login_Mainframe extends JFrame{
 		
 		
 		///////////////////////////////////////////////////////////////
-		setSize( 1100, 600);
+		setSize( 1100, 700);
 		setLocationRelativeTo(null);
 		setResizable(false);  
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
