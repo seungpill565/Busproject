@@ -60,8 +60,8 @@ public class SaveInfo {
 		this.userId = user_id;
 	}
 	
-	public void set_date(int month, int day) {
-		this.date = String.format("22/%02d/%02d", month, day);
+	public void set_date(int year, int month, int day) {
+		this.date = String.format("%d/%02d/%02d", year-2000, month, day);
 	}
 	
 	public void set_time(String time) {

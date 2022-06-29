@@ -9,7 +9,7 @@ public class DayComboBox extends JComboBox<Integer> {
 	
 	final private static int FIRST_DAY = 1; // 모든 달의 첫째날은 1일..
 	private int lastDay;	// 1일부터 마지막날까지 콤보박스에 추가할 것이므로
-	private Dimension dimension = new Dimension(150,30);
+	private Dimension dimension = new Dimension(110,30);
 	
 	public DayComboBox() {
 		setBackground(Color.WHITE);
