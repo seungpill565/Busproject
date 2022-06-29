@@ -156,7 +156,7 @@ public class MPmainFrame extends JFrame {
 		Pattern passPattern1 = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$"); //8자 영문+특문+숫자
 		Matcher passMatcher = passPattern1.matcher(MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf));
 		if (!passMatcher.find()) {
-			JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다", "입력 오류", 1);
+			JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8~20자로 구성되어야 합니다", "입력 오류", 1);
 			return;
 		}
 		
