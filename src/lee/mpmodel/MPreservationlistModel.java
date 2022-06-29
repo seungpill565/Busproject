@@ -198,41 +198,66 @@ public class MPreservationlistModel {
 	
 	//회원아이디를 입력하면 오늘 날짜 이후의 예매 내역에 대한 데이터(행)를 반환하는 메서드
 	public static ArrayList<MPreservationlistModel> get(Connection conn, String user_id) {
+		
 		ArrayList<MPreservationlistModel> list = new ArrayList<>();
 		
-		String[] split = LocalDate.now().toString().split("-");
-		String join = String.join("/", split);
-		String date = join.substring(2);
+		//오늘 날짜 구하기
+		String[] split1 = LocalDate.now().toString().split("-");
+		String join1 = String.join("/", split1);
+		String today = join1.substring(2);
 		String time = LocalTime.now().toString().substring(0, 5);
+		//내일날짜 구하기
+		String[] split2 = LocalDate.now().plusDays(1).toString().split("-");
+		String join2 = String.join("/", split2);
+		String tomorrow = join2.substring(2);
 		
-		String sql = 
-				"SELECT br_id, bi_day, bi_time, rt_depart_from, rt_arrive_at, bs_name, br_age_group, rt_charge"
+		//현재 시간 이후의 오늘 티켓만 조회
+		String sql1 = "SELECT br_id, bi_day, bi_time, rt_depart_from,"
+				+ "rt_arrive_at, bs_name, br_age_group, rt_charge, bs_is_reserved"
 				+ " FROM user_info"
 				+ " INNER JOIN bus_reservation USING(user_id)"
 				+ " INNER JOIN bus_info USING (bi_id)"
 				+ " INNER JOIN bus_route USING (rt_id)"
 				+ " INNER JOIN bus_seat USING (bs_id)"
 				+ " WHERE user_id = ?"
-				+ " AND bus_seat.bs_is_reserved = 1"   //이부분 추가함!!!!!!
-				+ " AND bus_info.bi_day >= ?"
-				+ " AND bus_info.bi_time >= ?";
-			
+				+ " AND bus_seat.bs_is_reserved = 1"
+				+ " AND bus_info.bi_day = ?"
+				+ " AND bus_info.bi_time >= ?"
+				+ " ORDER BY bus_info.bi_time";
 		
-		//System.out.println("여기까진 넘어옴");
-		//System.out.println("유저아이디 : " + user_id);
-		try(
-				PreparedStatement pstmt = conn.prepareStatement(sql); 		
-		) {
-			
-			pstmt.setString(1, user_id);
-			pstmt.setString(2, date);
-			pstmt.setString(3, time);
-			
-			try(ResultSet rs = pstmt.executeQuery();) {
+		//내일 이후의 티켓 조회
+		String sql2 = "SELECT br_id, bi_day, bi_time, rt_depart_from,"
+				+ "rt_arrive_at, bs_name, br_age_group, rt_charge, bs_is_reserved"
+				+ " FROM user_info"
+				+ " INNER JOIN bus_reservation USING(user_id)"
+				+ " INNER JOIN bus_info USING (bi_id)"
+				+ " INNER JOIN bus_route USING (rt_id)"
+				+ " INNER JOIN bus_seat USING (bs_id)"
+				+ " WHERE user_id = ?"
+				+ " AND bus_seat.bs_is_reserved = 1"
+				+ " AND bus_info.bi_day >= ?"
+				+ " ORDER BY bus_info.bi_day, bus_info.bi_time";
+		
+		//현재 시간 이후의 오늘 티켓 정보 list에 저장
+		try(PreparedStatement pstmt1 = conn.prepareStatement(sql1);) {
+			pstmt1.setString(1, user_id);
+			pstmt1.setString(2, today);
+			pstmt1.setString(3, time);
+			try(ResultSet rs = pstmt1.executeQuery();) {
 				while(rs.next() ) {
 					list.add(new MPreservationlistModel(rs));
 				}
 			}
+		//내일 이후의 티켓 정보 list에 저장
+		try(PreparedStatement pstmt2 = conn.prepareStatement(sql2);) {
+			pstmt2.setString(1, user_id);
+			pstmt2.setString(2, tomorrow);
+			try(ResultSet rs = pstmt2.executeQuery();) {
+				while(rs.next() ) {
+					list.add(new MPreservationlistModel(rs));
+				}
+			}	
+		}	
 					
 		} catch (SQLException e) {
 			System.out.println("예매내역 없음");
