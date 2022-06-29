@@ -1,6 +1,8 @@
 package park.frame;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import an.userinfo.Info_MainFrame;
 import hong.SaveInfo;
@@ -14,11 +16,12 @@ public class PayInfo extends JFrame{
 	
 	SaveInfo user;
 
-	HomeButton homeBtn;
-
-	SucceedPayLabel payLabel = new SucceedPayLabel(); 
-	RvInfoColumnNamePanel columnNamePanel = new RvInfoColumnNamePanel();
-	RvInfoPanel routePanel ;
+	private HomeButton homeBtn;
+	private SucceedPayLabel payLabel = new SucceedPayLabel(); 
+	private RvInfoColumnNamePanel columnNamePanel = new RvInfoColumnNamePanel();
+	private RvInfoPanel routePanel ;
+	private ImageIcon background = new ImageIcon("image/payimage.jpg");
+	private JLabel label = new JLabel();
 	
 	public PayInfo(SaveInfo user) {
 		super("예매 완료");
@@ -27,12 +30,15 @@ public class PayInfo extends JFrame{
 
 		homeBtn.addActionListener(new PayInfoButtonEvent(this));
 		routePanel = new RvInfoPanel(user);
+		label.setIcon(background);
+		label.setSize(500,600);
 
 
 		homeBtn.setBounds(190, 480, 100, 50);
-		add(payLabel);
-		add(homeBtn);
-		add(routePanel);
+		add(label);
+		label.add(payLabel);
+		label.add(homeBtn);
+		label.add(routePanel);
 		
 		setLayout(null);
 		setResizable(false);

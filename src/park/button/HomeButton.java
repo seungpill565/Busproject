@@ -19,7 +19,8 @@ public class HomeButton extends JButton{ // 홈 화면으로 가는 버튼
 	public HomeButton(SaveInfo user) {
 		super("Home");
 			
-		setSize(40, 40);
+		
+		setBounds(20,10,70,30);
 		setFont(new Font("궁서체", Font.BOLD,15));
 		setForeground(new Color(0x000000));
 		setBackground(new Color(0xffff00));

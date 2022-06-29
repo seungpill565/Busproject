@@ -15,7 +15,8 @@ public class BeforePayButton extends JButton{
 	public BeforePayButton(SaveInfo user) {
 		super("Before");
 		
-		setSize(40, 40);
+
+		setBounds(100,10,85,30);
 		setFont(new Font("±Ã¼­Ã¼", Font.BOLD,15));
 		setForeground(new Color(0x000000));
 		setBackground(new Color(0xffff00));		

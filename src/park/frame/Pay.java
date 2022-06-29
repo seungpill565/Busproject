@@ -6,11 +6,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 
 import an.userinfo.Info_MainFrame;
+import hong.BeforeButton;
 import hong.SaveInfo;
 import hong.selectseat.SelectSeatMainFrame;
+import park.button.BeforePayButton;
+import park.button.HomeButton;
 import park.button.PayButton;
 import park.combobox.SelectPayWayBox;
 import park.database.LoadRVID;
@@ -22,21 +24,23 @@ import park.label.RouteInfoLabel;
 import park.panel.HomeBeforeBtnPanel;
 import park.panel.RouteInfoPanel;
 import park.panel.SelectSeatAgePanel;
-import park.scrollpane.PayInfoScrollpane;
 
 
 public class Pay extends JFrame{
 	// 레이아웃 널로 만들고 위에서부터 flow, table, label, combobox, button 
 	static SaveInfo user;
 	
-	static HomeBeforeBtnPanel panel1 ; // 홈버튼, 이전버튼이 들어가는 판넬 (플로우레이아웃)
-	static SelectSeatAgePanel seatPanel ; // 좌석별 연령대 고를 콤보박스 들어있는 판넬
-	static PayButton payBtn ; // 결제하기 버튼
-	static SelectPayWayBox payWayBox ; // 결제 방식 고르는 콤보박스
-	static RouteInfoLabel route; // 행선지 정보 
+	//static HomeBeforeBtnPanel panel1 ; // 홈버튼, 이전버튼이 들어가는 판넬 (플로우레이아웃)
+	private HomeButton homeBtn;
+	private BeforePayButton beforeBtn;
+	private SelectSeatAgePanel seatPanel ; // 좌석별 연령대 고를 콤보박스 들어있는 판넬
+	private PayButton payBtn ; // 결제하기 버튼
+	private SelectPayWayBox payWayBox ; // 결제 방식 고르는 콤보박스
+	private RouteInfoLabel route; // 행선지 정보 
 	static RouteInfoPanel routePanel ; // 행선지 정보 표 형태로 보여줄 패널
 	private ImageIcon background = new ImageIcon("image/payimage.jpg");
 	private JLabel label = new JLabel();
+	
 	
 	
 	public Pay(SaveInfo user) {
@@ -47,7 +51,9 @@ public class Pay extends JFrame{
 		
 		// 접속 상태 유지하기위해서 다 매개변수로 받아온 user로 초기화 해줌
 		
-		panel1 = new HomeBeforeBtnPanel(user);
+		homeBtn = new HomeButton(user);
+		beforeBtn = new BeforePayButton(user);
+		//panel1 = new HomeBeforeBtnPanel(user);
 		route = new RouteInfoLabel();
 		routePanel = new RouteInfoPanel(user);
 		seatPanel = new SelectSeatAgePanel(user); // 패널 초기화 해주면서 user 정보 계속 유지해야해서 매개변수로 넘겨준다
@@ -56,15 +62,17 @@ public class Pay extends JFrame{
 		
 		
 		// 액션들
-		panel1.getHomeBtn().addActionListener(new HomeButtonEvent(this));
-		panel1.getBefBtn().addActionListener(new BeforeButtonEvent(this));
+		homeBtn.addActionListener(new HomeButtonEvent(this));
+		beforeBtn.addActionListener(new BeforeButtonEvent(this));
 		payBtn.addActionListener(new PayButtonEvent(this));
 		
 		label.setIcon(background);
 		label.setSize(500,600);
 		add(label);
 	
-		label.add(panel1); // 홈버튼, 이전버튼 판넬
+		//label.add(panel1); // 홈버튼, 이전버튼 판넬
+		label.add(homeBtn);
+		label.add(beforeBtn);
 		label.add(route); // 행선지 정보
 		label.add(routePanel); // 행선지 정보 표 표시할 판넬
 		label.add(seatPanel); // 좌석별 연령 고르는 콤보박스
