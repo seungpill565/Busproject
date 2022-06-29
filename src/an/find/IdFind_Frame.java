@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -22,13 +23,19 @@ public class IdFind_Frame extends JFrame{
 	JTextField nameText = new Find_TextField(10);
 	JTextField pnText = new Find_TextField(10);
 	
-	JButton button = new Find_Button("찾기");
-	JButton button2 = new Find_Button("비밀번호 찾기");
-	JButton out = new Find_Button("나가기");
+	ImageIcon buttonimage = new ImageIcon("image/find2.png");
+	ImageIcon passimage = new ImageIcon("image/findpass.png");
+	ImageIcon outimage = new ImageIcon("image/out.png");
+	
+	JButton button = new Find_Button("");
+	JButton button2 = new Find_Button("");
+	JButton out = new Find_Button("");
 	
 	public IdFind_Frame() {
 		
-		
+		button.setIcon(buttonimage);
+		button2.setIcon(passimage);
+		out.setIcon(outimage);
 		JPanel ipmain = new IdFind_Panel();
 		
 		
@@ -56,7 +63,7 @@ public class IdFind_Frame extends JFrame{
 		
 		
 		
-		setSize( 400, 300);
+		setSize( 500, 400);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);  
@@ -83,7 +90,7 @@ public class IdFind_Frame extends JFrame{
 				JOptionPane.showMessageDialog(null, "아이디 :   "+id, "아이디 찾기", 1);
 				
 		} catch (SQLException e1) {
-			JOptionPane.showMessageDialog(null, "올바른 정보를 입력하세요", "정보 없음", 1);
+			JOptionPane.showMessageDialog(null, "옳바른 정보를 입력하세요", "정보 없음", 1);
 		}
 		
 	}
