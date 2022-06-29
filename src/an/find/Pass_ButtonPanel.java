@@ -17,7 +17,7 @@ public class Pass_ButtonPanel extends JPanel{
 		button = b;
 		button2 = b2;
 		out =b3;
-		
+		setBackground(new Color(0X4D7F86));
 		setLayout(new FlowLayout());
 		
 		add(button); add(button2);

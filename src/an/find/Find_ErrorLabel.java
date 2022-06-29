@@ -9,7 +9,7 @@ public class Find_ErrorLabel extends JLabel{
 	
 	public Find_ErrorLabel(String str) {
 		super(str);
-		setForeground(Color.red);
+		setForeground(Color.WHITE);
 		setFont(new Font("휴먼편지체", Font.BOLD, 15));
 	}
 

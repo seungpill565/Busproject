@@ -23,6 +23,7 @@ public class Pass_AllPanel extends JPanel{
 	
 	public Pass_AllPanel(JTextField j ,JTextField j2) {
 		setLayout(new GridLayout(4,1));
+		setBackground(new Color(0X4D7F86));
 		idText = j;
 		nameText = j2;
 		JPanel name = new Pass_NamePanel(nameText);
@@ -42,7 +43,7 @@ public class Pass_AllPanel extends JPanel{
 					idLabel.setForeground(Color.red);
 					idLabel.setText("아이디는 5글자 이상이여야 합니다");
 				} else if (Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", id)) {
-					idLabel.setForeground(Color.BLUE);
+					idLabel.setForeground(Color.BLACK);
 					idLabel.setText("옳바른 아이디 형식입니다.");
 				}else if(id.length()>=12) {
 					idLabel.setForeground(Color.red);
@@ -70,7 +71,7 @@ public class Pass_AllPanel extends JPanel{
 					}
 				else {
 					nameLabel.setText("이름을 입력하셨습니다.");
-					nameLabel.setForeground(Color.blue);
+					nameLabel.setForeground(Color.BLACK);
 				}
 				
 			}

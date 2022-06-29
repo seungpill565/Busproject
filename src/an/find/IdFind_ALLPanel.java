@@ -25,6 +25,8 @@ public class IdFind_ALLPanel extends JPanel{
 		nameText = j;
 		pnText = j2;
 		
+		setBackground(new Color(0X4D7F86));
+		
 		JPanel name = new IdFind_NamePanel(nameText);
 		JPanel pn = new IdFind_PnPanel(pnText);
 		
@@ -39,13 +41,13 @@ public class IdFind_ALLPanel extends JPanel{
 			public void keyReleased(KeyEvent e) {
 				
 				String pnnum = pnText.getText();
-				System.out.println(pnnum);
+				
 				
 				if(!Pattern.matches("\\d{3}-\\d{4}-\\d{4}", pnnum)) {
 					pnLabel.setForeground(Color.red);
 					pnLabel.setText("전화번호의 형식은 xxx-xxx-xxxx입니다.");
 				 }else {
-					 pnLabel.setForeground(Color.BLUE);
+					 pnLabel.setForeground(Color.black);
 					 pnLabel.setText("올바른 형식의 비밀번호 입니다.");
 				 }
 			}
@@ -67,7 +69,7 @@ public class IdFind_ALLPanel extends JPanel{
 					}
 				else {
 					nameLabel.setText("이름을 입력하셨습니다.");
-					nameLabel.setForeground(Color.blue);
+					nameLabel.setForeground(Color.black);
 				}
 				
 			}
