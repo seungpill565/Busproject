@@ -26,7 +26,7 @@ public class SignupMain_Frame extends JFrame {
 		
 		
 		
-		setSize(390, 600);
+		setSize(390, 700);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);  
