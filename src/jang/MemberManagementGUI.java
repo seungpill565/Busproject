@@ -197,7 +197,7 @@ public class MemberManagementGUI extends JFrame {
 		scrollpane = new JScrollPane();
 		scrollpane.setViewportView(table);
 
-		scrollpane.setBounds(40, 150, 700, 300);
+		scrollpane.setBounds(40, 170, 710, 220);
 		getContentPane().add(scrollpane);
 	}
 
@@ -220,6 +220,9 @@ public class MemberManagementGUI extends JFrame {
 		pName.setBounds(350, 10, 200, 50);
 		pName.setFont(new Font("휴먼편지체", Font.BOLD, 35));
 		panel.add(pName);
+		
+		
+		
 
 		btn1.setBounds(160, 80, 70, 30); // 추가
 		btn1.setBackground(new Color(0XE7E6E6));
@@ -238,6 +241,10 @@ public class MemberManagementGUI extends JFrame {
 		panel.add(btn4);
 		panel.add(btn5);
 
+//		TextHint tHint = new TextHint(" 아이디 입력");
+//		tHint.setBounds(490, 410, 100, 30);
+//		panel.add(tHint);
+		
 		// 입력 공간
 		tf1.setBounds(70, 130, 80, 25);
 		tf1.setFont(new Font("휴먼편지체", Font.PLAIN, 15));

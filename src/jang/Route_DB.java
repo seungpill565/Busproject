@@ -11,6 +11,8 @@ import jang.Data.Route_Read_Data;
 import jang.Data.Seat_Data;
 
 public class Route_DB {
+	
+	ArrayList<Integer> bi_id_list = new ArrayList<>();
 
 	// Insert Create
 	public void bus_info_insertData(String bi_day, String bi_time, String rtfk_id) {
@@ -205,22 +207,81 @@ public class Route_DB {
 	}
 	
 	// rt_id_search
-		public ArrayList<Seat_Data> idRead(String rt_id) {
-			ArrayList<Seat_Data> arr = new ArrayList<Seat_Data>();
-			String sql = "SELECT rt_id, bi_id " + "FROM BUS_ROUTE " + "INNER JOIN BUS_INFO USING (rt_id) "
-					+ "WHERE rt_id LIKE '%" + rt_id + "%' ORDER BY rt_id";
-			try (Connection conn = OjdbcConnection.getConnection();
-					PreparedStatement pstmt = conn.prepareStatement(sql);
-					ResultSet rs = pstmt.executeQuery();) {
+	public ArrayList<Seat_Data> idRead(String rt_id) {
+		ArrayList<Seat_Data> arr = new ArrayList<Seat_Data>();
+		String sql = "SELECT rt_id, bi_id " + "FROM BUS_ROUTE " + "INNER JOIN BUS_INFO USING (rt_id) "
+				+ "WHERE rt_id LIKE '%" + rt_id + "%' ORDER BY rt_id";
+		try (Connection conn = OjdbcConnection.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();) {
 
-				while (rs.next()) {
-					arr.add(new Seat_Data(rs.getInt(1), rs.getInt(2)));
-				}
-
-			} catch (SQLException e) {
-				e.printStackTrace();
+			while (rs.next()) {
+				arr.add(new Seat_Data(rs.getInt(1), rs.getInt(2)));
 			}
-			return arr;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		return arr;
+	}
+
+	// bi_id 가져오기
+	public void get_bi_id(String rt_id) {
+		String sql = "SELECT bi_id FROM bus_info WHERE rt_id = ?";
+		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setInt(1, Integer.parseInt(rt_id));
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				bi_id_list.add(rs.getInt("bi_id"));
+			}
+
+		} catch (SQLException e) {
+
+		}
+	}
+
+	// rt_id로 가져온 bi_id 리스트들을 가진 예매내역 다 지우기
+	public void rv_delete() {
+		String sql = "DELETE FROM bus_reservation WHERE bi_id = ?";
+		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			for (int i = 0; i < bi_id_list.size(); ++i) {
+				pstmt.setInt(1, bi_id_list.get(i));
+				pstmt.executeUpdate();
+			}
+
+		} catch (SQLException e) {
+
+		}
+	}
+
+	// rt_id로 가져온 bi_id 리스트들을 가진 좌석 다 지우기
+	public void bs_delete() {
+		String sql = "DELETE FROM bus_seat WHERE bi_id = ?";
+		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			for (int i = 0; i < bi_id_list.size(); ++i) {
+				pstmt.setInt(1, bi_id_list.get(i));
+				pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+
+		}
+	}
+
+	// rt_id를 가진 bi들 다 지우기
+	public void bi_delete(String rt_id) {
+		String sql = "DELETE FROM bus_info WHERE rt_id = ?";
+		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setInt(1, Integer.parseInt(rt_id));
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+
+		}
+	}
 
 }

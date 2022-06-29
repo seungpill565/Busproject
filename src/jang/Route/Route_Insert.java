@@ -32,7 +32,6 @@ public class Route_Insert extends JFrame {
 	ArrayList<JTextField> tfList = new ArrayList<>();
 
 	JScrollPane scrolledpane;
-	JScrollPane scrolledpane2;
 	JPanel panel = new JPanel();
 
 	JButton btn3 = new JButton("노선 조회");
@@ -94,7 +93,7 @@ public class Route_Insert extends JFrame {
 
 	public void allView() {
 		try {
-			p.remove(scrolledpane);
+			remove(scrolledpane);
 		} catch (NullPointerException e) {
 
 		}
@@ -141,63 +140,9 @@ public class Route_Insert extends JFrame {
 		scrolledpane.setViewportView(table);
 //		table.setEnabled(false);
 
-		scrolledpane.setBounds(40, 220, 260, 190);
+		scrolledpane.setBounds(40, 220, 545, 190);
 		getContentPane().add(scrolledpane);
-		p.add(scrolledpane);
 		
-	}
-
-	public void idView(String rt_id) {
-		try {
-			remove(scrolledpane2);
-		} catch (NullPointerException e) {
-
-		}
-
-		ArrayList<Seat_Data> arr = db.idRead(rt_id);
-
-		String[] colNames = { "노선 ID", "버스 ID" };
-		String[][] rowData = new String[arr.size()][colNames.length];
-
-		for (int row = 0; row < rowData.length; ++row) {
-			rowData[row][0] = Integer.toString(arr.get(row).getRT_ID());
-			rowData[row][1] = Integer.toString(arr.get(row).getBI_ID());
-
-		}
-
-		DefaultTableModel model = new DefaultTableModel(rowData, colNames) {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-		JTable table = new JTable(model);
-		ListSelectionModel selectionModel = table.getSelectionModel();
-		selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.getTableHeader().setReorderingAllowed(false);
-
-		selectionModel.addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-
-				if (!e.getValueIsAdjusting()) {
-					System.out.println("select row : " + table.getSelectedRow());
-					int row = table.getSelectedRow();
-					tf3.setText(rowData[row][0]);
-					tf8.setText(rowData[row][1]);
-
-				}
-
-			}
-		});
-
-		model.fireTableDataChanged();
-		scrolledpane2 = new JScrollPane();
-		scrolledpane2.setViewportView(table);
-//		table.setEnabled(false);
-
-		scrolledpane2.setBounds(320, 220, 260, 190);
-		getContentPane().add(scrolledpane2);
 	}
 
 	public void Route_Insert() {
@@ -209,18 +154,16 @@ public class Route_Insert extends JFrame {
 		setSize(650, 500);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
-		add(p);
-		p.setBounds(40, 220, 260, 190);
 
 		pName.setBounds(240, 10, 200, 50);
 		pName.setFont(new Font("휴먼편지체", Font.BOLD, 35));
 		panel.add(pName);
 
-		btn3.setBounds(40, 180, 100, 30); // 전체조회
+		btn3.setBounds(40, 185, 100, 30); // 전체조회
 		btn3.setBackground(new Color(0XE7E6E6));
-		btn1.setBounds(500, 80, 70, 30); // 노선 추가
+		btn1.setBounds(500, 85, 70, 30); // 노선 추가
 		btn1.setBackground(new Color(0XE7E6E6));
-		btn2.setBounds(500, 140, 70, 30); // 버스 추가
+		btn2.setBounds(500, 150, 70, 30); // 버스 추가
 		btn2.setBackground(new Color(0XE7E6E6));
 //		btn4.setBounds(250, 570, 70, 30); // 확인
 //		btn4.setBackground(new Color(0XE7E6E6));
@@ -235,56 +178,53 @@ public class Route_Insert extends JFrame {
 		panel.add(btn4);
 		panel.add(btn5);
 
-		route.setBounds(40, 50, 80, 30);
-		route.setFont(new Font("휴먼편지체", Font.BOLD, 15));
+		route.setBounds(40, 55, 80, 30);
+		route.setFont(new Font("휴먼편지체", Font.BOLD, 17));
 		panel.add(route);
-		bus.setBounds(40, 110, 80, 30);
-		bus.setFont(new Font("휴먼편지체", Font.BOLD, 15));
+		bus.setBounds(40, 117, 80, 30);
+		bus.setFont(new Font("휴먼편지체", Font.BOLD, 17));
 		panel.add(bus);
 //		seat.setBounds(20, 260, 80, 30);
 //		seat.setFont(new Font("휴먼매직체", Font.BOLD, 20));
 //		panel.add(seat);
 
 		// 입력 공간 라벨
-		tf1.setBounds(90, 140, 80, 25);
+		tf1.setBounds(90, 150, 80, 25);
 		tf1.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(tf1); // 날짜
-		tf2.setBounds(230, 140, 80, 25);
+		tf2.setBounds(230, 150, 80, 25);
 		tf2.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(tf2); // 시간
-		tf3.setBounds(390, 140, 80, 25);
+		tf3.setBounds(390, 150, 80, 25);
 		tf3.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(tf3); // 노선 ID
-		tf4.setBounds(90, 80, 80, 25);
+		tf4.setBounds(90, 85, 80, 25);
 		tf4.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(tf4); // 출발지
-		tf5.setBounds(230, 80, 80, 25);
+		tf5.setBounds(230, 85, 80, 25);
 		tf5.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(tf5); // 도착지
-		tf6.setBounds(370, 80, 80, 25);
+		tf6.setBounds(370, 85, 80, 25);
 		tf6.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(tf6); // 요금
-		tf8.setBounds(130, 570, 80, 25);
-		tf8.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
-//		panel.add(tf8); // 버스 ID
 
 		// 입력 공간 라벨 이름
-		l1.setBounds(40, 140, 80, 30);
+		l1.setBounds(40, 150, 80, 30);
 		l1.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(l1); // 날짜
-		l2.setBounds(180, 140, 80, 30);
+		l2.setBounds(180, 150, 80, 30);
 		l2.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(l2); // 시간
-		l3.setBounds(320, 140, 80, 30);
+		l3.setBounds(320, 150, 80, 30);
 		l3.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(l3); // 노선 ID
-		l4.setBounds(40, 80, 80, 30);
+		l4.setBounds(40, 85, 80, 30);
 		l4.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(l4); // 출발지
-		l5.setBounds(180, 80, 80, 30);
+		l5.setBounds(180, 85, 80, 30);
 		l5.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(l5); // 도착지
-		l6.setBounds(320, 80, 80, 30);
+		l6.setBounds(320, 85, 80, 30);
 		l6.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(l6); // 요금
 
@@ -308,10 +248,10 @@ public class Route_Insert extends JFrame {
 					JOptionPane.showMessageDialog(null, "정보를 모두 입력해주세요", "알림", 1);
 					return;
 				} else if (!passMatcher.find()) {
-					JOptionPane.showMessageDialog(null, "출발지를 다시 입력해주세요\n(한글만 입력 가능)", "출발지 오류", 1);
+					JOptionPane.showMessageDialog(null, "출발지를 다시 입력해주세요\n(공백없이 한글만 입력 가능)", "출발지 오류", 1);
 					return;
 				} else if (!passMatcher2.find()) {
-					JOptionPane.showMessageDialog(null, "도착지를 다시 입력해주세요\n(한글만 입력 가능)", "도착지 오류", 1);
+					JOptionPane.showMessageDialog(null, "도착지를 다시 입력해주세요\n(공백없이 한글만 입력 가능)", "도착지 오류", 1);
 					return;
 				} else if (!passMatcher3.find()) {
 					JOptionPane.showMessageDialog(null, "숫자만 입력 가능합니다", "요금 오류", 1);
@@ -360,7 +300,7 @@ public class Route_Insert extends JFrame {
 					db.seat_insertData(i);
 
 					JOptionPane.showMessageDialog(null, "추가되었습니다!");
-					idView(bi_id);
+//					idView(bi_id);
 				}
 
 				tf1.setText("");
@@ -376,7 +316,7 @@ public class Route_Insert extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String rt_id = tf3.getText();
 				allView();
-				idView(rt_id);
+//				idView(rt_id);
 			}
 		});
 
@@ -396,25 +336,15 @@ public class Route_Insert extends JFrame {
 					}
 
 				} else if (delete == JOptionPane.YES_OPTION) {
+					db.get_bi_id(rt_id);
+					db.rv_delete();
+					db.bs_delete();
+					db.bi_delete(rt_id);
 					db.route_deleteData(rt_id);
 					JOptionPane.showMessageDialog(null, "삭제되었습니다!", "삭제 알림", 1);
 					System.out.println("이게 실행 됨");
 				}
-
-				if (bi_id.equals("") && rt_id.equals("")) {
-					if (delete == JOptionPane.YES_OPTION) {
-						JOptionPane.showMessageDialog(null, "버스와 노선 ID를 입력해주세요", "알림", 1);
-						return;
-					}
-				} else if (delete == JOptionPane.YES_OPTION) {
-					db.rv_deleteData(bi_id);
-					db.seat_deleteData(bi_id);
-					db.deleteData(bi_id);
-					db.route_deleteData(rt_id);
-					System.out.println("이것이 실행 됨");
-				}
-
-				idView(rt_id);
+				
 				allView();
 				tf3.setText("");
 				tf8.setText("");
