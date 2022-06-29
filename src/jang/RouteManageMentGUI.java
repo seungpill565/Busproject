@@ -26,15 +26,14 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import jang.Data.Route_Read_Data;
+import jang.Data.Seat_Data;
 import jang.Route.Route_Insert;
 
 public class RouteManageMentGUI extends JFrame {
 	ArrayList<JTextField> tfList = new ArrayList<>();
 
-	JScrollPane scrolledpane;
+	JScrollPane scrollpane;
 	JPanel panel = new JPanel();
-
-	JTextArea ta = new JTextArea();
 
 	JButton btn1 = new JButton("추가");
 	JButton btn2 = new JButton("전체 조회");
@@ -89,7 +88,7 @@ public class RouteManageMentGUI extends JFrame {
 
 	public void allView() {
 		try {
-			remove(scrolledpane);
+			remove(scrollpane);
 		} catch (NullPointerException e) {
 
 		}
@@ -139,17 +138,17 @@ public class RouteManageMentGUI extends JFrame {
 		});
 
 		model.fireTableDataChanged();
-		scrolledpane = new JScrollPane();
-		scrolledpane.setViewportView(table);
+		scrollpane = new JScrollPane();
+		scrollpane.setViewportView(table);
 //		table.setEnabled(false);
 
-		scrolledpane.setBounds(40, 200, 700, 330);
-		getContentPane().add(scrolledpane);
+		scrollpane.setBounds(40, 200, 700, 330);
+		getContentPane().add(scrollpane);
 	}
 
 	public void searchView(String arrive) {
 		try {
-			remove(scrolledpane);
+			remove(scrollpane);
 		} catch (NullPointerException e) {
 
 		}
@@ -198,13 +197,14 @@ public class RouteManageMentGUI extends JFrame {
 			}
 		});
 
+		
 		model.fireTableDataChanged();
-		scrolledpane = new JScrollPane();
-		scrolledpane.setViewportView(table);
+		scrollpane = new JScrollPane();
+		scrollpane.setViewportView(table);
 //		table.setEnabled(false);
 
-		scrolledpane.setBounds(40, 200, 700, 330);
-		getContentPane().add(scrolledpane);
+		scrollpane.setBounds(40, 200, 700, 330);
+		getContentPane().add(scrollpane);
 	}
 
 	public void RouteManageMentGUI() {
@@ -250,16 +250,16 @@ public class RouteManageMentGUI extends JFrame {
 		// 입력 공간 라벨
 		tf1.setBounds(100, 150, 80, 25);
 		tf1.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
-		panel.add(tf1); // 날짜 // 버스 ID
+		panel.add(tf1); // 버스 ID
 		tf2.setBounds(250, 150, 80, 25);
 		tf2.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
-		panel.add(tf2); // 시간 // 노선 ID
+		panel.add(tf2); // 노선 ID
 		tf3.setBounds(390, 150, 80, 25);
 		tf3.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
-		panel.add(tf3); // 노선 ID // 날짜
+		panel.add(tf3); // 날짜
 		tf4.setBounds(530, 150, 80, 25);
 		tf4.setFont(new Font("휴먼매직체", Font.PLAIN, 15));
-		panel.add(tf4); // 버스 ID // 시간
+		panel.add(tf4); // 시간
 
 		// 입력 공간 라벨 이름
 		l1.setBounds(40, 150, 80, 30);
@@ -299,9 +299,7 @@ public class RouteManageMentGUI extends JFrame {
 		btn2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				allView();
-				
 			}
 		});
 
@@ -356,16 +354,16 @@ public class RouteManageMentGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String bi_id = tf1.getText();
-				int bs_id = Integer.parseInt(tf5.getText());
 				
 				int delete = JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제 확인", JOptionPane.YES_NO_OPTION);
 				if (bi_id.equals("")) {
 					if(delete == JOptionPane.YES_OPTION) {
-						JOptionPane.showMessageDialog(null, "정보를 모두 입력해주세요", "알림", 1);
+						JOptionPane.showMessageDialog(null, "버스 ID를 입력해주세요", "알림", 1);
 						return;
-					}
+					} 
 				} else if(delete == JOptionPane.YES_OPTION) {
-					
+					db.rv_deleteData(bi_id);
+					db.seat_deleteData(bi_id);
 					db.deleteData(bi_id);					
 					JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", 1);
 				} 

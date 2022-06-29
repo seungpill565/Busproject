@@ -31,7 +31,7 @@ import jang.Data.Member_Update_Data;
 public class MemberManagementGUI extends JFrame {
 	ArrayList<JTextField> tfList = new ArrayList<>();
 
-	JScrollPane scrolledpane;
+	JScrollPane scrollpane;
 	JPanel panel = new JPanel();
 	JTextField tf1 = new JTextField();
 	JTextField tf2 = new JTextField();
@@ -89,7 +89,7 @@ public class MemberManagementGUI extends JFrame {
 
 	public void allView() {
 		try {
-			remove(scrolledpane);
+			remove(scrollpane);
 		} catch (NullPointerException e) {
 
 		}
@@ -136,17 +136,17 @@ public class MemberManagementGUI extends JFrame {
 		});
 
 		model.fireTableDataChanged();
-		scrolledpane = new JScrollPane();
-		scrolledpane.setViewportView(table);
+		scrollpane = new JScrollPane();
+		scrollpane.setViewportView(table);
 //		table.setEnabled(false);
 
-		scrolledpane.setBounds(40, 200, 700, 330);
-		getContentPane().add(scrolledpane);
+		scrollpane.setBounds(40, 200, 700, 330);
+		getContentPane().add(scrollpane);
 	}
 
 	public void searchView(String user_id) {
 		try {
-			remove(scrolledpane);
+			remove(scrollpane);
 		} catch (NullPointerException e) {
 
 		}
@@ -194,11 +194,11 @@ public class MemberManagementGUI extends JFrame {
 		});
 
 		model.fireTableDataChanged();
-		scrolledpane = new JScrollPane();
-		scrolledpane.setViewportView(table);
+		scrollpane = new JScrollPane();
+		scrollpane.setViewportView(table);
 
-		scrolledpane.setBounds(40, 150, 700, 330);
-		getContentPane().add(scrolledpane);
+		scrollpane.setBounds(40, 150, 700, 330);
+		getContentPane().add(scrollpane);
 	}
 
 	public void MemberManagementGUI() {
@@ -407,7 +407,11 @@ public class MemberManagementGUI extends JFrame {
 				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
 				arr = db.search(user_id);
 				int delete = JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제 확인", JOptionPane.YES_NO_OPTION);
-				if (arr.isEmpty()) {
+				
+				if(user_id.equals("")) {
+					JOptionPane.showMessageDialog(null, "ID를 입력해주세요", "알림", 1);
+					return;
+				} else if (arr.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "아이디가 존재하지 않습니다", "아이디 오류", 1);
 					return;
 				} else {

@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,8 +26,10 @@ import javax.swing.table.DefaultTableModel;
 import jang.Route_DB;
 import jang.Data.Route_Insert_Data;
 import jang.Data.Route_Read_Data;
+import jang.Data.Seat_Data;
 
 public class Route_Insert extends JFrame {
+	ArrayList<JTextField> tfList = new ArrayList<>();
 
 	JScrollPane scrolledpane;
 	JPanel panel = new JPanel();
@@ -34,6 +38,7 @@ public class Route_Insert extends JFrame {
 	JButton btn1 = new JButton("Ãß°¡");
 	JButton btn2 = new JButton("Ãß°¡");
 	JButton btn4 = new JButton("È®ÀÎ");
+	JButton btn5 = new JButton("»èÁ¦");
 
 	JLabel bus = new JLabel("¹ö½º Á¤º¸");
 	JLabel route = new JLabel("³ë¼± Á¤º¸");
@@ -59,9 +64,31 @@ public class Route_Insert extends JFrame {
 	JLabel pName = new JLabel("³ë¼± Ãß°¡");
 
 	Route_DB db = new Route_DB();
-
+	
+	JPanel p = new JPanel();
+	
 	public Route_Insert() {
 		Route_Insert();
+
+		tfList.add(tf1);
+		tfList.add(tf2);
+		tfList.add(tf3);
+		tfList.add(tf4);
+		tfList.add(tf5);
+		tfList.add(tf6);
+		tfList.add(tf7);
+		tfList.add(tf8);
+
+		for (int i = 0; i < tfList.size(); ++i) {
+			JTextField tf = tfList.get(i);
+			tf.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					tf.setText("");
+				}
+			});
+		}
+
 	}
 
 	public void allView() {
@@ -108,13 +135,67 @@ public class Route_Insert extends JFrame {
 
 			}
 		});
+		model.fireTableDataChanged();
+		scrolledpane = new JScrollPane();
+		scrolledpane.setViewportView(table);
+//		table.setEnabled(false);
+
+		scrolledpane.setBounds(40, 320, 260, 230);
+		getContentPane().add(scrolledpane);
+		p.add(scrolledpane);
+		
+	}
+
+	public void idView(String rt_id) {
+		try {
+			remove(scrolledpane);
+		} catch (NullPointerException e) {
+
+		}
+
+		ArrayList<Seat_Data> arr = db.idRead(rt_id);
+
+		String[] colNames = { "³ë¼± ID", "¹ö½º ID" };
+		String[][] rowData = new String[arr.size()][colNames.length];
+
+		for (int row = 0; row < rowData.length; ++row) {
+			rowData[row][0] = Integer.toString(arr.get(row).getRT_ID());
+			rowData[row][1] = Integer.toString(arr.get(row).getBI_ID());
+
+		}
+
+		DefaultTableModel model = new DefaultTableModel(rowData, colNames) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		JTable table = new JTable(model);
+		ListSelectionModel selectionModel = table.getSelectionModel();
+		selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.getTableHeader().setReorderingAllowed(false);
+
+		selectionModel.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+
+				if (!e.getValueIsAdjusting()) {
+					System.out.println("select row : " + table.getSelectedRow());
+					int row = table.getSelectedRow();
+					tf3.setText(rowData[row][0]);
+					tf8.setText(rowData[row][1]);
+
+				}
+
+			}
+		});
 
 		model.fireTableDataChanged();
 		scrolledpane = new JScrollPane();
 		scrolledpane.setViewportView(table);
 //		table.setEnabled(false);
 
-		scrolledpane.setBounds(40, 320, 530, 230);
+		scrolledpane.setBounds(320, 320, 260, 230);
 		getContentPane().add(scrolledpane);
 	}
 
@@ -127,6 +208,9 @@ public class Route_Insert extends JFrame {
 		setBounds(10, 20, 650, 650);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
+		add(p);
+		p.setBackground(Color.WHITE);
+		p.setBounds(40, 320, 250, 230);
 
 		pName.setBounds(200, 30, 200, 50);
 		pName.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.BOLD, 40));
@@ -138,13 +222,18 @@ public class Route_Insert extends JFrame {
 		btn1.setBackground(new Color(0XE7E6E6));
 		btn2.setBounds(500, 270, 70, 30); // ¹ö½º Ãß°¡
 		btn2.setBackground(new Color(0XE7E6E6));
-		btn4.setBounds(250, 570, 70, 30); // È®ÀÎ
+//		btn4.setBounds(250, 570, 70, 30); // È®ÀÎ
+//		btn4.setBackground(new Color(0XE7E6E6));
+		btn4.setBounds(300, 570, 70, 30); // È®ÀÎ
 		btn4.setBackground(new Color(0XE7E6E6));
+		btn5.setBounds(210, 570, 70, 30); // »èÁ¦
+		btn5.setBackground(new Color(0XE7E6E6));
 
 		panel.add(btn3);
 		panel.add(btn1);
 		panel.add(btn2);
 		panel.add(btn4);
+		panel.add(btn5);
 
 		route.setBounds(40, 150, 80, 30);
 		route.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.BOLD, 20));
@@ -175,6 +264,9 @@ public class Route_Insert extends JFrame {
 		tf6.setBounds(370, 190, 80, 25);
 		tf6.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.PLAIN, 15));
 		panel.add(tf6); // ¿ä±Ý
+		tf8.setBounds(130, 570, 80, 25);
+		tf8.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.PLAIN, 15));
+//		panel.add(tf8); // ¹ö½º ID
 
 		// ÀÔ·Â °ø°£ ¶óº§ ÀÌ¸§
 		l1.setBounds(40, 270, 80, 30);
@@ -209,8 +301,8 @@ public class Route_Insert extends JFrame {
 				Matcher passMatcher = passPattern.matcher(rt_depart_from);
 				Pattern passPattern2 = Pattern.compile("^[°¡-ÆR]*$");
 				Matcher passMatcher2 = passPattern.matcher(rt_arrive_at);
-				Pattern passPattern3 = Pattern.compile("\\d");
-				Matcher passMatcher3 = passPattern2.matcher(rt_charge);
+				Pattern passPattern3 = Pattern.compile("[0-9]");
+				Matcher passMatcher3 = passPattern3.matcher(rt_charge);
 
 				if (rt_depart_from.equals("") || rt_arrive_at.equals("") || rt_charge.equals("")) {
 					JOptionPane.showMessageDialog(null, "Á¤º¸¸¦ ¸ðµÎ ÀÔ·ÂÇØÁÖ¼¼¿ä", "¾Ë¸²", 1);
@@ -233,6 +325,8 @@ public class Route_Insert extends JFrame {
 				tf4.setText("");
 				tf5.setText("");
 				tf6.setText("");
+
+				allView();
 			}
 		});
 
@@ -241,6 +335,7 @@ public class Route_Insert extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+				String bi_id = tf8.getText();
 				String bi_day = tf1.getText();
 				String bi_time = tf2.getText();
 				String rtfk_id = tf3.getText();
@@ -265,6 +360,7 @@ public class Route_Insert extends JFrame {
 					db.seat_insertData(i);
 
 					JOptionPane.showMessageDialog(null, "Ãß°¡µÇ¾ú½À´Ï´Ù!");
+					idView(bi_id);
 				}
 
 				tf1.setText("");
@@ -278,7 +374,52 @@ public class Route_Insert extends JFrame {
 		btn3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String rt_id = tf3.getText();
 				allView();
+				idView(rt_id);
+			}
+		});
+
+		btn5.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String bi_id = tf8.getText();
+				String rt_id = tf3.getText();
+
+				int delete = JOptionPane.showConfirmDialog(null, "»èÁ¦ÇÏ½Ã°Ú½À´Ï±î?", "»èÁ¦ È®ÀÎ", JOptionPane.YES_NO_OPTION);
+
+				if (rt_id.equals("")) {
+					if (delete == JOptionPane.YES_OPTION) {
+						JOptionPane.showMessageDialog(null, "³ë¼± ID¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä", "¾Ë¸²", 1);
+						return;
+					}
+
+				} else if (delete == JOptionPane.YES_OPTION) {
+					db.route_deleteData(rt_id);
+					JOptionPane.showMessageDialog(null, "»èÁ¦µÇ¾ú½À´Ï´Ù!", "»èÁ¦ ¾Ë¸²", 1);
+					System.out.println("ÀÌ°Ô ½ÇÇà µÊ");
+					allView();
+					idView(rt_id);
+				}
+
+				if (bi_id.equals("") && rt_id.equals("")) {
+					if (delete == JOptionPane.YES_OPTION) {
+						JOptionPane.showMessageDialog(null, "¹ö½º¿Í ³ë¼± ID¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä", "¾Ë¸²", 1);
+						return;
+					}
+				} else if (delete == JOptionPane.YES_OPTION) {
+					db.rv_deleteData(bi_id);
+					db.seat_deleteData(bi_id);
+					db.deleteData(bi_id);
+					db.route_deleteData(rt_id);
+					System.out.println("ÀÌ°ÍÀÌ ½ÇÇà µÊ");
+					allView();
+					idView(rt_id);
+				}
+
+				tf3.setText("");
+				tf8.setText("");
 			}
 		});
 

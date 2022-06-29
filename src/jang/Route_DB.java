@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import jang.Data.Route_Insert_Data;
 import jang.Data.Route_Read_Data;
+import jang.Data.Seat_Data;
 
 public class Route_DB {
 
@@ -114,28 +115,10 @@ public class Route_DB {
 		return arr;
 	}
 
-	// Seat_Read
-	public ArrayList<Integer> seat_readData(int bs_id, int bi_id) {
-		ArrayList<Integer> arr = new ArrayList<Integer>();
-		String sql = "SELECT bs_id, bi_id " + "FROM BUS_SEAT";
-		try (Connection conn = OjdbcConnection.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery();) {
-
-			while (rs.next()) {
-				arr.add(rs.getInt(bs_id), rs.getInt(bi_id));
-			}
-
-		} catch (SQLException e) { 
-			e.printStackTrace();
-		}
-		return arr;
-	}
-
 	// Update
 	public void updateData(String bi_id, String rt_id, String bi_day, String bi_time) {
 		String sql = "UPDATE BUS_INFO SET bi_id = ?, rt_id = ?, bi_day = ?, bi_time = ? WHERE bi_id = ?";
-		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setInt(1, Integer.parseInt(bi_id));
 			pstmt.setInt(2, Integer.parseInt(rt_id));
@@ -150,29 +133,52 @@ public class Route_DB {
 		}
 	}
 
-	// Seat_Delete
-	public void seat_deleteData(String bs_id) {
-		String sql = "DELETE FROM BUS_SEAT WHERE bs_id = ?";
-		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
-
-			pstmt.setInt(1, Integer.parseInt(bs_id));
-			pstmt.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	// Delete
-	public void deleteData(String bi_id) {
-		String sql = "DELETE FROM BUS_INFO WHERE bi_id = ?";
-		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+	// Seat_bi_id_Delete
+	public void seat_deleteData(String bi_id) {
+		String sql = "DELETE FROM BUS_SEAT WHERE bi_id = ?";
+		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setInt(1, Integer.parseInt(bi_id));
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+		}
+	}
+
+	// Bus_Info_bi_id Delete
+	public void deleteData(String bi_id) {
+		String sql = "DELETE FROM BUS_INFO WHERE bi_id = ?";
+		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setInt(1, Integer.parseInt(bi_id));
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+		}
+	}
+
+	// Route_rt_id_Delete
+	public void route_deleteData(String rt_id) {
+		String sql = "DELETE FROM BUS_ROUTE WHERE rt_id = ?";
+		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+
+			pstmt.setInt(1, Integer.parseInt(rt_id));
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+		}
+	}
+
+	// reservation_Delete
+	public void rv_deleteData(String bi_id) {
+		String sql = "DELETE FROM BUS_RESERAVATION WHERE bi_id = ?";
+		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setInt(1, Integer.parseInt(bi_id));
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+
 		}
 	}
 
@@ -197,5 +203,24 @@ public class Route_DB {
 		return arr;
 
 	}
+	
+	// rt_id_search
+		public ArrayList<Seat_Data> idRead(String rt_id) {
+			ArrayList<Seat_Data> arr = new ArrayList<Seat_Data>();
+			String sql = "SELECT rt_id, bi_id " + "FROM BUS_ROUTE " + "INNER JOIN BUS_INFO USING (rt_id) "
+					+ "WHERE rt_id LIKE '%" + rt_id + "%' ORDER BY rt_id";
+			try (Connection conn = OjdbcConnection.getConnection();
+					PreparedStatement pstmt = conn.prepareStatement(sql);
+					ResultSet rs = pstmt.executeQuery();) {
+
+				while (rs.next()) {
+					arr.add(new Seat_Data(rs.getInt(1), rs.getInt(2)));
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return arr;
+		}
 
 }
