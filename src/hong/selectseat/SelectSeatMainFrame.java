@@ -124,7 +124,8 @@ public class SelectSeatMainFrame extends JFrame {
 		beforeBtn.addActionListener(beforeBtnEvent);
 		add(beforeBtn);
 		
-		setBounds(300, 100, 450, 700);
+		setSize(450, 700);
+		setLocationRelativeTo(null);
 		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);

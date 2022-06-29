@@ -34,7 +34,8 @@ public class SelectBusFrame extends JFrame {
 		add(new ColumnNameLabel("예약하기"));
 		
 		
-		setBounds(300, 100, 440, 550);
+		setSize(440, 550);
+		setLocationRelativeTo(null);
 		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);

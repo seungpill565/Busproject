@@ -267,7 +267,8 @@ public class SelectRouteMainFrame extends JFrame {
 		beforeButton.addActionListener(beforeBtnEvent);
 		label.add(beforeButton);
 		
-		setBounds(300, 100, 600, 650);
+		setSize(600, 650);
+		setLocationRelativeTo(null);
 		//this.getContentPane().setBackground(new Color(0xFFFFCC));
 		//getContentPane().setBackground(Color.WHITE);
 		setResizable(false);
