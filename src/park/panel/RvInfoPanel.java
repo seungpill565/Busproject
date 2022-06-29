@@ -21,7 +21,7 @@ public class RvInfoPanel extends JPanel {
 		LayoutManager manager = new BorderLayout();
 		setLayout(manager);
 		scrollPanel = new ScrollPanePanel2(user);
-		size.setSize(450, 30*user.getSeatSize());
+		size.setSize(450, 35*user.getSeatSize());
 		scrollPanel.setPreferredSize(size);
 		scroll = new JScrollPane(scrollPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.getViewport().setBackground(Color.white);

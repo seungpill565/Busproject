@@ -1,6 +1,7 @@
 package park.frame;
 
 import java.awt.Color;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -37,7 +38,7 @@ public class Pay extends JFrame{
 	private PayButton payBtn ; // 결제하기 버튼
 	private SelectPayWayBox payWayBox ; // 결제 방식 고르는 콤보박스
 	private RouteInfoLabel route; // 행선지 정보 
-	static RouteInfoPanel routePanel ; // 행선지 정보 표 형태로 보여줄 패널
+	private RouteInfoPanel routePanel ; // 행선지 정보 표 형태로 보여줄 패널
 	private ImageIcon background = new ImageIcon("image/payimage.jpg");
 	private JLabel label = new JLabel();
 	
@@ -50,9 +51,8 @@ public class Pay extends JFrame{
 		this.user = user;
 		
 		// 접속 상태 유지하기위해서 다 매개변수로 받아온 user로 초기화 해줌
-		
-		homeBtn = new HomeButton(user);
-		beforeBtn = new BeforePayButton(user);
+		homeBtn = new HomeButton(new ImageIcon("image/home.png"));
+		beforeBtn = new BeforePayButton(new ImageIcon("image/before.png"));
 		//panel1 = new HomeBeforeBtnPanel(user);
 		route = new RouteInfoLabel();
 		routePanel = new RouteInfoPanel(user);

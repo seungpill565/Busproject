@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 public class RvInfoRowsLabel extends JLabel {
 	public RvInfoRowsLabel(String title) {
 		super(title);
-		setFont(new Font("πŸ≈¡√º",Font.BOLD,16));
+		setFont(new Font("»ﬁ∏’ ∆Ì¡ˆ√º",Font.BOLD,16));
 		setPreferredSize(new Dimension(70,30));
 		setOpaque(true);
 		setForeground(Color.white);
