@@ -1,5 +1,6 @@
 package an.sign_up;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JLabel;
@@ -20,6 +21,7 @@ public Pn_Panel(JTextField pntext,JTextField pntext2,JTextField pntext3) {
 	this.pntext2 = pntext2;
 	this.pntext3 = pntext3;
 	setLayout(new FlowLayout(FlowLayout.LEFT));
+	setBackground(new Color(0X4D7F86));
 	add(pn);add(pntext);add(label2);add(pntext2);add(label);add(pntext3);
 	
 }

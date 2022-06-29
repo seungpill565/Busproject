@@ -47,7 +47,8 @@ public class Info_MainFrame extends JFrame{
 			
 		
 		/////////////////////////////////////////
-		setBounds(500, 200, 800, 500);
+		setSize(800, 500);
+		setLocationRelativeTo(null);
 		setResizable(false);  
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);

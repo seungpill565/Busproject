@@ -1,5 +1,6 @@
 package an.sign_up;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,7 +27,7 @@ public class Id_Panel extends JPanel{
 public Id_Panel(JTextField idtext,JButton check) {
 	this.idtext = idtext;
 	setLayout(new FlowLayout(FlowLayout.LEFT));
-	
+	setBackground(new Color(0X4D7F86));
 	add(id);add(idtext);add(check);
 	
 	

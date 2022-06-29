@@ -81,11 +81,11 @@ public class Sign_Panel extends JPanel{
 	public Sign_Panel(JButton button) {
 		setLayout(new GridLayout(12, 0));
 		
-		
+		setBackground(new Color(0X4D7F86));
 		this.button = button ;
 		//this.button2= button2;
 		//this.button3 = button3;
-		comboLabel.setForeground(Color.blue);
+		comboLabel.setForeground(new Color(0XFFFFFF));
 		
 		add(idPanel);
 		add(idcheckLabel);

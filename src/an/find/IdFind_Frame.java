@@ -56,7 +56,8 @@ public class IdFind_Frame extends JFrame{
 		
 		
 		
-		setBounds(660, 350, 400, 300);
+		setSize( 400, 300);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);  
 		setVisible(true);

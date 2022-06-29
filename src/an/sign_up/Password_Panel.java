@@ -1,5 +1,6 @@
 package an.sign_up;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -16,6 +17,7 @@ public class Password_Panel extends JPanel{
 public Password_Panel(JTextField passtext,JButton checkpass) {
 	this.checkpass = checkpass;
 	this.passtext = passtext;
+	setBackground(new Color(0X4D7F86));
 	setLayout(new FlowLayout(FlowLayout.LEFT));
 	add(password);add(passtext);add(checkpass);
 	
