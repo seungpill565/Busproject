@@ -46,16 +46,20 @@ public class Pay extends JFrame{
 		this.user = user;
 		
 		// 접속 상태 유지하기위해서 다 매개변수로 받아온 user로 초기화 해줌
-		seatPanel = new SelectSeatAgePanel(user); // 패널 초기화 해주면서 user 정보 계속 유지해야해서 매개변수로 넘겨준다
-		panel1 = new HomeBeforeBtnPanel(user);
-		payBtn = new PayButton(user);
-		payWayBox = new SelectPayWayBox(user);
-		routePanel = new RouteInfoPanel(user); 
-		route = new RouteInfoLabel();
 		
+		panel1 = new HomeBeforeBtnPanel(user);
+		route = new RouteInfoLabel();
+		routePanel = new RouteInfoPanel(user);
+		seatPanel = new SelectSeatAgePanel(user); // 패널 초기화 해주면서 user 정보 계속 유지해야해서 매개변수로 넘겨준다
+		payWayBox = new SelectPayWayBox(user);
+		payBtn = new PayButton(user);
+		
+		
+		// 액션들
 		panel1.getHomeBtn().addActionListener(new HomeButtonEvent(this));
 		panel1.getBefBtn().addActionListener(new BeforeButtonEvent(this));
 		payBtn.addActionListener(new PayButtonEvent(this));
+		
 		label.setIcon(background);
 		label.setSize(500,600);
 		add(label);
@@ -81,6 +85,7 @@ public class Pay extends JFrame{
 		if(ok==JOptionPane.OK_OPTION) { // ok를 누르면
 			user.remove_bs_map(user.getSeatId(), user.getSeatNames());
 			user.setTotalCharge();
+			user.setPayWay(null);
 			dispose();
 			new Info_MainFrame(user);
 		}
@@ -89,21 +94,15 @@ public class Pay extends JFrame{
 	public void beforeButtonEvent() {
 		user.remove_bs_map(user.getSeatId(), user.getSeatNames());
 		user.setTotalCharge();
+		user.setPayWay(null);
 		dispose();
 		new SelectSeatMainFrame(user);
-		
 	}
 	
 	public void payButtonEvent() {
-		
-		if(user.getdcBySeat().size() == user.getSeatNameBySeatId().size()) {
-			
-		} else {
-			JOptionPane.showConfirmDialog(null, "인원수체크", "결제 확인", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-		}
-		
 		try {
-			if((!user.getPayWay().equals(null))&&user.isTotalChargeCheck()) {
+			//if((!user.getPayWay().equals(null))&&user.isTotalChargeCheck()) {
+			if((user.getdcBySeat().size() == user.getSeatNameBySeatId().size())&&(!user.getPayWay().equals(null))) {
 				String str =String.format("결제 금액 : %d\n결제 수단 : %s\n결제 하시겠습니까?", (int)(user.getTotalCharge()), user.getPayWay());
 				int ok =JOptionPane.showConfirmDialog(null, str, "결제 확인", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				if(ok==JOptionPane.OK_OPTION) { // ok를 누르면
@@ -121,7 +120,7 @@ public class Pay extends JFrame{
 				JOptionPane.showMessageDialog(null, str, "오류 메시지", JOptionPane.PLAIN_MESSAGE);
 			}
 		}catch(NullPointerException e1){
-			String str ="올바르지 않은 연령 선택 또는 결제 방식입니다.";
+			String str ="올바르지 않은 연령 및 결제 방식입니다.";
 			JOptionPane.showMessageDialog(null, str, "오류 메시지", JOptionPane.PLAIN_MESSAGE);
 		}
 	}

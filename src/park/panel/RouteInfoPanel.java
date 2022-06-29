@@ -20,16 +20,16 @@ public class RouteInfoPanel extends JPanel{
 		LayoutManager manager = new BorderLayout();
 		setLayout(manager);
 		scrollPanel = new ScrollPanePanel(user);
-		size.setSize(450, 500);
+		size.setSize(450, 30*user.getSeatSize());
 		scrollPanel.setPreferredSize(size);
 		scroll = new JScrollPane(scrollPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.getViewport().setBackground(Color.white);
 		
 		add(panel,"North");
 		add(scroll,"Center");
 		
 		//scroll.setViewportView(scrollPanel);
 		setBackground(Color.white);
-		setLayout(manager);
 		setBounds(10,100,465,250);
 	}
 
