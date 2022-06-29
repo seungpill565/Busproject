@@ -11,24 +11,46 @@ import java.util.ArrayList;
 
 public class MPreservationlistModel {
 	
-	// 예매번호
-	Integer br_id;
-	//날짜, 시간
-	String bi_day;
-	String bi_time;
-	//출발지, 도착지
-	String rt_depart_from;
-	String rt_arrive_at;
-	//좌석번호
-	String bs_name;
-	//최종 요금 구하기 위해서 연령구분, 요금
-	String br_age_group;
-	Integer  rt_charge;
-//-------------------------------------
-	Integer bs_id; //좌석 id
+	Integer br_id;//예매번호
+
+	String bi_day;//날짜
+	String bi_time;//시간
+	
+	String rt_depart_from;//출발지
+	String rt_arrive_at;//도착지
+	
+	String bs_name;//좌석번호
+	
+	//최종 요금 구하기 위해서 추가
+	String br_age_group;//연령구분
+	Integer  rt_charge;//요금
+
+	Integer bs_id;//좌석id
 	
 	
 	
+	//rs 받아서 만들어둔 sql문에 해당하는 결과를 멤버변수에 저장하는 메서드 
+	//ex. while(rs.next()) {new MPreservationlistModel(rs);}
+	public MPreservationlistModel(ResultSet rs) throws SQLException {
+		br_id = rs.getInt("br_id");
+		bi_day = rs.getString("bi_day");
+		bi_time = rs.getString("bi_time");
+		rt_depart_from = rs.getString("rt_depart_from");
+		rt_arrive_at = rs.getString("rt_arrive_at");
+		bs_name = rs.getString("bs_name");
+		br_age_group = rs.getString("br_age_group");
+		rt_charge = rs.getInt("rt_charge");
+	}
+	
+	
+	
+	//예매번호 가져오기 메서드
+	public Integer getBr_id() {
+		return br_id;
+	}
+	
+	
+	//나이에 따른 할인 적용한 최종요금
 	public double totalCharge() {
 		if(br_age_group.equals("성인")) {
 			return rt_charge * 1;
@@ -40,18 +62,10 @@ public class MPreservationlistModel {
 		return 0; 
 	}
 	
-	
-	
-	
-	public Integer getBr_id() {
-		return br_id;
-	}
-	
-	
-	
+	//bus_reservation 테이블에서 user_id에 해당하는 행 삭제 
 	public static void delete_user_id_row(Connection conn, String user_id) {
 		String sql = "DELETE FROM bus_reservation WHERE user_id = ?";
-		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {
+		try(PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setString(1, user_id);
 			System.out.println("user_id의 행 삭제 성공? : " + pstmt.executeUpdate());
 		} catch (SQLException e) {
@@ -59,24 +73,12 @@ public class MPreservationlistModel {
 		}
 	}
 	
-
-	
-	public static void delete_bs_id_row(Connection conn, int bs_id) {
-		String sql = "DELETE FROM bus_seat WHERE bs_id = ?";
-		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {	
-			pstmt.setInt(1, bs_id);
-			System.out.println("bs_id의 행 삭제 성공? : " + pstmt.executeUpdate());	
-		} catch (SQLException e) {
-			System.out.println("삭제 안 됨");
-		}
-	}
 	
 
-//●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
 	// bs_id(버스좌석 아이디. 좌석번호 아님!) 에 해당하는 좌석예매여부 (1= 예매됨, 0=예매안됨)를 1에서 0으로 바꾸는 메서드
 	public static void update_bs_is_reserved(Connection conn, int bs_id) {
 		String sql = "UPDATE bus_seat SET bs_is_reserved = 0 WHERE bs_id = ?";
-		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {	
+		try(PreparedStatement pstmt = conn.prepareStatement(sql);) {	
 			
 			pstmt.setInt(1, bs_id);
 			
@@ -86,15 +88,13 @@ public class MPreservationlistModel {
 			System.out.println("삭제 안 됨");
 		}
 	}
-//●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●	
 	
 	
 	
-	
-	
+	//bus_reservation테이블에서 예매번호(br_id)에 해당하는 행 삭제
 	public static void delete_br_id_row(Connection conn, int br_id) {
 		String sql = "DELETE FROM bus_reservation WHERE br_id = ?";
-		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {
+		try(PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, br_id);
 			System.out.println("br_id의 행 삭제 성공? : " + pstmt.executeUpdate());	
 		} catch (SQLException e) {
@@ -105,7 +105,7 @@ public class MPreservationlistModel {
 	
 	
 	
-	//user_info 입력하면 bs_id들 구해서 ArrayList에 담아주는 메서드 
+	//user_id 입력하면 bs_id들 구해서 ArrayList에 담아주는 메서드 
 	public static ArrayList<Integer> get_bs_id(Connection conn, String user_id) {
 		ArrayList<Integer> bs_id_list = new ArrayList<>();
 		String sql = "SELECT user_id, br_id, bs_id"
@@ -113,9 +113,7 @@ public class MPreservationlistModel {
 				+ " INNER JOIN bus_reservation USING(user_id)"
 				+ " INNER JOIN bus_seat USING (bs_id)"
 				+ " WHERE user_id = ?";
-		
-		
-		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {
+		try(PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			
 			pstmt.setString(1, user_id);
 			
@@ -123,8 +121,7 @@ public class MPreservationlistModel {
 				while(rs.next() ) {
 					bs_id_list.add(rs.getInt("bs_id"));
 				}
-			}
-			
+			}	
 		} catch (SQLException e) {
 			System.out.println("");
 		}
@@ -132,17 +129,13 @@ public class MPreservationlistModel {
 	}
 	
 	
+
 	
-	
-	
-	
-	//Bus_Seat + Bus_Reservation 이너조인 해서 예매번호를 매개변수로 전달하면 bs_id(좌석id)를 리턴하는 메서드
+	//Bus_Seat + Bus_Reservation 이너조인 해서 br_id(예매번호)를 매개변수로 전달하면 bs_id(좌석id)를 리턴하는 메서드
 	public static int get_bs_id(Connection conn, int br_id) {
-		
-		String sql = "SELECT bs_id, br_id FROM bus_seat INNER JOIN bus_Reservation USING(bs_id) WHERE br_id = ?";
-				
+		String sql = "SELECT bs_id, br_id FROM bus_seat INNER JOIN bus_Reservation USING(bs_id) WHERE br_id = ?";	
 		int bs_id = 0;
-		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {
+		try(PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			
 			pstmt.setInt(1, br_id);
 			
@@ -150,23 +143,18 @@ public class MPreservationlistModel {
 				while(rs.next() ) {
 					bs_id = rs.getInt("bs_id");
 				}
-			}
-						
+			}			
 		} catch (SQLException e) {
 			System.out.println("");
 		}
 		return bs_id;
 	}
 	
-	
-	
-	
-	
+
 	
 	
 	//특정 예매번호를 입력하면 해당 예매번호의 행을 반환하는 메서드
 	public static MPreservationlistModel get(Connection conn, int br_id) {
-	
 		String sql = 
 				"SELECT br_id, bi_day, bi_time, rt_depart_from, rt_arrive_at, bs_name, br_age_group, rt_charge"
 				+ " FROM user_info"
@@ -177,18 +165,14 @@ public class MPreservationlistModel {
 				+ " WHERE br_id = ?";
 		
 		MPreservationlistModel result = null;
-		try(
-				PreparedStatement pstmt = conn.prepareStatement(sql); 
-						
-		) {
+		try(PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, br_id);
 			
 			try(ResultSet rs = pstmt.executeQuery();) {
 				while(rs.next() ) {
 					result = new MPreservationlistModel(rs);
 				}
-			}
-						
+			}		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -196,7 +180,8 @@ public class MPreservationlistModel {
 	}
 	
 	
-	//회원아이디를 입력하면 오늘 날짜 이후의 예매 내역에 대한 데이터(행)를 반환하는 메서드
+	
+	//회원아이디를 입력하면 오늘 현재 시간 이후의 예매 내역을 반환하는 메서드
 	public static ArrayList<MPreservationlistModel> get(Connection conn, String user_id) {
 		
 		ArrayList<MPreservationlistModel> list = new ArrayList<>();
@@ -257,52 +242,15 @@ public class MPreservationlistModel {
 					list.add(new MPreservationlistModel(rs));
 				}
 			}	
-		}	
-					
+		}				
 		} catch (SQLException e) {
-			System.out.println("예매내역 없음");
+			System.out.println("DB에서 예매내역 가져오는 중에 오류 발생(예매내역 없을 수도 있음)");
 		}
 		return list;
 	}
 	
+
 	
-	
-	public static ArrayList<MPreservationlistModel> getAll(Connection conn) {
-		ArrayList<MPreservationlistModel> list = new ArrayList<>();
-		
-		String sql = 
-				"SELECT br_id, bi_day, bi_time, rt_depart_from, rt_arrive_at, bs_name, br_age_group, rt_charge"
-				+ " FROM user_info"
-				+ " INNER JOIN bus_reservation USING(user_id)"
-				+ " INNER JOIN bus_info USING (bi_id)"
-				+ " INNER JOIN bus_route USING (rt_id)"
-				+ " INNER JOIN bus_seat USING (bs_id)"
-				+ " WHERE user_id = 'abc123'"
-				+ " AND bus_info.bi_day >= '22/06/20'";
-		try(
-				PreparedStatement pstmt = conn.prepareStatement(sql); 
-				ResultSet rs = pstmt.executeQuery();		
-		) {
-			while(rs.next() ) {
-				list.add(new MPreservationlistModel(rs));
-			}			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-	
-	
-	public MPreservationlistModel(ResultSet rs) throws SQLException {
-		br_id = rs.getInt("br_id");
-		bi_day = rs.getString("bi_day");
-		bi_time = rs.getString("bi_time");
-		rt_depart_from = rs.getString("rt_depart_from");
-		rt_arrive_at = rs.getString("rt_arrive_at");
-		bs_name = rs.getString("bs_name");
-		br_age_group = rs.getString("br_age_group");
-		rt_charge = rs.getInt("rt_charge");
-	}
 	
 	
 	@Override 
@@ -316,8 +264,5 @@ public class MPreservationlistModel {
 			br_id, bi_day, bi_time, rt_depart_from, rt_arrive_at, bs_name, br_age_group, Math.round(totalCharge()));
 	}
 
-	
-
-	
 	
 } 
