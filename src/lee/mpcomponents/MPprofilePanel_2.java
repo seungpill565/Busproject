@@ -45,7 +45,7 @@ public class MPprofilePanel_2 extends JPanel {
 	JPasswordField MPnewpwTf = new JPasswordField(25);
 	JPasswordField MPchknewpwTf = new JPasswordField(25);
 	
-	JLabel MPprofilerestrictLb = new JLabel("<html><pre style=\"font-family:고딕; font-size:13;\">이름은 10글자까지 입력 가능합니다.<br>비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다.</pre></htnl>"); 
+	JLabel MPprofilerestrictLb = new JLabel("<html><pre style=\"font-family:고딕; font-size:13;\">이름은 10글자까지 입력 가능합니다.<br>비밀번호는 영문+특수문자+숫자 8~20자로 구성되어야 합니다.</pre></htnl>"); 
 	
 	
 	JPanel phoneNumPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -150,7 +150,7 @@ public class MPprofilePanel_2 extends JPanel {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				JTextField src = (JTextField) e.getSource();
-				if((src.getText().length() >= 8)) e.consume(); //8글자 제한
+				if((src.getText().length() >= 20)) e.consume(); //20글자 제한
 			}
 			
 			@Override
@@ -178,7 +178,7 @@ public class MPprofilePanel_2 extends JPanel {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				JTextField src = (JTextField) e.getSource();
-				if((src.getText().length() >= 8)) e.consume(); //8글자 제한
+				if((src.getText().length() >= 20)) e.consume(); //20글자 제한
 			}
 			
 			@Override
