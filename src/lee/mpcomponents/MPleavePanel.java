@@ -7,11 +7,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
+import lee.RoundedButton;
+
 public class MPleavePanel extends JPanel {
 	
 	
 	JLabel MPleaveConfirmLb = new JLabel("계정 탈퇴를 원하시면 비밀번호를 입력해주세요.");
-	JButton MPleaveYesBtn = new JButton("확인");
+	RoundedButton MPleaveYesBtn = new RoundedButton("확인");
 	JPasswordField MPleavePf = new JPasswordField();
 	
 	public MPleavePanel() {
@@ -36,9 +38,9 @@ public class MPleavePanel extends JPanel {
 		add(MPleavePf);
 		
 		//확인 버튼 설정
-		MPleaveYesBtn.setBounds(380, 170, 90, 38);
+		MPleaveYesBtn.setBounds(380, 170, 90, 35);
 		MPleaveYesBtn.setBorderPainted(false);
-		MPleaveYesBtn.setFont(new Font("고딕", Font.BOLD, 13));
+		MPleaveYesBtn.setFont(new Font("휴먼편지체", Font.BOLD, 17));
 		add(MPleaveYesBtn);
 
 	}

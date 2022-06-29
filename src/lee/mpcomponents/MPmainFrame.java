@@ -57,7 +57,7 @@ public class MPmainFrame extends JFrame {
 	//네비게이션 3버튼 동작 메서드
 	public void navBtnCtrl (JButton btn) {
 		
-		if(btn.getText().equals("내 정보 조회/수정")) {
+		if(btn.getText().equals("내 정보")) {
 			setCategoryLabelText("내 정보 조회");
 			MPcontents.MPcontentsCard.show(MPcontents, "내정보");
 			MPcontents.MPprofile.showMPprofile_1();
@@ -73,10 +73,10 @@ public class MPmainFrame extends JFrame {
 			
 			//예매내역이 없으면 예매내역 없음 패널이 뜨도록
 			try(Connection conn = OjdbcConnection.getConnection();) {
+				System.out.println("예매내역 갯수 : " + MPreservationlistModel.get(conn, user_id).size());
 				if(MPreservationlistModel.get(conn, user_id).size() > 0) {
-					//System.out.println("예매내역 없대...");
 					MPcontents.MPreservation.MPreservationCard.show(MPcontents.MPreservation, "예매내역 있음");
-				}
+				} 
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -294,7 +294,7 @@ public class MPmainFrame extends JFrame {
 					try(Connection conn = OjdbcConnection.getConnection();) {
 						conn.setAutoCommit(false);
 						
-						//user_id에 해당하는 bs_id들을 1에서 0으로 바꾸기
+						//user_id가 얘매한 bs_id(좌석id)에 해당하는 bus_is_reserved를 1에서 0으로 바꾸기
 						ArrayList<Integer> bs_id_list = MPreservationlistModel.get_bs_id(conn, user_id);
 						for(int bs_id : bs_id_list) {
 							MPreservationlistModel.update_bs_is_reserved(conn, bs_id);
@@ -353,7 +353,8 @@ public class MPmainFrame extends JFrame {
 		//맨 처음 로드되는 화면은 내 정보 조회 화면이니까 카테고리 라벨을 '내 정보 조회'로 설정
 		setCategoryLabelText("내 정보 조회");
 		MPcategoryLb.setBounds(230, 30, 700, 100);
-		MPcategoryLb.setFont(new Font("고딕", Font.PLAIN, 25));
+		MPcategoryLb.setFont(new Font("휴먼편지체", Font.BOLD, 30));
+		MPcategoryLb.setForeground(Color.BLACK);
 		this.add(MPcategoryLb);
 		
 		
@@ -405,8 +406,9 @@ public class MPmainFrame extends JFrame {
 		
 		//프레임 설정
 		setTitle("마이페이지");
-		getContentPane().setBackground(Color.WHITE);//배경색 나중에 맞추기		
-		setBounds(0, 0, 800, 650);
+		//getContentPane().setBackground(Color.LIGHT_GRAY);//배경색 나중에 맞추기		
+		setSize(800, 650);
+		setLocationRelativeTo(null);//창이 가운데 나오게
 		setVisible(true);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
