@@ -1,6 +1,7 @@
 package an.login;
 
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -13,7 +14,7 @@ public class Login_buttonPanel extends JPanel{
 	public Login_buttonPanel(JButton j, JButton j2, JButton j3) {
 		login = j;up=j2;join=j3;
 		
-		setLayout(new FlowLayout());
+		setLayout(new GridLayout(1,3));
 		
 		add(login);add(up);add(join);
 	}

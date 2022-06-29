@@ -10,9 +10,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -29,6 +31,9 @@ import an.userinfo.Info_MainFrame;
 import hong.SaveInfo;
 
 public class Login_Mainframe extends JFrame{
+	ImageIcon loginimage = new ImageIcon("image/login.png");
+	ImageIcon signimage = new ImageIcon("image/signbutton.png");
+	ImageIcon findimage = new ImageIcon("image/find.png");
 	
 	JPanel title = new Login_TitlePanal();
 	JPanel image = new Login_ImgPanel();
@@ -36,7 +41,10 @@ public class Login_Mainframe extends JFrame{
 	
 	SaveInfo saveInfo = new SaveInfo();
 	
+	JLabel ButtonLabel = new JLabel();
+	
 	JButton login = new Lg_Button("로그인");
+	
 	JButton join = new Lg_Button("회원가입");
 	JButton up = new Lg_Button("아이디/비밀번호 찾기");
 	
@@ -62,6 +70,18 @@ public class Login_Mainframe extends JFrame{
 	public Login_Mainframe() {
 
 		setTitle("버스 예약시스템");
+		login.setText("");
+		login.setIcon(loginimage);
+		
+		join.setText("");
+		join.setIcon(signimage);
+		
+		up.setText("");
+		up.setIcon(findimage);
+		
+		ButtonLabel.setLayout(new FlowLayout());
+		
+		
 		JPanel allIdLabel = new AllPanel();
 		setLayout(new BorderLayout(0,0));
 		jp.setLayout(new FlowLayout());
@@ -87,7 +107,7 @@ public class Login_Mainframe extends JFrame{
 		
 		
 		///////////////////////////////////////////////////////////////
-		setSize( 800, 500);
+		setSize( 1100, 600);
 		setLocationRelativeTo(null);
 		setResizable(false);  
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
