@@ -299,7 +299,9 @@ public class RouteManageMentGUI extends JFrame {
 		btn2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				allView();
+				
 			}
 		});
 
@@ -307,8 +309,8 @@ public class RouteManageMentGUI extends JFrame {
 		btn3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int bi_id = Integer.parseInt(tf1.getText());
-				int rt_id = Integer.parseInt(tf2.getText());
+				String bi_id = tf1.getText();
+				String rt_id = tf2.getText();
 				String bi_day = tf3.getText();
 				String bi_time = tf4.getText();
 
@@ -318,15 +320,17 @@ public class RouteManageMentGUI extends JFrame {
 				Matcher passMatcher2 = passPattern2.matcher(bi_time);
 				
 				int update = JOptionPane.showConfirmDialog(null, "수정하시겠습니까?", "수정 확인", JOptionPane.YES_NO_OPTION);
-				if (bi_day.equals("") || bi_time.equals("")) {
-					JOptionPane.showMessageDialog(null, "정보를 모두 입력해주세요", "알림", 1);
-					return;
+				if (bi_day.equals("") || bi_time.equals("") || bi_id.equals("") || rt_id.equals("")) {
+					if(update == JOptionPane.YES_OPTION) {
+						JOptionPane.showMessageDialog(null, "정보를 모두 입력해주세요", "알림", 1);
+						return;
+					}
 				} 
 				else if (!passMatcher.find()) {
-					JOptionPane.showMessageDialog(null, "날짜를 다시 입력하세요\nex) xx/xx/xx", "날짜 오류", 1);
+					JOptionPane.showMessageDialog(null, "날짜를 다시 입력해주세요\nex) xx/xx/xx", "날짜 오류", 1);
 					return;
 				} else if (!passMatcher2.find()) {
-					JOptionPane.showMessageDialog(null, "시간을 다시 입력하세요\nex) 24:00", "시간 오류", 1);
+					JOptionPane.showMessageDialog(null, "시간을 다시 입력해주세요\nex) 24:00", "시간 오류", 1);
 					return;
 				} else {
 					if (update == JOptionPane.YES_OPTION) {
@@ -351,13 +355,26 @@ public class RouteManageMentGUI extends JFrame {
 		btn4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int bi_id = Integer.parseInt(tf1.getText());
-
+				String bi_id = tf1.getText();
+				int bs_id = Integer.parseInt(tf5.getText());
+				
 				int delete = JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제 확인", JOptionPane.YES_NO_OPTION);
-				if(delete == JOptionPane.YES_OPTION) {
+				if (bi_id.equals("")) {
+					if(delete == JOptionPane.YES_OPTION) {
+						JOptionPane.showMessageDialog(null, "정보를 모두 입력해주세요", "알림", 1);
+						return;
+					}
+				} else if(delete == JOptionPane.YES_OPTION) {
+					
 					db.deleteData(bi_id);					
 					JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", 1);
 				} 
+				
+				tf1.setText("");
+				tf2.setText("");
+				tf3.setText("");
+				tf4.setText("");
+				
 				allView();
 			}
 		});

@@ -12,13 +12,13 @@ import jang.Data.Route_Read_Data;
 public class Route_DB {
 
 	// Insert Create
-	public void bus_info_insertData(String bi_day, String bi_time, int rtfk_id) {
+	public void bus_info_insertData(String bi_day, String bi_time, String rtfk_id) {
 		String sql = "INSERT INTO BUS_INFO (bi_id, bi_day, bi_time, rt_id) VALUES(BI_ID_SQ.nextval, ?, ?, ?)";
 		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 
 			pstmt.setString(1, bi_day);
 			pstmt.setString(2, bi_time);
-			pstmt.setInt(3, rtfk_id);
+			pstmt.setInt(3, Integer.parseInt(rtfk_id));
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -114,16 +114,34 @@ public class Route_DB {
 		return arr;
 	}
 
+	// Seat_Read
+	public ArrayList<Integer> seat_readData(int bs_id, int bi_id) {
+		ArrayList<Integer> arr = new ArrayList<Integer>();
+		String sql = "SELECT bs_id, bi_id " + "FROM BUS_SEAT";
+		try (Connection conn = OjdbcConnection.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();) {
+
+			while (rs.next()) {
+				arr.add(rs.getInt(bs_id), rs.getInt(bi_id));
+			}
+
+		} catch (SQLException e) { 
+			e.printStackTrace();
+		}
+		return arr;
+	}
+
 	// Update
-	public void updateData(int bi_id, int rt_id, String bi_day, String bi_time) {
+	public void updateData(String bi_id, String rt_id, String bi_day, String bi_time) {
 		String sql = "UPDATE BUS_INFO SET bi_id = ?, rt_id = ?, bi_day = ?, bi_time = ? WHERE bi_id = ?";
 		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 
-			pstmt.setInt(1, bi_id);
-			pstmt.setInt(2, rt_id);
+			pstmt.setInt(1, Integer.parseInt(bi_id));
+			pstmt.setInt(2, Integer.parseInt(rt_id));
 			pstmt.setString(3, bi_day);
 			pstmt.setString(4, bi_time);
-			pstmt.setInt(5, bi_id);
+			pstmt.setInt(5, Integer.parseInt(bi_id));
 
 			pstmt.executeUpdate();
 
@@ -131,13 +149,13 @@ public class Route_DB {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Seat_Delete
-	public void seat_deleteData(int bifk_id) {
-		String sql = "DELETE FROM BUS_SEAT WHERE bi_id = ?";
+	public void seat_deleteData(String bs_id) {
+		String sql = "DELETE FROM BUS_SEAT WHERE bs_id = ?";
 		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 
-			pstmt.setInt(1, bifk_id);
+			pstmt.setInt(1, Integer.parseInt(bs_id));
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -146,11 +164,11 @@ public class Route_DB {
 	}
 
 	// Delete
-	public void deleteData(int bi_id) {
+	public void deleteData(String bi_id) {
 		String sql = "DELETE FROM BUS_INFO WHERE bi_id = ?";
 		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 
-			pstmt.setInt(1, bi_id);
+			pstmt.setInt(1, Integer.parseInt(bi_id));
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
