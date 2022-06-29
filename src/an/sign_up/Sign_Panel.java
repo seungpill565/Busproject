@@ -218,6 +218,8 @@ public class Sign_Panel extends JPanel{
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "중복된 아이디 입니다.", "중복 체크", 1);
+					idcheckLabel.setForeground(Color.red);
+					idcheckLabel.setText("중복된 아이디입니다.아이디를 변경해 주세요");
 				}
 			}
 		} catch (SQLException e) {
@@ -268,7 +270,7 @@ public class Sign_Panel extends JPanel{
 			idcheckLabel.setText("아이디는 5글자 이상이여야 합니다");
 		} else if (Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", id)) {
 			idcheckLabel.setForeground(Color.BLACK);
-			idcheckLabel.setText("사용가능한 아이디입니다. 아이디 중복을 눌러주세요");
+			idcheckLabel.setText("아이디 중복을 눌러주세요");
 		}else if(id.length()>=12) {
 			idcheckLabel.setForeground(Color.red);
 			idcheckLabel.setText("아이디는 11글자 이하이여야 합니다");
