@@ -10,14 +10,14 @@ import javax.swing.border.LineBorder;
 public class ArrivalButton extends JButton {
 	
 	//private LineBorder lb = new LineBorder(Color.BLACK);
-	private Dimension dimension = new Dimension(240,200);
+	private Dimension dimension = new Dimension(100,80);
 	
 	public ArrivalButton() {
-		super("도착지 선택");
+		super("선택");
 		setOpaque(false);
 		setBackground(Color.WHITE);
-		setForeground(Color.WHITE);
-		setFont(new Font("휴먼편지체", Font.BOLD, 30));
+		setForeground(Color.BLACK);
+		setFont(new Font("휴먼편지체", Font.BOLD, 25));
 		setBorderPainted(false);
 		//setBorder(lb);
 		setPreferredSize(dimension);

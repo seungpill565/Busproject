@@ -102,7 +102,7 @@ public class SelectSeatMainFrame extends JFrame {
 		
 		for(int i = 0; i < MAX_SEAT; ++i) {
 			if (i % 3 == 2) {
-				add(new BackGroundLabel("", 90, 69));
+				add(new BackGroundLabel("", 90, 69, 0));
 			} 
 			
 			add(seatBtns[i]);

@@ -16,9 +16,13 @@ public class SerchButtonEvent extends RouteMainFrameAction {
 	// 출발지, 도착지, 날짜를 입력해야 한다 안하면 경고메세지 뜨도록.
 	public void actionPerformed(ActionEvent e) {
 		if(main.checkRoute() && main.checkDate()) {
-			main.getRouteID();
-			main.showBus();
-			main.getprice();			
+			
+			if(main.checkMonth()) {
+				main.getRouteID();
+				main.showBus();
+				main.getprice();			
+				
+			}
 		}
 	}
 
