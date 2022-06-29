@@ -198,13 +198,14 @@ public class Sign_Panel extends JPanel{
 		id = idtext.getText();
 		
 		
-		String sql1 = String.format("SELECT user_id from user_info where user_id = '%s'",id);
+		String sql1 = "SELECT user_id from user_info where user_id = ?";
 		
 		boolean result = Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", id);
 		
 		try(Connection conn = OjdbcConnection.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql1);
 		) {
+			pstmt.setString(1, idtext.getText());
 			ResultSet rset = pstmt.executeQuery();
 			if(!result) {
 				JOptionPane.showMessageDialog(null, "아이디는 영문숫자로이루어진 5~12글자로 생성 해주세요", "아이디 오류", 1);
@@ -212,6 +213,8 @@ public class Sign_Panel extends JPanel{
 			
 				if(!rset.next()) {
 					JOptionPane.showMessageDialog(null, "사용가능한 아이디 입니다.", "아이디 중복 체크", 1);
+					idcheckLabel.setText("중복확인완료");
+					
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "중복된 아이디 입니다.", "중복 체크", 1);
@@ -227,7 +230,7 @@ public class Sign_Panel extends JPanel{
 	//비밀번호 체크 메서드
 	public void checkpass() {
 		pass = new String(passtext.getPassword());
-		String sql1 = String.format("SELECT user_password from user_info where user_password = '%s'",pass);
+		String sql1 = "SELECT user_password from user_info where user_password = ?";
 		
 		Pattern passPattern1 = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$"); //8자 영문+특문+숫자
 		
@@ -240,9 +243,11 @@ public class Sign_Panel extends JPanel{
 				Connection conn = OjdbcConnection.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql1);	
 			) {
+				pstmt.setString(1,pass);
 				ResultSet rset = pstmt.executeQuery();
 					if(rset.next()) {
 						JOptionPane.showMessageDialog(null, "사용가능한 비밀번호 입니다.", "비밀번호 체크", 1);
+						passLabel.setText("비밀번호 확인완료");
 					}else {
 						JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 최소 8자에서 최대20자로 구성되어야 합니다.", "비밀번호 체크", 1);
 					}

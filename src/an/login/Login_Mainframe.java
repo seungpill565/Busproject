@@ -117,12 +117,15 @@ public class Login_Mainframe extends JFrame{
 			String check = combo.getSelectedItem().toString();
 			
 		
-		String sql = String.format("SELECT user_password FROM user_info WHERE user_id = '%s'"
-				+ " AND user_password ='%s'and user_passenger_manager = '%s'",
-				id, pass,check);	
+		String sql = "SELECT user_password FROM user_info WHERE user_id = ?"
+				+ " AND user_password =? and user_passenger_manager = ?";	
 		try(Connection conn = OjdbcConnection.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
 				
+				pstmt.setString(1,id);
+				pstmt.setString(2,pass);
+				pstmt.setString(3,check);
+			
 				ResultSet rset = pstmt.executeQuery();
 
 				rset.next();
