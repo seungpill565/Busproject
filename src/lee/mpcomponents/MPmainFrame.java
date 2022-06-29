@@ -45,15 +45,18 @@ public class MPmainFrame extends JFrame {
 	
 
 	
-//액션리스너에서 쓰일 메서드들 모음##########################################################################################
+	
+//액션리스너에서 쓰일 메서드들 모음
 	
 	//카테고리명 라벨 텍스트 바꾸는 메서드
 		public void setCategoryLabelText(String title) {
 			MPcategoryLb.setText(title);	
 		}
 	
-	//네비게이션 3버튼 액션
+		
+	//네비게이션 3버튼 동작 메서드
 	public void navBtnCtrl (JButton btn) {
+		
 		if(btn.getText().equals("내 정보 조회/수정")) {
 			setCategoryLabelText("내 정보 조회");
 			MPcontents.MPcontentsCard.show(MPcontents, "내정보");
@@ -89,15 +92,17 @@ public class MPmainFrame extends JFrame {
 				cb.setSelected(false);
 			}
 		}
+		
 	}	
 	
 	
-	//프로필수정하기 버튼 눌렀을 때
+	//프로필수정하기 버튼 눌렀을 때 메서드 
 	public void editBtnCtrl () {		
 		
+		//비밀번호 확인창
 	 	MPinputpwSF inputpwSF = new MPinputpwSF();
-		
-		
+	 	
+		//비밀번호 확인창의 '입력'버튼 눌렀을 때 입력된 비번과 user_id의 비번을 비교하는 액션 리스너 
 		inputpwSF.completeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -106,16 +111,15 @@ public class MPmainFrame extends JFrame {
 					String str = inputpwSF.MPgetPwd(inputpwSF.inputpwPf);
 					
 					if(str.equals(MPprofileModel.MPgetUserPw(conn, user_id))) {
-						inputpwSF.dispose();
-						dispose();
-						MPmainFrame MPnewmainF = new MPmainFrame(saveInfo);
+						inputpwSF.dispose(); //비번확인창 끄고
+						dispose(); //메인프레임 끄고
+						MPmainFrame MPnewmainF = new MPmainFrame(saveInfo); //메인 프레임 새로 띄우기
 						MPnewmainF.MPcontents.MPprofile.showMPprofile_2(); 		
 						MPnewmainF.setCategoryLabelText("내 정보 수정");
 					} else {
 						new MPincorrectpwSF();
 					}
-				
-					
+	
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -123,36 +127,37 @@ public class MPmainFrame extends JFrame {
 		});
 		
 	}				
-				
-	//프로필수정하기 화면에서 뒤로가기 버튼 눌렀을 때 (수정값 저장하면 안 되도록)
+		
+	
+	//프로필수정하기 화면에서 뒤로가기 버튼 눌렀을 때 메서드
 	public void backBtnCtrl () {
 		setCategoryLabelText("내 정보 조회");
 		MPcontents.MPprofile.showMPprofile_1();
 	}
 	
 	
-	//프로필수정하기 화면에서 수정 완료 버튼 눌렀을 때 (수정값 저장되게) 
+	//프로필수정하기 화면에서 수정 완료 버튼 눌렀을 때 메서드 
 	public void completeBtnCtrl() {
+		
+		//입력되지 않은 빈 칸이 있을 때 경고창 띄우기
 		if(MPcontents.MPprofile.MPprofile_2.MPnameTf.getText().equals("") 
 			|| MPcontents.MPprofile.MPprofile_2.MPphoneTf_1.getText().equals("")
 			|| MPcontents.MPprofile.MPprofile_2.MPphoneTf_2.getText().equals("")
 			|| MPcontents.MPprofile.MPprofile_2.MPphoneTf_3.getText().equals("")
 			|| MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf).equals("")) {
-			
 			//new MPpreventnulltfSF();
 			JOptionPane.showMessageDialog(null, "빈 칸을 모두 입력해주세요", "입력 오류", 1);			
 			return;
 		}
-		
-			
-		//이름 글자수 제한 
+				
+		//이름 글자수 제한 경고창 띄우기
 		if(MPcontents.MPprofile.MPprofile_2.MPnameTf.getText().length() > 10) {		
 			//new MPnamelengthrestrictSF();
 			JOptionPane.showMessageDialog(null, "이름은 10글자까지 입력 가능합니다.", "입력 오류", 1);
 			return;
 		}
 		
-
+		//비밀번호 텍스트필드 제한 경고창 띄우기
 		Pattern passPattern1 = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$"); //8자 영문+특문+숫자
 		Matcher passMatcher = passPattern1.matcher(MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf));
 		if (!passMatcher.find()) {
@@ -160,17 +165,14 @@ public class MPmainFrame extends JFrame {
 			return;
 		}
 		
-		
+		//비밀번호 불일치 경고창 띄우기 
 		if(!MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPchknewpwTf).equals(MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf))) {
 			JOptionPane.showMessageDialog(null, "<html>비밀번호가 일치하지 않습니다.</html>", "입력 오류", 1);
 			return;
 		}
 		
 		
-		
-		
-		setCategoryLabelText("내 정보 조회");	
-
+		//경고창 아무것도 안 뜨면 바뀐 정보 DB에 업데이트 하면서 내 정보 조회 화면 새로 띄우기
 		//수정한 정보 DB에 업데이트
 		try(Connection conn = OjdbcConnection.getConnection()
 		) {
@@ -180,7 +182,7 @@ public class MPmainFrame extends JFrame {
 			MPprofileModel.MPupdateUserName(conn, user_id, MPcontents.MPprofile.MPprofile_2.MPnameTf.getText());
 			MPprofileModel.MPupdateUserPw(conn, user_id, MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf));
 		
-			//핸드폰번호는 01012341234 로 입력받아서 010-1234-1234로 저장	
+			//핸드폰번호는 01012341234를 010-1234-1234로 변환해서 DB에 업데이트
 			String str = MPcontents.MPprofile.MPprofile_2.MPgetPhoneNum();
 			ArrayList<String> arr = new ArrayList<>();
 			arr.add(str.substring(0, 3));
@@ -194,14 +196,14 @@ public class MPmainFrame extends JFrame {
 			e.printStackTrace();
 		}
 		
-		//새로고침
+		//새로고침 (프레임 껐다 켜기)
 		dispose();
 		MPmainFrame MPnewmainF = new MPmainFrame(saveInfo);
-		MPcontents.MPprofile.showMPprofile_1();		
+		MPnewmainF.setCategoryLabelText("내 정보 조회");			
 	}  
 
 	
-	//예매취소 버튼 눌렀을 때
+	//예매취소 버튼 눌렀을 때 메서드
 	public void reservationcancleBtnCtrl() {
 		
 		//체크된 체크박스 개수 세기
@@ -216,10 +218,10 @@ public class MPmainFrame extends JFrame {
 		//체크된 체크박스가 없을 땐 작은 창이 안 뜨고, 하나라도 있으면 작은 창(정말 취소?) 뜸
 		if(checkNum > 0) {
 			
-			//정말 취소하시겠습니까? 작은 창
+			//'정말 취소하시겠습니까?' 작은 창
 			MPreservationSF sf = new MPreservationSF();
 			
-			//정말취소?스몰창에서 '예'버튼 눌렀을 떄 
+			//'정말취소하시겠습니까?' 작은 창에서 '예'버튼 눌렀을 떄 
 			sf.yesBtn.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -227,7 +229,7 @@ public class MPmainFrame extends JFrame {
 					try (Connection conn = OjdbcConnection.getConnection();){	
 						conn.setAutoCommit(false);
 
-						int cancleNum = br_id_list.size();
+						int cancleNum = br_id_list.size(); //취소하려는 예매번호 갯수 
 						
 						for(int i = 0; i < cancleNum; ++i) {							
 							//체크된 체크박스에 해당하는 예매번호, 좌석번호
@@ -243,21 +245,18 @@ public class MPmainFrame extends JFrame {
 						conn.commit(); //커밋 오라클 가서 안 해도 되고 여기서 바로 됨
 						sf.dispose(); //예 누르면 작은 창 닫기
 					
-						//_______________________________예매내역 새로고침 부분______________________________________________________________
 						
+						//예매내역 새로고침
 						br_id_list = new ArrayList<>(); //체크박스 선택된 예매번호(br_id) 담는 어레리 비워주고 
-						
-						//예매내역 패널 새로고침
-						dispose();
+						dispose(); //메인 프레임 새로 띄우기
 						MPmainFrame MPnewmainF = new MPmainFrame(saveInfo);
 						MPnewmainF.setCategoryLabelText("예매확인");
-						
 						// 메인프레임 껐다 킨 후에 예매내역 패널이 뜨도록 하는 코드들
 						MPnewmainF.MPcontents.MPcontentsCard.show(MPnewmainF.MPcontents, "예매내역");						
 						if(MPreservationlistModel.get(conn, user_id).size() > 0) {
 							MPnewmainF.MPcontents.MPreservation.MPreservationCard.show(MPnewmainF.MPcontents.MPreservation, "예매내역 있음");
 						}
-						//______________________________________________________________________________________________________________
+						
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
@@ -271,7 +270,7 @@ public class MPmainFrame extends JFrame {
 
 	
 	
-	//계정 탈퇴 '예' 버튼
+	//계정 탈퇴 '예' 버튼 메서드
 	public void leaveBtnCtrl() {
 		
 		
@@ -331,13 +330,16 @@ public class MPmainFrame extends JFrame {
 
 
 	
-//####################################################################################################################################	
-//####################################################################################################################################
 
 	
 	
 	
-	//드디어 생성자
+	
+	
+	
+	
+	
+//드디어 생성자
 	public MPmainFrame(SaveInfo saveInfo) {
 		
 		this.saveInfo = saveInfo;
