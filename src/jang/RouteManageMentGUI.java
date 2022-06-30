@@ -18,15 +18,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import an.admin.Admin_MainFrame;
 import jang.Data.Route_Read_Data;
-import jang.Data.Seat_Data;
 import jang.Route.Route_Insert;
 
 public class RouteManageMentGUI extends JFrame {
@@ -279,8 +278,8 @@ public class RouteManageMentGUI extends JFrame {
 		homeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				new Admin_MainFrame(); // 나중에 메인으로 바꾸면 됨
-				new ManagerMainFrame2();
+				new Admin_MainFrame(); // 나중에 메인으로 바꾸면 됨
+//				new ManagerMainFrame2();
 				dispose();
 			}
 		});

@@ -1,6 +1,5 @@
 package jang;
 
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -25,6 +24,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import an.admin.Admin_MainFrame;
 import jang.Data.Member_Data;
 import jang.Data.Member_Update_Data;
 
@@ -287,8 +287,8 @@ public class MemberManagementGUI extends JFrame {
 		homeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				new Admin_MainFrame(); // 나중에 메인으로 바꾸면 됨
-				new ManagerMainFrame2();
+				new Admin_MainFrame(); // 나중에 메인으로 바꾸면 됨
+//				new ManagerMainFrame2();
 				dispose();
 			}
 		});
