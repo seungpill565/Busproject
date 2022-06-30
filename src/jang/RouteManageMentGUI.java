@@ -34,11 +34,11 @@ public class RouteManageMentGUI extends JFrame {
 	JScrollPane scrollpane;
 	JPanel panel = new JPanel();
 
-	JButton btn1 = new JButton("추가");
-	JButton btn2 = new JButton("전체 조회");
-	JButton btn3 = new JButton("수정");
-	JButton btn4 = new JButton("삭제");
-	JButton btn5 = new JButton("검색");
+	RoundButton btn1 = new RoundButton("추가");
+	RoundButton btn2 = new RoundButton("전체 조회");
+	RoundButton btn3 = new RoundButton("수정");
+	RoundButton btn4 = new RoundButton("삭제");
+	RoundButton btn5 = new RoundButton("검색");
 
 	JLabel pName = new JLabel("노선");
 
@@ -140,6 +140,7 @@ public class RouteManageMentGUI extends JFrame {
 		scrollpane = new JScrollPane();
 		scrollpane.setViewportView(table);
 //		table.setEnabled(false);
+//		table.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 
 		scrollpane.setBounds(40, 170, 700, 220);
 		getContentPane().add(scrollpane);
@@ -201,7 +202,8 @@ public class RouteManageMentGUI extends JFrame {
 		scrollpane = new JScrollPane();
 		scrollpane.setViewportView(table);
 //		table.setEnabled(false);
-
+//		table.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
+		
 		scrollpane.setBounds(40, 150, 700, 300);
 		getContentPane().add(scrollpane);
 	}
@@ -217,9 +219,10 @@ public class RouteManageMentGUI extends JFrame {
 		setVisible(true);
 
 		homeBtn = new JButton(home_image);
-		homeBtn.setRolloverIcon(home_image2);
+//		homeBtn.setRolloverIcon(home_image2);
 		homeBtn.setBorderPainted(false);
 		homeBtn.setBounds(700, 20, 50, 50);
+		homeBtn.setContentAreaFilled(false);
 		panel.add(homeBtn);
 
 		pName.setBounds(350, 10, 200, 50);
@@ -228,14 +231,19 @@ public class RouteManageMentGUI extends JFrame {
 
 		btn1.setBounds(160, 80, 70, 30); // 추가
 		btn1.setBackground(new Color(0XE7E6E6));
+		btn1.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 		btn2.setBounds(40, 80, 100, 30); // 조회
 		btn2.setBackground(new Color(0XE7E6E6));
+		btn2.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 		btn3.setBounds(250, 80, 70, 30); // 수정
 		btn3.setBackground(new Color(0XE7E6E6));
+		btn3.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 		btn4.setBounds(680, 410, 70, 30); // 삭제
 		btn4.setBackground(new Color(0XE7E6E6));
+		btn4.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 		btn5.setBounds(600, 410, 70, 30); // 검색
 		btn5.setBackground(new Color(0XE7E6E6));
+		btn5.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 
 		panel.add(btn1);
 		panel.add(btn2);
@@ -249,6 +257,7 @@ public class RouteManageMentGUI extends JFrame {
 		tf1.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(tf1); // 버스 ID
 		search_tf.setBounds(490, 410, 100, 30);
+		search_tf.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(search_tf);
 		tf2.setBounds(250, 130, 80, 25);
 		tf2.setFont(new Font("휴먼편지체", Font.PLAIN, 15));

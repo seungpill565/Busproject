@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,10 +22,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import jang.RoundButton;
 import jang.Route_DB;
 import jang.Data.Route_Insert_Data;
-import jang.Data.Route_Read_Data;
-import jang.Data.Seat_Data;
 
 public class Route_Insert extends JFrame {
 	ArrayList<JTextField> tfList = new ArrayList<>();
@@ -34,11 +32,11 @@ public class Route_Insert extends JFrame {
 	JScrollPane scrolledpane;
 	JPanel panel = new JPanel();
 
-	JButton btn3 = new JButton("노선 조회");
-	JButton btn1 = new JButton("추가");
-	JButton btn2 = new JButton("추가");
-	JButton btn4 = new JButton("확인");
-	JButton btn5 = new JButton("삭제");
+	RoundButton btn3 = new RoundButton("노선 조회");
+	RoundButton btn1 = new RoundButton("추가");
+	RoundButton btn2 = new RoundButton("추가");
+	RoundButton btn4 = new RoundButton("확인");
+	RoundButton btn5 = new RoundButton("삭제");
 
 	JLabel bus = new JLabel("버스 정보");
 	JLabel route = new JLabel("노선 정보");
@@ -161,16 +159,21 @@ public class Route_Insert extends JFrame {
 
 		btn3.setBounds(40, 185, 100, 30); // 전체조회
 		btn3.setBackground(new Color(0XE7E6E6));
+		btn3.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 		btn1.setBounds(500, 85, 70, 30); // 노선 추가
 		btn1.setBackground(new Color(0XE7E6E6));
+		btn1.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 		btn2.setBounds(500, 150, 70, 30); // 버스 추가
 		btn2.setBackground(new Color(0XE7E6E6));
+		btn2.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 //		btn4.setBounds(250, 570, 70, 30); // 확인
 //		btn4.setBackground(new Color(0XE7E6E6));
 		btn4.setBounds(320, 420, 70, 30); // 확인
 		btn4.setBackground(new Color(0XE7E6E6));
+		btn4.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 		btn5.setBounds(230, 420, 70, 30); // 삭제
 		btn5.setBackground(new Color(0XE7E6E6));
+		btn5.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 
 		panel.add(btn3);
 		panel.add(btn1);
