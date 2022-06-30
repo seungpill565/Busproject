@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 public class ManagerMainFrame2 extends JFrame{
 	
-	
+	MemberManagementGUI mmgui;
 	
 	JPanel panel = new JPanel();
 	JButton logo = new JButton();
@@ -74,11 +74,12 @@ public class ManagerMainFrame2 extends JFrame{
 			}
 		});
 		
+		
 		member.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new MemberManagementGUI();
-				setVisible(false);
+				dispose();
 			}
 		});
 		

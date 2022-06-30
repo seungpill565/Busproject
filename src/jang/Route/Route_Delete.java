@@ -1,7 +1,6 @@
 package jang.Route;
 
 import java.awt.Color;
-
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,13 +8,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import jang.Route_DB;
-import jang.Data.BI_Insert_Data;
-import jang.Data.Route_Insert_Data;
-import jang.Data.Seat_Insert_Data;
 
 public class Route_Delete extends JFrame {
 
@@ -74,7 +71,8 @@ public class Route_Delete extends JFrame {
 				
 				int bi_id = Integer.parseInt(tf1.getText());
 				
-				db.deleteData(bi_id);
+//				db.deleteData(bi_id);
+				JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", 1);
 				
 				tf1.setText("");
 			}

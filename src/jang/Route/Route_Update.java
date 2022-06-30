@@ -1,7 +1,6 @@
 package jang.Route;
 
 import java.awt.Color;
-
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import jang.Route_DB;
-import jang.Data.Businfo_Data;
 
 public class Route_Update extends JFrame {
 
@@ -49,7 +47,7 @@ public class Route_Update extends JFrame {
 		panel.setLayout(null);
 		setResizable(false);
 		setBounds(10, 20, 370, 300);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
 
 		pName.setBounds(100, 30, 200, 50);
@@ -105,7 +103,7 @@ public class Route_Update extends JFrame {
 				String bi_time = tf2.getText();
 				int rt_id = Integer.parseInt(tf3.getText());
 
-				db.updateData(new Businfo_Data(bi_id, bi_day, bi_time, rt_id));
+//				db.updateData(new Businfo_Data(bi_id, bi_day, bi_time, rt_id));
 
 				tf1.setText("");
 				tf2.setText("");

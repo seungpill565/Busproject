@@ -1,14 +1,13 @@
 package jang;
 
+import java.awt.CardLayout;
 import java.awt.Color;
-
 import java.awt.Font;
-import java.awt.color.ColorSpace;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.nio.channels.SelectableChannel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,28 +19,29 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.plaf.basic.BasicSliderUI.ScrollListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import an.admin.Admin_MainFrame;
 import jang.Data.Member_Data;
 import jang.Data.Member_Update_Data;
 
 public class MemberManagementGUI extends JFrame {
+	ArrayList<JTextField> tfList = new ArrayList<>();
 
+	JScrollPane scrollpane;
 	JPanel panel = new JPanel();
 	JTextField tf1 = new JTextField();
 	JTextField tf2 = new JTextField();
 	JTextField tf3 = new JTextField();
 	JTextField tf4 = new JTextField();
 	JTextField tf5 = new JTextField();
-	JTextArea ta = new JTextArea();
+	JTextField tf6 = new JTextField();
 
 	JButton btn1 = new JButton("Ãß°¡");
-	JButton btn2 = new JButton("Á¶È¸");
+	JButton btn2 = new JButton("ÀüÃ¼ Á¶È¸");
 	JButton btn3 = new JButton("¼öÁ¤");
 	JButton btn4 = new JButton("»èÁ¦");
 	JButton btn5 = new JButton("°Ë»ö");
@@ -51,10 +51,10 @@ public class MemberManagementGUI extends JFrame {
 	JLabel l3 = new JLabel("ºñ¹Ð¹øÈ£ : ");
 	JLabel l4 = new JLabel("ÀüÈ­¹øÈ£ : ");
 	JLabel l5 = new JLabel("°ü¸®ÀÚ/¼Õ´Ô : ");
+	JLabel l6 = new JLabel("ID : ");
 
-	JLabel pName = new JLabel("°ü¸®ÀÚ");
-	JLabel label = new JLabel("È¸¿ø");
-	//JButton backBtn;
+	JLabel pName = new JLabel("È¸¿ø");
+	// JButton backBtn;
 	JButton homeBtn;
 
 	ImageIcon image = new ImageIcon("Image/back2.png");
@@ -63,14 +63,142 @@ public class MemberManagementGUI extends JFrame {
 	ImageIcon home_image = new ImageIcon("Image/home.png");
 	ImageIcon home_image2 = new ImageIcon("Image/home2.png");
 
-	final String[] colNames = { "¾ÆÀÌµð", "ÀÌ¸§", "ºñ¹ÐÀüÈ£", "ÀüÈ­¹øÈ£", "°ü¸®ÀÚ/¼Õ´Ô" };
-	DefaultTableModel model = new DefaultTableModel(colNames, 0);
-
-	JTable table = new JTable(model);
-	JScrollPane scrolledpane = new JScrollPane(table);
-
 	public MemberManagementGUI() {
 		MemberManagementGUI();
+
+		tfList.add(tf1);
+		tfList.add(tf2);
+		tfList.add(tf3);
+		tfList.add(tf4);
+		tfList.add(tf5);
+		tfList.add(tf6);
+
+		for (int i = 0; i < tfList.size(); ++i) {
+			JTextField tf = tfList.get(i);
+			tf.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					tf.setText("");
+				}
+			});
+		}
+
+	}
+
+	Member_DB db = new Member_DB();
+
+	public void allView() {
+		try {
+			remove(scrollpane);
+		} catch (NullPointerException e) {
+
+		}
+
+		ArrayList<Member_Data> arr = db.readData();
+
+		String[] colNames = { "¾ÆÀÌµð", "ÀÌ¸§", "ºñ¹Ð¹øÈ£", "ÀüÈ­¹øÈ£", "°ü¸®ÀÚ/¼Õ´Ô" };
+		String[][] rowData = new String[arr.size()][colNames.length];
+
+		for (int row = 0; row < rowData.length; ++row) {
+			rowData[row][0] = arr.get(row).getID();
+			rowData[row][1] = arr.get(row).getName();
+			rowData[row][2] = arr.get(row).getPassword();
+			rowData[row][3] = arr.get(row).getPhonenum();
+			rowData[row][4] = arr.get(row).getPassenger();
+		}
+
+		DefaultTableModel model = new DefaultTableModel(rowData, colNames) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		JTable table = new JTable(model);
+		ListSelectionModel selectionModel = table.getSelectionModel();
+		selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.getTableHeader().setReorderingAllowed(false);
+
+		selectionModel.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+
+				if (!e.getValueIsAdjusting()) {
+					System.out.println("select row : " + table.getSelectedRow());
+					int row = table.getSelectedRow();
+					tf1.setText(rowData[row][0]);
+					tf2.setText(rowData[row][1]);
+					tf3.setText(rowData[row][2]);
+					tf4.setText(rowData[row][3]);
+					tf5.setText(rowData[row][4]);
+				}
+
+			}
+		});
+
+		model.fireTableDataChanged();
+		scrollpane = new JScrollPane();
+		scrollpane.setViewportView(table);
+//		table.setEnabled(false);
+
+		scrollpane.setBounds(40, 170, 710, 220);
+		getContentPane().add(scrollpane);
+	}
+
+	public void searchView(String user_id) {
+		try {
+			remove(scrollpane);
+		} catch (NullPointerException e) {
+
+		}
+
+		ArrayList<Member_Data> arr = db.search(user_id);
+
+		String[] colNames = { "¾ÆÀÌµð", "ÀÌ¸§", "ºñ¹Ð¹øÈ£", "ÀüÈ­¹øÈ£", "°ü¸®ÀÚ/¼Õ´Ô" };
+		String[][] rowData = new String[arr.size()][colNames.length];
+
+		for (int row = 0; row < rowData.length; ++row) {
+			rowData[row][0] = arr.get(row).getID();
+			rowData[row][1] = arr.get(row).getName();
+			rowData[row][2] = arr.get(row).getPassword();
+			rowData[row][3] = arr.get(row).getPhonenum();
+			rowData[row][4] = arr.get(row).getPassenger();
+		}
+
+		DefaultTableModel model = new DefaultTableModel(rowData, colNames) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		JTable table = new JTable(model);
+
+		ListSelectionModel selectionModel = table.getSelectionModel();
+		selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.getTableHeader().setReorderingAllowed(false);
+
+		selectionModel.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+
+				if (!e.getValueIsAdjusting()) {
+					System.out.println("select row : " + table.getSelectedRow());
+					int row = table.getSelectedRow();
+					tf1.setText(rowData[row][0]);
+					tf2.setText(rowData[row][1]);
+					tf3.setText(rowData[row][2]);
+					tf4.setText(rowData[row][3]);
+					tf5.setText(rowData[row][4]);
+				}
+
+			}
+		});
+
+		model.fireTableDataChanged();
+		scrollpane = new JScrollPane();
+		scrollpane.setViewportView(table);
+
+		scrollpane.setBounds(40, 170, 710, 220);
+		getContentPane().add(scrollpane);
 	}
 
 	public void MemberManagementGUI() {
@@ -79,82 +207,32 @@ public class MemberManagementGUI extends JFrame {
 		panel.setBackground(Color.WHITE);
 		panel.setLayout(null);
 		setResizable(false);
-		setBounds(10, 20, 800, 650);
+		setSize(800, 500);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
-
-		ta.setEditable(false);
-
-		scrolledpane.setSize(500, 200);
-		add(scrolledpane);
-
-//		backBtn = new JButton(image);
-//		backBtn.setRolloverIcon(image2);
-//		backBtn.setBorderPainted(false);
-//		backBtn.setBounds(30, 30, 48, 50);
-//		panel.add(backBtn);
 
 		homeBtn = new JButton(home_image);
 		homeBtn.setRolloverIcon(home_image2);
 		homeBtn.setBorderPainted(false);
-		homeBtn.setBounds(700, 30, 50, 50);
+		homeBtn.setBounds(700, 20, 50, 50);
 		panel.add(homeBtn);
 
-		pName.setBounds(330, 30, 200, 50);
-		pName.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.BOLD, 40));
+		pName.setBounds(350, 10, 200, 50);
+		pName.setFont(new Font("ÈÞ¸ÕÆíÁöÃ¼", Font.BOLD, 35));
 		panel.add(pName);
-		label.setBounds(40, 120, 50, 30);
-		label.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.PLAIN, 30));
-		panel.add(label);
+		
+		
+		
 
-		// ÀÔ·Â °ø°£
-		tf1.setBounds(55, 170, 80, 25);
-		tf1.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.PLAIN, 15));
-		panel.add(tf1); // ¾ÆÀÌµð ÀÔ·Â °ø°£
-		tf2.setBounds(187, 170, 80, 25);
-		tf2.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.PLAIN, 15));
-		panel.add(tf2); // ÀÌ¸§ ÀÔ·Â °ø°£
-		tf3.setBounds(347, 170, 80, 25);
-		tf3.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.PLAIN, 15));
-		panel.add(tf3); // ºñ¹ø
-		tf4.setBounds(505, 170, 80, 25);
-		tf4.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.PLAIN, 15));
-		panel.add(tf4); // Àü¹ø
-		tf5.setBounds(680, 170, 80, 25);
-		tf5.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.PLAIN, 15));
-		panel.add(tf5); // °ü¸®ÀÚÀ¯¹«
-
-		// ÀÔ·Â °ø°£ ¶óº§ ÀÌ¸§
-		l1.setBounds(25, 170, 80, 30);
-		l1.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.PLAIN, 15));
-		panel.add(l1); // ¾ÆÀÌµð ¶óº§
-		l2.setBounds(145, 170, 80, 30);
-		l2.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.PLAIN, 15));
-		panel.add(l2); // ÀÌ¸§ ¶óº¬
-		l3.setBounds(280, 170, 80, 30);
-		l3.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.PLAIN, 15));
-		panel.add(l3); // ºñ¹ø
-		l4.setBounds(440, 170, 80, 30);
-		l4.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.PLAIN, 15));
-		panel.add(l4); // Àü¹ø
-		l5.setBounds(595, 170, 90, 30);
-		l5.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.PLAIN, 15));
-		panel.add(l5); // °ü¸®ÀÚÀ¯¹«
-
-		// ÀÔ·ÂÇÑ ±ÛÀÌ º¸ÀÌ´Â Ã¢
-		JScrollPane jsp = new JScrollPane(ta); // Ã¢ ½ºÅ©·Ñ
-		jsp.setBounds(40, 300, 700, 250);
-		panel.add(jsp);
-
-		btn1.setBounds(250, 240, 70, 30);
+		btn1.setBounds(160, 80, 70, 30); // Ãß°¡
 		btn1.setBackground(new Color(0XE7E6E6));
-		btn2.setBounds(145, 240, 70, 30);
+		btn2.setBounds(40, 80, 100, 30); // Á¶È¸
 		btn2.setBackground(new Color(0XE7E6E6));
-		btn3.setBounds(355, 240, 70, 30);
+		btn3.setBounds(250, 80, 70, 30); // ¼öÁ¤
 		btn3.setBackground(new Color(0XE7E6E6));
-		btn4.setBounds(460, 240, 70, 30);
+		btn4.setBounds(680, 410, 70, 30); // »èÁ¦
 		btn4.setBackground(new Color(0XE7E6E6));
-		btn5.setBounds(565, 240, 70, 30);
+		btn5.setBounds(600, 410, 70, 30); // °Ë»ö
 		btn5.setBackground(new Color(0XE7E6E6));
 
 		panel.add(btn1);
@@ -163,22 +241,54 @@ public class MemberManagementGUI extends JFrame {
 		panel.add(btn4);
 		panel.add(btn5);
 
-		Member_DB db = new Member_DB();
+//		TextHint tHint = new TextHint(" ¾ÆÀÌµð ÀÔ·Â");
+//		tHint.setBounds(490, 410, 100, 30);
+//		panel.add(tHint);
+		
+		// ÀÔ·Â °ø°£
+		tf1.setBounds(70, 130, 80, 25);
+		tf1.setFont(new Font("ÈÞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
+		panel.add(tf1); // ¾ÆÀÌµð ÀÔ·Â °ø°£
+		tf6.setBounds(490, 410, 100, 30);
+		tf6.setFont(new Font("ÈÞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
+		tf6.setText("¾ÆÀÌµð ÀÔ·Â");
+		panel.add(tf6); // ¾ÆÀÌµð ÀÔ·Â °ø°£ (°Ë»ö)
+		tf2.setBounds(195, 130, 60, 25);
+		tf2.setFont(new Font("ÈÞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
+		panel.add(tf2); // ÀÌ¸§ ÀÔ·Â °ø°£
+		tf3.setBounds(325, 130, 80, 25);
+		tf3.setFont(new Font("ÈÞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
+		panel.add(tf3); // ºñ¹ø
+		tf4.setBounds(475, 130, 120, 25);
+		tf4.setFont(new Font("ÈÞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
+		panel.add(tf4); // Àü¹ø
+		tf5.setBounds(685, 130, 60, 25);
+		tf5.setFont(new Font("ÈÞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
+		panel.add(tf5); // °ü¸®ÀÚÀ¯¹«
 
-		// µÚ·Î°¡±â ¹öÆ°
-//		backBtn.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				new ManagerMainFrame2();
-//				setVisible(false);
-//			}
-//		});
+		// ÀÔ·Â °ø°£ ¶óº§ ÀÌ¸§
+		l1.setBounds(40, 130, 80, 30);
+		l1.setFont(new Font("ÈÞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
+		panel.add(l1); // ¾ÆÀÌµð ¶óº§
+		l2.setBounds(155, 130, 80, 30);
+		l2.setFont(new Font("ÈÞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
+		panel.add(l2); // ÀÌ¸§ ¶óº¬
+		l3.setBounds(260, 130, 80, 30);
+		l3.setFont(new Font("ÈÞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
+		panel.add(l3); // ºñ¹ø
+		l4.setBounds(410, 130, 80, 30);
+		l4.setFont(new Font("ÈÞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
+		panel.add(l4); // Àü¹ø
+		l5.setBounds(600, 130, 90, 30);
+		l5.setFont(new Font("ÈÞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
+		panel.add(l5); // °ü¸®ÀÚÀ¯¹«
 
 		// È¨ ¹öÆ°
 		homeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Admin_MainFrame(); // ³ªÁß¿¡ ¸ÞÀÎÀ¸·Î ¹Ù²Ù¸é µÊ
+//				new Admin_MainFrame(); // ³ªÁß¿¡ ¸ÞÀÎÀ¸·Î ¹Ù²Ù¸é µÊ
+				new ManagerMainFrame2();
 				dispose();
 			}
 		});
@@ -187,60 +297,60 @@ public class MemberManagementGUI extends JFrame {
 		btn1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ta.setText("");
 
 				String user_id = tf1.getText();
 				String user_name = tf2.getText();
 				String user_password = tf3.getText();
 				String user_phonenum = tf4.getText();
 				String user_passenger_manager = tf5.getText();
+				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
+				arr = db.search(user_id);
 
 				Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$");
 				Matcher passMatcher = passPattern.matcher(user_password);
-				Pattern passPattern2 = Pattern.compile("\\d");
+				Pattern passPattern2 = Pattern.compile("\\d{3}-\\d{4}-\\d{4}");
 				Matcher passMatcher2 = passPattern2.matcher(user_phonenum);
-				if (!passMatcher.find()) {
+				Pattern passPattern3 = Pattern.compile("^[°¡-ÆRa-zA-Z]*$");
+				Matcher passMatcher3 = passPattern3.matcher(user_name);
+				Member_Data data = new Member_Data(user_id, user_name, user_password, user_phonenum,
+						user_passenger_manager);
+				if (user_id.equals("") || user_name.equals("") || user_password.equals("") || user_phonenum.equals("")
+						|| user_passenger_manager.equals("")) {
+					JOptionPane.showMessageDialog(null, "Á¤º¸¸¦ ¸ðµÎ ÀÔ·ÂÇØÁÖ¼¼¿ä", "¾Ë¸²", 1);
+					return;
+				} else if (!arr.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "¾ÆÀÌµð°¡ Áßº¹µË´Ï´Ù", "¾ÆÀÌµð Áßº¹", 1);
+					return;
+				} else if (!passMatcher3.find()) {
+					JOptionPane.showMessageDialog(null, "ÇÑ±Û ¶Ç´Â ¿µ¹®¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä", "ÀÌ¸§ ¿À·ù", 1);
+					return;
+				} else if (!passMatcher.find()) {
 					JOptionPane.showMessageDialog(null, "ºñ¹Ð¹øÈ£´Â ¿µ¹®+Æ¯¼ö¹®ÀÚ+¼ýÀÚ 8ÀÚ·Î ±¸¼ºµÇ¾î¾ß ÇÕ´Ï´Ù", "ºñ¹Ð¹øÈ£ ¿À·ù", 1);
 					return;
 				} else if (!passMatcher2.find()) {
-					JOptionPane.showMessageDialog(null, "ÀüÈ­¹øÈ£´Â ¼ýÀÚ·Î¸¸ ±¸¼ºµÇ¾î¾ß ÇÕ´Ï´Ù", "ÀüÈ­¹øÈ£ ¿À·ù", 1);
-					return;
-				} else if (user_id.equals(user_id)) {
-					JOptionPane.showMessageDialog(null, "¾ÆÀÌµð°¡ Á¸ÀçÇÕ´Ï´Ù", "¾ÆÀÌµð Áßº¹", 1);
+					JOptionPane.showMessageDialog(null, "ÀüÈ­¹øÈ£¸¦ ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä\nex) xxx-xxxx-xxxx", "ÀüÈ­¹øÈ£ ¿À·ù", 1);
 					return;
 				} else {
 					db.insertData(
 							new Member_Data(user_id, user_name, user_password, user_phonenum, user_passenger_manager));
 					JOptionPane.showMessageDialog(null, "ÀÔ·ÂµÇ¾ú½À´Ï´Ù!");
-				}
 
+				}
 				tf1.setText("");
 				tf2.setText("");
 				tf3.setText("");
 				tf4.setText("");
 				tf5.setText("");
+				allView();
 			}
+
 		});
 
 		// Ãâ·Â ¹öÆ° ÀÌº¥Æ®
 		btn2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ta.setText("");
-				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
-				arr = db.readData();
-
-				ta.append("\t¾ÆÀÌµð\t" + "ÀÌ¸§\t" + "ºñ¹Ð¹øÈ£\t" + "ÀüÈ­¹øÈ£\t\t" + "°ü¸®ÀÚ/¼Õ´Ô\n");
-				ta.append("\t"
-						+ "-----------------------------------------------------------------------------------------------------------------------\n");
-
-				// ÀüÃ¼Ãâ·Â
-				for (int i = 0; i < arr.size(); i++) {
-					ta.append("\t" + arr.get(i).getID() + "\t" + arr.get(i).getName() + "\t" + arr.get(i).getPassword()
-							+ "\t" + arr.get(i).getPhonenum() + "\t\t" + arr.get(i).getPassenger() + "\n");
-
-				}
-
+				allView();
 			}
 		});
 
@@ -248,7 +358,6 @@ public class MemberManagementGUI extends JFrame {
 		btn3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ta.setText("");
 
 				String user_id = tf1.getText();
 				String user_name = tf2.getText();
@@ -259,22 +368,40 @@ public class MemberManagementGUI extends JFrame {
 				Matcher passMatcher = passPattern.matcher(user_password);
 				Pattern passPattern2 = Pattern.compile("\\d");
 				Matcher passMatcher2 = passPattern2.matcher(user_phonenum);
+				Pattern passPattern3 = Pattern.compile("^[°¡-ÆRa-zA-Z]*$");
+				Matcher passMatcher3 = passPattern3.matcher(user_name);
 
-				if (!passMatcher.find()) {
+				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
+				arr = db.search(user_id);
+
+				int update = JOptionPane.showConfirmDialog(null, "¼öÁ¤ÇÏ½Ã°Ú½À´Ï±î?", "¼öÁ¤ È®ÀÎ", JOptionPane.YES_NO_OPTION);
+				if (user_id.equals("") || user_name.equals("") || user_password.equals("")
+						|| user_phonenum.equals("")) {
+					JOptionPane.showMessageDialog(null, "Á¤º¸¸¦ ¸ðµÎ ÀÔ·ÂÇØÁÖ¼¼¿ä", "¾Ë¸²", 1);
+					return;
+				} else if (!passMatcher3.find()) {
+					JOptionPane.showMessageDialog(null, "ÇÑ±Û ¶Ç´Â ¿µ¹®¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä", "ÀÌ¸§ ¿À·ù", 1);
+					return;
+				} else if (!passMatcher.find()) {
 					JOptionPane.showMessageDialog(null, "ºñ¹Ð¹øÈ£´Â ¿µ¹®+Æ¯¼ö¹®ÀÚ+¼ýÀÚ 8ÀÚ·Î ±¸¼ºµÇ¾î¾ß ÇÕ´Ï´Ù", "ºñ¹Ð¹øÈ£ ¿À·ù", 1);
 					return;
 				} else if (!passMatcher2.find()) {
 					JOptionPane.showMessageDialog(null, "ÀüÈ­¹øÈ£´Â ¼ýÀÚ·Î¸¸ ±¸¼ºµÇ¾î¾ß ÇÕ´Ï´Ù", "ÀüÈ­¹øÈ£ ¿À·ù", 1);
 					return;
 				} else {
-					db.updateData(new Member_Update_Data(user_id, user_name, user_password, user_phonenum));
-					JOptionPane.showMessageDialog(null, "¼öÁ¤µÇ¾ú½À´Ï´Ù!", "¾Ë¸²", 1);
-				}
+					if (update == JOptionPane.YES_OPTION) {
+						db.updateData(new Member_Update_Data(user_id, user_name, user_password, user_phonenum));
+						JOptionPane.showMessageDialog(null, "¼öÁ¤µÇ¾ú½À´Ï´Ù!", "¾Ë¸²", 1);
 
+					}
+					allView();
+				}
 				tf1.setText("");
 				tf2.setText("");
 				tf3.setText("");
 				tf4.setText("");
+				tf5.setText("");
+
 			}
 		});
 
@@ -282,11 +409,27 @@ public class MemberManagementGUI extends JFrame {
 		btn4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ta.setText("");
 
 				String user_id = tf1.getText();
-				db.deleteData(user_id);
-				JOptionPane.showMessageDialog(null, "»èÁ¦µÇ¾ú½À´Ï´Ù!", "¾Ë¸²", 1);
+				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
+				arr = db.search(user_id);
+				int delete = JOptionPane.showConfirmDialog(null, "»èÁ¦ÇÏ½Ã°Ú½À´Ï±î?", "»èÁ¦ È®ÀÎ", JOptionPane.YES_NO_OPTION);
+				
+				if(user_id.equals("")) {
+					JOptionPane.showMessageDialog(null, "ID¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä", "¾Ë¸²", 1);
+					return;
+				} else if (arr.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "¾ÆÀÌµð°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù", "¾ÆÀÌµð ¿À·ù", 1);
+					return;
+				} else {
+					if (delete == JOptionPane.YES_OPTION) {
+						db.deleteData(user_id);
+						JOptionPane.showMessageDialog(null, "»èÁ¦µÇ¾ú½À´Ï´Ù!", "¾Ë¸²", 1);
+
+					}
+					allView();
+
+				}
 
 				tf1.setText("");
 				tf2.setText("");
@@ -300,26 +443,20 @@ public class MemberManagementGUI extends JFrame {
 		btn5.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ta.setText("");
-				String user_id = tf1.getText();
+				String user_id = tf6.getText();
 				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
 				arr = db.search(user_id);
 
-				ta.append("\t¾ÆÀÌµð\t" + "ÀÌ¸§\t" + "ºñ¹Ð¹øÈ£\t" + "ÀüÈ­¹øÈ£\t\t" + "°ü¸®ÀÚ/¼Õ´Ô\n");
-				ta.append("\t"
-						+ "-----------------------------------------------------------------------------------------------------------------------\n");
-
-				// ÀüÃ¼Ãâ·Â
+				// ÀüÃ¼ Ãâ·Â
 				if (arr.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "ÀúÀåµÈ ¾ÆÀÌµð°¡ ¾ø½À´Ï´Ù", "¾ÆÀÌµð ¿À·ù", 1);
+					JOptionPane.showMessageDialog(null, "¾ÆÀÌµð°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù", "¾ÆÀÌµð ¿À·ù", 1);
 					return;
 				} else {
-					
-					for (int i = 0; i < arr.size(); i++) {
-						ta.append("\t" + arr.get(i).getID() + "\t" + arr.get(i).getName() + "\t" + arr.get(i).getPassword()
-								+ "\t" + arr.get(i).getPhonenum() + "\t\t" + arr.get(i).getPassenger() + "\n");
-					}
+					searchView(user_id);
+
 				}
+
+				tf6.setText("");
 
 			}
 		});
