@@ -50,7 +50,7 @@ public class SeatButton extends JButton {
 	public void selectedCheck() {
 		
 		if(!is_selected) {
-			setBackground(Color.GREEN);
+			setBackground(Color.LIGHT_GRAY);
 			is_selected = true;
 		} else {
 			setBackground(Color.WHITE);

@@ -70,7 +70,7 @@ public class SelectRouteMainFrame extends JFrame {
 	SelectBusFrame busFrame;	// 버스 선택 프레임
 	
 	private JLabel label = new JLabel();
-	private ImageIcon background = new ImageIcon("image/reservation2.png");
+	private ImageIcon background = new ImageIcon("image/mp배경원본.png");
 	
 	private String startingPoint;
 	private String arrivalPoint;
@@ -328,7 +328,7 @@ public class SelectRouteMainFrame extends JFrame {
 		beforeButton.addActionListener(beforeBtnEvent);
 		label.add(beforeButton);
 		
-		setSize(600, 650);
+		setSize(800, 650);
 		setLocationRelativeTo(null);
 		//this.getContentPane().setBackground(new Color(0xFFFFCC));
 		//getContentPane().setBackground(Color.WHITE);
