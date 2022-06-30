@@ -10,7 +10,6 @@ import java.awt.RenderingHints;
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JButton;
-import javax.swing.border.MatteBorder;
 
 public class RoundedButton extends JButton {
     public RoundedButton() { super(); decorate(); } 

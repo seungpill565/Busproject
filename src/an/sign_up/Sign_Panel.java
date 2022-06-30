@@ -247,12 +247,10 @@ public class Sign_Panel extends JPanel{
 			) {
 				pstmt.setString(1,pass);
 				ResultSet rset = pstmt.executeQuery();
-					if(rset.next()) {
+					rset.next();
 						JOptionPane.showMessageDialog(null, "사용가능한 비밀번호 입니다.", "비밀번호 체크", 1);
 						passLabel.setText("비밀번호 확인완료");
-					}else {
-						JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 최소 8자에서 최대20자로 구성되어야 합니다.", "비밀번호 체크", 1);
-					}
+					
 				}
 			catch (SQLException e) {
 				e.printStackTrace();
@@ -283,7 +281,7 @@ public class Sign_Panel extends JPanel{
 	//비밀번호 경고 메세지 메서드
 	public void passerror() {
 		pass = new String(passtext.getPassword());
-		if (pass.length() <= 8) {
+		if (pass.length() <= 7) {
 			passLabel.setForeground(Color.red);
 			passLabel.setText("8자이상으로 입력하세요");
 		}
