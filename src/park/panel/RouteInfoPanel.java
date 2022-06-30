@@ -12,24 +12,24 @@ import hong.SaveInfo;
 
 public class RouteInfoPanel extends JPanel{
 	RouteInfoColumnNamePanel panel = new RouteInfoColumnNamePanel();
-	//RouteInfoRowsPanel rowsPanel ;
 	JScrollPane scroll;
 	ScrollPanePanel scrollPanel;
 	Dimension size = new Dimension();
+	
 	public RouteInfoPanel(SaveInfo user) {
 		LayoutManager manager = new BorderLayout();
 		setLayout(manager);
 		scrollPanel = new ScrollPanePanel(user);
-		size.setSize(450, 30);
+		size.setSize(450, 35*user.getSeatSize());
 		scrollPanel.setPreferredSize(size);
-		scroll = new JScrollPane(scrollPanel);//, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll = new JScrollPane(scrollPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.getViewport().setBackground(Color.white);
 		
 		add(panel,"North");
 		add(scroll,"Center");
 		
-		scroll.setViewportView(scrollPanel);
+		//scroll.setViewportView(scrollPanel);
 		setBackground(Color.white);
-		setLayout(manager);
 		setBounds(10,100,465,250);
 	}
 

@@ -12,7 +12,7 @@ public class RvInfoColumnNameLabel extends JLabel{
 	
 		super(title);
 		
-		setFont(new Font("πŸ≈¡√º",Font.BOLD,16));
+		setFont(new Font("»ﬁ∏’ ∆Ì¡ˆ√º",Font.BOLD,16));
 		setPreferredSize(new Dimension(77,30));
 		setOpaque(true);
 		setForeground(Color.white);
