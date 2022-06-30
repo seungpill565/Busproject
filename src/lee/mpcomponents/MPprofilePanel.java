@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -37,28 +38,16 @@ public class MPprofilePanel extends JPanel {
 
 		add("내정보 보기", MPprofile_1);
 		add("내정보 수정", MPprofile_2);
+
 		
-		//profile_1 에 내 정보 뜨는 라벨 붙이기_____________________________________________________________________________
-		String sql = "SELECT user_id, user_name, user_phonenum, user_password FROM user_info WHERE user_id = ?";
-		String MPprofileLbStr = "";	
-		MPprofileModel pm = null;
-		try (
-				Connection conn = OjdbcConnection.getConnection();				
-				PreparedStatement pstmt = conn.prepareStatement(sql);		
-		){
-			pstmt.setString(1, user_id);  // 아 pstmt.setString()로 물음표 먼저 채워주고 rs써야됨!
-		
-			try(ResultSet rs = pstmt.executeQuery();){
-				//라벨
-				while(rs.next()) {
-					pm = new MPprofileModel(rs);
-					MPprofileLbStr = pm.toString();				
-				}
-			}			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+		ImageIcon backImg = new ImageIcon("image/mp컨텐츠패널배경.png");
+		JLabel backLb = new JLabel(backImg);
+		backLb.setBounds(0, 0, 510, 460);
+		add(backLb);		
+
+		//MPprofile_1에 회원정보 띄우기_________________________________________________________________________________________
+		//데이터모델의 메서드를 이용해 회원정보를 String으로 가져온 후 프로필라벨에 넣기
+		String MPprofileLbStr = MPprofileModel.MPprofileInfo(user_id);
 		JLabel MPprofileLb = new JLabel(MPprofileLbStr);
 		//프로필라벨 설정
 		MPprofileLb.setOpaque(true);//나중에 삭제 
@@ -66,23 +55,24 @@ public class MPprofilePanel extends JPanel {
 		MPprofileLb.setBounds(50, 50, 390, 200);
 		MPprofileLb.setVerticalAlignment(JLabel.TOP);
 		MPprofile_1.add(MPprofileLb);
-		//__________________________________________________________________________________________________________________
+		//_________________________________________________________________________________________________________________
 		
-		
-		//MPprofile_2의 tf들에 회원정보가 기본으로 떠 있게_________________________________________________________________________
-		//이름
-		MPprofile_2.MPnameTf.setText(pm.getUser_name());
-				
-		//핸드폰번호
-		String str = pm.getUser_phonenum();
-		String[] arr = str.split("-");
-		MPprofile_2.MPphoneTf_1.setText(arr[0]);
-		MPprofile_2.MPphoneTf_2.setText(arr[1]);
-		MPprofile_2.MPphoneTf_3.setText(arr[2]);
-		//비밀번호
-		MPprofile_2.MPnewpwTf.setText(pm.getUser_password());
-		//__________________________________________________________________________________________________________________
-
+		//MPprofile_2의 tf들에 회원정보가 기본으로 떠 있게___________________________________________________________________________
+		try (Connection conn = OjdbcConnection.getConnection();){
+			//이름
+			MPprofile_2.MPnameTf.setText(MPprofileModel.MPgetUserName(conn, user_id));		
+			//핸드폰번호
+			String str = MPprofileModel.MPgetUserPhoneNum(conn, user_id);
+			String[] arr = str.split("-");
+			MPprofile_2.MPphoneTf_1.setText(arr[0]);
+			MPprofile_2.MPphoneTf_2.setText(arr[1]);
+			MPprofile_2.MPphoneTf_3.setText(arr[2]);
+			//비밀번호
+			MPprofile_2.MPnewpwTf.setText(MPprofileModel.MPgetUserPw(conn, user_id));	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		//__________________________________________________________________________________________________________________	
 	}
 	
 

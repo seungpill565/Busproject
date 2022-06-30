@@ -10,11 +10,13 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import an.OjdbcConnection;
 import an.login.Login_Mainframe;
@@ -34,7 +36,7 @@ public class MPmainFrame extends JFrame {
 	String user_id;
 	SaveInfo saveInfo;
 	
-	JButton MPhomeBtn = new JButton();
+	
 	JLabel MPcategoryLb = new JLabel("카테고리명");
 	
 	MPnavPanel MPnav = new MPnavPanel();
@@ -43,8 +45,10 @@ public class MPmainFrame extends JFrame {
 	//체크된 체크박스에 담긴 예매번호 담는 어레리 
 	ArrayList<Integer> br_id_list = new ArrayList<>();
 	
-
-	
+	//이미지 아이콘 준비
+	ImageIcon homeImg1 = new ImageIcon("image/home1.png");
+	ImageIcon homeImg2 = new ImageIcon("image/home2.png");
+	ImageIcon backImg = new ImageIcon("image/mp배경.png");
 	
 //액션리스너에서 쓰일 메서드들 모음
 	
@@ -343,7 +347,6 @@ public class MPmainFrame extends JFrame {
 	public MPmainFrame(SaveInfo saveInfo) {
 		
 		this.saveInfo = saveInfo;
-		System.out.println(saveInfo.get_user_id());
 		this.user_id = saveInfo.get_user_id();
 		
 		MPcontents = new MPcontentsPanel(saveInfo);
@@ -357,10 +360,13 @@ public class MPmainFrame extends JFrame {
 		MPcategoryLb.setForeground(Color.BLACK);
 		this.add(MPcategoryLb);
 		
-		
+		//홈버튼에 이미지 달기
+		JButton MPhomeBtn = new JButton(homeImg1);
+		MPhomeBtn.setRolloverIcon(homeImg2);
 		MPhomeBtn.setBounds(10, 10, 50, 50);
 		MPhomeBtn.setBorderPainted(false);
-		
+		MPhomeBtn.setContentAreaFilled(false);
+		MPhomeBtn.setFocusPainted(false);
 		
 		//홈버튼 액션 달기
 		MPhomeBtn.addActionListener(new ActionListener() {		
@@ -402,11 +408,20 @@ public class MPmainFrame extends JFrame {
 		add(MPnav);
 		add(MPcontents);	
 		add(MPhomeBtn);
-			
+		
+		
+		//프레임 배경 설정
+		JPanel backPn = new JPanel();
+		JLabel backLb = new JLabel(backImg);
+		backPn.setBounds(0, 0, 800, 650);
+		backPn.setOpaque(true);
+		backLb.setBounds(0, 0, 800, 650);
+		backPn.add(backLb);
+		add(backPn);
+
 		
 		//프레임 설정
-		setTitle("마이페이지");
-		//getContentPane().setBackground(Color.LIGHT_GRAY);//배경색 나중에 맞추기		
+		setTitle("마이페이지");		
 		setSize(800, 650);
 		setLocationRelativeTo(null);//창이 가운데 나오게
 		setVisible(true);

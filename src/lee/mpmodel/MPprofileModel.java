@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import an.OjdbcConnection;
+
 public class MPprofileModel {
 	
 	String user_id;
@@ -50,7 +52,7 @@ public class MPprofileModel {
 	}
 	
 	
-	
+	//회원의 비번 가져오는 메서드
 	public static String MPgetUserPw(Connection conn, String user_id) {
 		String sql = "SELECT user_password FROM user_info WHERE user_id = ?";
 		String userPw = "";
@@ -67,6 +69,44 @@ public class MPprofileModel {
 			System.out.println("");
 		}
 		return userPw;
+	}
+	
+	//회원의 연락처 가져오는 메서드
+	public static String MPgetUserPhoneNum(Connection conn, String user_id) {
+		String sql = "SELECT user_phonenum FROM user_info WHERE user_id = ?";
+		String userPhone = "";
+		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {
+			
+			pstmt.setString(1, user_id);
+			
+			try(ResultSet rs = pstmt.executeQuery();) {
+				while(rs.next() ) {
+					userPhone = rs.getString("user_phonenum");
+				}
+			}	
+		} catch (SQLException e) {
+			System.out.println("");
+		}
+		return userPhone;
+	}
+	
+	//회원의 이름 가져오는 메서드
+	public static String MPgetUserName(Connection conn, String user_id) {
+		String sql = "SELECT user_name FROM user_info WHERE user_id = ?";
+		String userName = "";
+		try(PreparedStatement pstmt = conn.prepareStatement(sql); ) {
+			
+			pstmt.setString(1, user_id);
+			
+			try(ResultSet rs = pstmt.executeQuery();) {
+				while(rs.next() ) {
+					userName = rs.getString("user_name");
+				}
+			}	
+		} catch (SQLException e) {
+			System.out.println("");
+		}
+		return userName;
 	}
 	
 	
@@ -111,6 +151,31 @@ public class MPprofileModel {
 	}
 	
 
+	//MPprofilePanel_2에 띄울 회원정보 String으로 반환하는 메서드
+	public static String MPprofileInfo(String user_id) {
+		String sql = "SELECT user_id, user_name, user_phonenum, user_password FROM user_info WHERE user_id = ?";
+		String MPprofileLbStr = "";	
+		MPprofileModel pm = null;
+		try (
+				Connection conn = OjdbcConnection.getConnection();				
+				PreparedStatement pstmt = conn.prepareStatement(sql);		
+		){
+			pstmt.setString(1, user_id);
+		
+			try(ResultSet rs = pstmt.executeQuery();){
+				//라벨
+				while(rs.next()) {
+					pm = new MPprofileModel(rs);
+					MPprofileLbStr = pm.toString();				
+				}
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return MPprofileLbStr;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return String.format(
