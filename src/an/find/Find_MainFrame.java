@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,12 +13,19 @@ import an.find.action.Find_IdAction;
 import an.find.action.Find_PassAction;
 
 public class Find_MainFrame extends JFrame{
+	ImageIcon idimage = new ImageIcon("image/findid.png");
+	ImageIcon passimage = new ImageIcon("image/findpass.png");
+	
 	JButton id = new Find_Button("아이디 찾기");
 	JButton pass = new Find_Button("비밀번호 찾기"); 
 	
 	
 	public Find_MainFrame() {
+		id.setText("");
+		id.setIcon(idimage);
 		
+		pass.setText("");
+		pass.setIcon(passimage);
 		
 		JPanel main  = new Find_Panel();
 		JPanel bt = new Find_ButtonPanel(id,pass);
@@ -34,7 +42,8 @@ public class Find_MainFrame extends JFrame{
 		add(main,BorderLayout.NORTH);
 		add(bt,BorderLayout.CENTER);
 		
-		setBounds(660, 350, 400, 150);
+		setSize(400, 250);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);  
 		setVisible(true);

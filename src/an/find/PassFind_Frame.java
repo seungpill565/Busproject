@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -24,11 +25,20 @@ public class PassFind_Frame extends JFrame{
 	JTextField nameText = new Find_TextField(10);
 	JTextField idText = new Find_TextField(10);
 	
-	JButton button = new Find_Button("찾기");
-	JButton button2 = new Find_Button("아이디 찾기");
-	JButton out = new Find_Button("나가기");
+	ImageIcon buttonimage = new ImageIcon("image/find2.png");
+	ImageIcon idimage = new ImageIcon("image/findid.png");
+	ImageIcon outimage = new ImageIcon("image/out.png");
+	
+	JButton button = new Find_Button("");
+	JButton button2 = new Find_Button("");
+	JButton out = new Find_Button("");
 	
 	public PassFind_Frame() {
+		
+		button.setIcon(buttonimage);
+		button2.setIcon(idimage);
+		out.setIcon(outimage);
+		
 		
 		
 		JPanel passMain = new Pass_Mainpanel();
@@ -52,7 +62,8 @@ public class PassFind_Frame extends JFrame{
 			
 		
 		//////////////////////////////////////////////////////////////////////////
-		setBounds(650, 350, 400, 300);
+		setSize(500, 400);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);  
 		setVisible(true);

@@ -13,7 +13,8 @@ public class Find_Button extends JButton{
 		super(str);
 		EmptyBorder b1 = new EmptyBorder(5,3,5,3);
 		setBorder(b1);
-		setBackground(new Color(0XFFFFFFF));
+		setBackground(new Color(0X4D7F86));
+		setForeground(new Color(0XFFFFFF));
 		setFont(new Font("휴먼편지체", Font.BOLD, 20));
 		
 	}

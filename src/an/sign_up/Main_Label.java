@@ -9,7 +9,7 @@ public class Main_Label extends JLabel{
 	
 public Main_Label(String str) {
 	super(str);
-	setForeground(new Color(0X000000));
+	setForeground(new Color(0XFFFFFFF));
 	setFont(new Font("휴먼편지체", Font.BOLD, 30));
 }
 }

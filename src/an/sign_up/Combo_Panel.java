@@ -1,5 +1,6 @@
 package an.sign_up;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JComboBox;
@@ -12,6 +13,7 @@ public class Combo_Panel extends JPanel{
 	public Combo_Panel(JComboBox<String> combo) {
 		this.combo = combo;
 		setLayout(new FlowLayout());
+		setBackground(new Color(0X4D7F86));
 		add(check);add(combo);
 		
 	}

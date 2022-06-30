@@ -1,5 +1,6 @@
 package an.find;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JLabel;
@@ -15,7 +16,7 @@ public class Pass_IdPanel extends JPanel{
 		 idText = j;
 		 
 		setLayout(new FlowLayout(FlowLayout.LEADING));
-		
+		setBackground(new Color(0X4D7F86));
 		add(idLabel); add(idText);
 	}
 	

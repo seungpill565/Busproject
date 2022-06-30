@@ -2,6 +2,7 @@ package an.admin;
 
 import java.awt.BorderLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,6 +15,10 @@ import jang.MemberManagementGUI;
 import jang.RouteManageMentGUI;
 
 public class Admin_MainFrame extends JFrame{
+	ImageIcon logoutimage = new ImageIcon("image/button3.png");
+	ImageIcon routemodifyimage = new ImageIcon("image/button4.png");
+	ImageIcon userModifyimage = new ImageIcon("image/button5.png");
+	
 	JButton userModify = new Admin_Button("회원정보 수정");
 	JButton routemodify = new Admin_Button("노선정보 수정");
 	JButton out 		= new Admin_Button("나가기");
@@ -23,6 +28,16 @@ public class Admin_MainFrame extends JFrame{
 	JPanel titlePanel = new Admin_TitlePanel(); 
 	public Admin_MainFrame() {
 		setTitle("관리자 페이지");
+		
+		userModify.setText("");
+		userModify.setIcon(userModifyimage);
+		
+		routemodify.setText("");
+		routemodify.setIcon(routemodifyimage);
+		
+		out.setText("");
+		out.setIcon(logoutimage);
+		
 		
 		add(main,BorderLayout.SOUTH);
 		add(titlePanel,BorderLayout.NORTH);
@@ -38,7 +53,8 @@ public class Admin_MainFrame extends JFrame{
 		out.addActionListener(outevent);
 
 		///////////////////////////////////////////////////////////////////
-		setBounds(500, 200, 800, 500);
+		setSize( 1100, 750);
+		setLocationRelativeTo(null);
 		setResizable(false);  
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);

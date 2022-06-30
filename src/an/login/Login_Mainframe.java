@@ -8,9 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -27,6 +29,9 @@ import an.userinfo.Info_MainFrame;
 import hong.SaveInfo;
 
 public class Login_Mainframe extends JFrame{
+	ImageIcon loginimage = new ImageIcon("image/login.png");
+	ImageIcon signimage = new ImageIcon("image/signbutton.png");
+	ImageIcon findimage = new ImageIcon("image/find.png");
 	
 	JPanel title = new Login_TitlePanal();
 	JPanel image = new Login_ImgPanel();
@@ -34,7 +39,10 @@ public class Login_Mainframe extends JFrame{
 	
 	SaveInfo saveInfo = new SaveInfo();
 	
+	JLabel ButtonLabel = new JLabel();
+	
 	JButton login = new Lg_Button("로그인");
+	
 	JButton join = new Lg_Button("회원가입");
 	JButton up = new Lg_Button("아이디/비밀번호 찾기");
 	
@@ -60,6 +68,18 @@ public class Login_Mainframe extends JFrame{
 	public Login_Mainframe() {
 
 		setTitle("버스 예약시스템");
+		login.setText("");
+		login.setIcon(loginimage);
+		
+		join.setText("");
+		join.setIcon(signimage);
+		
+		up.setText("");
+		up.setIcon(findimage);
+		
+		ButtonLabel.setLayout(new FlowLayout());
+		
+		
 		JPanel allIdLabel = new AllPanel();
 		setLayout(new BorderLayout(0,0));
 		jp.setLayout(new FlowLayout());
@@ -85,7 +105,8 @@ public class Login_Mainframe extends JFrame{
 		
 		
 		///////////////////////////////////////////////////////////////
-		setBounds(500, 200, 800, 500);
+		setSize( 1090, 750);
+		setLocationRelativeTo(null);
 		setResizable(false);  
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -114,12 +135,15 @@ public class Login_Mainframe extends JFrame{
 			String check = combo.getSelectedItem().toString();
 			
 		
-		String sql = String.format("SELECT user_password FROM user_info WHERE user_id = '%s'"
-				+ " AND user_password ='%s'and user_passenger_manager = '%s'",
-				id, pass,check);	
+		String sql = "SELECT user_password FROM user_info WHERE user_id = ?"
+				+ " AND user_password =? and user_passenger_manager = ?";	
 		try(Connection conn = OjdbcConnection.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
 				
+				pstmt.setString(1,id);
+				pstmt.setString(2,pass);
+				pstmt.setString(3,check);
+			
 				ResultSet rset = pstmt.executeQuery();
 
 				rset.next();

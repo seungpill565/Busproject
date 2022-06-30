@@ -12,7 +12,7 @@ public class Find_Label extends JLabel{
 		
 		
 		super(str);
-		setForeground(new Color(0X000000));
+		setForeground(new Color(0XFFFFFF));
 		setFont(new Font("휴먼편지체", Font.BOLD, 25));
 	}
 

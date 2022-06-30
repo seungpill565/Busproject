@@ -1,5 +1,6 @@
 package an.find;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -17,6 +18,7 @@ public class IdFind_ButtonPanel extends JPanel{
 		out = b3;
 		
 		setLayout(new FlowLayout());
+		setBackground(new Color(0X4D7F86));
 		
 		add(button); add(button2);add(out);
 	}

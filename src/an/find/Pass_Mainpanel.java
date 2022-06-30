@@ -13,7 +13,7 @@ public class Pass_Mainpanel extends JPanel{
 		
 		setLayout(new FlowLayout());
 		setForeground(new Color(0X000000));
-		
+		setBackground(new Color(0X4D7F86));
 		add(findLabel);
 		
 	}

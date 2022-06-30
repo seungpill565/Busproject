@@ -47,7 +47,7 @@ public class Sign_Panel extends JPanel{
 	JPasswordField passtext= new JPasswordField(12);
 	JButton checkpass = new Action_button("비밀번호 확인");
 	JPanel passPanel = new Password_Panel(passtext,checkpass);
-	JLabel passLabel = new ErrorLabel("비밀번호는 영문+특수문자+숫자 최소 8자에서 최대20자로 구성");
+	JLabel passLabel = new ErrorLabel("비밀번호는 영문+숫자+특수문자 최소 8자에서 최대20자로 구성");
 	
 	//비밀번호 확인
 	JPasswordField passCktext= new JPasswordField(12);
@@ -81,11 +81,11 @@ public class Sign_Panel extends JPanel{
 	public Sign_Panel(JButton button) {
 		setLayout(new GridLayout(12, 0));
 		
-		
+		setBackground(new Color(0X4D7F86));
 		this.button = button ;
 		//this.button2= button2;
 		//this.button3 = button3;
-		comboLabel.setForeground(Color.blue);
+		comboLabel.setForeground(new Color(0XFFFFFF));
 		
 		add(idPanel);
 		add(idcheckLabel);
@@ -122,6 +122,8 @@ public class Sign_Panel extends JPanel{
 		passtext.addKeyListener(passkeyevent);
 		passCktext.addKeyListener(passckkeyevent);
 		nametext.addKeyListener(namekeyevent);
+		pntext.addKeyListener(pnkeyevent);
+		pntext2.addKeyListener(pnkeyevent);
 		pntext3.addKeyListener(pnkeyevent);
 		combo.addActionListener(comboevent);
 					
@@ -156,7 +158,7 @@ public class Sign_Panel extends JPanel{
 			return;
 		}	
 		if (!passMatcher.find()) {
-			JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 최소 8자에서 최대20자로 구성되어야 합니다", "비밀번호 오류", 1);
+			JOptionPane.showMessageDialog(null, "비밀번호는 영문+숫자+특수문자 최소 8자에서 최대20자로 구성되어야 합니다", "비밀번호 오류", 1);
 			return;
 		} if(!phcheck) {
 			JOptionPane.showMessageDialog(null, "xxx-xxxx-xxxx로 입력해 주세요", "번호 오류", 1);
@@ -196,13 +198,14 @@ public class Sign_Panel extends JPanel{
 		id = idtext.getText();
 		
 		
-		String sql1 = String.format("SELECT user_id from user_info where user_id = '%s'",id);
+		String sql1 = "SELECT user_id from user_info where user_id = ?";
 		
 		boolean result = Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", id);
 		
 		try(Connection conn = OjdbcConnection.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql1);
 		) {
+			pstmt.setString(1, idtext.getText());
 			ResultSet rset = pstmt.executeQuery();
 			if(!result) {
 				JOptionPane.showMessageDialog(null, "아이디는 영문숫자로이루어진 5~12글자로 생성 해주세요", "아이디 오류", 1);
@@ -210,9 +213,13 @@ public class Sign_Panel extends JPanel{
 			
 				if(!rset.next()) {
 					JOptionPane.showMessageDialog(null, "사용가능한 아이디 입니다.", "아이디 중복 체크", 1);
+					idcheckLabel.setText("중복확인완료");
+					
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "중복된 아이디 입니다.", "중복 체크", 1);
+					idcheckLabel.setForeground(Color.red);
+					idcheckLabel.setText("중복된 아이디입니다.아이디를 변경해 주세요");
 				}
 			}
 		} catch (SQLException e) {
@@ -225,22 +232,24 @@ public class Sign_Panel extends JPanel{
 	//비밀번호 체크 메서드
 	public void checkpass() {
 		pass = new String(passtext.getPassword());
-		String sql1 = String.format("SELECT user_password from user_info where user_password = '%s'",pass);
+		String sql1 = "SELECT user_password from user_info where user_password = ?";
 		
 		Pattern passPattern1 = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$"); //8자 영문+특문+숫자
 		
 		Matcher passMatcher = passPattern1.matcher(pass);
 		
 		if(!passMatcher.find()) {
-			JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 최소 8자에서 최대20자로 구성되어야 합니다", "비밀번호 오류", 1);
+			JOptionPane.showMessageDialog(null, "비밀번호는 영문+숫자+특수문자  최소 8자에서 최대20자로 구성되어야 합니다", "비밀번호 오류", 1);
 		}else {
 			try(
 				Connection conn = OjdbcConnection.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql1);	
 			) {
+				pstmt.setString(1,pass);
 				ResultSet rset = pstmt.executeQuery();
 					if(rset.next()) {
 						JOptionPane.showMessageDialog(null, "사용가능한 비밀번호 입니다.", "비밀번호 체크", 1);
+						passLabel.setText("비밀번호 확인완료");
 					}else {
 						JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 최소 8자에서 최대20자로 구성되어야 합니다.", "비밀번호 체크", 1);
 					}
@@ -260,8 +269,8 @@ public class Sign_Panel extends JPanel{
 			idcheckLabel.setForeground(Color.red);
 			idcheckLabel.setText("아이디는 5글자 이상이여야 합니다");
 		} else if (Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", id)) {
-			idcheckLabel.setForeground(Color.BLUE);
-			idcheckLabel.setText("사용가능한 아이디입니다. 아이디 중복을 눌러주세요");
+			idcheckLabel.setForeground(Color.BLACK);
+			idcheckLabel.setText("아이디 중복을 눌러주세요");
 		}else if(id.length()>=12) {
 			idcheckLabel.setForeground(Color.red);
 			idcheckLabel.setText("아이디는 11글자 이하이여야 합니다");
@@ -273,13 +282,13 @@ public class Sign_Panel extends JPanel{
 	
 	//비밀번호 경고 메세지 메서드
 	public void passerror() {
-		pass = new String(passtext.getText());
+		pass = new String(passtext.getPassword());
 		if (pass.length() <= 8) {
 			passLabel.setForeground(Color.red);
 			passLabel.setText("8자이상으로 입력하세요");
 		}
 		else if(Pattern.matches("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$",pass)) {
-			 passLabel.setForeground(Color.BLUE);
+			 passLabel.setForeground(Color.BLACK);
 			 passLabel.setText("사용가능한 비밀번호 입니다. 비밀번호 확인을 눌러주세요");
 		}
 		else if(pass.length() >=21){
@@ -287,7 +296,7 @@ public class Sign_Panel extends JPanel{
 			passLabel.setText("비밀번호는 20자 이하여야 됩니다.");
 		}else {
 			passLabel.setForeground(Color.red);
-			passLabel.setText("비밀번호는 영문+특수문자+숫자 최소 8자에서 최대20자로 구성");
+			passLabel.setText("비밀번호는 영문+숫자+특수문자 최소 8자에서 최대20자로 구성");
 		}
 		
 	}
@@ -300,7 +309,7 @@ public class Sign_Panel extends JPanel{
 			passcheckLabel.setForeground(Color.red);
 			passcheckLabel.setText("비밀번호가 일치 하지 않습니다.");
 		} else if(passck.equals(pass)) {
-			passcheckLabel.setForeground(Color.BLUE);
+			passcheckLabel.setForeground(Color.BLACK);
 			passcheckLabel.setText("비밀번호가 일치 합니다.");
 		}else {
 			passcheckLabel.setText("비밀번호 입력하세요");
@@ -320,7 +329,7 @@ public class Sign_Panel extends JPanel{
 			pnLabel.setForeground(Color.red);
 			pnLabel.setText("전화번호의 형식은 xxx-xxx-xxxx입니다.");
 			}else {
-				pnLabel.setForeground(Color.BLUE);
+				pnLabel.setForeground(Color.BLACK);
 			 	pnLabel.setText("올바른 형식의 비밀번호 입니다.");
 			}
 	}
@@ -331,7 +340,7 @@ public class Sign_Panel extends JPanel{
 		
 		if(name =="") {
 			nameLabel.setText("이름을 입력하세요.");
-			nameLabel.setForeground(Color.BLUE);
+			nameLabel.setForeground(Color.RED);
 		}	
 		else if(Pattern.matches(REGEX,name)) {
 			nameLabel.setText("이름에는 숫자를 입력하실수 없습니다.");
@@ -339,7 +348,7 @@ public class Sign_Panel extends JPanel{
 			}
 		else {
 			nameLabel.setText("이름을 입력하셨습니다.");
-			nameLabel.setForeground(Color.blue);
+			nameLabel.setForeground(Color.BLACK);
 		}
 		
 	}

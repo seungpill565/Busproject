@@ -1,5 +1,6 @@
 package an.sign_up;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JLabel;
@@ -13,6 +14,7 @@ public class Pass_CheckPanel extends JPanel{
 	public Pass_CheckPanel(JTextField passCkText) {
 		this.passCkText = passCkText;
 		setLayout(new FlowLayout(FlowLayout.LEFT));
+		setBackground(new Color(0X4D7F86));
 		add(password);add(passCkText);
 	}
 
