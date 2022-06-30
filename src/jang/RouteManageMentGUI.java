@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 
 import an.admin.Admin_MainFrame;
 import jang.Data.Route_Read_Data;
+import jang.Data.rt_bi_id_Data;
 import jang.Route.Route_Insert;
 
 public class RouteManageMentGUI extends JFrame {
@@ -141,7 +142,7 @@ public class RouteManageMentGUI extends JFrame {
 //		table.setEnabled(false);
 //		table.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 
-		scrollpane.setBounds(40, 170, 700, 220);
+		scrollpane.setBounds(40, 170, 710, 370);
 		getContentPane().add(scrollpane);
 	}
 
@@ -196,14 +197,13 @@ public class RouteManageMentGUI extends JFrame {
 			}
 		});
 
-		
 		model.fireTableDataChanged();
 		scrollpane = new JScrollPane();
 		scrollpane.setViewportView(table);
 //		table.setEnabled(false);
 //		table.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
-		
-		scrollpane.setBounds(40, 150, 700, 300);
+
+		scrollpane.setBounds(40, 170, 710, 370);
 		getContentPane().add(scrollpane);
 	}
 
@@ -214,9 +214,10 @@ public class RouteManageMentGUI extends JFrame {
 		panel.setLayout(null);
 		setResizable(false);
 		setSize(800, 650);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
-		
+
 		panel.setIcon(image);
 
 		homeBtn = new JButton(home_image);
@@ -231,19 +232,20 @@ public class RouteManageMentGUI extends JFrame {
 		panel.add(pName);
 
 		btn1.setBounds(160, 80, 70, 30); // 추가
-		btn1.setBackground(new Color(0XE7E6E6));
+//		btn1.setBackground(Color.white);
+		btn1.setBackground(new Color(255, 255, 255, 122));
 		btn1.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 		btn2.setBounds(40, 80, 100, 30); // 조회
-		btn2.setBackground(new Color(0XE7E6E6));
+		btn2.setBackground(new Color(255, 255, 255, 122));
 		btn2.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 		btn3.setBounds(250, 80, 70, 30); // 수정
-		btn3.setBackground(new Color(0XE7E6E6));
+		btn3.setBackground(new Color(255, 255, 255, 122));
 		btn3.setFont(new Font("휴먼편지체", Font.BOLD, 15));
-		btn4.setBounds(680, 410, 70, 30); // 삭제
-		btn4.setBackground(new Color(0XE7E6E6));
+		btn4.setBounds(680, 560, 70, 30); // 삭제
+		btn4.setBackground(new Color(255, 255, 255, 122));
 		btn4.setFont(new Font("휴먼편지체", Font.BOLD, 15));
-		btn5.setBounds(600, 410, 70, 30); // 검색
-		btn5.setBackground(new Color(0XE7E6E6));
+		btn5.setBounds(600, 560, 70, 30); // 검색
+		btn5.setBackground(new Color(255, 255, 255, 122));
 		btn5.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 
 		panel.add(btn1);
@@ -252,12 +254,11 @@ public class RouteManageMentGUI extends JFrame {
 		panel.add(btn4);
 		panel.add(btn5);
 
-
 		// 입력 공간 라벨
 		tf1.setBounds(100, 130, 80, 25);
 		tf1.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(tf1); // 버스 ID
-		search_tf.setBounds(490, 410, 100, 30);
+		search_tf.setBounds(490, 560, 100, 30);
 		search_tf.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(search_tf);
 		tf2.setBounds(250, 130, 80, 25);
@@ -321,19 +322,24 @@ public class RouteManageMentGUI extends JFrame {
 				String bi_day = tf3.getText();
 				String bi_time = tf4.getText();
 
+				ArrayList<rt_bi_id_Data> arr = new ArrayList<rt_bi_id_Data>();
+				arr = db.rt_idRead(rt_id);
+
 				Pattern passPattern = Pattern.compile("\\d{2}/\\d{2}/\\d{2}");
 				Matcher passMatcher = passPattern.matcher(bi_day);
 				Pattern passPattern2 = Pattern.compile("\\d{2}:\\d{2}");
 				Matcher passMatcher2 = passPattern2.matcher(bi_time);
-				
+
 				int update = JOptionPane.showConfirmDialog(null, "수정하시겠습니까?", "수정 확인", JOptionPane.YES_NO_OPTION);
 				if (bi_day.equals("") || bi_time.equals("") || bi_id.equals("") || rt_id.equals("")) {
-					if(update == JOptionPane.YES_OPTION) {
+					if (update == JOptionPane.YES_OPTION) {
 						JOptionPane.showMessageDialog(null, "정보를 모두 입력해주세요", "알림", 1);
 						return;
 					}
-				} 
-				else if (!passMatcher.find()) {
+				} else if (arr.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "노선 ID가 존재하지 않습니다", "아이디 오류", 1);
+					return;
+				} else if (!passMatcher.find()) {
 					JOptionPane.showMessageDialog(null, "날짜를 다시 입력해주세요\nex) xx/xx/xx", "날짜 오류", 1);
 					return;
 				} else if (!passMatcher2.find()) {
@@ -343,7 +349,7 @@ public class RouteManageMentGUI extends JFrame {
 					if (update == JOptionPane.YES_OPTION) {
 						db.updateData(bi_id, rt_id, bi_day, bi_time);
 						JOptionPane.showMessageDialog(null, "수정되었습니다!");
-						
+
 					}
 
 				}
@@ -363,25 +369,31 @@ public class RouteManageMentGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String bi_id = tf1.getText();
-				
+
+				ArrayList<rt_bi_id_Data> arr = new ArrayList<rt_bi_id_Data>();
+				arr = db.bi_idRead(bi_id);
+
 				int delete = JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제 확인", JOptionPane.YES_NO_OPTION);
 				if (bi_id.equals("")) {
-					if(delete == JOptionPane.YES_OPTION) {
+					if (delete == JOptionPane.YES_OPTION) {
 						JOptionPane.showMessageDialog(null, "버스 ID를 입력해주세요", "알림", 1);
 						return;
-					} 
-				} else if(delete == JOptionPane.YES_OPTION) {
+					}
+				} else if (arr.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "버스 ID가 존재하지 않습니다", "아이디 오류", 1);
+					return;
+				} else if (delete == JOptionPane.YES_OPTION) {
 					db.rv_deleteData(bi_id);
 					db.seat_deleteData(bi_id);
-					db.deleteData(bi_id);					
+					db.deleteData(bi_id);
 					JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", 1);
-				} 
-				
+				}
+
 				tf1.setText("");
 				tf2.setText("");
 				tf3.setText("");
 				tf4.setText("");
-				
+
 				allView();
 			}
 		});

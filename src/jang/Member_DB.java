@@ -96,4 +96,23 @@ public class Member_DB {
 		}
 		return arr;
 	}
+
+	// ID Check
+	public ArrayList<Member_Data> user_id_check(String user_id) {
+		ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
+		String sql = "select * from user_info WHERE user_id LIKE '" + user_id + "'";
+		try (Connection conn = OjdbcConnection.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();) {
+
+			while (rs.next()) {
+				arr.add(new Member_Data(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
+						rs.getString(5)));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return arr;
+	}
 }

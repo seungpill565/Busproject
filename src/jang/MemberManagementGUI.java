@@ -15,7 +15,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -58,9 +57,7 @@ public class MemberManagementGUI extends JFrame {
 	// JButton backBtn;
 	JButton homeBtn;
 
-	ImageIcon image = new ImageIcon("Image/back2.png");
-	ImageIcon image2 = new ImageIcon("Image/back3.png");
-	ImageIcon image3 = new ImageIcon("Image/yujin2.jpg");
+	ImageIcon image = new ImageIcon("Image/yujin2.jpg");
 
 	ImageIcon home_image = new ImageIcon("Image/home.png");
 	ImageIcon home_image2 = new ImageIcon("Image/home2.png");
@@ -143,7 +140,7 @@ public class MemberManagementGUI extends JFrame {
 //		table.setEnabled(false);
 //		table.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 
-		scrollpane.setBounds(40, 170, 710, 220);
+		scrollpane.setBounds(40, 170, 710, 370);
 		getContentPane().add(scrollpane);
 	}
 
@@ -201,7 +198,7 @@ public class MemberManagementGUI extends JFrame {
 		scrollpane.setViewportView(table);
 //		table.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 
-		scrollpane.setBounds(40, 170, 710, 220);
+		scrollpane.setBounds(40, 170, 710, 370);
 		getContentPane().add(scrollpane);
 	}
 
@@ -228,22 +225,23 @@ public class MemberManagementGUI extends JFrame {
 		panel.add(pName);
 
 //		panel.add(imageLabel);
-		panel.setIcon(image3);
+		panel.setIcon(image);
 
 		btn1.setBounds(160, 80, 70, 30); // 추가
-		btn1.setBackground(Color.white);
+//		btn1.setBackground(Color.white);
+		btn1.setBackground(new Color(255, 255, 255, 122));
 		btn1.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 		btn2.setBounds(40, 80, 100, 30); // 조회
-		btn2.setBackground(new Color(0XE7E6E6));
+		btn2.setBackground(new Color(255, 255, 255, 122));
 		btn2.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 		btn3.setBounds(250, 80, 70, 30); // 수정
-		btn3.setBackground(new Color(0XE7E6E6));
+		btn3.setBackground(new Color(255, 255, 255, 122));
 		btn3.setFont(new Font("휴먼편지체", Font.BOLD, 15));
-		btn4.setBounds(680, 410, 70, 30); // 삭제
-		btn4.setBackground(new Color(0XE7E6E6));
+		btn4.setBounds(680, 560, 70, 30); // 삭제
+		btn4.setBackground(new Color(255, 255, 255, 122));
 		btn4.setFont(new Font("휴먼편지체", Font.BOLD, 15));
-		btn5.setBounds(600, 410, 70, 30); // 검색
-		btn5.setBackground(new Color(0XE7E6E6));
+		btn5.setBounds(600, 560, 70, 30); // 검색
+		btn5.setBackground(new Color(255, 255, 255, 122));
 		btn5.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 
 		panel.add(btn1);
@@ -260,7 +258,7 @@ public class MemberManagementGUI extends JFrame {
 		tf1.setBounds(70, 130, 80, 25);
 		tf1.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(tf1); // 아이디 입력 공간
-		tf6.setBounds(490, 410, 100, 30);
+		tf6.setBounds(490, 560, 100, 30);
 		tf6.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		tf6.setText("아이디 입력");
 		panel.add(tf6); // 아이디 입력 공간 (검색)
@@ -315,7 +313,7 @@ public class MemberManagementGUI extends JFrame {
 				String user_phonenum = tf4.getText();
 				String user_passenger_manager = tf5.getText();
 				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
-				arr = db.search(user_id);
+				arr = db.user_id_check(user_id);
 
 				Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$");
 				Matcher passMatcher = passPattern.matcher(user_password);
@@ -325,9 +323,9 @@ public class MemberManagementGUI extends JFrame {
 				Matcher passMatcher3 = passPattern3.matcher(user_name);
 				Pattern passPattern4 = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$");
 				Matcher passMatcher4 = passPattern4.matcher(user_id);
+				Pattern passPattern5 = Pattern.compile("[손님]*[관리자]*");
+				Matcher passMatcher5 = passPattern4.matcher(user_passenger_manager);
 
-				Member_Data data = new Member_Data(user_id, user_name, user_password, user_phonenum,
-						user_passenger_manager);
 				if (user_id.equals("") || user_name.equals("") || user_password.equals("") || user_phonenum.equals("")
 						|| user_passenger_manager.equals("")) {
 					JOptionPane.showMessageDialog(null, "정보를 모두 입력해주세요", "알림", 1);
@@ -336,16 +334,19 @@ public class MemberManagementGUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "아이디가 중복됩니다", "아이디 중복", 1);
 					return;
 				} else if (!passMatcher4.find()) {
-					JOptionPane.showMessageDialog(null, "한글 또는 영문만 입력해주세요", "아이디 오류", 1);
+					JOptionPane.showMessageDialog(null, "영문 또는 숫자로 이루어진 5~12자로 생성해주세요", "아이디 오류", 1);
 					return;
-				} else if (!passMatcher3.find()) {
-					JOptionPane.showMessageDialog(null, "한글 또는 영문만 입력해주세요", "이름 오류", 1);
+				} else if (passMatcher3.find()) {
+					JOptionPane.showMessageDialog(null, "이름에는 숫자를 입력하실 수 없습니다", "이름 오류", 1);
 					return;
 				} else if (!passMatcher.find()) {
-					JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다", "비밀번호 오류", 1);
+					JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 최소 8자에서 최대 20자로 구성되어야 합니다", "비밀번호 오류", 1);
 					return;
 				} else if (!passMatcher2.find()) {
-					JOptionPane.showMessageDialog(null, "전화번호를 다시 입력하세요\nex) xxx-xxxx-xxxx", "전화번호 오류", 1);
+					JOptionPane.showMessageDialog(null, "전화번호를 다시 입력해주세요\nex) xxx-xxxx-xxxx", "전화번호 오류", 1);
+					return;
+				} else if (passMatcher5.find()) {
+					JOptionPane.showMessageDialog(null, "관리자 or 손님만 입력 가능합니다", "알림", 1);
 					return;
 				} else {
 					db.insertData(
@@ -391,24 +392,28 @@ public class MemberManagementGUI extends JFrame {
 				Matcher passMatcher4 = passPattern4.matcher(user_id);
 
 				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
-				arr = db.search(user_id);
+				arr = db.user_id_check(user_id);
 
 				int update = JOptionPane.showConfirmDialog(null, "수정하시겠습니까?", "수정 확인", JOptionPane.YES_NO_OPTION);
+
 				if (user_id.equals("") || user_name.equals("") || user_password.equals("")
 						|| user_phonenum.equals("")) {
 					JOptionPane.showMessageDialog(null, "정보를 모두 입력해주세요", "알림", 1);
 					return;
-				} else if (!passMatcher4.find()) {
-					JOptionPane.showMessageDialog(null, "한글 또는 영문만 입력해주세요", "아이디 오류", 1);
+				} else if (arr.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "아이디가 존재하지 않습니다", "아이디 오류", 1);
 					return;
-				} else if (!passMatcher3.find()) {
-					JOptionPane.showMessageDialog(null, "한글 또는 영문만 입력해주세요", "이름 오류", 1);
+				} else if (!passMatcher4.find()) {
+					JOptionPane.showMessageDialog(null, "영문 또는 숫자로 이루어진 5~12자로 생성해주세요", "아이디 오류", 1);
+					return;
+				} else if (passMatcher3.find()) {
+					JOptionPane.showMessageDialog(null, "이름에는 숫자를 입력하실수 없습니다", "이름 오류", 1);
 					return;
 				} else if (!passMatcher.find()) {
-					JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다", "비밀번호 오류", 1);
+					JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 최소 8자에서 최대 20자로 구성되어야 합니다", "비밀번호 오류", 1);
 					return;
 				} else if (!passMatcher2.find()) {
-					JOptionPane.showMessageDialog(null, "전화번호를 다시 입력하세요\\nex) xxx-xxxx-xxxx", "전화번호 오류", 1);
+					JOptionPane.showMessageDialog(null, "전화번호를 다시 입력해주세요\\nex) xxx-xxxx-xxxx", "전화번호 오류", 1);
 					return;
 				} else {
 					if (update == JOptionPane.YES_OPTION) {
@@ -434,7 +439,7 @@ public class MemberManagementGUI extends JFrame {
 
 				String user_id = tf1.getText();
 				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
-				arr = db.search(user_id);
+				arr = db.user_id_check(user_id);
 				int delete = JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제 확인", JOptionPane.YES_NO_OPTION);
 
 				if (user_id.equals("")) {

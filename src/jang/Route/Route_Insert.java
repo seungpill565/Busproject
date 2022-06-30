@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,13 +25,15 @@ import javax.swing.table.DefaultTableModel;
 
 import jang.RoundButton;
 import jang.Route_DB;
+import jang.Data.Member_Data;
 import jang.Data.Route_Insert_Data;
+import jang.Data.rt_bi_id_Data;
 
 public class Route_Insert extends JFrame {
 	ArrayList<JTextField> tfList = new ArrayList<>();
 
 	JScrollPane scrolledpane;
-	JPanel panel = new JPanel();
+	JLabel panel = new JLabel();
 
 	RoundButton btn3 = new RoundButton("노선 조회");
 	RoundButton btn1 = new RoundButton("추가");
@@ -61,10 +64,12 @@ public class Route_Insert extends JFrame {
 
 	JLabel pName = new JLabel("노선 추가");
 
+	ImageIcon image = new ImageIcon("Image/yujin2.jpg");
+
 	Route_DB db = new Route_DB();
-	
+
 	JPanel p = new JPanel();
-	
+
 	public Route_Insert() {
 		Route_Insert();
 
@@ -140,7 +145,7 @@ public class Route_Insert extends JFrame {
 
 		scrolledpane.setBounds(40, 220, 545, 190);
 		getContentPane().add(scrolledpane);
-		
+
 	}
 
 	public void Route_Insert() {
@@ -150,29 +155,30 @@ public class Route_Insert extends JFrame {
 		panel.setLayout(null);
 		setResizable(false);
 		setSize(650, 500);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
+
+		panel.setIcon(image);
 
 		pName.setBounds(240, 10, 200, 50);
 		pName.setFont(new Font("휴먼편지체", Font.BOLD, 35));
 		panel.add(pName);
 
 		btn3.setBounds(40, 185, 100, 30); // 전체조회
-		btn3.setBackground(new Color(0XE7E6E6));
+		btn3.setBackground(new Color(255, 255, 255, 122));
 		btn3.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 		btn1.setBounds(500, 85, 70, 30); // 노선 추가
-		btn1.setBackground(new Color(0XE7E6E6));
+		btn1.setBackground(new Color(255, 255, 255, 122));
 		btn1.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 		btn2.setBounds(500, 150, 70, 30); // 버스 추가
-		btn2.setBackground(new Color(0XE7E6E6));
+		btn2.setBackground(new Color(255, 255, 255, 122));
 		btn2.setFont(new Font("휴먼편지체", Font.BOLD, 15));
-//		btn4.setBounds(250, 570, 70, 30); // 확인
-//		btn4.setBackground(new Color(0XE7E6E6));
 		btn4.setBounds(320, 420, 70, 30); // 확인
-		btn4.setBackground(new Color(0XE7E6E6));
+		btn4.setBackground(new Color(255, 255, 255, 122));
 		btn4.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 		btn5.setBounds(230, 420, 70, 30); // 삭제
-		btn5.setBackground(new Color(0XE7E6E6));
+		btn5.setBackground(new Color(255, 255, 255, 122));
 		btn5.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 
 		panel.add(btn3);
@@ -283,6 +289,9 @@ public class Route_Insert extends JFrame {
 				String bi_time = tf2.getText();
 				String rtfk_id = tf3.getText();
 
+				ArrayList<rt_bi_id_Data> arr = new ArrayList<rt_bi_id_Data>();
+				arr = db.rt_idRead(rtfk_id);
+
 				Pattern passPattern = Pattern.compile("\\d{2}/\\d{2}/\\d{2}");
 				Matcher passMatcher = passPattern.matcher(bi_day);
 				Pattern passPattern2 = Pattern.compile("\\d{2}:\\d{2}");
@@ -297,13 +306,15 @@ public class Route_Insert extends JFrame {
 				} else if (!passMatcher2.find()) {
 					JOptionPane.showMessageDialog(null, "시간을 다시 입력해주세요\nex) 24:00", "시간 오류", 1);
 					return;
+				} else if (arr.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "노선 ID가 존재하지 않습니다", "아이디 오류", 1);
+					return;
 				} else {
 					db.bus_info_insertData(bi_day, bi_time, rtfk_id);
 					int i = db.get_currsq();
 					db.seat_insertData(i);
 
 					JOptionPane.showMessageDialog(null, "추가되었습니다!");
-//					idView(bi_id);
 				}
 
 				tf1.setText("");
@@ -330,6 +341,9 @@ public class Route_Insert extends JFrame {
 				String bi_id = tf8.getText();
 				String rt_id = tf3.getText();
 
+				ArrayList<rt_bi_id_Data> arr = new ArrayList<rt_bi_id_Data>();
+				arr = db.rt_idRead(rt_id);
+
 				int delete = JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제 확인", JOptionPane.YES_NO_OPTION);
 
 				if (rt_id.equals("")) {
@@ -338,6 +352,9 @@ public class Route_Insert extends JFrame {
 						return;
 					}
 
+				} else if (arr.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "노선 ID가 존재하지 않습니다", "아이디 오류", 1);
+					return;
 				} else if (delete == JOptionPane.YES_OPTION) {
 					db.get_bi_id(rt_id);
 					db.rv_delete();
@@ -345,9 +362,8 @@ public class Route_Insert extends JFrame {
 					db.bi_delete(rt_id);
 					db.route_deleteData(rt_id);
 					JOptionPane.showMessageDialog(null, "삭제되었습니다!", "삭제 알림", 1);
-					System.out.println("이게 실행 됨");
 				}
-				
+
 				allView();
 				tf3.setText("");
 				tf8.setText("");
