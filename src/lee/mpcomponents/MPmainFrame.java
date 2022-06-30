@@ -412,6 +412,7 @@ public class MPmainFrame extends JFrame {
 		setVisible(true);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		getContentPane().setBackground(Color.WHITE);
 	}
 
 }
