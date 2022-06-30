@@ -208,7 +208,7 @@ public class MPreservationlistModel {
 				+ " AND bus_seat.bs_is_reserved = 1"
 				+ " AND bus_info.bi_day = ?"
 				+ " AND bus_info.bi_time >= ?"
-				+ " ORDER BY bus_info.bi_time";
+				+ " ORDER BY bus_info.bi_time, bs_name";
 		
 		//내일 이후의 티켓 조회
 		String sql2 = "SELECT br_id, bi_day, bi_time, rt_depart_from,"
@@ -221,7 +221,7 @@ public class MPreservationlistModel {
 				+ " WHERE user_id = ?"
 				+ " AND bus_seat.bs_is_reserved = 1"
 				+ " AND bus_info.bi_day >= ?"
-				+ " ORDER BY bus_info.bi_day, bus_info.bi_time";
+				+ " ORDER BY bus_info.bi_day, bus_info.bi_time, bs_name";
 		
 		//현재 시간 이후의 오늘 티켓 정보 list에 저장
 		try(PreparedStatement pstmt1 = conn.prepareStatement(sql1);) {

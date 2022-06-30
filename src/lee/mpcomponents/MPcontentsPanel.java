@@ -1,8 +1,8 @@
 package lee.mpcomponents;
 
 import java.awt.CardLayout;
-import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import hong.SaveInfo;
@@ -18,6 +18,8 @@ public class MPcontentsPanel extends JPanel {
 	//카드레이아웃
 	CardLayout MPcontentsCard = new CardLayout();
 	
+	ImageIcon backImg = new ImageIcon("image/mp컨텐츠패널배경.png");
+	
 	public MPcontentsPanel(SaveInfo saveInfo) {
 		this.saveInfo = saveInfo;
 	
@@ -25,10 +27,11 @@ public class MPcontentsPanel extends JPanel {
 		MPreservation = new MPreservationPanel(saveInfo);
 		
 		setLayout(MPcontentsCard);	
-		
+
 		add("내정보", MPprofile);
 		add("예매내역", MPreservation);
 		add("계정탈퇴", MPleave);
+		
 		
 		setBounds(230, 110, 510, 460);
 		setVisible(true);
