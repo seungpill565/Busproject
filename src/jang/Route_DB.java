@@ -77,7 +77,7 @@ public class Route_DB {
 		try (Connection conn = OjdbcConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 
 			for (int i = 1; i < 22; ++i) {
-				pstmt.setString(1, "" + i);
+				pstmt.setInt(1, i);
 				pstmt.setInt(2, bi_id);
 				pstmt.executeUpdate();
 			}
