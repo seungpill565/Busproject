@@ -70,7 +70,7 @@ public class SelectRouteMainFrame extends JFrame {
 	SelectBusFrame busFrame;	// 버스 선택 프레임
 	
 	private JLabel label = new JLabel();
-	private ImageIcon background = new ImageIcon("image/busReservation3.png");
+	private ImageIcon background = new ImageIcon("image/reservation2.png");
 	
 	private String startingPoint;
 	private String arrivalPoint;
@@ -264,7 +264,7 @@ public class SelectRouteMainFrame extends JFrame {
 		// 나중에 이미지넣을..?
 		
 		label.add(new BackGroundLabel("", 10, 90, 1));
-		label.add(new BackGroundLabel("버스 예약하기", 250, 90,34));
+		label.add(new BackGroundLabel("버스 예약하기", 250, 90,36));
 		
 		
 		label.add(new BackGroundLabel("", 290, 90, 0));
@@ -324,7 +324,7 @@ public class SelectRouteMainFrame extends JFrame {
 		label.add(nextButton);
 		
 		//label.add(new BackGroundLabel("", 30, 30));
-		label.add(new BackGroundLabel("", 30, 30, 0));
+		label.add(new BackGroundLabel("", 20, 30, 0));
 		beforeButton.addActionListener(beforeBtnEvent);
 		label.add(beforeButton);
 		

@@ -198,7 +198,7 @@ public class SaveInfo {
 		this.busId = busId;
 	}
 
-	public   String getDepart() {
+	public String getDepart() {
 		return depart;
 	}
 
@@ -222,15 +222,15 @@ public class SaveInfo {
 		this.price = price;
 	}
 
-	public   String getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public   void setDate(String date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
-	public   String getTime() {
+	public String getTime() {
 		return time;
 	}
 
