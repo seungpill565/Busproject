@@ -220,6 +220,7 @@ public class RouteManageMentGUI extends JFrame {
 		homeBtn.setRolloverIcon(home_image2);
 		homeBtn.setBorderPainted(false);
 		homeBtn.setBounds(700, 20, 50, 50);
+		homeBtn.setContentAreaFilled(false);
 		panel.add(homeBtn);
 
 		pName.setBounds(350, 10, 200, 50);
