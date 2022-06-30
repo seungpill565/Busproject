@@ -2,6 +2,7 @@ package lee.mpcomponents;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -10,22 +11,21 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneLayout;
+import javax.swing.border.LineBorder;
+
+import lee.RoundedButton;
 
 
 public class MPprofilePanel_2 extends JPanel {
 	
-	JButton MPbackBtn = new JButton("뒤로가기");
-	JButton MPcompleteBtn = new JButton("수정완료");
+	RoundedButton MPbackBtn = new RoundedButton("뒤로가기");
+	RoundedButton MPcompleteBtn = new RoundedButton("수정완료");
 	
 	JPanel MPlabelPanel = new JPanel();//레이아웃은 그리드백레이아웃으로
 	
@@ -61,7 +61,7 @@ public class MPprofilePanel_2 extends JPanel {
 		MPviewLb3.setFont(new Font("고딕", Font.BOLD, 14));
 		MPviewLb4.setFont(new Font("고딕", Font.BOLD, 14));
 		
-		MPprofilerestrictLb.setBounds(80, 350, 400, 85);
+		MPprofilerestrictLb.setBounds(50, 330, 400, 85);
 		add(MPprofilerestrictLb);
 		
 		//새비밀번호 텍스트필드 입력할 때 ●로 표시 
@@ -72,10 +72,8 @@ public class MPprofilePanel_2 extends JPanel {
 		//그리드백레이아웃 적용하는 부분_______________________________________________________________
 		//인풋패널 설정
 		MPlabelPanel.setLayout(new GridLayout());
-		MPlabelPanel.setBounds(10, 5, 480, 300);
+		MPlabelPanel.setBounds(40, 5, 400, 300);
 		MPlabelPanel.setLayout(gbl);
-//		MPlabelPanel.setOpaque(true);
-//		MPlabelPanel.setBackground(Color.BLUE);
 	
 		//그리드백레이아웃 설정 + 컴포넌트 넣기__________ 
 		gblc.weightx = 1.0; //가로, 세로 패딩? 정하기
@@ -205,12 +203,14 @@ public class MPprofilePanel_2 extends JPanel {
 		
 		
 		//수정완료버튼 설정
-		MPcompleteBtn.setBounds(280, 300, 90, 38);
+		MPcompleteBtn.setBounds(260, 280, 90, 38);
 		MPcompleteBtn.setBorderPainted(false);
+		MPcompleteBtn.setFont(new Font("휴먼편지체", Font.BOLD, 17));
 		
 		//뒤로가기 버튼 설정
-		MPbackBtn.setBounds(150, 300, 90, 38 );
+		MPbackBtn.setBounds(130, 280, 90, 38 );
 		MPbackBtn.setBorderPainted(false);
+		MPbackBtn.setFont(new Font("휴먼편지체", Font.BOLD, 17));
 		
 		add(MPcompleteBtn);
 		add(MPbackBtn);

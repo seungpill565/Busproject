@@ -1,31 +1,32 @@
 package lee.mpcomponents;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import an.OjdbcConnection;
 import hong.SaveInfo;
+import lee.RoundedButton;
 import lee.mpevents.MPcheckboxIL;
 import lee.mpmodel.MPreservationlistModel;
 
 //예매내역 있을 때 패널
-//디비에서 예매내역 데려올 때 오늘 날짜 이후의 예매내역만 가져와야 됨...
 public class MPreservationPanel_2 extends JPanel {
 	 
 	SaveInfo saveInfo;
 	String user_id; 
 	
 	
-	JButton MPreservationcancleBtn = new JButton("예매취소");	
+	RoundedButton MPreservationcancleBtn = new RoundedButton("예매취소");	
 	BorderLayout MPborderlayout = new BorderLayout();
 	
 	//티켓 틀이 되는 패널 (안에 라벨, 쳌박 들어감) 
@@ -80,8 +81,12 @@ public class MPreservationPanel_2 extends JPanel {
 		
 		
 		MPscroll.getVerticalScrollBar().setUnitIncrement(6);// 스크롤 속도 조절
-
+		//MPscroll.getVerticalScrollBar().setBackground(Color.WHITE);
+		
 		MPreservationcancleBtn.setBorderPainted(false);
+		MPreservationcancleBtn.setBounds(125, 130, 90, 35);
+		MPreservationcancleBtn.setFont(new Font("휴먼편지체", Font.BOLD, 17));
+		
 		add(MPreservationcancleBtn, "South");
 		add(MPscroll, "Center");
 		

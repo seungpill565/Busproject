@@ -1,21 +1,22 @@
 package lee.mpcomponents;
 
-import javax.swing.JButton;
+import java.awt.Font;
+
 import javax.swing.JPanel;
 
-import hong.SaveInfo;
+import lee.RoundedButton;
 
 public class MPprofilePanel_1 extends JPanel {
 	
-	JButton MPeditBtn = new JButton("수정하기");
+	RoundedButton MPeditBtn = new RoundedButton("수정하기");
 	
 	public MPprofilePanel_1() {
 
 		setLayout(null);
 		
 		//수정하기 버튼 설정
-		MPeditBtn.setBounds(400, 400, 90, 38);
-		MPeditBtn.setBorderPainted(false);
+		MPeditBtn.setBounds(350, 200, 90, 35);
+		MPeditBtn.setFont(new Font("휴먼편지체", Font.BOLD, 17));
 		
 		add(MPeditBtn);		
 	}

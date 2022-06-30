@@ -33,7 +33,8 @@ public class MPnamelengthrestrictSF extends JFrame implements ActionListener{
 		setLayout(null);
 		setVisible(true);
 		setResizable(false);
-		setBounds(200, 200, 350, 250);
+		setSize(350,250);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}	
 
