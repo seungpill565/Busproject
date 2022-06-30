@@ -32,7 +32,7 @@ public class MemberManagementGUI extends JFrame {
 	ArrayList<JTextField> tfList = new ArrayList<>();
 
 	JScrollPane scrollpane;
-	JPanel panel = new JPanel();
+	JLabel panel = new JLabel();
 	JTextField tf1 = new JTextField();
 	JTextField tf2 = new JTextField();
 	JTextField tf3 = new JTextField();
@@ -52,6 +52,7 @@ public class MemberManagementGUI extends JFrame {
 	JLabel l4 = new JLabel("ÀüÈ­¹øÈ£ : ");
 	JLabel l5 = new JLabel("°ü¸®ÀÚ/¼Õ´Ô : ");
 	JLabel l6 = new JLabel("ID : ");
+	JLabel imageLabel = new JLabel();
 
 	JLabel pName = new JLabel("È¸¿ø");
 	// JButton backBtn;
@@ -59,6 +60,7 @@ public class MemberManagementGUI extends JFrame {
 
 	ImageIcon image = new ImageIcon("Image/back2.png");
 	ImageIcon image2 = new ImageIcon("Image/back3.png");
+	ImageIcon image3 = new ImageIcon("Image/yujin2.jpg");
 
 	ImageIcon home_image = new ImageIcon("Image/home.png");
 	ImageIcon home_image2 = new ImageIcon("Image/home2.png");
@@ -209,7 +211,8 @@ public class MemberManagementGUI extends JFrame {
 		panel.setBackground(Color.WHITE);
 		panel.setLayout(null);
 		setResizable(false);
-		setSize(800, 500);
+		setSize(800, 650);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 
@@ -223,12 +226,12 @@ public class MemberManagementGUI extends JFrame {
 		pName.setBounds(350, 10, 200, 50);
 		pName.setFont(new Font("ÈÞ¸ÕÆíÁöÃ¼", Font.BOLD, 35));
 		panel.add(pName);
-		
-		
-		
+
+//		panel.add(imageLabel);
+		panel.setIcon(image3);
 
 		btn1.setBounds(160, 80, 70, 30); // Ãß°¡
-		btn1.setBackground(new Color(0XE7E6E6));
+		btn1.setBackground(Color.white);
 		btn1.setFont(new Font("ÈÞ¸ÕÆíÁöÃ¼", Font.BOLD, 15));
 		btn2.setBounds(40, 80, 100, 30); // Á¶È¸
 		btn2.setBackground(new Color(0XE7E6E6));
@@ -252,7 +255,7 @@ public class MemberManagementGUI extends JFrame {
 //		TextHint tHint = new TextHint(" ¾ÆÀÌµð ÀÔ·Â");
 //		tHint.setBounds(490, 410, 100, 30);
 //		panel.add(tHint);
-		
+
 		// ÀÔ·Â °ø°£
 		tf1.setBounds(70, 130, 80, 25);
 		tf1.setFont(new Font("ÈÞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
@@ -318,8 +321,11 @@ public class MemberManagementGUI extends JFrame {
 				Matcher passMatcher = passPattern.matcher(user_password);
 				Pattern passPattern2 = Pattern.compile("\\d{3}-\\d{4}-\\d{4}");
 				Matcher passMatcher2 = passPattern2.matcher(user_phonenum);
-				Pattern passPattern3 = Pattern.compile("^[°¡-ÆRa-zA-Z]*$");
+				Pattern passPattern3 = Pattern.compile("[0-9]+");
 				Matcher passMatcher3 = passPattern3.matcher(user_name);
+				Pattern passPattern4 = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$");
+				Matcher passMatcher4 = passPattern4.matcher(user_id);
+
 				Member_Data data = new Member_Data(user_id, user_name, user_password, user_phonenum,
 						user_passenger_manager);
 				if (user_id.equals("") || user_name.equals("") || user_password.equals("") || user_phonenum.equals("")
@@ -328,6 +334,9 @@ public class MemberManagementGUI extends JFrame {
 					return;
 				} else if (!arr.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "¾ÆÀÌµð°¡ Áßº¹µË´Ï´Ù", "¾ÆÀÌµð Áßº¹", 1);
+					return;
+				} else if (!passMatcher4.find()) {
+					JOptionPane.showMessageDialog(null, "ÇÑ±Û ¶Ç´Â ¿µ¹®¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä", "¾ÆÀÌµð ¿À·ù", 1);
 					return;
 				} else if (!passMatcher3.find()) {
 					JOptionPane.showMessageDialog(null, "ÇÑ±Û ¶Ç´Â ¿µ¹®¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä", "ÀÌ¸§ ¿À·ù", 1);
@@ -374,10 +383,12 @@ public class MemberManagementGUI extends JFrame {
 
 				Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$");
 				Matcher passMatcher = passPattern.matcher(user_password);
-				Pattern passPattern2 = Pattern.compile("\\d");
+				Pattern passPattern2 = Pattern.compile("\\d{3}-\\d{4}-\\d{4}");
 				Matcher passMatcher2 = passPattern2.matcher(user_phonenum);
-				Pattern passPattern3 = Pattern.compile("^[°¡-ÆRa-zA-Z]*$");
+				Pattern passPattern3 = Pattern.compile("[0-9]+");
 				Matcher passMatcher3 = passPattern3.matcher(user_name);
+				Pattern passPattern4 = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$");
+				Matcher passMatcher4 = passPattern4.matcher(user_id);
 
 				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
 				arr = db.search(user_id);
@@ -387,6 +398,9 @@ public class MemberManagementGUI extends JFrame {
 						|| user_phonenum.equals("")) {
 					JOptionPane.showMessageDialog(null, "Á¤º¸¸¦ ¸ðµÎ ÀÔ·ÂÇØÁÖ¼¼¿ä", "¾Ë¸²", 1);
 					return;
+				} else if (!passMatcher4.find()) {
+					JOptionPane.showMessageDialog(null, "ÇÑ±Û ¶Ç´Â ¿µ¹®¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä", "¾ÆÀÌµð ¿À·ù", 1);
+					return;
 				} else if (!passMatcher3.find()) {
 					JOptionPane.showMessageDialog(null, "ÇÑ±Û ¶Ç´Â ¿µ¹®¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä", "ÀÌ¸§ ¿À·ù", 1);
 					return;
@@ -394,7 +408,7 @@ public class MemberManagementGUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "ºñ¹Ð¹øÈ£´Â ¿µ¹®+Æ¯¼ö¹®ÀÚ+¼ýÀÚ 8ÀÚ·Î ±¸¼ºµÇ¾î¾ß ÇÕ´Ï´Ù", "ºñ¹Ð¹øÈ£ ¿À·ù", 1);
 					return;
 				} else if (!passMatcher2.find()) {
-					JOptionPane.showMessageDialog(null, "ÀüÈ­¹øÈ£´Â ¼ýÀÚ·Î¸¸ ±¸¼ºµÇ¾î¾ß ÇÕ´Ï´Ù", "ÀüÈ­¹øÈ£ ¿À·ù", 1);
+					JOptionPane.showMessageDialog(null, "ÀüÈ­¹øÈ£¸¦ ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä\\nex) xxx-xxxx-xxxx", "ÀüÈ­¹øÈ£ ¿À·ù", 1);
 					return;
 				} else {
 					if (update == JOptionPane.YES_OPTION) {
@@ -422,8 +436,8 @@ public class MemberManagementGUI extends JFrame {
 				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
 				arr = db.search(user_id);
 				int delete = JOptionPane.showConfirmDialog(null, "»èÁ¦ÇÏ½Ã°Ú½À´Ï±î?", "»èÁ¦ È®ÀÎ", JOptionPane.YES_NO_OPTION);
-				
-				if(user_id.equals("")) {
+
+				if (user_id.equals("")) {
 					JOptionPane.showMessageDialog(null, "ID¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä", "¾Ë¸²", 1);
 					return;
 				} else if (arr.isEmpty()) {

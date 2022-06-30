@@ -32,7 +32,7 @@ public class RouteManageMentGUI extends JFrame {
 	ArrayList<JTextField> tfList = new ArrayList<>();
 
 	JScrollPane scrollpane;
-	JPanel panel = new JPanel();
+	JLabel panel = new JLabel();
 
 	RoundButton btn1 = new RoundButton("추가");
 	RoundButton btn2 = new RoundButton("전체 조회");
@@ -57,8 +57,7 @@ public class RouteManageMentGUI extends JFrame {
 
 	JButton homeBtn;
 
-	ImageIcon image = new ImageIcon("Image/back2.png");
-	ImageIcon image2 = new ImageIcon("Image/back3.png");
+	ImageIcon image = new ImageIcon("Image/yujin2.jpg");
 
 	ImageIcon home_image = new ImageIcon("Image/home.png");
 	ImageIcon home_image2 = new ImageIcon("Image/home2.png");
@@ -214,9 +213,11 @@ public class RouteManageMentGUI extends JFrame {
 		panel.setBackground(Color.WHITE);
 		panel.setLayout(null);
 		setResizable(false);
-		setSize(800, 500);
+		setSize(800, 650);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
+		
+		panel.setIcon(image);
 
 		homeBtn = new JButton(home_image);
 //		homeBtn.setRolloverIcon(home_image2);
