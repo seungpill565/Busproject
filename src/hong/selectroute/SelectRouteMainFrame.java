@@ -88,6 +88,7 @@ public class SelectRouteMainFrame extends JFrame {
 	private Integer price;
 	
 	// 달에 따른 day들을 일 선택 콤보박스에 추가하는 메서드
+	
 	public void addDays(int month) {
 		dayBox.addItems(month);
 	}
@@ -120,7 +121,11 @@ public class SelectRouteMainFrame extends JFrame {
 	
 	// 출발지 버튼을 누르면 터미널들을 보여주는 메서드. 각각의 터미널 버튼에 액션을 추가해준다.
 	public void showStartingTerminals() {
-		
+		try {
+			stmFrame.dispose();
+		} catch (NullPointerException e) {
+			
+		}
 		stmFrame = new SelectTerminalMainFrame();
 		for (JButton btn : stmFrame.getAllBtns()) {
 			btn.addActionListener(startingBtnEvent);
@@ -130,6 +135,11 @@ public class SelectRouteMainFrame extends JFrame {
 	// 도착지 버튼을 누르면 터미널들을 보여주는 메서드. 각각의 터미널 버튼에 액션을 추가해준다.
 	public void showArriveTerminals() {
 		//System.out.println(saveInfo.get_user_id());
+		try {
+			stmFrame.dispose();
+		} catch (NullPointerException e) {
+			
+		}
 		stmFrame = new SelectTerminalMainFrame();
 		for (JButton btn : stmFrame.getAllBtns()) {
 			btn.addActionListener(arrivalBtnEvent);
@@ -158,6 +168,11 @@ public class SelectRouteMainFrame extends JFrame {
 	
 	// 노선, 날짜에 맞는 버스들의 정보를 보여주는 메서드
 	public void showBus() {
+		try {
+			busFrame.dispose();
+		} catch (NullPointerException e) {
+			
+		}
 		busFrame = new SelectBusFrame();
 		busFrame.showBusInfo(rt_id, year, month, day);
 		busFrame.getCanReserve();
