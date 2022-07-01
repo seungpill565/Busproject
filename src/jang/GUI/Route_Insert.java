@@ -19,9 +19,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import jang.RoundButton;
 import jang.DB.Route_DB;
@@ -142,6 +145,14 @@ public class Route_Insert extends JFrame {
 		scrolledpane = new JScrollPane();
 		scrolledpane.setViewportView(table);
 //		table.setEnabled(false);
+
+		// 셀 안의 내용 가운데 정렬
+		DefaultTableCellRenderer tcellRander = new DefaultTableCellRenderer();
+		tcellRander.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel tcolumn = table.getColumnModel();
+		for (int i = 0; i < tcolumn.getColumnCount(); ++i) {
+			tcolumn.getColumn(i).setCellRenderer(tcellRander);
+		}
 
 		scrolledpane.setBounds(40, 220, 545, 190);
 		getContentPane().add(scrolledpane);

@@ -19,13 +19,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import an.admin.Admin_MainFrame;
 import jang.RoundButton;
-import jang.TextHint;
 import jang.DB.Member_DB;
 import jang.Data.Member_Data;
 import jang.Data.Member_Update_Data;
@@ -143,6 +145,14 @@ public class MemberManagementGUI extends JFrame {
 //		table.setEnabled(false);
 //		table.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 
+		// 셀 안의 내용 가운데 정렬
+		DefaultTableCellRenderer tcellRander = new DefaultTableCellRenderer();
+		tcellRander.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel tcolumn = table.getColumnModel();
+		for (int i = 0; i < tcolumn.getColumnCount(); ++i) {
+			tcolumn.getColumn(i).setCellRenderer(tcellRander);
+		}
+
 		scrollpane.setBounds(40, 170, 710, 370);
 		getContentPane().add(scrollpane);
 	}
@@ -200,6 +210,14 @@ public class MemberManagementGUI extends JFrame {
 		scrollpane = new JScrollPane();
 		scrollpane.setViewportView(table);
 //		table.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
+
+		// 셀 안의 내용 가운데 정렬
+		DefaultTableCellRenderer tcellRander = new DefaultTableCellRenderer();
+		tcellRander.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel tcolumn = table.getColumnModel();
+		for (int i = 0; i < tcolumn.getColumnCount(); ++i) {
+			tcolumn.getColumn(i).setCellRenderer(tcellRander);
+		}
 
 		scrollpane.setBounds(40, 170, 710, 370);
 		getContentPane().add(scrollpane);
