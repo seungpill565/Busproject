@@ -12,6 +12,7 @@ import an.userinfo.Info_MainFrame;
 import hong.BeforeButton;
 import hong.SaveInfo;
 import hong.selectseat.SelectSeatMainFrame;
+import lee.RoundedButton;
 import park.button.BeforePayButton;
 import park.button.HomeButton;
 import park.button.PayButton;
@@ -35,11 +36,12 @@ public class Pay extends JFrame{
 	private HomeButton homeBtn;
 	private BeforePayButton beforeBtn;
 	private SelectSeatAgePanel seatPanel ; // 좌석별 연령대 고를 콤보박스 들어있는 판넬
-	private PayButton payBtn ; // 결제하기 버튼
+	//private PayButton payBtn ; // 결제하기 버튼
+	private RoundedButton payBtn ; // 결제하기 버튼
 	private SelectPayWayBox payWayBox ; // 결제 방식 고르는 콤보박스
 	private RouteInfoLabel route; // 행선지 정보 
 	private RouteInfoPanel routePanel ; // 행선지 정보 표 형태로 보여줄 패널
-	private ImageIcon background = new ImageIcon("image/payimage.jpg");
+	private ImageIcon background = new ImageIcon("image/mp배경원본1.png");
 	private JLabel label = new JLabel();
 	
 	
@@ -55,15 +57,17 @@ public class Pay extends JFrame{
 		this.user = user;
 		
 		// 접속 상태 유지하기위해서 다 매개변수로 받아온 user로 초기화 해줌
-		homeBtn = new HomeButton(new ImageIcon("image/home1.png"));
-		beforeBtn = new BeforePayButton(new ImageIcon("image/before.png"));
+		homeBtn = new HomeButton(new ImageIcon("image/home2.png"));
+		beforeBtn = new BeforePayButton(new ImageIcon("image/before1.png"));
 		//panel1 = new HomeBeforeBtnPanel(user);
 		route = new RouteInfoLabel();
 
 		routePanel = new RouteInfoPanel(user);
 		seatPanel = new SelectSeatAgePanel(user); // 패널 초기화 해주면서 user 정보 계속 유지해야해서 매개변수로 넘겨준다
 		payWayBox = new SelectPayWayBox(user);
-		payBtn = new PayButton(user);
+		payBtn = new RoundedButton("결제하기");
+		payBtn.setBounds(190,500,90,40);
+		
 
 		
 		
@@ -71,19 +75,7 @@ public class Pay extends JFrame{
 		homeBtn.addActionListener(new HomeButtonEvent(this));
 		beforeBtn.addActionListener(new BeforeButtonEvent(this));
 		payBtn.addActionListener(new PayButtonEvent(this));
-//<<<<<<< HEAD
-//
-//		add(panel1); // 홈버튼, 이전버튼 판넬
-//		add(route); // 행선지 정보
-//		//add(scroll);
-//		//add(scroll2);
-//		add(routePanel); // 행선지 정보 표 표시할 판넬
-//		add(seatPanel); // 좌석별 연령 고르는 콤보박스
-//		add(payWayBox); // 결제 수단 고를 콤보 박스
-//		add(payBtn); // 결제하기 버튼
-//		
-//		
-//=======
+
 		
 		label.setIcon(background);
 		label.setSize(500,600);
@@ -98,11 +90,12 @@ public class Pay extends JFrame{
 		label.add(payWayBox); // 결제 수단 고를 콤보 박스
 		label.add(payBtn); // 결제하기 버튼
 	
-//>>>>>>> refs/remotes/origin/masterpark2
+
 		getContentPane().setBackground(Color.white);
 		setLayout(null);
 		setResizable(false);
-		setBounds(100,100,500,600);
+		setSize(500,600);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}

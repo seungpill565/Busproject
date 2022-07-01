@@ -13,8 +13,8 @@ public class RouteInfoRowsLabel extends JLabel{
 		setFont(new Font("휴먼 편지체",Font.BOLD,16));
 		setPreferredSize(new Dimension(85,30));
 		setOpaque(true);
-		setForeground(Color.white);
-		setBackground(Color.blue);
+		setForeground(Color.black);
+		setBackground(new Color(0x99CCFF));
 		
 	}
 	

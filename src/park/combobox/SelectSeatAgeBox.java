@@ -27,9 +27,10 @@ public class SelectSeatAgeBox extends JComboBox<String>{ // 연령별 좌석개수를 고
 		seatName = user.getSeatNames().get(seatCnt);
 		
 		if(((Integer.parseInt(user.getSeatNames().get(seatCnt))) + 1)<10) {
-			addItem(String.format("%2d번 좌석", (Integer.parseInt(user.getSeatNames().get(seatCnt))) + 1)); // i번째 키 값에 해당하는 좌석 번호를 가장 위에 표시
-		}else
+			addItem(String.format("0%d번 좌석", (Integer.parseInt(user.getSeatNames().get(seatCnt))) + 1)); // i번째 키 값에 해당하는 좌석 번호를 가장 위에 표시
+		}else {
 			addItem(String.format("%d번 좌석", (Integer.parseInt(user.getSeatNames().get(seatCnt))) + 1)); // i번째 키 값에 해당하는 좌석 번호를 가장 위에 표시
+		}
 		addItem("------");
 		this.seatID = user.getSeatNameBySeatId().get(seatName);
 		for(int i=0;i<ageGroup.length;i++) { // 성인 청소년 어린이 추가
@@ -46,10 +47,11 @@ public class SelectSeatAgeBox extends JComboBox<String>{ // 연령별 좌석개수를 고
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				age = (String) getSelectedItem().toString(); // 콤보박스에서 고른 값을 string으로 변환
-				if(age.equals("------")||age.equals(String.format("%2d번 좌석", (Integer.parseInt(user.getSeatNames().get(seatCnt))) + 1))
+				if(age.equals("------")||age.equals(String.format("0%d번 좌석", (Integer.parseInt(user.getSeatNames().get(seatCnt))) + 1))
 						||age.equals(String.format("%d번 좌석", (Integer.parseInt(user.getSeatNames().get(seatCnt))) + 1))) {// 키 값을 고르거나 ---- 고르면 다시 선택하게
 					//user.setTotalChargeCheck(false);
-					user.getDcBySeat().remove(seatID);
+					//user.getDcBySeat().remove(seatID);
+					user.getDcBySeat().put(seatID, null); // 해당 좌석의 할인률을 null로 바꾼다
 					new JOptionPane().showMessageDialog(null, "성인, 청소년, 아동 중 선택하세요.","오류",JOptionPane.ERROR_MESSAGE); // 성인 어린이 청소년 제외 선택하면 오류창 뜨게
 	
 				}else {

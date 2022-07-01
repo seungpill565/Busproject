@@ -16,27 +16,17 @@ public class PayInfo extends JFrame{
 	
 	SaveInfo user;
 
-//<<<<<<< HEAD
-//
-//	HomeButton homeBtn;
-//
-//
-//	SucceedPayLabel payLabel = new SucceedPayLabel(); 
-//	RvInfoColumnNamePanel columnNamePanel = new RvInfoColumnNamePanel();
-//	RvInfoPanel routePanel ;
-//=======
 	private HomeButton homeBtn;
 	private SucceedPayLabel payLabel = new SucceedPayLabel(); 
-	private RvInfoColumnNamePanel columnNamePanel = new RvInfoColumnNamePanel();
 	private RvInfoPanel routePanel ;
-	private ImageIcon background = new ImageIcon("image/payimage.jpg");
+	private ImageIcon background = new ImageIcon("image/mp배경원본1.png");
 	private JLabel label = new JLabel();
-//>>>>>>> refs/remotes/origin/masterpark2
+
 	
 	public PayInfo(SaveInfo user) {
 		super("예매 완료");
 		this.user = user;
-		homeBtn = new HomeButton(new ImageIcon("image/home1.png"));
+		homeBtn = new HomeButton(new ImageIcon("image/home3.png"));
 
 
 		homeBtn.addActionListener(new PayInfoButtonEvent(this));
@@ -45,7 +35,7 @@ public class PayInfo extends JFrame{
 		label.setSize(500,600);
 
 
-		homeBtn.setBounds(190, 480, 100, 50);
+		homeBtn.setBounds(195, 450, 100, 100);
 		add(label);
 		label.add(payLabel);
 		label.add(homeBtn);
@@ -53,7 +43,8 @@ public class PayInfo extends JFrame{
 		
 		setLayout(null);
 		setResizable(false);
-		setBounds(100,100,500,600);
+		setSize(500,600);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		
