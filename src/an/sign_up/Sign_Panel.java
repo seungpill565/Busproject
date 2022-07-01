@@ -274,7 +274,7 @@ public class Sign_Panel extends JPanel{
 			idcheckLabel.setText("아이디는 11글자 이하이여야 합니다");
 		}else {
 			idcheckLabel.setForeground(Color.red);
-			idcheckLabel.setText("옳바른 아이디를 입력하세요");
+			idcheckLabel.setText("올바른 아이디를 입력하세요");
 		}
 	}
 	
