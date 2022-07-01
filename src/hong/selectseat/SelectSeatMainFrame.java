@@ -1,6 +1,7 @@
 package hong.selectseat;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,13 +13,12 @@ import javax.swing.JFrame;
 
 import an.OjdbcConnection;
 import hong.BackGroundLabel;
-import hong.BeforeButton;
-import hong.NextButton;
 import hong.SaveInfo;
 import hong.selectroute.SelectRouteMainFrame;
 import hong.selectseat.event.BeforeButtonEvent;
 import hong.selectseat.event.NextButtonEvent;
 import hong.selectseat.event.SeatButtonEvent;
+import lee.RoundedButton;
 import park.frame.Pay;
 
 public class SelectSeatMainFrame extends JFrame {
@@ -37,8 +37,12 @@ public class SelectSeatMainFrame extends JFrame {
 	private ArrayList<Integer> bs_is_reserved = new ArrayList<>();
 	private ArrayList<String> bs_name_list = new ArrayList<>();
 	
-	private NextButton nextBtn = new NextButton();
-	private BeforeButton beforeBtn = new BeforeButton();
+//	private NextButton nextBtn = new NextButton();
+//	private BeforeButton beforeBtn = new BeforeButton();
+	private RoundedButton nextBtn = new RoundedButton("확인");
+	private RoundedButton beforeBtn = new RoundedButton("이전으로");
+	
+	
 	private SeatButtonEvent seatBtnEvent = new SeatButtonEvent(this);
 	private NextButtonEvent nextBtnEvent = new NextButtonEvent(this);
 	private BeforeButtonEvent beforeBtnEvent = new BeforeButtonEvent(this);
@@ -118,12 +122,14 @@ public class SelectSeatMainFrame extends JFrame {
 		nextBtn.setBackground(Color.WHITE);
 		nextBtn.setForeground(Color.BLACK);
 		
+		nextBtn.setPreferredSize(new Dimension(110,40));
 		nextBtn.addActionListener(nextBtnEvent);
 		add(nextBtn);
 		
 		beforeBtn.setBackground(Color.WHITE);
 		beforeBtn.setForeground(Color.BLACK);
 		
+		beforeBtn.setPreferredSize(new Dimension(110,40));
 		beforeBtn.addActionListener(beforeBtnEvent);
 		add(beforeBtn);
 		
