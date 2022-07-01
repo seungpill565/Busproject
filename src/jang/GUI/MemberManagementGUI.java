@@ -1,4 +1,4 @@
-package jang;
+package jang.GUI;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -24,6 +24,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import an.admin.Admin_MainFrame;
+import jang.RoundButton;
+import jang.DB.Member_DB;
 import jang.Data.Member_Data;
 import jang.Data.Member_Update_Data;
 

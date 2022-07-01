@@ -1,4 +1,4 @@
-package jang;
+package jang.GUI;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import jang.DB.Member_DB;
 import jang.Data.Member_Data;
 
 public class Member_InsertGUI extends JFrame{

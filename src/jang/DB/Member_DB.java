@@ -1,4 +1,4 @@
-package jang;
+package jang.DB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import an.OjdbcConnection;
 import jang.Data.Member_Data;
 import jang.Data.Member_Update_Data;
 
