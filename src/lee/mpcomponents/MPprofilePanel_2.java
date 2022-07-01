@@ -2,6 +2,7 @@ package lee.mpcomponents;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -35,9 +36,6 @@ public class MPprofilePanel_2 extends JPanel {
 	JLabel MPviewLb2 = new JLabel("핸드폰 번호 ");
 	JLabel MPviewLb3 = new JLabel("새 비밀번호 ");
 	JLabel MPviewLb4 = new JLabel("비밀번호 확인 ");
-	
-	
-	
 	
 	
 	JTextField MPnameTf = new JTextField(25);
@@ -90,7 +88,7 @@ public class MPprofilePanel_2 extends JPanel {
 		//그리드백레이아웃 적용하는 부분_______________________________________________________________
 		//인풋패널 설정
 		MPlabelPanel.setLayout(new GridLayout());
-		MPlabelPanel.setBounds(57, 5, 400, 300);
+		MPlabelPanel.setBounds(5, 5, 500, 300);
 		MPlabelPanel.setLayout(gbl);
 		MPlabelPanel.setBackground(Color.WHITE);
 		//그리드백레이아웃 설정 + 컴포넌트 넣기__________ 

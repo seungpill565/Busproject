@@ -77,6 +77,7 @@ public class MPreservationPanel_2 extends JPanel {
 			cbArr[i].setBounds(400, 77, 18, 18);
 			cbArr[i].addItemListener(new MPcheckboxIL()); //MPcheckboxIL 은 아이템리스너 상속 받은 클래스. (쳌박에는 아이템리스너 달 수 있음) 
 			cbArr[i].setBackground(Color.WHITE);
+			
 			//예매 리스트 패널의 라벨 설정
 			MPreservationlistArrList.add(new MPreservationlistPanel(br_id, sqlResults.get(i).toString()));
 			MPreservationlistArrList.get(i).add(cbArr[i]);//체크박스는 여기서 달아줌
