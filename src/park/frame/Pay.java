@@ -42,6 +42,8 @@ public class Pay extends JFrame{
 	private RouteInfoLabel route; // 행선지 정보 
 	private RouteInfoPanel routePanel ; // 행선지 정보 표 형태로 보여줄 패널
 	private ImageIcon background = new ImageIcon("image/mp배경원본1.png");
+	private ImageIcon homeicon = new ImageIcon("image/Payhome2.png");
+	private ImageIcon beforeicon = new ImageIcon("image/Paybefore2.png");
 	private JLabel label = new JLabel();
 	
 	
@@ -57,8 +59,8 @@ public class Pay extends JFrame{
 		this.user = user;
 		
 		// 접속 상태 유지하기위해서 다 매개변수로 받아온 user로 초기화 해줌
-		homeBtn = new HomeButton(new ImageIcon("image/home2.png"));
-		beforeBtn = new BeforePayButton(new ImageIcon("image/before1.png"));
+		homeBtn = new HomeButton(new ImageIcon("image/Payhome1.png"));
+		beforeBtn = new BeforePayButton(new ImageIcon("image/Paybefore1.png"));
 		//panel1 = new HomeBeforeBtnPanel(user);
 		route = new RouteInfoLabel();
 
@@ -69,6 +71,8 @@ public class Pay extends JFrame{
 		payBtn.setBounds(190,500,90,40);
 		
 
+		homeBtn.setRolloverIcon(homeicon);
+		beforeBtn.setRolloverIcon(beforeicon);
 		
 		
 		// 액션들

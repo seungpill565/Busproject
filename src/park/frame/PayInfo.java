@@ -20,13 +20,14 @@ public class PayInfo extends JFrame{
 	private SucceedPayLabel payLabel = new SucceedPayLabel(); 
 	private RvInfoPanel routePanel ;
 	private ImageIcon background = new ImageIcon("image/mp배경원본1.png");
+	private ImageIcon icon = new ImageIcon("image/PayInfohome2.png");
 	private JLabel label = new JLabel();
 
 	
 	public PayInfo(SaveInfo user) {
 		super("예매 완료");
 		this.user = user;
-		homeBtn = new HomeButton(new ImageIcon("image/home3.png"));
+		homeBtn = new HomeButton(new ImageIcon("image/PayInfohome1.png"));
 
 
 		homeBtn.addActionListener(new PayInfoButtonEvent(this));
@@ -36,6 +37,8 @@ public class PayInfo extends JFrame{
 
 
 		homeBtn.setBounds(195, 450, 100, 100);
+		homeBtn.setRolloverIcon(icon);
+		
 		add(label);
 		label.add(payLabel);
 		label.add(homeBtn);

@@ -12,8 +12,8 @@ public class RvInfoRowsLabel extends JLabel {
 		setFont(new Font("휴먼 편지체",Font.BOLD,16));
 		setPreferredSize(new Dimension(70,30));
 		setOpaque(true);
-		setForeground(Color.white);
-		setBackground(Color.blue);
+		setForeground(Color.black);
+		setBackground(new Color(0x99CCFF));
 	}
 
 }
