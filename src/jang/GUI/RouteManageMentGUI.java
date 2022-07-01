@@ -50,7 +50,7 @@ public class RouteManageMentGUI extends JFrame {
 	JTextField tf2 = new JTextField();
 	JTextField tf3 = new JTextField();
 	JTextField tf4 = new JTextField();
-	JTextField search_tf = new JTextField("도착지 입력");
+	JTextField search_tf = new JTextField(" 도착지 입력");
 	JTextField delete = new JTextField();
 	JTextField tf5 = new JTextField();
 
