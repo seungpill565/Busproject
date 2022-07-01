@@ -471,6 +471,9 @@ public class MemberManagementGUI extends JFrame {
 					return;
 				} else {
 					if (delete == JOptionPane.YES_OPTION) {
+						db.get_bs_id(user_id);
+						db.reset_is_reserved();
+						db.deleteRV(user_id);
 						db.deleteData(user_id);
 						JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", 1);
 
