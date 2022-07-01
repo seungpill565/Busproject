@@ -14,11 +14,15 @@ public class DayComboBoxEvent extends RouteMainFrameItem {
 	
 	@Override
 	public void itemStateChanged(ItemEvent e) {
+		int day;
 		
 		// 콤보박스가 선택되면 true
 		if(e.getStateChange() == 1) {
-			main.setDay((int)e.getItem());
+			day = (int)e.getItem();
+		} else {
+			day = 0;
 		}
 		
+		main.setDay(day);
 	}
 }

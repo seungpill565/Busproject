@@ -121,7 +121,6 @@ public class SelectRouteMainFrame extends JFrame {
 	// 출발지 버튼을 누르면 터미널들을 보여주는 메서드. 각각의 터미널 버튼에 액션을 추가해준다.
 	public void showStartingTerminals() {
 		
-		System.out.println(saveInfo.get_user_id());
 		stmFrame = new SelectTerminalMainFrame();
 		for (JButton btn : stmFrame.getAllBtns()) {
 			btn.addActionListener(startingBtnEvent);
