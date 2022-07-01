@@ -1,5 +1,6 @@
 package lee.mpcomponents;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,15 +10,16 @@ import javax.swing.JLabel;
 
 import lee.RoundedButton;
 
-public class MPleaveRealSF extends JFrame implements ActionListener{
+public class MPrealSF extends JFrame implements ActionListener{
 	
 	RoundedButton yesBtn = new RoundedButton("예");
 	RoundedButton noBtn = new RoundedButton("아니오");
 	
-	public MPleaveRealSF() {
+	public MPrealSF(String title, String msg, int x, int y, int width, int height) {
+		super(title);
 		
-		JLabel label = new JLabel("정말 탈퇴하시겠습니까?");
-		label.setBounds(100, 60, 300, 30);
+		JLabel label = new JLabel(msg);
+		label.setBounds(x, y, width, height);
 		add(label);
 		
 		yesBtn.setBounds(60, 120, 90, 35);
@@ -38,6 +40,7 @@ public class MPleaveRealSF extends JFrame implements ActionListener{
 		setSize(350,250);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	
+		getContentPane().setBackground(Color.WHITE);
 	}
 
 	//아니오버튼 액션

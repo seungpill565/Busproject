@@ -1,6 +1,7 @@
 package lee.mpcomponents;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -54,6 +55,7 @@ public class MPprofilePanel extends JPanel {
 		MPprofileLb.setFont(new Font("°íµñ", Font.BOLD, 18)); 
 		MPprofileLb.setBounds(50, 50, 390, 200);
 		MPprofileLb.setVerticalAlignment(JLabel.TOP);
+		MPprofileLb.setBackground(Color.WHITE);
 		MPprofile_1.add(MPprofileLb);
 		//_________________________________________________________________________________________________________________
 		

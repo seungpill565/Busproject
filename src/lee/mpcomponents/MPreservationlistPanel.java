@@ -1,5 +1,6 @@
 package lee.mpcomponents;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JLabel;
@@ -24,7 +25,7 @@ public class MPreservationlistPanel extends JPanel {
 		MPreservationdetailLb.setFont(new Font("°íµñ", Font.BOLD, 14));
 		add(MPreservationdetailLb);		
 
-		
+		setBackground(Color.WHITE);
 		setLayout(null);
 		setOpaque(true);  
 		setSize(470, 180);

@@ -20,7 +20,7 @@ public class RoundedButton extends JButton {
     protected void decorate() { setBorderPainted(false); setOpaque(false); }
     @Override 
     protected void paintComponent(Graphics g) {
-       Color c=new Color(255,255,255); //배경색 결정
+       Color c=new Color(219,219,219); //배경색 결정
        Color o=new Color(51,51,51); //글자색 결정
        int width = getWidth(); 
        int height = getHeight(); 

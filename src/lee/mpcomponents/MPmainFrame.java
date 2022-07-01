@@ -4,6 +4,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ContainerAdapter;
+import java.awt.event.ContainerEvent;
+import java.awt.event.ContainerListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,7 +21,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import an.OjdbcConnection;
@@ -46,9 +51,12 @@ public class MPmainFrame extends JFrame {
 	ArrayList<Integer> br_id_list = new ArrayList<>();
 	
 	//이미지 아이콘 준비
-	ImageIcon homeImg1 = new ImageIcon("image/home1.png");
-	ImageIcon homeImg2 = new ImageIcon("image/home2.png");
+	ImageIcon homeImg1 = new ImageIcon("image/MPhome1.png");
+	ImageIcon homeImg2 = new ImageIcon("image/MPhome2.png");
 	ImageIcon backImg = new ImageIcon("image/mp배경.png");
+	
+	MPwarningSF deleted;
+	MPrealSF realSF;
 	
 //액션리스너에서 쓰일 메서드들 모음
 	
@@ -103,13 +111,25 @@ public class MPmainFrame extends JFrame {
 	//프로필수정하기 버튼 눌렀을 때 메서드 
 	public void editBtnCtrl () {		
 		
+		//수정하기 버튼 비활성화
+		MPcontents.MPprofile.MPprofile_1.MPeditBtn.setEnabled(false);
+		
 		//비밀번호 확인창
 	 	MPinputpwSF inputpwSF = new MPinputpwSF();
+	 	
+	 	//비밀번호 입력 창 떠 있는 동안 수정하기 버튼 비활성화 시키는 리스너
+	 	inputpwSF.addWindowListener(new WindowAdapter() {
+	 		@Override
+	 		public void windowClosed(WindowEvent e) {
+	 			MPcontents.MPprofile.MPprofile_1.MPeditBtn.setEnabled(true);
+	 		}
+	 	});
 	 	
 		//비밀번호 확인창의 '입력'버튼 눌렀을 때 입력된 비번과 user_id의 비번을 비교하는 액션 리스너 
 		inputpwSF.completeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				inputpwSF.completeBtn.setEnabled(false);
 				try (Connection conn = OjdbcConnection.getConnection();){
 					
 					String str = inputpwSF.MPgetPwd(inputpwSF.inputpwPf);
@@ -120,15 +140,22 @@ public class MPmainFrame extends JFrame {
 						MPmainFrame MPnewmainF = new MPmainFrame(saveInfo); //메인 프레임 새로 띄우기
 						MPnewmainF.MPcontents.MPprofile.showMPprofile_2(); 		
 						MPnewmainF.setCategoryLabelText("내 정보 수정");
+						
 					} else {
-						new MPincorrectpwSF();
+						MPwarningSF warningSF = new MPwarningSF("비밀번호 오류", "<html><pre>잘못된 비밀번호입니다.<br> 다시 입력해주세요.</pre></html>", 110, 60, 340, 30);
+						warningSF.addWindowListener(new WindowAdapter() {
+							public void windowClosed(WindowEvent e) {
+								inputpwSF.completeBtn.setEnabled(true);	
+							};
+						});
 					}
-	
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
 			}	
 		});
+		
+		
 		
 	}				
 		
@@ -143,21 +170,22 @@ public class MPmainFrame extends JFrame {
 	//프로필수정하기 화면에서 수정 완료 버튼 눌렀을 때 메서드 
 	public void completeBtnCtrl() {
 		
+		//뒤로가기 버튼, 완료 버튼 일단 비활성화
+		MPcontents.MPprofile.MPprofile_2.MPbackBtn.setEnabled(false);
+		MPcontents.MPprofile.MPprofile_2.MPcompleteBtn.setEnabled(false);
+				
+		
 		//입력되지 않은 빈 칸이 있을 때 경고창 띄우기
 		if(MPcontents.MPprofile.MPprofile_2.MPnameTf.getText().equals("") 
 			|| MPcontents.MPprofile.MPprofile_2.MPphoneTf_1.getText().equals("")
 			|| MPcontents.MPprofile.MPprofile_2.MPphoneTf_2.getText().equals("")
 			|| MPcontents.MPprofile.MPprofile_2.MPphoneTf_3.getText().equals("")
-			|| MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf).equals("")) {
-			//new MPpreventnulltfSF();
-			JOptionPane.showMessageDialog(null, "빈 칸을 모두 입력해주세요", "입력 오류", 1);			
-			return;
-		}
-				
-		//이름 글자수 제한 경고창 띄우기
-		if(MPcontents.MPprofile.MPprofile_2.MPnameTf.getText().length() > 10) {		
-			//new MPnamelengthrestrictSF();
-			JOptionPane.showMessageDialog(null, "이름은 10글자까지 입력 가능합니다.", "입력 오류", 1);
+			|| MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf).equals("")) {			
+			MPwarningSF warningSF = new MPwarningSF("입력 오류", "빈 칸을 모두 입력해주세요", 95, 60, 200, 30);
+			warningSF.addWindowListener(new WindowListener() {
+				public void windowOpened(WindowEvent e) {} public void windowIconified(WindowEvent e) {} public void windowDeiconified(WindowEvent e) {} public void windowDeactivated(WindowEvent e) {} public void windowClosing(WindowEvent e) {} public void windowActivated(WindowEvent e) {}
+				public void windowClosed(WindowEvent e) {MPcontents.MPprofile.MPprofile_2.MPcompleteBtn.setEnabled(true); MPcontents.MPprofile.MPprofile_2.MPbackBtn.setEnabled(true);}
+			});
 			return;
 		}
 		
@@ -165,13 +193,21 @@ public class MPmainFrame extends JFrame {
 		Pattern passPattern1 = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$"); //8자 영문+특문+숫자
 		Matcher passMatcher = passPattern1.matcher(MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf));
 		if (!passMatcher.find()) {
-			JOptionPane.showMessageDialog(null, "비밀번호는 영문+특수문자+숫자 8~20자로 구성되어야 합니다", "입력 오류", 1);
+			MPwarningSF warningSF = new MPwarningSF("입력 오류", "<html><pre>비밀번호는 영문+특수문자+숫자<br> 8~20자로 구성되어야 합니다</pre></html>", 80, 60, 200, 40);
+			warningSF.addWindowListener(new WindowListener() {
+				public void windowOpened(WindowEvent e) {} public void windowIconified(WindowEvent e) {} public void windowDeiconified(WindowEvent e) {} public void windowDeactivated(WindowEvent e) {} public void windowClosing(WindowEvent e) {} public void windowActivated(WindowEvent e) {}
+				public void windowClosed(WindowEvent e) {MPcontents.MPprofile.MPprofile_2.MPcompleteBtn.setEnabled(true); MPcontents.MPprofile.MPprofile_2.MPbackBtn.setEnabled(true);}
+			});
 			return;
 		}
 		
 		//비밀번호 불일치 경고창 띄우기 
 		if(!MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPchknewpwTf).equals(MPcontents.MPprofile.MPprofile_2.MPgetPwd(MPcontents.MPprofile.MPprofile_2.MPnewpwTf))) {
-			JOptionPane.showMessageDialog(null, "<html>비밀번호가 일치하지 않습니다.</html>", "입력 오류", 1);
+			MPwarningSF warningSF = new MPwarningSF("입력 오류", "비밀번호가 일치하지 않습니다.", 85, 60, 200, 30);
+			warningSF.addWindowListener(new WindowListener() {
+				public void windowOpened(WindowEvent e) {} public void windowIconified(WindowEvent e) {} public void windowDeiconified(WindowEvent e) {} public void windowDeactivated(WindowEvent e) {} public void windowClosing(WindowEvent e) {} public void windowActivated(WindowEvent e) {}
+				public void windowClosed(WindowEvent e) {MPcontents.MPprofile.MPprofile_2.MPcompleteBtn.setEnabled(true); MPcontents.MPprofile.MPprofile_2.MPbackBtn.setEnabled(true);}
+			});
 			return;
 		}
 		
@@ -221,10 +257,16 @@ public class MPmainFrame extends JFrame {
 		
 		//체크된 체크박스가 없을 땐 작은 창이 안 뜨고, 하나라도 있으면 작은 창(정말 취소?) 뜸
 		if(checkNum > 0) {
+			//예매취소버튼 비활성화
+			MPcontents.MPreservation.MPreservation_2.MPreservationcancleBtn.setEnabled(false);
+			//'정말 취소하시겠습니까?' 작은 창			
+			MPrealSF sf = new MPrealSF("예메취소", "정말 취소하시겠습니까?", 100, 60, 300, 30);
 			
-			//'정말 취소하시겠습니까?' 작은 창
-			MPreservationSF sf = new MPreservationSF();
-			
+			//'정말취소하시겠습니까?' 작은 창 꺼지면 예매취소버튼 활성화 
+			sf.addWindowListener(new WindowListener() {
+				public void windowOpened(WindowEvent e) {} public void windowIconified(WindowEvent e) {} public void windowDeiconified(WindowEvent e) {} public void windowDeactivated(WindowEvent e) {} public void windowClosing(WindowEvent e) {} public void windowActivated(WindowEvent e) {}
+				public void windowClosed(WindowEvent e) {MPcontents.MPreservation.MPreservation_2.MPreservationcancleBtn.setEnabled(true);}
+			});
 			//'정말취소하시겠습니까?' 작은 창에서 '예'버튼 눌렀을 떄 
 			sf.yesBtn.addActionListener(new ActionListener() {
 				@Override
@@ -286,15 +328,26 @@ public class MPmainFrame extends JFrame {
 		} catch (SQLException e2) {
 		}
 		
+		//'예' 버튼 비활성화
+		MPcontents.MPleave.MPleaveYesBtn.setEnabled(false);
+		
 		//비밀번호 일치하면 정말 탈퇴 하시겠습니까? 작은 창 띄우기
 		if(confirmPw.equals(userPw)) {
 			
 			//정말 탈퇴 하시겠습니까? 작은 창 
-			MPleaveRealSF sf = new MPleaveRealSF();
+			realSF = new MPrealSF("계정 탈퇴", "정말 탈퇴하시겠습니까?", 100, 60, 300, 30);
+			
+			//정말 탈퇴? 작은 창 꺼지면 '예' 버튼 활성화
+			realSF.addWindowListener(new WindowListener() {
+				public void windowOpened(WindowEvent e) {} public void windowIconified(WindowEvent e) {} public void windowDeiconified(WindowEvent e) {} public void windowDeactivated(WindowEvent e) {} public void windowClosing(WindowEvent e) {} public void windowActivated(WindowEvent e) {}
+				public void windowClosed(WindowEvent e) {MPcontents.MPleave.MPleaveYesBtn.setEnabled(true);}
+			});
+			
 			//정말 탈퇴?창 '예' 누르면 bus_seat에서 좌석 1>0으로 바꾸고, bus_reservation에서 예매기록 삭제한 후에 user_id삭제  
-			sf.yesBtn.addActionListener(new ActionListener() {
+			realSF.yesBtn.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					realSF.yesBtn.setEnabled(false);//버튼 비활성화
 					try(Connection conn = OjdbcConnection.getConnection();) {
 						conn.setAutoCommit(false);
 						
@@ -309,14 +362,20 @@ public class MPmainFrame extends JFrame {
 						MPprofileModel.MPdeleteUserInfo(conn, user_id);
 							
 						conn.commit();
-						sf.dispose();
+						realSF.dispose();
 						
 						//삭제되었습니다 작은 창 띄유기 
-						MPleavecompleteSF sf1 = new MPleavecompleteSF();	
-						sf1.yesBtn.addActionListener(new ActionListener() {
+						deleted = new MPwarningSF("탈퇴 완료", "<html><pre>     탈퇴 완료.<br>홈화면으로 이동합니다.</pre></html>", 107, 60, 300, 30);	
+						
+						deleted.addWindowListener(new WindowListener() {
+							public void windowOpened(WindowEvent e) {} public void windowIconified(WindowEvent e) {} public void windowDeiconified(WindowEvent e) {} public void windowDeactivated(WindowEvent e) {} public void windowClosing(WindowEvent e) {} public void windowActivated(WindowEvent e) {}
+							public void windowClosed(WindowEvent e) {realSF.yesBtn.setEnabled(true);}
+						});
+						
+						deleted.closeBtn.addActionListener(new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent e) {
-								sf1.dispose();
+								deleted.dispose();
 								dispose();
 								new Login_Mainframe();
 							}
@@ -328,7 +387,11 @@ public class MPmainFrame extends JFrame {
 			});	
 
 		} else {
-			JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다 .", "입력 오류", 1);
+			MPwarningSF warningSF = new MPwarningSF("비밀번호 오류", "<html><pre>잘못된 비밀번호입니다.<br> 다시 입력해주세요.</pre></html>", 110, 60, 340, 30);
+			warningSF.addWindowListener(new WindowListener() {
+				public void windowOpened(WindowEvent e) {} public void windowIconified(WindowEvent e) {} public void windowDeiconified(WindowEvent e) {} public void windowDeactivated(WindowEvent e) {} public void windowClosing(WindowEvent e) {} public void windowActivated(WindowEvent e) {}
+				public void windowClosed(WindowEvent e) {MPcontents.MPleave.MPleaveYesBtn.setEnabled(true);}
+			});
 		}	
 	}
 
@@ -362,11 +425,11 @@ public class MPmainFrame extends JFrame {
 		
 		//홈버튼에 이미지 달기
 		JButton MPhomeBtn = new JButton(homeImg1);
-		MPhomeBtn.setRolloverIcon(homeImg2);
 		MPhomeBtn.setBounds(10, 10, 50, 50);
 		MPhomeBtn.setBorderPainted(false);
 		MPhomeBtn.setContentAreaFilled(false);
 		MPhomeBtn.setFocusPainted(false);
+		
 		
 		//홈버튼 액션 달기
 		MPhomeBtn.addActionListener(new ActionListener() {		
@@ -377,7 +440,7 @@ public class MPmainFrame extends JFrame {
 			}
 		});
 		
-		
+		MPhomeBtn.setRolloverIcon(homeImg2);
 		
 		//네비게이션 바 버튼 3개 액션
 		MPnav.MPprofileBtn.addActionListener(new MPnavBtnsEvent(this, MPnav.MPprofileBtn));

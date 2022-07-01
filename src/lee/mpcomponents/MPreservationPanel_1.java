@@ -1,5 +1,6 @@
 package lee.mpcomponents;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JLabel;
@@ -9,7 +10,7 @@ import javax.swing.JPanel;
 public class MPreservationPanel_1 extends JPanel {
 
 	
-	JLabel MPnoreservationLb = new JLabel("현재 예매내역이 존재하지 않습니다.");
+	JLabel MPnoreservationLb = new JLabel("현재 예매매내역이 존재하지 않습니다.");
 	
 	public MPreservationPanel_1() {
 		
@@ -19,6 +20,8 @@ public class MPreservationPanel_1 extends JPanel {
 		MPnoreservationLb.setBounds(30, 30, 300, 30);
 		MPnoreservationLb.setFont(new Font("고딕", Font.BOLD, 15));
 		add(MPnoreservationLb);
+		
+		setBackground(Color.WHITE);
 	}
 	
 	

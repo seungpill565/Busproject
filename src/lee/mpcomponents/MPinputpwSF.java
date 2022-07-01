@@ -1,5 +1,6 @@
 package lee.mpcomponents;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -13,8 +14,11 @@ public class MPinputpwSF extends JFrame {
 	RoundedButton completeBtn = new RoundedButton("입력");	
 	JPasswordField inputpwPf = new JPasswordField(25);
 	
+	Boolean onOff = false;
+	
 	public MPinputpwSF() {
 		super("비밀번호 입력");
+		onOff = true;
 		
 		JLabel label = new JLabel("비밀번호를 입력해주세요.");
 
@@ -31,6 +35,8 @@ public class MPinputpwSF extends JFrame {
 		
 		inputpwPf.setBounds(85, 80, 170, 30);
 		inputpwPf.setEchoChar('●');
+		inputpwPf.setBackground(new Color(219,219,219));
+		inputpwPf.setBorder(null);
 		add(inputpwPf);
 		
 		setLayout(null);
@@ -39,6 +45,7 @@ public class MPinputpwSF extends JFrame {
 		setSize(350,250);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		getContentPane().setBackground(Color.WHITE);
 	}
 
 	
