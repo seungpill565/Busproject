@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import an.OjdbcConnection;
 import hong.BackGroundLabel;
@@ -30,6 +31,7 @@ public class SelectSeatMainFrame extends JFrame {
 	
 	private int bi_id;
 	private int bs_id;
+	private int selectCnt = 0;
 	
 	private SeatButton seatBtn;
 	
@@ -79,11 +81,17 @@ public class SelectSeatMainFrame extends JFrame {
 	public void putSeat() {
 		for(int i = 0; i < MAX_SEAT; ++i) {
 			if(seatBtns[i].get_is_selected()) {
+				++selectCnt;
 				saveInfo.put_bs_id(seatBtns[i].get_bs_id());
 				saveInfo.put_bs_name("" + i, seatBtns[i].get_bs_id());
 			}
 		}
 	}
+	
+	public int getSelectCnt() {
+		return selectCnt;
+	}
+	
 	
 	public SelectSeatMainFrame(SaveInfo saveInfo) {
 		
@@ -135,7 +143,7 @@ public class SelectSeatMainFrame extends JFrame {
 		
 		setSize(450, 720);
 		setLocationRelativeTo(null);
-		getContentPane().setBackground(Color.WHITE);
+		getContentPane().setBackground(new Color(0xA0A0F6));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		setVisible(true);
@@ -161,6 +169,7 @@ public class SelectSeatMainFrame extends JFrame {
 			e.printStackTrace();
 		}
 	}
+
 
 
 }
