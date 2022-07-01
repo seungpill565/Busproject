@@ -14,7 +14,7 @@ public class SelectBusButton extends JButton {
 	public SelectBusButton() {
 		super("예약하기");
 		//setOpaque(true);
-		//setBackground(Color.WHITE);
+		setBackground(new Color(0xFDF6DB));
 		//setHorizontalAlignment(CENTER);
 		setBorder(lb);
 		setPreferredSize(dimension);

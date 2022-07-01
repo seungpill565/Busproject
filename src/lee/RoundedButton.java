@@ -42,6 +42,10 @@ public class RoundedButton extends JButton {
 
        }
     
+    public void btnSetText(String text) {
+    	setText(text);
+    }
+    
     	
     }
 

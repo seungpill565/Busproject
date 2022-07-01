@@ -12,11 +12,15 @@ public class YearComboBoxEvent extends RouteMainFrameItem {
 	
 	@Override
 	public void itemStateChanged(ItemEvent e) {
+		int year;
 		
 		if(e.getStateChange() == 1) {
-			main.setYear((int)e.getItem());
+			year = (int)e.getItem();
+		} else {
+			year = 0;
 		}
 		
+		main.setYear(year);
 	}
 
 }

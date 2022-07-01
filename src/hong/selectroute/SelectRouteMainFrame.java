@@ -1,6 +1,8 @@
 package hong.selectroute;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,8 +19,6 @@ import javax.swing.JOptionPane;
 import an.OjdbcConnection;
 import an.userinfo.Info_MainFrame;
 import hong.BackGroundLabel;
-import hong.BeforeButton;
-import hong.NextButton;
 import hong.SaveInfo;
 import hong.selectroute.event.BeforeButtonEvent;
 import hong.selectroute.event.DayComboBoxEvent;
@@ -40,11 +40,13 @@ public class SelectRouteMainFrame extends JFrame {
 	SaveInfo saveInfo;
 	
 	HomeButton homeButton = new HomeButton();				// 홈 버튼
-	StartingPointButton startingPointButton = new StartingPointButton();	// 출발 버튼
-	ArrivalButton arrivalButton = new ArrivalButton(); 	// 도착 버튼
-	SerchButton serchButton = new SerchButton(); // 조회하기 버튼
-	NextButton nextButton = new NextButton();	// 다음 버튼
-	BeforeButton beforeButton = new BeforeButton();
+	RoundedButton startingPointButton = new RoundedButton("선택");	// 출발 버튼
+	RoundedButton arrivalButton = new RoundedButton("선택"); 	// 도착 버튼
+	RoundedButton serchButton = new RoundedButton("조회하기"); // 조회하기 버튼
+	RoundedButton nextButton = new RoundedButton("확인");
+	RoundedButton beforeButton = new RoundedButton("이전으로");
+	//NextButton nextButton = new NextButton();	// 다음 버튼
+	//BeforeButton beforeButton = new BeforeButton();
 	
 	YearComboBox yearBox = new YearComboBox();
 	MonthComboBox monBox = new MonthComboBox();				// 달 선택 콤보박스
@@ -84,6 +86,7 @@ public class SelectRouteMainFrame extends JFrame {
 	private Integer price;
 	
 	// 달에 따른 day들을 일 선택 콤보박스에 추가하는 메서드
+	
 	public void addDays(int month) {
 		dayBox.addItems(month);
 	}
@@ -95,7 +98,7 @@ public class SelectRouteMainFrame extends JFrame {
 		
 	// 출발지를 선택하면 버튼 이름을 출발지로(ex:동서울) 바꿔준다
 	public void departFrom(String starting) {
-		startingPointButton.setTextStpBtn(starting);
+		startingPointButton.btnSetText(starting);
 	}
 		
 	// 출발지를 선택하면 출발지를 입력받는다.
@@ -105,7 +108,7 @@ public class SelectRouteMainFrame extends JFrame {
 	
 	// 도착지를 선택하면 버튼 이름을 출발지로(ex:부산) 바꿔준다
 	public void arriveAt(String destination) {
-		arrivalButton.setTextArvBtn(destination);
+		arrivalButton.btnSetText(destination);
 		
 	}
 		
@@ -116,8 +119,11 @@ public class SelectRouteMainFrame extends JFrame {
 	
 	// 출발지 버튼을 누르면 터미널들을 보여주는 메서드. 각각의 터미널 버튼에 액션을 추가해준다.
 	public void showStartingTerminals() {
-		
-		System.out.println(saveInfo.get_user_id());
+		try {
+			stmFrame.dispose();
+		} catch (NullPointerException e) {
+			
+		}
 		stmFrame = new SelectTerminalMainFrame();
 		for (JButton btn : stmFrame.getAllBtns()) {
 			btn.addActionListener(startingBtnEvent);
@@ -127,6 +133,11 @@ public class SelectRouteMainFrame extends JFrame {
 	// 도착지 버튼을 누르면 터미널들을 보여주는 메서드. 각각의 터미널 버튼에 액션을 추가해준다.
 	public void showArriveTerminals() {
 		//System.out.println(saveInfo.get_user_id());
+		try {
+			stmFrame.dispose();
+		} catch (NullPointerException e) {
+			
+		}
 		stmFrame = new SelectTerminalMainFrame();
 		for (JButton btn : stmFrame.getAllBtns()) {
 			btn.addActionListener(arrivalBtnEvent);
@@ -155,6 +166,11 @@ public class SelectRouteMainFrame extends JFrame {
 	
 	// 노선, 날짜에 맞는 버스들의 정보를 보여주는 메서드
 	public void showBus() {
+		try {
+			busFrame.dispose();
+		} catch (NullPointerException e) {
+			
+		}
 		busFrame = new SelectBusFrame();
 		busFrame.showBusInfo(rt_id, year, month, day);
 		busFrame.getCanReserve();
@@ -272,25 +288,27 @@ public class SelectRouteMainFrame extends JFrame {
 		label.add(new BackGroundLabel("", 770, 25, 0));
 		
 		
-		label.add(new BackGroundLabel("", 200, 40, 12));
-		label.add(new BackGroundLabel("출발지", 185, 40, 20));
+		label.add(new BackGroundLabel("", 210, 40, 12));
+		label.add(new BackGroundLabel("출발지", 200, 40, 20));
 		label.add(new BackGroundLabel("도착지", 350, 40, 20));
 		
 		// 출발지 버튼 액션달고 붙이기
-		RoundedButton rb = new RoundedButton();
 		label.add(new BackGroundLabel("", 200, 100, 0));
+		startingPointButton.setPreferredSize(new Dimension(150, 120));
+		startingPointButton.setFont(new Font("고딕체", Font.BOLD, 22));
 		startingPointButton.addActionListener(showStratingBtnEvent);
 		label.add(startingPointButton);
-		
-		label.add(new BackGroundLabel("", 80, 100, 0));
+		label.add(new BackGroundLabel("", 40, 100, 0));
 		
 		// 도착지 버튼
+		arrivalButton.setPreferredSize(new Dimension(150, 120));
+		arrivalButton.setFont(new Font("고딕체", Font.BOLD, 22));
 		arrivalButton.addActionListener(showArrivalBtnEvent);
 		arrivalButton.setLocation(50, 50);
 		label.add(arrivalButton);
 		
-		label.add(new BackGroundLabel("", 250, 100, 0));
-		label.add(new BackGroundLabel("", 770, 110, 0));
+		label.add(new BackGroundLabel("", 150, 100, 0));
+		label.add(new BackGroundLabel("", 770, 80, 0));
 		//add(new BackGroundLabel("", 560, 10));
 		label.add(new BackGroundLabel("", 100, 45, 0));
 		label.add(new BackGroundLabel("가는날 :",70, 45, 15));
@@ -312,6 +330,9 @@ public class SelectRouteMainFrame extends JFrame {
 		//add(new BackGroundLabel("", 560, 10));
 		
 		// 조회하기 버튼
+		
+		serchButton.setPreferredSize(new Dimension(300,50));
+		serchButton.setFont(new Font("고딕체", Font.BOLD, 22));
 		label.add(new BackGroundLabel("", 235, 77, 0));
 		serchButton.addActionListener(serchBtnEvent);
 		label.add(serchButton);
@@ -321,11 +342,15 @@ public class SelectRouteMainFrame extends JFrame {
 		//label.add(new BackGroundLabel("", 150, 30));
 		
 		// 다음 프레임으로 넘어가는 버튼
+		nextButton.setPreferredSize(new Dimension(110,40));
 		label.add(new BackGroundLabel("", 260, 30, 0));
 		nextButton.addActionListener(nextBtnEvent);
 		label.add(nextButton);
 		
+		// 이전 버튼
 		//label.add(new BackGroundLabel("", 30, 30));
+		beforeButton.setPreferredSize(new Dimension(110,40));
+		
 		label.add(new BackGroundLabel("", 20, 30, 0));
 		beforeButton.addActionListener(beforeBtnEvent);
 		label.add(beforeButton);
