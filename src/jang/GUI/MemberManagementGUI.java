@@ -64,7 +64,7 @@ public class MemberManagementGUI extends JFrame {
 
 	ImageIcon image = new ImageIcon("Image/yujin2.jpg");
 
-	ImageIcon home_image = new ImageIcon("Image/home.png");
+	ImageIcon home_image = new ImageIcon("Image/home2-1.png");
 	ImageIcon home_image2 = new ImageIcon("Image/home2.png");
 
 	public MemberManagementGUI() {
