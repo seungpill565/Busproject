@@ -1,5 +1,6 @@
 package park.panel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.LayoutManager;
@@ -22,6 +23,9 @@ public class ScrollPanePanel extends JPanel {
 			add(new RouteInfoRowsLabel(String.format("%s",(Integer.parseInt(user.getSeatNames().get(i))+1 )))); // ÁÂ¼®ÀÌ¸§
 		
 		}
+		
+		//getViewport().setBackground(Color.black);
+		setBackground(Color.white);
 	}
 
 }

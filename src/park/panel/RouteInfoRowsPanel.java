@@ -1,5 +1,6 @@
 package park.panel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.LayoutManager;
@@ -23,6 +24,8 @@ public class RouteInfoRowsPanel extends JPanel{ // 행선지 정보 행들 넣는 패널
 			add(new RouteInfoRowsLabel(String.format("%s",(Integer.parseInt(user.getSeatNames().get(i))+1 )))); // 좌석이름
 		
 		}
+		
+		setBackground(Color.black);
 		
 		//setBounds(10, 100, 450, 30);
 		
