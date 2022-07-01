@@ -151,7 +151,7 @@ public class Login_Mainframe extends JFrame{
 				if (pass.equals(rset.getString(1))) {
 					if(check == "¼Õ´Ô") {
 						all_id(id);
-						dispose();
+						dispose(); 
 						new Info_MainFrame(saveInfo);
 					}else {
 					new Admin_MainFrame();

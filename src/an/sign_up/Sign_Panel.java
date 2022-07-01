@@ -22,7 +22,6 @@ import javax.swing.JTextField;
 
 import an.OjdbcConnection;
 import an.sign_up.action.Sign_ButtonAction;
-import an.sign_up.action.Sign_ComboAction;
 import an.sign_up.action.Sign_IdButtonAction;
 import an.sign_up.action.Sign_KeyIdAction;
 import an.sign_up.action.Sign_KeyNameAction;
@@ -68,9 +67,9 @@ public class Sign_Panel extends JPanel{
 	JLabel pnLabel = new ErrorLabel("전화번호의 형식은 xxx-xxx-xxxx입니다.");
 	
 	//손님/관리자
-	JComboBox<String> combo = new Combo();
-	JPanel comboPanel = new Combo_Panel(combo);
-	public JLabel comboLabel = new ErrorLabel("손님을 선택하셨습니다.");
+	//JComboBox<String> combo = new Combo();
+	//JPanel comboPanel = new Combo_Panel(combo);
+	//public JLabel comboLabel = new ErrorLabel("손님을 선택하셨습니다.");
 	
 	
 	//JRadioButton client = new RadioButton("손님");
@@ -85,7 +84,7 @@ public class Sign_Panel extends JPanel{
 		this.button = button ;
 		//this.button2= button2;
 		//this.button3 = button3;
-		comboLabel.setForeground(new Color(0XFFFFFF));
+		//comboLabel.setForeground(new Color(0XFFFFFF));
 		
 		add(idPanel);
 		add(idcheckLabel);
@@ -97,8 +96,8 @@ public class Sign_Panel extends JPanel{
 		add(nameLabel);
 		add(pnPanel);
 		add(pnLabel);
-		add(comboPanel);
-		add(comboLabel);
+		//add(comboPanel);
+		//add(comboLabel);
 		
 		
 		/////////////////////////////액션/////////////////////////////////
@@ -116,7 +115,7 @@ public class Sign_Panel extends JPanel{
 		Sign_KeyPassCkAction passckkeyevent = new Sign_KeyPassCkAction(this);
 		Sign_KeyNameAction namekeyevent = new Sign_KeyNameAction(this);
 		Sign_KeyPnAction pnkeyevent = new Sign_KeyPnAction(this);
-		Sign_ComboAction comboevent = new Sign_ComboAction(this);
+		//Sign_ComboAction comboevent = new Sign_ComboAction(this);
 		
 		idtext.addKeyListener(idkeyevent);
 		passtext.addKeyListener(passkeyevent);
@@ -125,7 +124,7 @@ public class Sign_Panel extends JPanel{
 		pntext.addKeyListener(pnkeyevent);
 		pntext2.addKeyListener(pnkeyevent);
 		pntext3.addKeyListener(pnkeyevent);
-		combo.addActionListener(comboevent);
+		//combo.addActionListener(comboevent);
 					
 				
 	}
@@ -138,10 +137,10 @@ public class Sign_Panel extends JPanel{
 		passck = new String(passCktext.getPassword());
 		name = nametext.getText();
 		phone = (pntext.getText()+"-"+pntext2.getText() +"-"+pntext3.getText());
-		check = combo.getSelectedItem().toString();
+		//check = combo.getSelectedItem().toString();
 
 		String sql = "INSERT into user_info(user_id,user_passenger_manager,user_name,user_password,user_phonenum)"
-				+ " values (?,?,?,?,?)"; 
+				+ " values (?,'손님',?,?,?)"; 
 
 		Pattern passPattern1 = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$"); //8자 영문+특문+숫자
 		
@@ -169,8 +168,13 @@ public class Sign_Panel extends JPanel{
 		}if(namecheck) {
 			JOptionPane.showMessageDialog(null, "이름에는 숫자를 입력하실수 없습니다.", "이름 오류", 1);
 			return;
+		}if(idcheckLabel.getText().equals("아이디 중복을 눌러주세요")) {
+			JOptionPane.showMessageDialog(null, "중복확인을 눌러주세요", "아이디 중복체크 오류", 1);
+			return;
+		}if(passLabel.getText().equals("사용가능한 비밀번호 입니다. 비밀번호 확인을 눌러주세요")) {
+			JOptionPane.showMessageDialog(null, "비밀번호 확인을 눌러주세요", "비밀번호 체크 오류", 1);
+			return;
 		}
-		
 		else {
 			try(Connection conn = OjdbcConnection.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -178,14 +182,12 @@ public class Sign_Panel extends JPanel{
 					) {
 				
 				pstmt.setString(1, id);
-				pstmt.setString(2, check);
-				pstmt.setString(3, name);
-				pstmt.setString(4, pass);
-				pstmt.setString(5, phone);
+				//pstmt.setString(2, check);
+				pstmt.setString(2, name);
+				pstmt.setString(3, pass);
+				pstmt.setString(4, phone);
 				pstmt.executeUpdate();
 				JOptionPane.showMessageDialog(null, "회원 가입 완료!", "회원가입", 1);
-				
-				
 				
 			} catch (SQLException e1) {
 				JOptionPane.showMessageDialog(null, "정보를 제대로 입력해주세요!", "오류", 1);
@@ -249,6 +251,7 @@ public class Sign_Panel extends JPanel{
 				ResultSet rset = pstmt.executeQuery();
 					rset.next();
 						JOptionPane.showMessageDialog(null, "사용가능한 비밀번호 입니다.", "비밀번호 체크", 1);
+						passLabel.setForeground(Color.BLACK);
 						passLabel.setText("비밀번호 확인완료");
 					
 				}
@@ -350,15 +353,17 @@ public class Sign_Panel extends JPanel{
 		}
 		
 	}
+	// 
+	
 	
 	//손님/관리자 선택
-	public void checkerror() {
-		String check = combo.getSelectedItem().toString();
-		if(check =="손님") {
-			comboLabel.setText("손님을 선택하셨습니다.");
-		}else {
-			comboLabel.setText("관리자를 선택하셨습니다.");
-			
-		}
-	}
+//	public void checkerror() {
+//		String check = combo.getSelectedItem().toString();
+//		if(check =="손님") {
+//			comboLabel.setText("손님을 선택하셨습니다.");
+//		}else {
+//			comboLabel.setText("관리자를 선택하셨습니다.");
+//			
+//		}
+//	}
 }
