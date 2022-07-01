@@ -339,6 +339,9 @@ public class RouteManageMentGUI extends JFrame {
 
 				ArrayList<rt_bi_id_Data> arr = new ArrayList<rt_bi_id_Data>();
 				arr = db.rt_idRead(rt_id);
+				
+				ArrayList<rt_bi_id_Data> arr1 = new ArrayList<rt_bi_id_Data>();
+				arr1 = db.bi_idRead(bi_id);
 
 				Pattern passPattern = Pattern.compile("\\d{2}/\\d{2}/\\d{2}");
 				Matcher passMatcher = passPattern.matcher(bi_day);
@@ -353,6 +356,9 @@ public class RouteManageMentGUI extends JFrame {
 						JOptionPane.showMessageDialog(null, "정보를 모두 입력해주세요", "알림", 1);
 						return;
 					}
+				} else if (arr1.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "버스 ID가 존재하지 않습니다", "아이디 오류", 1);
+					return;
 				} else if (!passMatcher3.find()) {
 					JOptionPane.showMessageDialog(null, "노선 ID는 숫자만 입력 가능합니다", "아이디 오류", 1);
 					return;
