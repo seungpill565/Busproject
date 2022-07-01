@@ -250,7 +250,7 @@ public class MemberManagementGUI extends JFrame {
 
 		btn1.setBounds(160, 80, 70, 30); // 추가
 //		btn1.setBackground(Color.white);
-		btn1.setBackground(new Color(255, 255, 255, 122));
+		btn1.setBackground(new Color(255, 255, 255, 122)); // 투명도 조절(122)
 		btn1.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 		btn2.setBounds(40, 80, 100, 30); // 조회
 		btn2.setBackground(new Color(255, 255, 255, 122));
