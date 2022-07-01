@@ -129,8 +129,6 @@ public class RouteManageMentGUI extends JFrame {
 					tf2.setText(rowData[row][1]);
 					tf3.setText(rowData[row][5]);
 					tf4.setText(rowData[row][6]);
-//					tf5.setText(rowData[row][0]);
-//					search.setText(rowData[row][3]);
 				}
 
 			}
@@ -190,8 +188,6 @@ public class RouteManageMentGUI extends JFrame {
 					tf2.setText(rowData[row][1]);
 					tf3.setText(rowData[row][5]);
 					tf4.setText(rowData[row][6]);
-//					tf5.setText(rowData[row][0]);
-//	               tf5.setText(rowData[row][4]);
 				}
 
 			}
@@ -329,6 +325,8 @@ public class RouteManageMentGUI extends JFrame {
 				Matcher passMatcher = passPattern.matcher(bi_day);
 				Pattern passPattern2 = Pattern.compile("\\d{2}:\\d{2}");
 				Matcher passMatcher2 = passPattern2.matcher(bi_time);
+				Pattern passPattern3 = Pattern.compile("[0-9]");
+				Matcher passMatcher3 = passPattern3.matcher(rt_id);
 
 				int update = JOptionPane.showConfirmDialog(null, "수정하시겠습니까?", "수정 확인", JOptionPane.YES_NO_OPTION);
 				if (bi_day.equals("") || bi_time.equals("") || bi_id.equals("") || rt_id.equals("")) {
@@ -336,6 +334,9 @@ public class RouteManageMentGUI extends JFrame {
 						JOptionPane.showMessageDialog(null, "정보를 모두 입력해주세요", "알림", 1);
 						return;
 					}
+				} else if (!passMatcher3.find()) {
+					JOptionPane.showMessageDialog(null, "노선 ID는 숫자만 입력 가능합니다", "아이디 오류", 1);
+					return;
 				} else if (arr.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "노선 ID가 존재하지 않습니다", "아이디 오류", 1);
 					return;

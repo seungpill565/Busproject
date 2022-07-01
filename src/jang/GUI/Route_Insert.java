@@ -193,9 +193,6 @@ public class Route_Insert extends JFrame {
 		bus.setBounds(40, 117, 80, 30);
 		bus.setFont(new Font("휴먼편지체", Font.BOLD, 17));
 		panel.add(bus);
-//		seat.setBounds(20, 260, 80, 30);
-//		seat.setFont(new Font("휴먼매직체", Font.BOLD, 20));
-//		panel.add(seat);
 
 		// 입력 공간 라벨
 		tf1.setBounds(90, 150, 80, 25);
@@ -263,7 +260,7 @@ public class Route_Insert extends JFrame {
 					JOptionPane.showMessageDialog(null, "도착지를 다시 입력해주세요\n(공백없이 한글만 입력 가능)", "도착지 오류", 1);
 					return;
 				} else if (!passMatcher3.find()) {
-					JOptionPane.showMessageDialog(null, "숫자만 입력 가능합니다", "요금 오류", 1);
+					JOptionPane.showMessageDialog(null, "요금은 숫자만 입력 가능합니다", "요금 오류", 1);
 					return;
 				} else {
 					db.route_insertData(rt_depart_from, rt_arrive_at, rt_charge);
@@ -296,6 +293,8 @@ public class Route_Insert extends JFrame {
 				Matcher passMatcher = passPattern.matcher(bi_day);
 				Pattern passPattern2 = Pattern.compile("\\d{2}:\\d{2}");
 				Matcher passMatcher2 = passPattern2.matcher(bi_time);
+				Pattern passPattern3 = Pattern.compile("[0-9]");
+				Matcher passMatcher3 = passPattern3.matcher(rtfk_id);
 
 				if (bi_day.equals("") || bi_time.equals("") || tf3.getText().length() == 0) {
 					JOptionPane.showMessageDialog(null, "정보를 모두 입력해주세요", "알림", 1);
@@ -305,6 +304,9 @@ public class Route_Insert extends JFrame {
 					return;
 				} else if (!passMatcher2.find()) {
 					JOptionPane.showMessageDialog(null, "시간을 다시 입력해주세요\nex) 24:00", "시간 오류", 1);
+					return;
+				} else if (!passMatcher3.find()) {
+					JOptionPane.showMessageDialog(null, "노선 ID는 숫자만 입력 가능합니다", "아이디 오류", 1);
 					return;
 				} else if (arr.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "노선 ID가 존재하지 않습니다", "아이디 오류", 1);
@@ -330,7 +332,6 @@ public class Route_Insert extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String rt_id = tf3.getText();
 				allView();
-//				idView(rt_id);
 			}
 		});
 

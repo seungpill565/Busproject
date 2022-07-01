@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 
 import an.admin.Admin_MainFrame;
 import jang.RoundButton;
+import jang.TextHint;
 import jang.DB.Member_DB;
 import jang.Data.Member_Data;
 import jang.Data.Member_Update_Data;
@@ -56,7 +57,7 @@ public class MemberManagementGUI extends JFrame {
 	JLabel imageLabel = new JLabel();
 
 	JLabel pName = new JLabel("회원");
-	// JButton backBtn;
+
 	JButton homeBtn;
 
 	ImageIcon image = new ImageIcon("Image/yujin2.jpg");
@@ -283,7 +284,7 @@ public class MemberManagementGUI extends JFrame {
 		panel.add(l1); // 아이디 라벨
 		l2.setBounds(155, 130, 80, 30);
 		l2.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
-		panel.add(l2); // 이름 라벵
+		panel.add(l2); // 이름 라벨
 		l3.setBounds(260, 130, 80, 30);
 		l3.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(l3); // 비번
@@ -353,7 +354,7 @@ public class MemberManagementGUI extends JFrame {
 				} else {
 					db.insertData(
 							new Member_Data(user_id, user_name, user_password, user_phonenum, user_passenger_manager));
-					JOptionPane.showMessageDialog(null, "입력되었습니다!");
+					JOptionPane.showMessageDialog(null, "추가되었습니다!");
 
 				}
 				tf1.setText("");
