@@ -1,7 +1,7 @@
 package hong;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
@@ -16,9 +16,9 @@ public class SaveInfo {
 	private String date;
 	private String time;
 	private int rt_id;
-	private HashMap<Integer, Double> dcBySeat = new HashMap<>();// 좌석별 할인률
-	private HashMap<Integer, String> ageBySeat = new HashMap<>(); // 좌석별 연령
-	private HashMap<String, Integer> seatNameBySeatId = new HashMap<>();// 좌석이름에 해당하는 좌석 id
+	private LinkedHashMap<Integer, Double> dcBySeat = new LinkedHashMap<>();// 좌석별 할인률
+	private LinkedHashMap<Integer, String> ageBySeat = new LinkedHashMap<>(); // 좌석별 연령
+	private LinkedHashMap<String, Integer> seatNameBySeatId = new LinkedHashMap<>();// 좌석이름에 해당하는 좌석 id
 	private ArrayList<Integer> seatId = new ArrayList<>(); // 좌석 id들
 	private ArrayList<String> seatNames = new ArrayList<>(); // 좌석이름 리스트 // 팀장님 넘겨주시는거
 	private String payWay; // 이건 한번 결제할때 같은 수단으로 하니까 배열 x
@@ -117,7 +117,7 @@ public class SaveInfo {
 			System.out.println(i+"번째 좌석ID "+seatNames.get(i)+"저장");
 
 	}
-	public HashMap<String, Integer> getSeatNameBySeatId() {
+	public LinkedHashMap<String, Integer> getSeatNameBySeatId() {
 		return seatNameBySeatId;
 	}
 	
@@ -144,11 +144,11 @@ public class SaveInfo {
 	public void setAgeBySeat(Integer seat, String age) {
 		ageBySeat.put(seat, age);
 	}
-	public HashMap<Integer, String> getAgeBySeat() {
+	public LinkedHashMap<Integer, String> getAgeBySeat() {
 		return ageBySeat;
 	}
 	
-	public HashMap<Integer, Double> getDcBySeat() {
+	public LinkedHashMap<Integer, Double> getDcBySeat() {
 		return dcBySeat;
 	}
 	
@@ -238,7 +238,7 @@ public class SaveInfo {
 		this.time = time;
 	}
 
-	public HashMap<Integer, Double> getdcBySeat() {
+	public LinkedHashMap<Integer, Double> getdcBySeat() {
 		return dcBySeat;
 	}
 

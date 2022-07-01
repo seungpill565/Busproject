@@ -36,7 +36,7 @@ public class PayInfo extends JFrame{
 	public PayInfo(SaveInfo user) {
 		super("예매 완료");
 		this.user = user;
-		homeBtn = new HomeButton(new ImageIcon("image/home.png"));
+		homeBtn = new HomeButton(new ImageIcon("image/home1.png"));
 
 
 		homeBtn.addActionListener(new PayInfoButtonEvent(this));

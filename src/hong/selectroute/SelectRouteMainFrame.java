@@ -33,6 +33,7 @@ import hong.selectroute.event.ShowArriveTerminalEvent;
 import hong.selectroute.event.ShowStartingTerminalEvent;
 import hong.selectroute.event.YearComboBoxEvent;
 import hong.selectseat.SelectSeatMainFrame;
+import lee.RoundedButton;
 
 public class SelectRouteMainFrame extends JFrame {
 	
@@ -267,16 +268,17 @@ public class SelectRouteMainFrame extends JFrame {
 		label.add(new BackGroundLabel("버스 예약하기", 250, 90,36));
 		
 		
-		label.add(new BackGroundLabel("", 290, 90, 0));
-		label.add(new BackGroundLabel("", 580, 25, 0));
+		label.add(new BackGroundLabel("", 500, 90, 0));
+		label.add(new BackGroundLabel("", 770, 25, 0));
 		
 		
-		label.add(new BackGroundLabel("", 32, 40, 12));
+		label.add(new BackGroundLabel("", 200, 40, 12));
 		label.add(new BackGroundLabel("출발지", 185, 40, 20));
-		label.add(new BackGroundLabel("도착지", 330, 40, 20));
+		label.add(new BackGroundLabel("도착지", 350, 40, 20));
 		
 		// 출발지 버튼 액션달고 붙이기
-		label.add(new BackGroundLabel("", 22, 100, 0));
+		RoundedButton rb = new RoundedButton();
+		label.add(new BackGroundLabel("", 200, 100, 0));
 		startingPointButton.addActionListener(showStratingBtnEvent);
 		label.add(startingPointButton);
 		
@@ -288,9 +290,9 @@ public class SelectRouteMainFrame extends JFrame {
 		label.add(arrivalButton);
 		
 		label.add(new BackGroundLabel("", 250, 100, 0));
-		label.add(new BackGroundLabel("", 570, 110, 0));
+		label.add(new BackGroundLabel("", 770, 110, 0));
 		//add(new BackGroundLabel("", 560, 10));
-		label.add(new BackGroundLabel("", 10, 45, 0));
+		label.add(new BackGroundLabel("", 100, 45, 0));
 		label.add(new BackGroundLabel("가는날 :",70, 45, 15));
 		
 		
@@ -306,11 +308,11 @@ public class SelectRouteMainFrame extends JFrame {
 		// 일 선택 콤보박스
 		dayBox.addItemListener(dayBoxEvent);
 		label.add(dayBox);
-		label.add(new BackGroundLabel("일", 70, 30, 15));
+		label.add(new BackGroundLabel("일", 80, 30, 15));
 		//add(new BackGroundLabel("", 560, 10));
 		
 		// 조회하기 버튼
-		label.add(new BackGroundLabel("", 130, 77, 0));
+		label.add(new BackGroundLabel("", 235, 77, 0));
 		serchButton.addActionListener(serchBtnEvent);
 		label.add(serchButton);
 		
@@ -319,7 +321,7 @@ public class SelectRouteMainFrame extends JFrame {
 		//label.add(new BackGroundLabel("", 150, 30));
 		
 		// 다음 프레임으로 넘어가는 버튼
-		label.add(new BackGroundLabel("", 155, 30, 0));
+		label.add(new BackGroundLabel("", 260, 30, 0));
 		nextButton.addActionListener(nextBtnEvent);
 		label.add(nextButton);
 		

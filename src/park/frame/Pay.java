@@ -55,7 +55,7 @@ public class Pay extends JFrame{
 		this.user = user;
 		
 		// 접속 상태 유지하기위해서 다 매개변수로 받아온 user로 초기화 해줌
-		homeBtn = new HomeButton(new ImageIcon("image/home.png"));
+		homeBtn = new HomeButton(new ImageIcon("image/home1.png"));
 		beforeBtn = new BeforePayButton(new ImageIcon("image/before.png"));
 		//panel1 = new HomeBeforeBtnPanel(user);
 		route = new RouteInfoLabel();
