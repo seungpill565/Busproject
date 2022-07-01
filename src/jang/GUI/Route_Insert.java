@@ -67,7 +67,7 @@ public class Route_Insert extends JFrame {
 
 	JLabel pName = new JLabel("노선 추가");
 
-	ImageIcon image = new ImageIcon("Image/yujin2.jpg");
+	ImageIcon image = new ImageIcon("Image/yujin_route_insert.jpg");
 
 	Route_DB db = new Route_DB();
 
@@ -221,7 +221,7 @@ public class Route_Insert extends JFrame {
 		tf5.setBounds(230, 85, 80, 25);
 		tf5.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(tf5); // 도착지
-		tf6.setBounds(370, 85, 80, 25);
+		tf6.setBounds(390, 85, 80, 25);
 		tf6.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(tf6); // 요금
 
@@ -241,7 +241,7 @@ public class Route_Insert extends JFrame {
 		l5.setBounds(180, 85, 80, 30);
 		l5.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(l5); // 도착지
-		l6.setBounds(320, 85, 80, 30);
+		l6.setBounds(340, 85, 80, 30);
 		l6.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		panel.add(l6); // 요금
 
