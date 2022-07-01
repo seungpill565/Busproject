@@ -1,5 +1,6 @@
 package lee.mpcomponents;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
@@ -22,7 +23,10 @@ public class MPprofilePanel_1 extends JPanel {
 		//수정하기 버튼 설정
 		MPeditBtn.setBounds(350, 200, 90, 35);
 		MPeditBtn.setFont(new Font("휴먼편지체", Font.BOLD, 17));		
-		add(MPeditBtn);		
+		add(MPeditBtn);
+		
+		
+		setBackground(Color.WHITE);
 	}
 	
 }

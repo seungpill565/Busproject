@@ -1,5 +1,6 @@
 package lee.mpcomponents;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -22,7 +23,6 @@ public class MPleavePanel extends JPanel {
 		
 		//탈퇴하시겠습니까? 라벨 설정
 		MPleaveConfirmLb.setBounds(50, 30, 400, 60);
-		MPleaveConfirmLb.setOpaque(true);
 		MPleaveConfirmLb.setFont(new Font("고딕", Font.BOLD, 15));
 		add(MPleaveConfirmLb);
 
@@ -35,6 +35,8 @@ public class MPleavePanel extends JPanel {
 		//비밀번호 텍스트필드 설정
 		MPleavePf.setBounds(120, 100, 250, 27);
 		MPleavePf.setEchoChar('●');
+		MPleavePf.setBackground(new Color(219,219,219));
+		MPleavePf.setBorder(null);
 		add(MPleavePf);
 		
 		//확인 버튼 설정
@@ -42,7 +44,8 @@ public class MPleavePanel extends JPanel {
 		MPleaveYesBtn.setBorderPainted(false);
 		MPleaveYesBtn.setFont(new Font("휴먼편지체", Font.BOLD, 17));
 		add(MPleaveYesBtn);
-
+		
+		setBackground(Color.WHITE);
 	}
 
 
