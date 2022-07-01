@@ -32,8 +32,6 @@ public class MPrealSF extends JFrame implements ActionListener{
 		add(noBtn);
 		noBtn.addActionListener(this); //아니오 버튼 액션은 여기서 바로 넣음
 		
-		
-		setTitle("계정 탈퇴");
 		setLayout(null);
 		setVisible(true);
 		setResizable(false);
