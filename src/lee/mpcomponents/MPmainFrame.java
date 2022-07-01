@@ -257,7 +257,7 @@ public class MPmainFrame extends JFrame {
 			//예매취소버튼 비활성화
 			MPcontents.MPreservation.MPreservation_2.MPreservationcancleBtn.setEnabled(false);
 			//'정말 취소하시겠습니까?' 작은 창			
-			MPrealSF sf = new MPrealSF("예메취소", "정말 취소하시겠습니까?", 100, 60, 300, 30);
+			MPrealSF sf = new MPrealSF("예매취소", "정말 취소하시겠습니까?", 100, 60, 300, 30);
 			
 			//'정말취소하시겠습니까?' 작은 창 꺼지면 예매취소버튼 활성화 
 			sf.addWindowListener(new WindowListener() {
