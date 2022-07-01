@@ -1,4 +1,4 @@
-package jang;
+package jang.GUI;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -28,7 +28,7 @@ public class ManagerMainFrame2 extends JFrame{
 	ImageIcon back_Image2 = new ImageIcon("Image/back3.png");
 	
 	
-	ImageIcon home_image = new ImageIcon("Image/home.png");
+	ImageIcon home_image = new ImageIcon("Image/home2-1.png");
 	ImageIcon home_image2 = new ImageIcon("Image/home2.png");
 	
 	

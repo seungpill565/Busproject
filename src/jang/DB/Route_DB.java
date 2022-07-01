@@ -1,4 +1,4 @@
-package jang;
+package jang.DB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,12 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import an.OjdbcConnection;
 import jang.Data.Route_Insert_Data;
 import jang.Data.Route_Read_Data;
-import jang.Data.Seat_Data;
+import jang.Data.rt_bi_id_Data;
 
 public class Route_DB {
-	
+
 	ArrayList<Integer> bi_id_list = new ArrayList<>();
 
 	// Insert Create
@@ -192,7 +193,7 @@ public class Route_DB {
 		}
 	}
 
-	// search
+	// arrive_search
 	public ArrayList<Route_Read_Data> searchRoute(String arrive) {
 		ArrayList<Route_Read_Data> arr = new ArrayList<Route_Read_Data>();
 		String sql = "SELECT bi_id, rt_id, rt_depart_from, rt_arrive_at, rt_charge, bi_day, bi_time "
@@ -213,18 +214,54 @@ public class Route_DB {
 		return arr;
 
 	}
-	
-	// rt_id_search
-	public ArrayList<Seat_Data> idRead(String rt_id) {
-		ArrayList<Seat_Data> arr = new ArrayList<Seat_Data>();
-		String sql = "SELECT rt_id, bi_id " + "FROM BUS_ROUTE " + "INNER JOIN BUS_INFO USING (rt_id) "
-				+ "WHERE rt_id LIKE '%" + rt_id + "%' ORDER BY rt_id";
+
+//	// rt_id_search (부분 검색)
+//	public ArrayList<rt_bi_id_Data> idRead(String rt_id) {
+//		ArrayList<rt_bi_id_Data> arr = new ArrayList<rt_bi_id_Data>();
+//		String sql = "SELECT rt_id, bi_id " + "FROM BUS_ROUTE " + "INNER JOIN BUS_INFO USING (rt_id) "
+//				+ "WHERE rt_id LIKE '%" + rt_id + "%' ORDER BY rt_id";
+//		try (Connection conn = OjdbcConnection.getConnection();
+//				PreparedStatement pstmt = conn.prepareStatement(sql);
+//				ResultSet rs = pstmt.executeQuery();) {
+//
+//			while (rs.next()) {
+//				arr.add(new rt_bi_id_Data(rs.getInt(1), rs.getInt(2)));
+//			}
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return arr;
+//	}
+
+	// bi_id_search
+	public ArrayList<rt_bi_id_Data> bi_idRead(String bi_id) {
+		ArrayList<rt_bi_id_Data> arr = new ArrayList<rt_bi_id_Data>();
+		String sql = "SELECT * FROM BUS_INFO WHERE bi_id LIKE '" + bi_id + "'";
 		try (Connection conn = OjdbcConnection.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery();) {
 
 			while (rs.next()) {
-				arr.add(new Seat_Data(rs.getInt(1), rs.getInt(2)));
+				arr.add(new rt_bi_id_Data(rs.getString(1), rs.getString(2)));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return arr;
+	}
+
+	// rt_id_search (전체 검색)
+	public ArrayList<rt_bi_id_Data> rt_idRead(String rtfk_id) {
+		ArrayList<rt_bi_id_Data> arr = new ArrayList<rt_bi_id_Data>();
+		String sql = "SELECT * FROM BUS_ROUTE WHERE rt_id LIKE '" + rtfk_id + "'";
+		try (Connection conn = OjdbcConnection.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();) {
+
+			while (rs.next()) {
+				arr.add(new rt_bi_id_Data(rs.getString(1), rs.getString(2)));
 			}
 
 		} catch (SQLException e) {

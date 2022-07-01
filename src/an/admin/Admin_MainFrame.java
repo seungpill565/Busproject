@@ -11,8 +11,8 @@ import an.admin.action.Admin_OutAction;
 import an.admin.action.Admin_RouteAction;
 import an.admin.action.Admin_UserAction;
 import an.login.Login_Mainframe;
-import jang.MemberManagementGUI;
-import jang.RouteManageMentGUI;
+import jang.GUI.MemberManagementGUI;
+import jang.GUI.RouteManageMentGUI;
 
 public class Admin_MainFrame extends JFrame{
 	ImageIcon logoutimage = new ImageIcon("image/button3.png");

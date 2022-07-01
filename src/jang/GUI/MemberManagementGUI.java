@@ -1,4 +1,4 @@
-package jang;
+package jang.GUI;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -15,16 +15,20 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import an.admin.Admin_MainFrame;
+import jang.RoundButton;
+import jang.DB.Member_DB;
 import jang.Data.Member_Data;
 import jang.Data.Member_Update_Data;
 
@@ -32,7 +36,7 @@ public class MemberManagementGUI extends JFrame {
 	ArrayList<JTextField> tfList = new ArrayList<>();
 
 	JScrollPane scrollpane;
-	JPanel panel = new JPanel();
+	JLabel panel = new JLabel();
 	JTextField tf1 = new JTextField();
 	JTextField tf2 = new JTextField();
 	JTextField tf3 = new JTextField();
@@ -52,13 +56,13 @@ public class MemberManagementGUI extends JFrame {
 	JLabel l4 = new JLabel("ÀüÈ­¹øÈ£ : ");
 	JLabel l5 = new JLabel("°ü¸®ÀÚ/¼Õ´Ô : ");
 	JLabel l6 = new JLabel("ID : ");
+	JLabel imageLabel = new JLabel();
 
 	JLabel pName = new JLabel("È¸¿ø");
-	// JButton backBtn;
+
 	JButton homeBtn;
 
-	ImageIcon image = new ImageIcon("Image/back2.png");
-	ImageIcon image2 = new ImageIcon("Image/back3.png");
+	ImageIcon image = new ImageIcon("Image/yujin2.jpg");
 
 	ImageIcon home_image = new ImageIcon("Image/home.png");
 	ImageIcon home_image2 = new ImageIcon("Image/home2.png");
@@ -141,7 +145,15 @@ public class MemberManagementGUI extends JFrame {
 //		table.setEnabled(false);
 //		table.setFont(new Font("ÈŞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
 
-		scrollpane.setBounds(40, 170, 710, 220);
+		// ¼¿ ¾ÈÀÇ ³»¿ë °¡¿îµ¥ Á¤·Ä
+		DefaultTableCellRenderer tcellRander = new DefaultTableCellRenderer();
+		tcellRander.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel tcolumn = table.getColumnModel();
+		for (int i = 0; i < tcolumn.getColumnCount(); ++i) {
+			tcolumn.getColumn(i).setCellRenderer(tcellRander);
+		}
+
+		scrollpane.setBounds(40, 170, 710, 370);
 		getContentPane().add(scrollpane);
 	}
 
@@ -199,7 +211,15 @@ public class MemberManagementGUI extends JFrame {
 		scrollpane.setViewportView(table);
 //		table.setFont(new Font("ÈŞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
 
-		scrollpane.setBounds(40, 170, 710, 220);
+		// ¼¿ ¾ÈÀÇ ³»¿ë °¡¿îµ¥ Á¤·Ä
+		DefaultTableCellRenderer tcellRander = new DefaultTableCellRenderer();
+		tcellRander.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel tcolumn = table.getColumnModel();
+		for (int i = 0; i < tcolumn.getColumnCount(); ++i) {
+			tcolumn.getColumn(i).setCellRenderer(tcellRander);
+		}
+
+		scrollpane.setBounds(40, 170, 710, 370);
 		getContentPane().add(scrollpane);
 	}
 
@@ -209,7 +229,8 @@ public class MemberManagementGUI extends JFrame {
 		panel.setBackground(Color.WHITE);
 		panel.setLayout(null);
 		setResizable(false);
-		setSize(800, 500);
+		setSize(800, 650);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 
@@ -223,24 +244,25 @@ public class MemberManagementGUI extends JFrame {
 		pName.setBounds(350, 10, 200, 50);
 		pName.setFont(new Font("ÈŞ¸ÕÆíÁöÃ¼", Font.BOLD, 35));
 		panel.add(pName);
-		
-		
-		
+
+//		panel.add(imageLabel);
+		panel.setIcon(image);
 
 		btn1.setBounds(160, 80, 70, 30); // Ãß°¡
-		btn1.setBackground(new Color(0XE7E6E6));
+//		btn1.setBackground(Color.white);
+		btn1.setBackground(new Color(255, 255, 255, 122)); // Åõ¸íµµ Á¶Àı(122)
 		btn1.setFont(new Font("ÈŞ¸ÕÆíÁöÃ¼", Font.BOLD, 15));
 		btn2.setBounds(40, 80, 100, 30); // Á¶È¸
-		btn2.setBackground(new Color(0XE7E6E6));
+		btn2.setBackground(new Color(255, 255, 255, 122));
 		btn2.setFont(new Font("ÈŞ¸ÕÆíÁöÃ¼", Font.BOLD, 15));
 		btn3.setBounds(250, 80, 70, 30); // ¼öÁ¤
-		btn3.setBackground(new Color(0XE7E6E6));
+		btn3.setBackground(new Color(255, 255, 255, 122));
 		btn3.setFont(new Font("ÈŞ¸ÕÆíÁöÃ¼", Font.BOLD, 15));
-		btn4.setBounds(680, 410, 70, 30); // »èÁ¦
-		btn4.setBackground(new Color(0XE7E6E6));
+		btn4.setBounds(680, 560, 70, 30); // »èÁ¦
+		btn4.setBackground(new Color(255, 255, 255, 122));
 		btn4.setFont(new Font("ÈŞ¸ÕÆíÁöÃ¼", Font.BOLD, 15));
-		btn5.setBounds(600, 410, 70, 30); // °Ë»ö
-		btn5.setBackground(new Color(0XE7E6E6));
+		btn5.setBounds(600, 560, 70, 30); // °Ë»ö
+		btn5.setBackground(new Color(255, 255, 255, 122));
 		btn5.setFont(new Font("ÈŞ¸ÕÆíÁöÃ¼", Font.BOLD, 15));
 
 		panel.add(btn1);
@@ -252,12 +274,12 @@ public class MemberManagementGUI extends JFrame {
 //		TextHint tHint = new TextHint(" ¾ÆÀÌµğ ÀÔ·Â");
 //		tHint.setBounds(490, 410, 100, 30);
 //		panel.add(tHint);
-		
+
 		// ÀÔ·Â °ø°£
 		tf1.setBounds(70, 130, 80, 25);
 		tf1.setFont(new Font("ÈŞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
 		panel.add(tf1); // ¾ÆÀÌµğ ÀÔ·Â °ø°£
-		tf6.setBounds(490, 410, 100, 30);
+		tf6.setBounds(490, 560, 100, 30);
 		tf6.setFont(new Font("ÈŞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
 		tf6.setText("¾ÆÀÌµğ ÀÔ·Â");
 		panel.add(tf6); // ¾ÆÀÌµğ ÀÔ·Â °ø°£ (°Ë»ö)
@@ -280,7 +302,7 @@ public class MemberManagementGUI extends JFrame {
 		panel.add(l1); // ¾ÆÀÌµğ ¶óº§
 		l2.setBounds(155, 130, 80, 30);
 		l2.setFont(new Font("ÈŞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
-		panel.add(l2); // ÀÌ¸§ ¶óº¬
+		panel.add(l2); // ÀÌ¸§ ¶óº§
 		l3.setBounds(260, 130, 80, 30);
 		l3.setFont(new Font("ÈŞ¸ÕÆíÁöÃ¼", Font.PLAIN, 15));
 		panel.add(l3); // ºñ¹ø
@@ -312,16 +334,19 @@ public class MemberManagementGUI extends JFrame {
 				String user_phonenum = tf4.getText();
 				String user_passenger_manager = tf5.getText();
 				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
-				arr = db.search(user_id);
+				arr = db.user_id_check(user_id);
 
 				Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$");
 				Matcher passMatcher = passPattern.matcher(user_password);
 				Pattern passPattern2 = Pattern.compile("\\d{3}-\\d{4}-\\d{4}");
 				Matcher passMatcher2 = passPattern2.matcher(user_phonenum);
-				Pattern passPattern3 = Pattern.compile("^[°¡-ÆRa-zA-Z]*$");
+				Pattern passPattern3 = Pattern.compile("[0-9]+");
 				Matcher passMatcher3 = passPattern3.matcher(user_name);
-				Member_Data data = new Member_Data(user_id, user_name, user_password, user_phonenum,
-						user_passenger_manager);
+				Pattern passPattern4 = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$");
+				Matcher passMatcher4 = passPattern4.matcher(user_id);
+				Pattern passPattern5 = Pattern.compile("[¼Õ´Ô]*[°ü¸®ÀÚ]*");
+				Matcher passMatcher5 = passPattern4.matcher(user_passenger_manager);
+
 				if (user_id.equals("") || user_name.equals("") || user_password.equals("") || user_phonenum.equals("")
 						|| user_passenger_manager.equals("")) {
 					JOptionPane.showMessageDialog(null, "Á¤º¸¸¦ ¸ğµÎ ÀÔ·ÂÇØÁÖ¼¼¿ä", "¾Ë¸²", 1);
@@ -329,19 +354,25 @@ public class MemberManagementGUI extends JFrame {
 				} else if (!arr.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "¾ÆÀÌµğ°¡ Áßº¹µË´Ï´Ù", "¾ÆÀÌµğ Áßº¹", 1);
 					return;
-				} else if (!passMatcher3.find()) {
-					JOptionPane.showMessageDialog(null, "ÇÑ±Û ¶Ç´Â ¿µ¹®¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä", "ÀÌ¸§ ¿À·ù", 1);
+				} else if (!passMatcher4.find()) {
+					JOptionPane.showMessageDialog(null, "¿µ¹® ¶Ç´Â ¼ıÀÚ·Î ÀÌ·ç¾îÁø 5~12ÀÚ·Î »ı¼ºÇØÁÖ¼¼¿ä", "¾ÆÀÌµğ ¿À·ù", 1);
+					return;
+				} else if (passMatcher3.find()) {
+					JOptionPane.showMessageDialog(null, "ÀÌ¸§¿¡´Â ¼ıÀÚ¸¦ ÀÔ·ÂÇÏ½Ç ¼ö ¾ø½À´Ï´Ù", "ÀÌ¸§ ¿À·ù", 1);
 					return;
 				} else if (!passMatcher.find()) {
-					JOptionPane.showMessageDialog(null, "ºñ¹Ğ¹øÈ£´Â ¿µ¹®+Æ¯¼ö¹®ÀÚ+¼ıÀÚ 8ÀÚ·Î ±¸¼ºµÇ¾î¾ß ÇÕ´Ï´Ù", "ºñ¹Ğ¹øÈ£ ¿À·ù", 1);
+					JOptionPane.showMessageDialog(null, "ºñ¹Ğ¹øÈ£´Â ¿µ¹®+Æ¯¼ö¹®ÀÚ+¼ıÀÚ ÃÖ¼Ò 8ÀÚ¿¡¼­ ÃÖ´ë 20ÀÚ·Î ±¸¼ºµÇ¾î¾ß ÇÕ´Ï´Ù", "ºñ¹Ğ¹øÈ£ ¿À·ù", 1);
 					return;
 				} else if (!passMatcher2.find()) {
-					JOptionPane.showMessageDialog(null, "ÀüÈ­¹øÈ£¸¦ ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä\nex) xxx-xxxx-xxxx", "ÀüÈ­¹øÈ£ ¿À·ù", 1);
+					JOptionPane.showMessageDialog(null, "ÀüÈ­¹øÈ£¸¦ ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä\nex) xxx-xxxx-xxxx", "ÀüÈ­¹øÈ£ ¿À·ù", 1);
+					return;
+				} else if (passMatcher5.find()) {
+					JOptionPane.showMessageDialog(null, "°ü¸®ÀÚ or ¼Õ´Ô¸¸ ÀÔ·Â °¡´ÉÇÕ´Ï´Ù", "¾Ë¸²", 1);
 					return;
 				} else {
 					db.insertData(
 							new Member_Data(user_id, user_name, user_password, user_phonenum, user_passenger_manager));
-					JOptionPane.showMessageDialog(null, "ÀÔ·ÂµÇ¾ú½À´Ï´Ù!");
+					JOptionPane.showMessageDialog(null, "Ãß°¡µÇ¾ú½À´Ï´Ù!");
 
 				}
 				tf1.setText("");
@@ -374,27 +405,36 @@ public class MemberManagementGUI extends JFrame {
 
 				Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$");
 				Matcher passMatcher = passPattern.matcher(user_password);
-				Pattern passPattern2 = Pattern.compile("\\d");
+				Pattern passPattern2 = Pattern.compile("\\d{3}-\\d{4}-\\d{4}");
 				Matcher passMatcher2 = passPattern2.matcher(user_phonenum);
-				Pattern passPattern3 = Pattern.compile("^[°¡-ÆRa-zA-Z]*$");
+				Pattern passPattern3 = Pattern.compile("[0-9]+");
 				Matcher passMatcher3 = passPattern3.matcher(user_name);
+				Pattern passPattern4 = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$");
+				Matcher passMatcher4 = passPattern4.matcher(user_id);
 
 				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
-				arr = db.search(user_id);
+				arr = db.user_id_check(user_id);
 
 				int update = JOptionPane.showConfirmDialog(null, "¼öÁ¤ÇÏ½Ã°Ú½À´Ï±î?", "¼öÁ¤ È®ÀÎ", JOptionPane.YES_NO_OPTION);
+
 				if (user_id.equals("") || user_name.equals("") || user_password.equals("")
 						|| user_phonenum.equals("")) {
 					JOptionPane.showMessageDialog(null, "Á¤º¸¸¦ ¸ğµÎ ÀÔ·ÂÇØÁÖ¼¼¿ä", "¾Ë¸²", 1);
 					return;
-				} else if (!passMatcher3.find()) {
-					JOptionPane.showMessageDialog(null, "ÇÑ±Û ¶Ç´Â ¿µ¹®¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä", "ÀÌ¸§ ¿À·ù", 1);
+				} else if (arr.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "¾ÆÀÌµğ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù", "¾ÆÀÌµğ ¿À·ù", 1);
+					return;
+				} else if (!passMatcher4.find()) {
+					JOptionPane.showMessageDialog(null, "¿µ¹® ¶Ç´Â ¼ıÀÚ·Î ÀÌ·ç¾îÁø 5~12ÀÚ·Î »ı¼ºÇØÁÖ¼¼¿ä", "¾ÆÀÌµğ ¿À·ù", 1);
+					return;
+				} else if (passMatcher3.find()) {
+					JOptionPane.showMessageDialog(null, "ÀÌ¸§¿¡´Â ¼ıÀÚ¸¦ ÀÔ·ÂÇÏ½Ç¼ö ¾ø½À´Ï´Ù", "ÀÌ¸§ ¿À·ù", 1);
 					return;
 				} else if (!passMatcher.find()) {
-					JOptionPane.showMessageDialog(null, "ºñ¹Ğ¹øÈ£´Â ¿µ¹®+Æ¯¼ö¹®ÀÚ+¼ıÀÚ 8ÀÚ·Î ±¸¼ºµÇ¾î¾ß ÇÕ´Ï´Ù", "ºñ¹Ğ¹øÈ£ ¿À·ù", 1);
+					JOptionPane.showMessageDialog(null, "ºñ¹Ğ¹øÈ£´Â ¿µ¹®+Æ¯¼ö¹®ÀÚ+¼ıÀÚ ÃÖ¼Ò 8ÀÚ¿¡¼­ ÃÖ´ë 20ÀÚ·Î ±¸¼ºµÇ¾î¾ß ÇÕ´Ï´Ù", "ºñ¹Ğ¹øÈ£ ¿À·ù", 1);
 					return;
 				} else if (!passMatcher2.find()) {
-					JOptionPane.showMessageDialog(null, "ÀüÈ­¹øÈ£´Â ¼ıÀÚ·Î¸¸ ±¸¼ºµÇ¾î¾ß ÇÕ´Ï´Ù", "ÀüÈ­¹øÈ£ ¿À·ù", 1);
+					JOptionPane.showMessageDialog(null, "ÀüÈ­¹øÈ£¸¦ ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä\\nex) xxx-xxxx-xxxx", "ÀüÈ­¹øÈ£ ¿À·ù", 1);
 					return;
 				} else {
 					if (update == JOptionPane.YES_OPTION) {
@@ -420,10 +460,10 @@ public class MemberManagementGUI extends JFrame {
 
 				String user_id = tf1.getText();
 				ArrayList<Member_Data> arr = new ArrayList<Member_Data>();
-				arr = db.search(user_id);
+				arr = db.user_id_check(user_id);
 				int delete = JOptionPane.showConfirmDialog(null, "»èÁ¦ÇÏ½Ã°Ú½À´Ï±î?", "»èÁ¦ È®ÀÎ", JOptionPane.YES_NO_OPTION);
-				
-				if(user_id.equals("")) {
+
+				if (user_id.equals("")) {
 					JOptionPane.showMessageDialog(null, "ID¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä", "¾Ë¸²", 1);
 					return;
 				} else if (arr.isEmpty()) {
