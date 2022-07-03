@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,24 +27,29 @@ public class MPreservationPanel_2 extends JPanel {
 	SaveInfo saveInfo;
 	String user_id; 
 	
+	JCheckBox chkAll = new JCheckBox(" 전체 선택");//전체선택 체크박스
 	
-	RoundedButton MPreservationcancleBtn = new RoundedButton("예매취소");	
-	BorderLayout MPborderlayout = new BorderLayout();
+	RoundedButton MPreservationcancleBtn = new RoundedButton("예매취소");// 예매취소 버튼
 	
-	//티켓이 들어갈 공간을 나누고 확보해놓는 패널(박스레이아웃 적용) 
-	JPanel MPreservation_3 = new JPanel();
+	BorderLayout MPborderlayout = new BorderLayout(); //MPreservation_2에 적용할 보더레이아웃
+	 
+	JPanel MPreservation_3 = new JPanel();//티켓이 들어갈 공간을 나누고 확보해놓는 패널(박스레이아웃 적용)
 	
-	JCheckBox[] cbArr;
+	JCheckBox[] cbArr; //예매내역수만큼 만든 체크박스를 담는 체크박스 배열
 	
 	public MPreservationPanel_2(SaveInfo saveInfo) {  
 
 		this.saveInfo = saveInfo;
 		this.user_id = saveInfo.get_user_id();
-		
-		JScrollPane MPscroll = new JScrollPane(MPreservation_3, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		BoxLayout MPboxlayout = new BoxLayout(MPreservation_3, BoxLayout.Y_AXIS);		
-		
+
 		setLayout(MPborderlayout);
+		
+		//MPreservation_3에 스크롤 달기
+		JScrollPane MPscroll = new JScrollPane(MPreservation_3, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		add(MPscroll, "Center");
+		
+		//MPresrevation_3의 레이아웃은 BoxLayout
+		BoxLayout MPboxlayout = new BoxLayout(MPreservation_3, BoxLayout.Y_AXIS);		
 		
 		//스크롤바랑 박스레이아웃 적용한 MPresevation_3패널 설정
 		MPreservation_3.setLayout(MPboxlayout);
@@ -83,24 +90,44 @@ public class MPreservationPanel_2 extends JPanel {
 			MPreservationlistArrList.get(i).add(cbArr[i]);//체크박스는 여기서 달아줌
 			
 			MPreservation_3.add(MPreservationlistArrList.get(i)); //완성된 예매리스트 패널(라벨+쳌박 들어 있음) 을 MPreservation_3(스크롤 붙은 JPanel) 에 붙이기 
-			MPreservation_3.setPreferredSize(new Dimension(500, 180*ticketNum));//리스트패널의 높이에 티켓수 곱해줘야됨★
-			//스크롤 작동하려면 setPreferredSize로 사이즈 조절해줘야 했던듯
 		}
 		
+		MPreservation_3.setPreferredSize(new Dimension(500, 180*ticketNum));//리스트패널의 높이에 티켓수 곱해줘야됨★
+		//스크롤 작동하려면 setPreferredSize로 사이즈 조절해줘야 했던듯
 		
 		MPscroll.getVerticalScrollBar().setUnitIncrement(6);// 스크롤 속도 조절
-		//MPscroll.getVerticalScrollBar().setBackground(Color.WHITE);
 		
 		MPreservationcancleBtn.setBorderPainted(false);
-		MPreservationcancleBtn.setBounds(125, 130, 90, 35);
 		MPreservationcancleBtn.setFont(new Font("휴먼편지체", Font.BOLD, 17));
-		
-		
-		
-		setBackground(Color.WHITE);
 		add(MPreservationcancleBtn, "South");
-		add(MPscroll, "Center");
 		
+		
+		//전체선택 체크박스 아이템 리스너
+		chkAll.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(chkAll.isSelected() == true) {
+					for(JCheckBox cb : cbArr) {
+						cb.setSelected(true);
+					}
+				} else if(chkAll.isSelected() == false) {
+					for(JCheckBox cb : cbArr) {
+						cb.setSelected(false);
+					}
+				}
+			}
+		});
+		
+		//전체선택 체크박스 설정
+		chkAll.setBackground(Color.WHITE);
+		chkAll.setFocusPainted(false);
+		chkAll.setFont(new Font("고딕", Font.BOLD, 14));
+		add(chkAll, "North");
+		setBackground(Color.WHITE);
 	}
 	
+	
+	public void setChkAllUnselected() { //전체선택 체크박스 체크 해제 메서드
+		chkAll.setSelected(false);
+	}
 }

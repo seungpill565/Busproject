@@ -61,5 +61,9 @@ public class MPleavePanel extends JPanel {
 		return pw.toString();
 	}
 
-
+	
+	public void setPfEmpty() {
+		MPleavePf.setText("");
+	}
+		
 }

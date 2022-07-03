@@ -71,20 +71,21 @@ public class MPmainFrame extends JFrame {
 			MPcontents.MPcontentsCard.show(MPcontents, "내정보");
 			MPcontents.MPprofile.showMPprofile_1();
 			
-			//예매내역의 모든 체크박스 선택 해제
-			for(JCheckBox cb : MPcontents.MPreservation.MPreservation_2.cbArr) {
-				cb.setSelected(false);
-			}
-			
 		} else if(btn.getText().equals("예매 확인")) {
 			setCategoryLabelText(btn.getText());
 			MPcontents.MPcontentsCard.show(MPcontents, "예매내역");
 			
-			//예매내역이 없으면 예매내역 없음 패널이 뜨도록
+			//예매내역이 있으면 예매내역 있음 패널 띄우기
 			try(Connection conn = OjdbcConnection.getConnection();) {
-				System.out.println("예매내역 갯수 : " + MPreservationlistModel.get(conn, user_id).size());
+				//System.out.println("예매내역 갯수 : " + MPreservationlistModel.get(conn, user_id).size());
 				if(MPreservationlistModel.get(conn, user_id).size() > 0) {
 					MPcontents.MPreservation.MPreservationCard.show(MPcontents.MPreservation, "예매내역 있음");
+					//예매내역의 전체 체크박스 해제
+					MPcontents.MPreservation.MPreservation_2.setChkAllUnselected();
+					//예매내역의 모든 체크박스 선택 해제
+					for(JCheckBox cb : MPcontents.MPreservation.MPreservation_2.cbArr) {
+						cb.setSelected(false);
+					}
 				} 
 				
 			} catch (SQLException e) {
@@ -95,11 +96,7 @@ public class MPmainFrame extends JFrame {
 		} else if(btn.getText().equals("계정 탈퇴")) {
 			setCategoryLabelText(btn.getText());
 			MPcontents.MPcontentsCard.show(MPcontents, "계정탈퇴");
-			
-			//예매내역의 모든 체크박스 선택 해제
-			for(JCheckBox cb : MPcontents.MPreservation.MPreservation_2.cbArr) {
-				cb.setSelected(false);
-			}
+			MPcontents.MPleave.setPfEmpty();
 		}
 		
 	}	
